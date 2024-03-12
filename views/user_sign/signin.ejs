@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+	<%- include('partials/head.ejs') %> 
+
+	<body>
+
+		<div class="wrapper" style="background-image: url('assets/images/redbullPurpleEdition-1.png');">
+			<div class="inner">
+				<form action="/signin" method="post">
+					<h3>SIGN IN</h3>
+					<div class="form-wrapper">
+						<label for="">Email</label>
+						<input type="text" name="email" class="form-control">
+					</div>
+					<div class="form-wrapper">
+						<label for="">Password</label>
+						<input type="password" name="password" class="form-control">
+					</div>
+					<button type="submit">SIGN IN</button>
+					<br>
+                    <h5>Need an account?<a href="/signup">SIGN UP</a></h5>
+				</form>
+			</div>
+		</div>
+		
+	</body>
+</html>
