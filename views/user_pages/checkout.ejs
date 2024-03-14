@@ -44,11 +44,11 @@
 											data-parent="#accordionExample">
 											<div class="card-body">
 												<div class="billing-address-form">
-													<form action="/address" method="post">
-														<p><input type="text" placeholder="Name"></p>
-														<p><input type="email" placeholder="Email"></p>
-														<p><input type="text" placeholder="Address"></p>
-														<p><input type="tel" placeholder="Phone"></p>
+													<form action="/checkout" method="post">
+														<p><input type="email" name="email" placeholder="Name"></p>
+														<p><input type="tel" name="phonenumber" placeholder="Phone"></p>
+														<p><input type="text" name="city" placeholder="Address"></p>
+														<p><input type="text" name="country" placeholder="country"></p>
 														<p><textarea name="bill" id="bill" cols="30" rows="10"
 																placeholder="Say Something"></textarea></p>
 																<button type="submit">ADD</button>
