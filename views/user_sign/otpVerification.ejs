@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<%- include('partials/head.ejs') %>
+<link href="assetsAdmin/css/main.css" rel="stylesheet" type="text/css" />
+
+
+	<body>
+
+		<div class="wrapper" style="background-image: url('assets/images/redbullPurpleEdition-1.png');">
+			<div class="inner">
+				<form action="/otp_verification" method="post">
+					<h3>ENTER YOUR VERFICATION CODE</h3>
+					<div class="form-wrapper">
+						<label for="">OTP</label>
+						<input type="text" name="otp" class="form-control">
+					</div>
+					<button type="submit" class=" w-100">CONFIRM OTP</button>
+					<br>
+					<h5>Back to <a class="p-2" href="/signin"> SIGN IN</a></h5>
+				</form>
+				
+			</div>
+		</div>
+
+	</body>
+
+</html>

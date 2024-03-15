@@ -1,11 +1,12 @@
+import dotenv from "dotenv";
 import mongoose from "mongoose";
-
+dotenv.config()
 
 async function connect() {
 
     try {
 
-        await mongoose.connect('mongodb://127.0.0.1:27017/database')
+        await mongoose.connect(process.env.MONGO_DB)
 
             .then(() => {
 
