@@ -17,12 +17,12 @@ passport.deserializeUser((obj, cb) => {
 
 dotenv.config()
 
-const GOOGLE_CLIENT_ID = process.env.CLIENT_ID
-const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SECRET
+// const GOOGLE_CLIENT_ID = process.env.CLIENT_ID
+// const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SECRET
 
 export const googleSignIn = passport.use(new GoogleStrategy({
-    clientID: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
     callbackURL: process.env.LOCALHOST_URL
 }, (accessToken, refreshToken, profile, done) => {
     let userProfile = profile;

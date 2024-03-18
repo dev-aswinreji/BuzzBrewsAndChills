@@ -1,4 +1,4 @@
-import { userData } from "../../../data/users/find.mjs"
+import { findUser } from "../../../data/users/find.mjs"
 import { compareHashPassword } from "../../../utils/passwordHashing.mjs"
 
 
@@ -14,7 +14,7 @@ export const user_signinPost = async (req, res) => {
         email: req.body.email,
         password: req.body.password
     }
-    const userAuth = await userData(data.email)
+    const userAuth = await findUser(data.email)
     const pass = await compareHashPassword(data.password,userAuth.password)
     console.log(pass)
     if(data.email === userAuth.email && pass === true){

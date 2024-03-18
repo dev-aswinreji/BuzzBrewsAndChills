@@ -1,5 +1,5 @@
 
-import { userData } from "../../../data/users/find.mjs"
+import { findUser } from "../../../data/users/find.mjs"
 import { sendEmail } from "../../../utils/otpEmailVerification.mjs"
 import { otpGen } from "../../../utils/otpGenerator.mjs"
 import { hashPassword } from "../../../utils/passwordHashing.mjs"
@@ -9,7 +9,7 @@ export const user_signupGet = async (req, res) => {
 }
 
 async function isNull(data) {
-    const emailExist = await userData(data.email)
+    const emailExist = await findUser(data.email)
     if (emailExist === null) {
         return false
     }
@@ -43,7 +43,7 @@ export const user_signupPost = async (req, res) => {
             const OTP = otpGen()
             console.log(OTP)
 
-            req.session.OTP = OTP
+            req.session.otpForNewUser = OTP
 
             sendEmail(data.email, data.full_name, OTP)
 
