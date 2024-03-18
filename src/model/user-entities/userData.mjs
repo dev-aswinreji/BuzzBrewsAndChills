@@ -24,9 +24,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    isAdmin: {
-        type: Boolean,
-        default: false,
+    status: {
+        type: String,
+        enum: ['user','admin'],
+        requied:true
     },
 
 })

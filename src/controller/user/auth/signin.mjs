@@ -1,5 +1,5 @@
-import { compareHashPassword } from "../../utils/passwordHashing.mjs"
-import { userData } from "../../mongodbMethods/users/find/find.mjs"
+import { userData } from "../../../data/users/find.mjs"
+import { compareHashPassword } from "../../../utils/passwordHashing.mjs"
 
 
 export const user_signinGet = (req, res) => {

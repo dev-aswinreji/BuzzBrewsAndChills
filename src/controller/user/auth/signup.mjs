@@ -1,8 +1,8 @@
 
-import { userData } from "../../mongodbMethods/users/find/find.mjs"
-import { sendEmail } from "../../utils/otpEmailVerification.mjs"
-import { hashPassword } from "../../utils/passwordHashing.mjs"
-import { otpGen } from "../../utils/otpGenerator.mjs"
+import { userData } from "../../../data/users/find.mjs"
+import { sendEmail } from "../../../utils/otpEmailVerification.mjs"
+import { otpGen } from "../../../utils/otpGenerator.mjs"
+import { hashPassword } from "../../../utils/passwordHashing.mjs"
 
 export const user_signupGet = async (req, res) => {
     res.render('signup')

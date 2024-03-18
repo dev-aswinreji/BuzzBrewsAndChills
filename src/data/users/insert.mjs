@@ -1,5 +1,5 @@
-import { userAddressCollection } from "../../../model/userDatabase/userAddress.mjs"
-import { userCollection } from "../../../model/userDatabase/userdata.mjs"
+import { userCollection } from "../../model/user-entities/userData.mjs"
+import { userAddressCollection } from "../../model/user-entities/userAddress.mjs"
 
 
 export async function insertUser(data) {

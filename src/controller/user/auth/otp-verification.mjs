@@ -1,4 +1,4 @@
-import { insertUser } from "../../mongodbMethods/users/insert/insert.mjs";
+import { insertUser } from "../../../data/users/insert.mjs";
 
 
 export const user_otpVerificationPost = async (req,res)=>{
@@ -14,9 +14,9 @@ export const user_otpVerificationPost = async (req,res)=>{
         if(token_check===req.session.OTP ){
             const userdata = req.session.userTemporaryData
             await insertUser(userdata)
-            res.redirect('/signin')
+            res.redirect('/home')
         }else{
-            res.redirect('/otp_verification')
+            res.redirect('/otp-verification')
         }
 
     } catch (error) {

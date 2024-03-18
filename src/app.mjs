@@ -5,7 +5,9 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import path from 'path'
 import dotenv from 'dotenv'
-import route from './route/userRoute.mjs'
+import route from './route/user/auth/user-auth.mjs'
+
+
 
 dotenv.config()
 
