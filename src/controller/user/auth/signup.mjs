@@ -1,14 +1,16 @@
 
 import { findUser } from "../../../data/users/find.mjs"
-import { sendEmail } from "../../../utils/otpEmailVerification.mjs"
-import { otpGen } from "../../../utils/otpGenerator.mjs"
+import { sendEmailForNewUser } from "../../../utils/otpEmailVerification.mjs"
+import { otpGenForNewUser } from "../../../utils/otpGenerator.mjs"
 import { hashPassword } from "../../../utils/passwordHashing.mjs"
 
 export const user_signupGet = async (req, res) => {
+    console.log('signup get is working')
     res.render('signup')
 }
 
 async function isNull(data) {
+    console.log('is null is working')
     const emailExist = await findUser(data.email)
     if (emailExist === null) {
         return false
@@ -21,6 +23,7 @@ async function isNull(data) {
 
 export const user_signupPost = async (req, res) => {
 
+        console.log('signup post is working')
     try {
 
         const hash = await hashPassword(req.body.password)
@@ -40,12 +43,12 @@ export const user_signupPost = async (req, res) => {
 
         } else {
 
-            const OTP = otpGen()
+            const OTP = await otpGenForNewUser()
             console.log(OTP)
 
             req.session.otpForNewUser = OTP
 
-            sendEmail(data.email, data.full_name, OTP)
+            sendEmailForNewUser(data.email, data.full_name, OTP)
 
             res.render('otpVerification')
 

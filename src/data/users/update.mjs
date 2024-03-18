@@ -1,5 +1,6 @@
 // import { Schema } from "mongoose";
-// import { userCollection } from "../../../model/userdata.mjs";
+
+import { userCollection } from "../../model/user-entities/userData.mjs";
 
 // export async function updateUser(data) {
 
@@ -14,3 +15,8 @@
 //             }
 //         })
 // }
+
+export async function updateUserPassword (userEmail,newPassword) {
+    const updated = await userCollection.updateOne({email:userEmail},{$set:{password:newPassword}})
+    console.log(updated)
+}

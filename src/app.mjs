@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import path from 'path'
 import dotenv from 'dotenv'
+import routeHome from './route/user/home/user-home.mjs'
 import route from './route/user/auth/user-auth.mjs'
 
 
@@ -26,10 +27,10 @@ app.use(express.static('public'))
 app.use(nocache())
 
 app.set('views', [
-    path.join(__dirname, 'views/admin_pages'),
-    path.join(__dirname, 'views/admin_signin'),
-    path.join(__dirname, 'views/user_pages'),
-    path.join(__dirname, 'views/user_sign')
+    path.join(__dirname, 'views/admin-pages'),
+    path.join(__dirname, 'views/admin-signin'),
+    path.join(__dirname, 'views/user-auth'),
+    path.join(__dirname, 'views/user-pages')
 ])
 
 app.set('view engine', 'ejs')
@@ -41,6 +42,7 @@ app.use(session({
 }))
 
 app.use('/',route)
+app.use('/',routeHome)
 
 
 app.use((err, req, res, next) => {

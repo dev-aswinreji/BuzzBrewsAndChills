@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "main e-commerce project",
   "main": "src/app.mjs",
-  "type": "module",
   "scripts": {
     "test": "nodemon"
   },
@@ -24,8 +23,5 @@
     "passport": "^0.7.0",
     "passport-google-oauth": "^2.0.0",
     "sweetalert2": "^11.10.6"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.0"
   }
 }
