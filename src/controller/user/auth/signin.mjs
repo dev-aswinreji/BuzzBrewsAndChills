@@ -15,12 +15,17 @@ export const user_signinPost = async (req, res) => {
         password: req.body.password
     }
     const userAuth = await findUser(data.email)
-    const pass = await compareHashPassword(data.password,userAuth.password)
+
+    req.session.userEmailForAddUserAddress = userAuth.email
+
+
+    const pass = await compareHashPassword(data.password, userAuth.password)
     console.log(pass)
-    if(data.email === userAuth.email && pass === true){
+
+    if (data.email === userAuth.email && pass === true) {
         req.session.isAuth = true
         res.render('home')
-    }else{
+    } else {
         res.redirect('/signin')
     }
 

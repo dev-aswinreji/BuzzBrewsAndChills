@@ -22,10 +22,7 @@ const userAddressSchema = mongoose.Schema({
         type: String,
         requied: true
     },
-    ownerId: {
-        type: Schema.Types.ObjectId,
-        ref: 'userData'
-    }
+
 })
 
 export const userAddressCollection = userModel('userAddressData', userAddressSchema)

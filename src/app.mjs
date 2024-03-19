@@ -7,7 +7,9 @@ import path from 'path'
 import dotenv from 'dotenv'
 import routeHome from './route/user/home/user-home.mjs'
 import route from './route/user/auth/user-auth.mjs'
-
+import passport from 'passport'
+import { userAddressCollection } from './model/user-entities/userAddress.mjs'
+import { userCollection } from './model/user-entities/userData.mjs'
 
 
 dotenv.config()
@@ -40,6 +42,9 @@ app.use(session({
     saveUninitialized: true,
     resave: false
 }))
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/',route)
 app.use('/',routeHome)

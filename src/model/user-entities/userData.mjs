@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose, { Schema } from "mongoose"
 const db = await import("../database.mjs").then((instance) => instance.default)
 
 function userModel(collectionName, schema) {
@@ -26,9 +26,14 @@ const userSchema = mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['user','admin'],
-        requied:true
+        enum: ['USER','ADMIN'],
+        default:'USER',
+        required:true
     },
+    ownerId:[{
+        type:Schema.Types.ObjectId,
+        ref:'userAddressData'
+    }]
 
 })
 

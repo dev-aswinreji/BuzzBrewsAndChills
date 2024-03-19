@@ -1,9 +1,10 @@
+import Swal from "sweetalert2"
 
 
 export const user_cartGet = async (req, res) => {
     if (req.session.isAuth) {
-        res.render('cart')
+        res.render('cart',{isAuth:req.session.isAuth})
     }else{
-        res.status(401).json({ message: 'Please sign in to continue' });
+      res.redirect('/signin')
     }
 } 

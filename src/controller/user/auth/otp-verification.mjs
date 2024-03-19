@@ -1,30 +1,30 @@
 import { insertUser } from "../../../data/users/insert.mjs";
 
 
-export const user_otpVerificationPost = async (req,res)=>{
-    const token_check = req.body.otp ;
+export const user_otpVerificationPost = async (req, res) => {
+    const token_check = req.body.otp;
     const token_link = req.query.token_check
-    console.log('new user veri')
-    console.log(req.session.otpForNewUser, 'created new user otp recieved otp')
-    console.log(req.body.otp ,  'user recieved otp')
-    console.log('fication was successful')
-    
-    console.log('forgot password -ver')
-    console.log(req.session.otpForForgotPassword, 'created forgot otp recieved otp')
-    console.log(req.body.otp ,  'user recieved otp')
-    console.log('fication was successfull')
 
     try {
 
-        if(token_check===req.session.otpForForgotPassword){
+        const otpFromSessionForForgotPassword = req.session.otpForForgotPassword
+
+        const isOtpForgotPass = await otpForForgotPassword(token_check, otpFromSessionForForgotPassword)
+        if (isOtpForgotPass === true) {
             res.render('forgotPassword')
         }
- 
-        if(token_check===req.session.otpForNewUser ){
+
+
+        const otpFromSessionForNewUser = req.session.otpForNewUser
+
+        const isOtpNewUser = await otpForNewUser(token_check, otpFromSessionForNewUser)
+
+        if (isOtpNewUser === true) {
             const userdata = req.session.userTemporaryData
             await insertUser(userdata)
+            req.session.isAuth = true
             res.redirect('/home')
-        }else{
+        } else {
             res.redirect('/otp-verification')
         }
 
@@ -32,5 +32,20 @@ export const user_otpVerificationPost = async (req,res)=>{
         console.log(error.message)
     }
 
+}
+
+async function otpForNewUser(token_check, isOtpNewUser) {
+
+    if (token_check === isOtpNewUser) {
+        return true
+    }
 
 }
+
+async function otpForForgotPassword(token_check, otpFromSessionForForgotPassword) {
+    if (token_check === otpFromSessionForForgotPassword) {
+        return true
+    }
+    return false
+}
+

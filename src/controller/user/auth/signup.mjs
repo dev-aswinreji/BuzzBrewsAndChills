@@ -33,6 +33,7 @@ export const user_signupPost = async (req, res) => {
             last_name: req.body.lastname,
             email: req.body.email,
             password: hash,
+            enum:'user',
         }
         console.log(hash)
 

@@ -1,22 +1,13 @@
-// import { Schema } from "mongoose";
+import { Schema } from "mongoose";
 
 import { userCollection } from "../../model/user-entities/userData.mjs";
 
-// export async function updateUser(data) {
+export async function updateUser(data, addressOfUser) {
 
-//     userCollection.updateMany(
-//         { email: data },
-//         {
-//             $addToSet:
-//             {
-//                 $addressId: [
-//                     { type: Schema.Types.ObjectId, ref: 'userAddressData' }
-//                 ]
-//             }
-//         })
-// }
+    return await userCollection.updateOne({ email: data }, { $addToSet: { ownerId: addressOfUser} })
+}
 
-export async function updateUserPassword (userEmail,newPassword) {
-    const updated = await userCollection.updateOne({email:userEmail},{$set:{password:newPassword}})
+export async function updateUserPassword(userEmail, newPassword) {
+    const updated = await userCollection.updateOne({ email: userEmail }, { $set: { password: newPassword } })
     console.log(updated)
 }

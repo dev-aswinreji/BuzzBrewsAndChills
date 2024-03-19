@@ -32,15 +32,15 @@
 							</li>
 							<li>
 								<div class="header-icons">
-									<a class="shopping-cart" href="/cart"><i class="fas fa-shopping-cart"></i></a>
+									<a class="shopping-cart" id="cartButton" href="/cart"><i class="fas fa-shopping-cart"></i></a>
 									<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
-									<a class="person-cart" href="/profile"><svg xmlns="http://www.w3.org/2000/svg"
+									<a class="person-cart" href="/signout"><svg xmlns="http://www.w3.org/2000/svg"
 											width="16" height="16" fill="currentColor" class="bi bi-person-circle"
 											viewBox="0 0 16 16">
 											<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
 											<path fill-rule="evenodd"
 												d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-										</svg> <span class="p-2"> SIGN IN</span></a>
+										</svg> <span class="p-2"> Sign Out</span></a>
 								</div>
 							</li>
 						</ul>
@@ -73,3 +73,32 @@
 	</div>
 </div>
 <!-- end search area -->
+
+
+			<!-- Include SweetAlert from CDN -->
+			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+			
+			<!-- JavaScript code -->
+			<script>
+				// Function to show SweetAlert warning
+				function showWarning() {
+					Swal.fire({
+						title: 'Warning',
+						text: 'Login to continue',
+						icon: 'warning'
+					});
+				}
+			
+				// Event listener for the cart button
+				document.getElementById('cartButton').addEventListener('click', function() {
+				 
+					var isAuthenticated = isAuth
+					if (!isAuthenticated) {
+						// Display SweetAlert warning if the user is not authenticated
+						showWarning();
+					} else {
+						// Redirect the user to the cart page
+						window.location.href = '/cart';
+					}
+				});
+			</script>

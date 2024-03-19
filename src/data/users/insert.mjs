@@ -7,6 +7,6 @@ export async function insertUser(data) {
 }
 
 export async function insertUserAddress(data) {
-    await userAddressCollection.create([data])
+    return await userAddressCollection.create([data])
 }
 
