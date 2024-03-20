@@ -25,7 +25,7 @@ export const user_otpVerificationPost = async (req, res) => {
             req.session.isAuth = true
             res.redirect('/home')
         } else {
-            res.redirect('/otp-verification')
+            res.redirect('/email-verification')
         }
 
     } catch (error) {

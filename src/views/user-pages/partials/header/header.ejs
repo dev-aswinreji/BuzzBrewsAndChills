@@ -1,3 +1,42 @@
+
+
+<style>
+	/* Dropdown Button */
+	.dropdown {
+		position: relative;
+		display: inline-block;
+	}
+	
+	/* Dropdown Content (Hidden by Default) */
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #0e0d0d;
+		min-width: 120px;
+		box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+		z-index: 1;
+	}
+	
+	/* Links inside the dropdown */
+	.dropdown-content a {
+		color: black;
+		padding: 12px 16px;
+		text-decoration: none;
+		display: block;
+	}
+	
+	/* Change color of dropdown links on hover */
+	.dropdown-content a:hover {
+		background-color: #000000;
+	}
+	
+	/* Show the dropdown menu on hover */
+	.dropdown:hover .dropdown-content {
+		display: block;
+	}
+</style>
+
+
 <!--PreLoader-->
 <div class="loader">
 	<div class="loader-inner">
@@ -34,18 +73,20 @@
 								<div class="header-icons">
 									<a class="shopping-cart" id="cartButton" href="/cart"><i class="fas fa-shopping-cart"></i></a>
 									<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
-									<a class="person-cart" href="/signout"><svg xmlns="http://www.w3.org/2000/svg"
-											width="16" height="16" fill="currentColor" class="bi bi-person-circle"
-											viewBox="0 0 16 16">
-											<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-											<path fill-rule="evenodd"
-												d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-										</svg> <span class="p-2"> Sign Out</span></a>
 								</div>
 							</li>
 						</ul>
 					</nav>
 					<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+					<div  class="dropdown">
+						<button class=" dropdown-toggle" type="button" id="dropdownMenuButton" aria-expanded="false">
+							<i class="bi bi-person"></i>
+						</button>
+						<div class="dropdown-content" aria-labelledby="dropdownMenuButton">
+							<a href="/signup">Sign Up</a>
+							<a href="/signin">Sign In</a>
+						</div>
+					</div>
 					<div class="mobile-menu"></div>
 					<!-- menu end -->
 				</div>
@@ -74,31 +115,3 @@
 </div>
 <!-- end search area -->
 
-
-			<!-- Include SweetAlert from CDN -->
-			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-			
-			<!-- JavaScript code -->
-			<script>
-				// Function to show SweetAlert warning
-				function showWarning() {
-					Swal.fire({
-						title: 'Warning',
-						text: 'Login to continue',
-						icon: 'warning'
-					});
-				}
-			
-				// Event listener for the cart button
-				document.getElementById('cartButton').addEventListener('click', function() {
-				 
-					var isAuthenticated = isAuth
-					if (!isAuthenticated) {
-						// Display SweetAlert warning if the user is not authenticated
-						showWarning();
-					} else {
-						// Redirect the user to the cart page
-						window.location.href = '/cart';
-					}
-				});
-			</script>

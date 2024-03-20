@@ -8,8 +8,6 @@ import dotenv from 'dotenv'
 import routeHome from './route/user/home/user-home.mjs'
 import route from './route/user/auth/user-auth.mjs'
 import passport from 'passport'
-import { userAddressCollection } from './model/user-entities/userAddress.mjs'
-import { userCollection } from './model/user-entities/userData.mjs'
 
 
 dotenv.config()

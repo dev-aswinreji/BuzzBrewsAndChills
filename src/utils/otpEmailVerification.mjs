@@ -51,5 +51,3 @@ export const sendEmailForForgotPassword = async (email, full_name, otp) => {
 
 
 
-
-
