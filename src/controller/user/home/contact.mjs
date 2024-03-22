@@ -1,5 +1,11 @@
 
 
 export const user_contactGet = async(req,res)=>{
-    res.render('contact')
+    try {
+
+        res.render('contact')
+        
+    } catch (error) {
+        console.error(error)
+    }
 }

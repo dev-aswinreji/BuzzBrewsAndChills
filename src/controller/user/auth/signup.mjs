@@ -24,8 +24,8 @@ export const user_signupPost = async (req, res) => {
             password:req.body.password,
             confirmPassword:req.body.confirm_password
         }
-        const samePass = await samePasswordValidation(validation.password,validation.confirmPassword)
-        if(!samePass){
+        // const samePass = await samePasswordValidation(validation.password,validation.confirmPassword)
+        if(!samePasswordValidation(validation.password,validation.confirmPassword)){
             console.log('password checking working')
             return res.redirect('/signup')
         }
@@ -39,6 +39,7 @@ export const user_signupPost = async (req, res) => {
         
         
         const hash = await hashPassword(req.body.password)
+        console.log(hash,'password is hashed')
 
         const data = {
             full_name: req.body.fullname,

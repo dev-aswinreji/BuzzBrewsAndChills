@@ -1,6 +1,6 @@
 
 
-import { userCollection } from "../../model/user-entities/userData.mjs";
+import { userCollection } from "../../model/userData.mjs";
 
 export async function updateUser(data, addressOfUser) {
 

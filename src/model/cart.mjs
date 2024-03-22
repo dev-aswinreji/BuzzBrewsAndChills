@@ -3,7 +3,7 @@
 import moment from "moment"
 import mongoose, { Schema } from "mongoose"
 
-const db = await import("../database.mjs").then((instance) => instance.default)
+const db = await import("./database.mjs").then((instance) => instance.default)
 
 function cartModel(collectionName, schema) {
     return db.model(collectionName, schema)

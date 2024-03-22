@@ -1,11 +1,18 @@
 
 
-export const admin_ordersGet = async(req,res)=>{
-    if(req.session.isAdminAuthenticated){
+export const admin_ordersGet = async (req, res) => {
 
-        res.render('orders')
+    try {
+        if (req.session.isAdminAuthenticated) {
 
-    }else{
-        res.redirect('/admin')
+            res.render('orders')
+
+        } else {
+            res.redirect('/admin')
+        }
+        
+    } catch (error) {
+        console.error(error)
     }
+
 }

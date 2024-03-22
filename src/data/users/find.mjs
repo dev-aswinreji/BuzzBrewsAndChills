@@ -1,5 +1,5 @@
-import { userAddressCollection } from "../../model/user-entities/userAddress.mjs";
-import { userCollection } from "../../model/user-entities/userData.mjs";
+import { userAddressCollection } from "../../model/userAddress.mjs";
+import { userCollection } from "../../model/userData.mjs";
 
 export async function findUser (data){
     return await userCollection.findOne({email:data})

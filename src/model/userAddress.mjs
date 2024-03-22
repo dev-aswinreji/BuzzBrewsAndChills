@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose"
-const db = await import("../database.mjs").then((instance) => instance.default)
+const db = await import("./database.mjs").then((instance) => instance.default)
 
 function userModel(collectionName, schema) {
     return db.model(collectionName, schema)

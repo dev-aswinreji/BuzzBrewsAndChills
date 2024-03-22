@@ -7,3 +7,7 @@ export const admin_userListGet = async (req, res) => {
     res.render('usersList',{userList})
 }
 
+export const admin_userListBlockQuery = async (req,res)=>{
+    console.log(req.query._id)
+   
+}

@@ -87,9 +87,14 @@
                                                         <%=userList[i].accountCreated%>
                                                     </td>
                                                     <td class="text-end">
-                                                        <a href="/block-unblock"
+                                                        <a href="/admin/block?id<%= userList[i]._id %> "
                                                             class="btn btn-sm btn-brand rounded font-sm mt-15">
                                                             Block</a>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <a href="/admin/unblock?id<%= userList[i]._id %> "
+                                                            class="btn btn-sm btn-brand rounded font-sm mt-15">
+                                                             Un Block</a>
                                                     </td>
                                                 </tr>
                                                 <% } } %>

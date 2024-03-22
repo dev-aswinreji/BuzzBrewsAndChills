@@ -6,47 +6,63 @@ import { updateUser } from "../../../data/users/update.mjs";
 
 
 
-export const user_checkoutGet =async (req, res) => {
-    if(req.session.isAuth){
-        const userEmail = req.session.userEmailForAddUserAddress
+export const user_checkoutGet = async (req, res) => {
 
-        const user = await findUserAddressUsingPopulate(userEmail)
-        console.log(user)
-        res.render('checkout',{user})
-    }else{
-        Swal.fire({
-            title:'Warning',
-            text:'Login To Continue',
-            icon:'warning'
-        })
-        res.redirect('/signin')
+    try {
+
+        if (req.session.isAuth) {
+            const userEmail = req.session.userEmailForAddUserAddress
+
+            const user = await findUserAddressUsingPopulate(userEmail)
+            console.log(user)
+            res.render('checkout', { user })
+        } else {
+            Swal.fire({
+                title: 'Warning',
+                text: 'Login To Continue',
+                icon: 'warning'
+            })
+            res.redirect('/signin')
+        }
+    } catch (error) {
+        console.error(error)
     }
+
+
 }
 export const user_addressPost = async (req, res) => {
-    const data = {
-        name: req.body.name,
-        phonenumber: req.body.phonenumber,
-        home_address: req.body.home_address,
-        city: req.body.city,
-        country: req.body.country,
+    try {
+
+        const data = {
+            name: req.body.name,
+            phonenumber: req.body.phonenumber,
+            home_address: req.body.home_address,
+            city: req.body.city,
+            country: req.body.country,
+        }
+
+        const userAddress = await insertUserAddress(data)
+        console.log(userAddress, 'userAddress is ==============')
+        console.log(userAddress[0]._id, 'userAddress id is ==============')
+
+
+        const userEmail = req.session.userEmailForAddUserAddress
+        console.log(userEmail, 'userEmail is ?')
+
+
+        const user = await findUser(userEmail)
+        console.log(user, 'user data is found ===================')
+
+
+        const success = await updateUser(user.email, userAddress[0]._id)
+        console.log(success)
+
+        res.redirect('/checkout')
+
+    } catch (error) {
+
+        console.error(error)
     }
 
-    const userAddress = await insertUserAddress(data)
-    console.log(userAddress, 'userAddress is ==============')
-    console.log(userAddress[0]._id, 'userAddress id is ==============')
-
-
-    const userEmail = req.session.userEmailForAddUserAddress
-    console.log(userEmail, 'userEmail is ?')
-
-
-    const user = await findUser(userEmail)
-    console.log(user, 'user data is found ===================')
-
-
-    const success = await updateUser(user.email, userAddress[0]._id)
-    console.log(success)
-
-    res.redirect('/checkout')
 
 }

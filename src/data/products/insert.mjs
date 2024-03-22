@@ -1,4 +1,4 @@
-import { productCollection } from "../../model/admin-entities/product.mjs";
+import { productCollection } from "../../model/product.mjs";
 
 
 

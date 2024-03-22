@@ -4,14 +4,12 @@ import nocache from 'nocache'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import path from 'path'
-import fs from 'fs'
 import dotenv from 'dotenv'
 import routeHome from './route/user/home/user-home.mjs'
 import route from './route/user/auth/user-auth.mjs'
 import authRoute from './route/admin/auth/admin.mjs'
 import adminHomeRoute from './route/admin/home/admin-home.mjs'
 import passport from 'passport'
-
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -25,10 +23,9 @@ const app = express()
 
 app.use(express.urlencoded({ extended: true }))
 
+app.use(nocache())
 
 app.use(express.static('public'))
-
-app.use(nocache())
 
 app.set('views', [
     path.join(__dirname, 'views/admin-pages'),

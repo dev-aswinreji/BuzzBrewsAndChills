@@ -5,29 +5,38 @@ import { otpGenForForgotPassword } from "../../../utils/otp-generator.mjs"
 
 
 
-export const user_emailVerificationGet = async (req,res)=>{
-    res.render('emailVerification')
+export const user_emailVerificationGet = async (req, res) => {
+    try {
+
+        res.render('emailVerification')
+
+    } catch (error) {
+        console.error(error)
+    }
 }
 
-export const user_emailVerificationPost = async (req,res)=>{
-    
-    const data = req.body.email
+export const user_emailVerificationPost = async (req, res) => {
 
-    const userData = await findUser(data)
+    try {
 
-    if(userData===null){
-        req.redirect('/email-verification')
+        const data = req.body.email
+
+        const userData = await findUser(data)
+
+        if (userData === null) {
+            req.redirect('/email-verification')
+        }
+        else {
+            req.session.userEmailForChangePassword = userData.email
+            const OTP = await otpGenForForgotPassword()
+            sendEmailForForgotPassword(userData.email, userData.full_name, OTP)
+
+            console.log(OTP)
+            req.session.otpForForgotPassword = OTP
+            res.render('otpVerification')
+        }
+
+    } catch (error) {
+        console.error(error)
     }
-    else{
-        req.session.userEmailForChangePassword = userData.email
-        const OTP = await otpGenForForgotPassword()
-        sendEmailForForgotPassword(userData.email,userData.full_name,OTP)
-
-        console.log(OTP)
-        req.session.otpForForgotPassword = OTP
-        res.render('otpVerification')
-    }
-
-
-
 }

@@ -1,4 +1,4 @@
-import { userCollection } from "../../model/user-entities/userData.mjs";
+import { userCollection } from "../../model/userData.mjs";
 
 
 export async function findAdmin (data){

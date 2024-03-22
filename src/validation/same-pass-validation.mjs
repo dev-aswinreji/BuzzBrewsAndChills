@@ -1,6 +1,6 @@
 
 
-export async function samePasswordValidation(password,confirmPassword) {
+export function samePasswordValidation(password,confirmPassword) {
     if(password === confirmPassword){
         return true
     }
