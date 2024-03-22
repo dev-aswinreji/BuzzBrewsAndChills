@@ -1,6 +1,6 @@
 import { findUser } from "../../../data/users/find.mjs"
-import { sendEmailForForgotPassword } from "../../../utils/otpEmailVerification.mjs"
-import { otpGenForForgotPassword } from "../../../utils/otpGenerator.mjs"
+import { sendEmailForForgotPassword } from "../../../utils/otp-email-verification.mjs"
+import { otpGenForForgotPassword } from "../../../utils/otp-generator.mjs"
 
 
 

@@ -20,7 +20,45 @@
 					</div>
 				</div>
 			</div>
+			<br><br><br><br>
 			<!-- end breadcrumb section -->
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="checkout-accordion">
+							<div class="accordion" id="accordionExample">
+								<div class="card single-accordion">
+									<div class="card-header" id="headingOne">
+										<h5 class="mb-0">
+											<button>
+												<h6>My Address</h6>
+												<% if(user){ %>
+													<% console.log((user,'inside checkout.ejs')) %>
+														<% console.log(user.ownerId[0].phonenumber) %>
+															<form action="/change-address" method="post">
+																<% user.ownerId.forEach(address=> { %>
+																	<label>
+																		<input type="radio" name="selectedAddress"
+																			value="<%= address._id %>">
+																		<span class="p-2">Name:<%= address.name.toUpperCase() %></span> <span class="p-2">Phone No.<%= address.phonenumber %></span> <span class="p-2">Home Address:<%= address.home_address %></span>
+																				<% console.log(address.phonenumber) %>
+																	</label><br>
+																	<% }) %>
+															</form>
+															<% } %>
+											</button>
+										</h5>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<br><br>
+
+
 
 			<!-- check out section -->
 			<div class="checkout-section mt-150 mb-150">
@@ -37,9 +75,6 @@
 													aria-controls="collapseOne">
 													Billing Address
 												</button>
-
-
-									
 											</h5>
 										</div>
 
@@ -50,50 +85,16 @@
 													<form action="/address" method="post">
 														<p><input type="name" name="name" placeholder="Name"></p>
 														<p><input type="tel" name="phonenumber" placeholder="Phone"></p>
-														<p><input type="text" name="home" placeholder="Home Address"></p>
+														<p><input type="text" name="home_address" placeholder="Home Address">
+														</p>
 														<p><input type="text" name="city" placeholder="City"></p>
+														<p><input type="text" name="country" placeholder="Country"></p>
+
 														<p><textarea name="bill" id="bill" cols="30" rows="10"
-																placeholder="Say Something"></textarea></p>
-																<button class="btn btn-dark" type="submit">ADD</button>
+																placeholder="Say Something"></textarea>
+														</p>
+														<button class="btn btn-dark" type="submit">ADD</button>
 													</form>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="card single-accordion">
-										<div class="card-header" id="headingTwo">
-											<h5 class="mb-0">
-												<button class="btn btn-link collapsed" type="button"
-													data-toggle="collapse" data-target="#collapseTwo"
-													aria-expanded="false" aria-controls="collapseTwo">
-													Shipping Address
-												</button>
-											</h5>
-										</div>
-										<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-											data-parent="#accordionExample">
-											<div class="card-body">
-												<div class="shipping-address-form">
-													<p>Your shipping address form is here.</p>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="card single-accordion">
-										<div class="card-header" id="headingThree">
-											<h5 class="mb-0">
-												<button class="btn btn-link collapsed" type="button"
-													data-toggle="collapse" data-target="#collapseThree"
-													aria-expanded="false" aria-controls="collapseThree">
-													Card Details
-												</button>
-											</h5>
-										</div>
-										<div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-											data-parent="#accordionExample">
-											<div class="card-body">
-												<div class="card-details">
-													<p>Your card details goes here.</p>
 												</div>
 											</div>
 										</div>
@@ -151,6 +152,8 @@
 					</div>
 				</div>
 			</div>
+
+
 			<!-- end check out section -->
 
 			<%- include('./partials/footer/footer.ejs') %>

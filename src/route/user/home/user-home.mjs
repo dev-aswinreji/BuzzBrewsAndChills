@@ -1,20 +1,24 @@
 
-import  express from 'express'
+import express from 'express'
 
 const routeHome = express.Router()
 
 import { user_homeGet } from "../../../controller/user/home/home.mjs";
 import { user_addressPost, user_checkoutGet } from '../../../controller/user/home/checkout.mjs';
 import { user_cartGet } from '../../../controller/user/home/cart.mjs';
+import { user_aboutGet } from '../../../controller/user/home/about.mjs';
+import { user_shopGet } from '../../../controller/user/home/shop.mjs';
 
-routeHome.get('/',user_homeGet)
-routeHome.get('/home',user_homeGet)
+routeHome.get('/', user_homeGet)
+routeHome.get('/home', user_homeGet)
 
- 
+routeHome.get('/about', user_aboutGet)
 
-routeHome.get('/checkout',user_checkoutGet)
-routeHome.post('/address',user_addressPost)
+routeHome.get('/shop',user_shopGet)
 
-routeHome.get('/cart',user_cartGet)
+routeHome.get('/checkout', user_checkoutGet)
+routeHome.post('/address', user_addressPost)
+
+routeHome.get('/cart', user_cartGet)
 
 export default routeHome

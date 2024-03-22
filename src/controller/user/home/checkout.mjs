@@ -1,13 +1,18 @@
 import Swal from "sweetalert2";
-import { findUser } from "../../../data/users/find.mjs";
+import { findUser, findUserAddressUsingPopulate } from "../../../data/users/find.mjs";
 import { insertUserAddress } from "../../../data/users/insert.mjs";
 import { updateUser } from "../../../data/users/update.mjs";
 
 
 
-export const user_checkoutGet = (req, res) => {
+
+export const user_checkoutGet =async (req, res) => {
     if(req.session.isAuth){
-        res.render('checkout')
+        const userEmail = req.session.userEmailForAddUserAddress
+
+        const user = await findUserAddressUsingPopulate(userEmail)
+        console.log(user)
+        res.render('checkout',{user})
     }else{
         Swal.fire({
             title:'Warning',
@@ -21,7 +26,7 @@ export const user_addressPost = async (req, res) => {
     const data = {
         name: req.body.name,
         phonenumber: req.body.phonenumber,
-        area: req.body.area,
+        home_address: req.body.home_address,
         city: req.body.city,
         country: req.body.country,
     }

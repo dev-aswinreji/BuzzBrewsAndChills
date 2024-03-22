@@ -8,3 +8,7 @@ export async function findUser (data){
 export async function findUserAddress(data){
     return await userAddressCollection.findOne({home_address:data})
 }
+
+export async function findUserAddressUsingPopulate(data) {
+    return await userCollection.findOne({email:data}).populate('ownerId')
+}

@@ -6,13 +6,17 @@ function userModel(collectionName, schema) {
 }
 
 const userAddressSchema = mongoose.Schema({
+    name:{
+        type:String,
+        required:true,
+    },
     phonenumber: {
         type: Number,
         required: true
     },
-    area: {
+    home_address: {
         type: String,
-        requied: false
+        requied: true
     },
     city: {
         type: String,

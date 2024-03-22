@@ -41,15 +41,20 @@
 
 					<div class="row product-lists">
 
-						// <% if(data){console.log(data.length)} %>
+						<% if(data){console.log(data.length)} %>
 							<% for(let i=0; i<data.length;i++){%>
 								<div class="col-lg-4 col-md-6 text-center berry">
 									<div class="single-product-item">
 										<div class="product-image">
-											<img src="<%= data[i].imageUrl %> " alt="<%= data[i].name %>">
+											<img src="/product-images/<%= data[i].imageUrl %>"
+												alt="<%= data[i].name %>">
 										</div>
-										<h3>Strawberry</h3>
-										<p class="product-price"><span>Per ml</span> 85$ </p>
+										<h3>
+											<%= data[i].name %>
+										</h3>
+										<p class="product-price"><span>Per ml</span>
+											<%= data[i].price %>
+										</p>
 										<a href="/cart" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to
 											Cart</a>
 									</div>

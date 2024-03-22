@@ -1,5 +1,6 @@
 import { findUser } from "../../../data/users/find.mjs"
-import { compareHashPassword } from "../../../utils/passwordHashing.mjs"
+import { compareHashPassword } from "../../../utils/password-hashing.mjs"
+import { isUserNull } from "../../../validation/is-null.mjs"
 
 
 export const user_signinGet = (req, res) => {
@@ -15,6 +16,11 @@ export const user_signinPost = async (req, res) => {
         password: req.body.password
     }
     const userAuth = await findUser(data.email)
+    const userData = await isUserNull(userAuth)
+
+    if(userData === true){
+        return res.redirect('/signin')
+    }
 
     req.session.userEmailForAddUserAddress = userAuth.email
 
