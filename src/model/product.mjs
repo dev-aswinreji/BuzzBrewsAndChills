@@ -1,7 +1,7 @@
 
 
 import moment from "moment"
-import mongoose, { Schema } from "mongoose"
+import mongoose from "mongoose"
 
 const db = await import("./database.mjs").then((instance) => instance.default)
 
@@ -37,6 +37,10 @@ const productsSchema = mongoose.Schema({
     imageUrl:{
         type:String,
         required:true
+    },
+    createdAt:{
+        type:String,
+        default:Date(),
     }
 })
 

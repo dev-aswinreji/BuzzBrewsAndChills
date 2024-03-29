@@ -1,11 +1,15 @@
 import Swal from "sweetalert2";
-import { findUser, findUserAddressUsingPopulate } from "../../../data/users/find.mjs";
-import { insertUserAddress } from "../../../data/users/insert.mjs";
-import { updateUser } from "../../../data/users/update.mjs";
+import {findUser, findUserAddressUsingPopulate} from "../../../data/users/find.mjs";
+import {insertUserAddress} from "../../../data/users/insert.mjs";
+import {updateUser} from "../../../data/users/update.mjs";
 
 
-
-
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 export const user_checkoutGet = async (req, res) => {
 
     try {
@@ -15,19 +19,14 @@ export const user_checkoutGet = async (req, res) => {
 
             const user = await findUserAddressUsingPopulate(userEmail)
             console.log(user)
-            res.render('checkout', { user })
+            res.render('checkout', {user})
         } else {
-            Swal.fire({
-                title: 'Warning',
-                text: 'Login To Continue',
-                icon: 'warning'
-            })
+            Swal.fire({title: 'Warning', text: 'Login To Continue', icon: 'warning'})
             res.redirect('/signin')
         }
     } catch (error) {
         console.error(error)
     }
-
 
 }
 export const user_addressPost = async (req, res) => {
@@ -38,7 +37,7 @@ export const user_addressPost = async (req, res) => {
             phonenumber: req.body.phonenumber,
             home_address: req.body.home_address,
             city: req.body.city,
-            country: req.body.country,
+            country: req.body.country
         }
 
         const userAddress = await insertUserAddress(data)
@@ -63,6 +62,5 @@ export const user_addressPost = async (req, res) => {
 
         console.error(error)
     }
-
 
 }

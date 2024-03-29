@@ -15,7 +15,9 @@
 						<label for="">OTP</label>
 						<input type="text" name="otp" class="form-control">
 					</div>
+					<span id="error" class="text-danger"><%= errorOtp %></span> 
 					<button type="submit" class=" w-100">CONFIRM OTP</button>
+					<button location.href="/resent-otp" type="submit" class=" w-100">RESEND OTP</button>
 					<br>
 					<h5>Back to <a class="p-2" href="/signin"> SIGN IN</a></h5>
 				</form>
