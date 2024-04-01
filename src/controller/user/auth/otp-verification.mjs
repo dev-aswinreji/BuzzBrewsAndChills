@@ -14,11 +14,9 @@ export const user_otpVerificationPost = async (req, res) => {
             res.render('forgotPassword')
         }
 
+const otpFromSessionForNewUser = req.session.otpForNewUser
 
-        const otpFromSessionForNewUser = req.session.otpForNewUser
-
-        const isOtpNewUser = await otpForNewUser(token_check, otpFromSessionForNewUser)
-
+       
         if (isOtpNewUser === true) {
             const userdata = req.session.userTemporaryData
             req.session.userEmailForAddUserAddress = userdata.email

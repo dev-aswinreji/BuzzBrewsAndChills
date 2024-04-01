@@ -13,7 +13,7 @@ export const user_signupGet = async (req, res) => {
             console.log('signup get is working')
             const singupErrorMessage = req.session.emailValidation
             res.render('signup', {errors: singupErrorMessage})
-            
+
         }
 
     } catch (error) {

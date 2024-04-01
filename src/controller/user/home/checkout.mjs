@@ -4,12 +4,6 @@ import {insertUserAddress} from "../../../data/users/insert.mjs";
 import {updateUser} from "../../../data/users/update.mjs";
 
 
-/**
- * Description
- * @param {any} req
- * @param {any} res
- * @returns {any}
- */
 export const user_checkoutGet = async (req, res) => {
 
     try {
@@ -27,7 +21,6 @@ export const user_checkoutGet = async (req, res) => {
     } catch (error) {
         console.error(error)
     }
-
 }
 export const user_addressPost = async (req, res) => {
     try {
