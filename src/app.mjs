@@ -42,6 +42,10 @@ app.use(session({
     resave: false
 }))
 
+
+app.get('/otp',(req,res)=>{
+    res.render('otpVerification')
+})
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -49,6 +53,8 @@ app.use('/',route)
 app.use('/',routeHome)
 app.use('/admin',authRoute)
 app.use('/admin',adminHomeRoute)
+
+
 
 
 app.use((err, req, res, next) => {

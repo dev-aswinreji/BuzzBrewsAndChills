@@ -17,13 +17,15 @@
                     </div>
                     <span id="error" class="text-danger"><%= errorOtp %></span>
                     <button type="submit" class=" w-100">CONFIRM OTP</button>
-                    <button location.href="/resent-otp" type="submit" class=" w-100">RESEND OTP</button>
                     <br>
                     <h5>Back to
                         <a class="p-2" href="/signin">
                             SIGN IN</a>
                     </h5>
                 </form>
+
+
+
                 <style>
                     #countdown {
                         font-size: 18px;
@@ -36,7 +38,7 @@
                 <button id="resendButton" onclick="resendOTP()" disabled>Resend OTP</button>
 
                 <script>
-                    let countdownValue = 60; // Countdown duration in seconds
+                    let countdownValue = 2; // Countdown duration in seconds
                     let countdownInterval;
 
                     function startCountdown() {
@@ -54,12 +56,13 @@
 
                     function resendOTP() {
                         // Simulate OTP resend logic
+                        
                         // Replace this with your actual OTP resend logic
-                        window.location.href = "/adduser/resndOtp"
+                        window.location.href = "/otp-verification/resend-otp"
 
                         // Disable the resend button and start the countdown
                         document.getElementById('resendButton').disabled = true;
-                        countdownValue = 60; // Reset countdown value
+                        countdownValue = 2; // Reset countdown value
                         startCountdown();
                     }
 
@@ -70,5 +73,15 @@
         </div>
 
     </body>
+
+    <script>
+        reload()
+        const errMsg = document.getElementById('error')
+        function reload(){
+            setTimeout(()=>{
+                errMsg.innerHTML = ''
+            },4000)
+        }
+    </script>
 
 </html>

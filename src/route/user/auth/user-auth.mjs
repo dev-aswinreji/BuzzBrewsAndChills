@@ -1,6 +1,6 @@
 import express from 'express'
 import {user_signupGet, user_signupPost} from '../../../controller/user/auth/signup.mjs'
-import {user_otpVerificationPost} from '../../../controller/user/auth/otp-verification.mjs'
+import {user_otpVerificationGet, user_otpVerificationPost, user_otpVerificationResentOtpPost} from '../../../controller/user/auth/otp-verification.mjs'
 import {user_signinGet, user_signinPost} from '../../../controller/user/auth/signin.mjs'
 import {user_forgotPasswordPost} from '../../../controller/user/auth/forgot-password.mjs'
 import {user_emailVerificationGet, user_emailVerificationPost} from '../../../controller/user/auth/email-verification.mjs'
@@ -21,7 +21,9 @@ route.get('/error', user_signinWithGoogleFailed)
 route.get('/signup', user_signupGet)
 route.post('/signup', user_signupPost)
 
+route.get('/otp-verification', user_otpVerificationGet)
 route.post('/otp-verification', user_otpVerificationPost)
+route.get('/otp-verification/resend-otp', user_otpVerificationResentOtpPost)
 
 route.get('/email-verification', user_emailVerificationGet)
 route.post('/email-verification', user_emailVerificationPost)

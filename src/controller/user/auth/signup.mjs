@@ -58,7 +58,7 @@ export const user_signupPost = async (req, res) => {
 
             sendEmailForNewUser(data.email, data.full_name, OTP)
 
-            res.render('otpVerification')
+            res.redirect('/otp-verification')
 
             console.log('otp verfication working')
         }
