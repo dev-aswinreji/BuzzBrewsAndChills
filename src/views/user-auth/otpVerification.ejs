@@ -1,28 +1,87 @@
 <!DOCTYPE html>
 <html>
 
-<%- include('partials/head.ejs') %>
-<link href="/cssUser/main.css" rel="stylesheet" type="text/css" />
+    <%- include('partials/head.ejs') %>
+    <link href="/cssUser/main.css" rel="stylesheet" type="text/css"/>
 
 
-	<body>
+    <body>
 
-		<div class="wrapper" style="background-image: url('assets/images/redbullPurpleEdition-1.png');">
-			<div class="inner">
-				<form action="/otp-verification" method="post">
-					<h3>ENTER YOUR VERFICATION CODE</h3>
-					<div class="form-wrapper">
-						<label for="">OTP</label>
-						<input type="text" name="otp" class="form-control">
-					</div>
-					<button type="submit" class=" w-100">CONFIRM OTP</button>
-					<br>
-					<h5>Back to <a class="p-2" href="/signin"> SIGN IN</a></h5>
-				</form>
-				
-			</div>
-		</div>
+        <div class="wrapper" style="background-image: url('assets/images/redbullPurpleEdition-1.png');">
+            <div class="inner">
+                <form action="/otp-verification" method="post">
+                    <h3>ENTER YOUR VERFICATION CODE</h3>
+                    <div class="form-wrapper">
+                        <label for="">OTP</label>
+                        <input type="text" name="otp" class="form-control">
+                    </div>
+                    <span id="error" class="text-danger"><%= errorOtp %></span>
+                    <button type="submit" class=" w-100">CONFIRM OTP</button>
+                    <br>
+                    <h5>Back to
+                        <a class="p-2" href="/signin">
+                            SIGN IN</a>
+                    </h5>
+                </form>
 
-	</body>
+
+
+                <style>
+                    #countdown {
+                        font-size: 18px;
+                        color: #333;
+                    }
+                </style>
+
+
+                <p id="countdown">Waiting for OTP...</p>
+                <button id="resendButton" onclick="resendOTP()" disabled>Resend OTP</button>
+
+                <script>
+                    let countdownValue = 60; // Countdown duration in seconds
+                    let countdownInterval;
+
+                    function startCountdown() {
+                        countdownInterval = setInterval(function () {
+                            if (countdownValue > 0) {
+                                countdownValue--;
+                                document.getElementById('countdown').innerText = `Resend OTP in ${countdownValue} seconds`;
+                            } else {
+                                clearInterval(countdownInterval);
+                                document.getElementById('countdown').innerText = 'Waiting for OTP...';
+                                document.getElementById('resendButton').disabled = false;
+                            }
+                        }, 1000);
+                    }
+
+                    function resendOTP() {
+                        // Simulate OTP resend logic
+                        
+                        // Replace this with your actual OTP resend logic
+                        window.location.href = "/otp-verification/resend-otp"
+
+                        // Disable the resend button and start the countdown
+                        document.getElementById('resendButton').disabled = true;
+                        countdownValue = 60; // Reset countdown value
+                        startCountdown();
+                    }
+
+                    // Start the initial countdown
+                    startCountdown();
+                </script>
+            </div>
+        </div>
+
+    </body>
+
+    <script>
+        reload()
+        const errMsg = document.getElementById('error')
+        function reload(){
+            setTimeout(()=>{
+                errMsg.innerHTML = ''
+            },4000)
+        }
+    </script>
 
 </html>
