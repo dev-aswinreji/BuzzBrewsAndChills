@@ -9,5 +9,5 @@ export const admin_userListGet = async (req, res) => {
 
 export const admin_userListBlockQuery = async (req,res)=>{
     console.log(req.query._id)
-   
+    let id = req.query._id 
 }
