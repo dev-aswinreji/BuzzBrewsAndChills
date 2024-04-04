@@ -43,18 +43,22 @@ app.use(session({
 }))
 
 
-app.get('/otp',(req,res)=>{
-    res.render('otpVerification')
-})
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(function(req,res,next){
+    res.locals.session = req.session;
+    next()
+})
 
 app.use('/',route)
 app.use('/',routeHome)
 app.use('/admin',authRoute)
 app.use('/admin',adminHomeRoute)
 
-
+app.get('/pro',(req,res)=>{
+    res.render('product-view')
+})
 
 
 app.use((err, req, res, next) => {
@@ -64,6 +68,7 @@ app.use((err, req, res, next) => {
     }
     res.status(500).send('404-not-found')
 })
+
 
 app.listen(PORT, () => {
     console.log(`Server is running http://localhost:${PORT}`)

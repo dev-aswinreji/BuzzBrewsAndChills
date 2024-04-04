@@ -38,7 +38,7 @@
                 <button id="resendButton" onclick="resendOTP()" disabled>Resend OTP</button>
 
                 <script>
-                    let countdownValue = 2; // Countdown duration in seconds
+                    let countdownValue = 60; // Countdown duration in seconds
                     let countdownInterval;
 
                     function startCountdown() {
@@ -62,7 +62,7 @@
 
                         // Disable the resend button and start the countdown
                         document.getElementById('resendButton').disabled = true;
-                        countdownValue = 2; // Reset countdown value
+                        countdownValue = 60; // Reset countdown value
                         startCountdown();
                     }
 

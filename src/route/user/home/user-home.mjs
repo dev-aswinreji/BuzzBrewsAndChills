@@ -8,6 +8,7 @@ import { user_addressPost, user_checkoutGet } from '../../../controller/user/hom
 import { user_cartGet } from '../../../controller/user/home/cart.mjs';
 import { user_aboutGet } from '../../../controller/user/home/about.mjs';
 import { user_shopGet } from '../../../controller/user/home/shop.mjs';
+import { user_productView } from '../../../controller/user/home/product-view.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -20,5 +21,7 @@ routeHome.get('/checkout', user_checkoutGet)
 routeHome.post('/address', user_addressPost)
 
 routeHome.get('/cart', user_cartGet)
+
+routeHome.get('/product-view/:id',user_productView)
 
 export default routeHome

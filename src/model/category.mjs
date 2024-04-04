@@ -7,15 +7,17 @@ function productModel(collectionName, schema) {
 }
 
 
-const categorySchema = new mongoose.Schema({
-    category: {
+const categorySchemaCoolDrink = new mongoose.Schema({
+    name: {
         type: String,
+        trim:true,
         required: true
     },
-    list: {
-        type: Number,
-        required: true
-    }
+    products: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "products"
+    }],
+
 })
 
-export const categoryCollection = productModel('category', categorySchema)
+export const categoryCoolDrinkCollection = productModel('categoryCoolDrink', categorySchemaCoolDrink)

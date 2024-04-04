@@ -11,7 +11,7 @@ export const user_signupGet = async (req, res) => {
         } else {
 
             console.log('signup get is working')
-            const singupErrorMessage = req.session.emailValidation
+            const singupErrorMessage = req.session.emailValidation || req.session.emailExist
             res.render('signup', {errors: singupErrorMessage})
 
         }
@@ -47,6 +47,7 @@ export const user_signupPost = async (req, res) => {
         req.session.userTemporaryData = data
 
         if (await isNull(data) === true) {
+            req.session.emailExist = 'email already exist try again with other one'
             res.redirect('/signup')
 
         } else {
