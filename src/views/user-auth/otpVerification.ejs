@@ -34,12 +34,18 @@
                 </style>
 
 
-                <p id="countdown">Waiting for OTP...</p>
-                <button id="resendButton" onclick="resendOTP()" disabled>Resend OTP</button>
+<p id="countdown">Waiting for OTP...</p>
 
-                <script>
+<button id="resendButton" onclick="resendOTP()" disabled>Resend OTP</button>
+
+<script>
+                    // Start the initial countdown
                     let countdownValue = 60; // Countdown duration in seconds
                     let countdownInterval;
+                    if(60 === startCountdown()){
+                    
+                        startCountdown();
+                    }
 
                     function startCountdown() {
                         countdownInterval = setInterval(function () {
@@ -66,8 +72,6 @@
                         startCountdown();
                     }
 
-                    // Start the initial countdown
-                    startCountdown();
                 </script>
             </div>
         </div>

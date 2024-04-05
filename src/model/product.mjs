@@ -1,7 +1,8 @@
 
 
 import mongoose from "mongoose"
-import { categoryCoolDrinkCollection } from "./category.mjs"
+import { categoryCollection } from "./category.mjs"
+import moment from "moment"
 
 const db = await import("./database.mjs").then((instance) => instance.default)
 
@@ -27,7 +28,12 @@ const productsSchema = mongoose.Schema({
     },
     category: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: categoryCoolDrinkCollection,
+        ref: categoryCollection,
+    },
+    availability:{
+        type:Boolean,
+        default:true,
+        required:true, 
     },
     stock: {
         type: Number,
@@ -35,12 +41,12 @@ const productsSchema = mongoose.Schema({
         min: 0
     },
     imageUrl:{
-        type:String,
+        type:Array,
         required:true
     },
     createdAt:{
-        type:String,
-        default:Date(),
+        type:Date,
+        default:Date.now,
     }
 })
 
