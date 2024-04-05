@@ -1,7 +1,7 @@
-import {findUser} from "../../../data/users/find.mjs"
-import {sendEmailForNewUser} from "../../../utils/otp-email-verification.mjs"
-import {otpGenForNewUser} from "../../../utils/otp-generator.mjs"
-import {hashPassword} from "../../../utils/password-hashing.mjs"
+import { findUser } from "../../../data/users/find.mjs"
+import { sendEmailForNewUser } from "../../../utils/otp-email-verification.mjs"
+import { otpGenForNewUser } from "../../../utils/otp-generator.mjs"
+import { hashPassword } from "../../../utils/password-hashing.mjs"
 import validator from 'email-validator'
 
 export const user_signupGet = async (req, res) => {
@@ -12,7 +12,7 @@ export const user_signupGet = async (req, res) => {
 
             console.log('signup get is working')
             const singupErrorMessage = req.session.emailValidation || req.session.emailExist
-            res.render('signup', {errors: singupErrorMessage})
+            res.render('signup', { errors: singupErrorMessage })
 
         }
 
@@ -36,12 +36,12 @@ export const user_signupPost = async (req, res) => {
         console.log(hash, 'password is hashed')
 
         const data = {
-            full_name: req.body.fullname,
-            last_name: req.body.lastname,
+            fullName: req.body.fullname,
+            lastName: req.body.lastname,
             email: req.body.email,
             password: hash,
-            enum: 'USER'
         }
+        console.log(data)
         console.log(hash)
 
         req.session.userTemporaryData = data
@@ -54,10 +54,9 @@ export const user_signupPost = async (req, res) => {
 
             const OTP = await otpGenForNewUser()
             console.log(OTP)
-
             req.session.otpForNewUser = OTP
 
-            sendEmailForNewUser(data.email, data.full_name, OTP)
+            sendEmailForNewUser(data.email, data.fullName, OTP)
 
             res.redirect('/otp-verification')
 
@@ -83,3 +82,4 @@ async function isNull(data) {
     }
 
 }
+

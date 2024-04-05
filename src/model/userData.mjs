@@ -8,30 +8,37 @@ function userModel(collectionName, schema) {
 }
 
 const userSchema = mongoose.Schema({
-    full_name: {
+    fullName: {
         type: String,
         trim: true,
         required: true
     },
-    last_name: {
+    lastName: {
         type: String,
         trim: true,
     },
     email: {
         type: String,
         requied: true,
+        unique:true,
     },
     password: {
         type: String,
         required: true,
     },
-    status: {
+    role: {
         type: String,
         enum: ['USER', 'ADMIN'],
         default: 'USER',
         required: true
     },
-    ownerId: [{
+    accountStatus:{
+        type:String,
+        enum:['BLOCKED','ACTIVE'],
+        default:'ACTIVE',
+        required:true
+    },
+    addresses: [{
         type: Schema.Types.ObjectId,
         ref: 'userAddressData'
     }],

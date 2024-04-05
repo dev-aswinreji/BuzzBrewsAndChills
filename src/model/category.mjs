@@ -7,17 +7,32 @@ function productModel(collectionName, schema) {
 }
 
 
-const categorySchemaCoolDrink = new mongoose.Schema({
+const categorySchema = new mongoose.Schema({
     name: {
         type: String,
         trim:true,
         required: true
     },
+    description:{
+        type:String,
+        trim:true,
+        required:true
+    },
+    availability:{
+        type:String,
+        enum:['ACTIVE','ARCHIVE','UNAVAILABLE'],
+        default:'ACTIVE',
+        required:true
+    },
     products: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "products"
     }],
+    createdAt:{
+        type:Date,
+        default:Date.now,
+    }
 
 })
 
-export const categoryCoolDrinkCollection = productModel('categoryCoolDrink', categorySchemaCoolDrink)
+export const categoryCollection = productModel('category', categorySchema)
