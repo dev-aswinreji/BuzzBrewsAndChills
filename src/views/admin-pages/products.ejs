@@ -55,63 +55,78 @@
                     <!-- card-header end// -->
                     <div class="card-body">
                         <% console.log('hello'); %>
-                        <% if (product.length) { for(let i =0;i<product.length;i++){ %>
-                            <% console.log(product[i]) %>
-
-                            <article class="itemlist">
-                                <div class="row align-items-center">
-                                    <div class="col col-check flex-grow-0">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                                        <a class="itemside" href="#">
-                                            <div class="left">
+                        <% if (product.length) { %>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">
+                                            <input type="checkbox">
+                                        </th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Stock</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (let i = 0; i < product.length; i++) { %>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>
+                                                <a href="#">
+                                                    <div class="info">
+                                                        <h6 class="mb-0"><%= product[i].name %></h6>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td>
                                                 <img src="/product-images/<%= product[i].imageUrl %>" class="img-sm img-thumbnail" alt="Item">
-
-                                            </div>
-                                            <div class="info">
-                                                <h6 class="mb-0"><%= product[i].name %>
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-2 col-4 col-price">
-                                        <span><%= product[i].price %>
-                                        </span>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-2 col-4 col-status">
-                                        <span class="badge rounded-pill alert-success"><%= product[i].availability %>
-                                        </span>
-                                    </div>
-                                    <div class="col-lg-1 col-sm-2 col-4 col-date">
-                                        <span>02.11.2021</span>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                                        <a href="/admin/edit-products/<%= product[i]._id %>" class="btn btn-sm font-sm rounded btn-brand">
-                                            <i class="material-icons md-edit"></i>
-                                            Edit
-                                        </a>
-                                        <% if (product[i].availability) { %>
-
-                                            <a href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability  %> " class="btn btn-sm font-sm btn-light rounded">ARCHIVE
-                                                <i class="material-icons md-delete_forever"></i>
-                                               
-                                            </a>
-                                        <% }else{ %>
-                                            <a href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability  %> " class="btn btn-sm font-sm btn-light rounded">ACTIVE
-                                                <i class="material-icons md-delete_forever"></i>
-                                                
-                                            </a>
-
-                                        <% } %>
-                                    </div>
-                                </div>
-                                <!-- row .// -->
-                            </article>
-                        <% } } %>
+                                            </td>
+                                            <td>
+                                                $<%= product[i].price %>
+                                            </td>
+                                            <td>
+                                                <%= product[i].stock %>
+                                            </td>
+                                            <td>
+                                                <%= product[i].category.name %>
+                                            </td>
+                                            <td>
+                                                <span class="badge rounded-pill alert-success"><%= product[i].availability %>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span>02.11.2021</span>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/edit-products/<%= product[i]._id %>" class="btn btn-sm font-sm rounded btn-brand">
+                                                    <i class="material-icons md-edit"></i>
+                                                    Edit
+                                                </a>
+                                                <% if (product[i].availability) { %>
+                                                    <a href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability %>" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;" >HIDE
+                                                        <i class="material-icons md-delete_forever"></i>
+                                                    </a>
+                                                <% } else { %>
+                                                    <a href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability %>" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">UNHIDE
+                                                        <i class="material-icons md-delete_forever"></i>
+                                                    </a>
+                                                <% } %>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        <% } %>
                     </div>
+
+
                     <!-- card-body end// -->
                 </div>
                 <!-- card end// -->

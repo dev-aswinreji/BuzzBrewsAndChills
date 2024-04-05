@@ -15,7 +15,7 @@ const adminHomeRoute = express.Router()
 adminHomeRoute.get('/users-list', admin_userListGet)
 
 adminHomeRoute.get('/add-new-products', admin_addNewProductsGet)
-adminHomeRoute.post('/add-new-products', upload.single("product-image"), admin_addNewProductsPost)
+adminHomeRoute.post('/add-new-products', upload.single("imageUrl"), admin_addNewProductsPost)
 
 adminHomeRoute.get('/category', admin_categoriesGet)
 adminHomeRoute.post('/category', admin_categoriesPost)
@@ -23,7 +23,7 @@ adminHomeRoute.post('/category', admin_categoriesPost)
 adminHomeRoute.get('/dashboard', admin_dashboardGet)
 
 adminHomeRoute.get('/edit-products/:id', admin_editProductsGet)
-adminHomeRoute.post('/edit-products', upload.none(), admin_editProductsPost)
+adminHomeRoute.post('/edit-products', upload.single("imageUrl"), admin_editProductsPost)
 
 adminHomeRoute.get('/manage-products/:id', admin_manageProducts)
 

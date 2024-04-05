@@ -29,7 +29,7 @@
                                 <div class="card-body">
                                     <div class="mb-4">
                                         <label for="product_name" class="form-label">Product Name</label>
-                                        <input type="text" placeholder="Type here" name="product_name" class="form-control" id="product_name">
+                                        <input type="text" placeholder="Type here" name="name" class="form-control" id="product_name">
                                     </div>
                                     <% if (category) { %>
                                         <div class="mb-4">
@@ -50,18 +50,18 @@
                             <% } %>
                             <div class="mb-4">
                                 <label for="product_stock" class="form-label">Product Stock</label>
-                                <input type="text" placeholder="Type here" name="product_stock" class="form-control" id="product_name">
+                                <input type="text" placeholder="Type here" name="stock" class="form-control" id="product_name">
                             </div>
                             <div class="mb-4">
                                 <label class="form-label">Full description</label>
-                                <textarea placeholder="Type here" class="form-control" name="product_description" rows="4"></textarea>
+                                <textarea placeholder="Type here" class="form-control" name="description" rows="4"></textarea>
                             </div>
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="mb-4">
                                         <label class="form-label">Regular price</label>
                                         <div class="row gx-2">
-                                            <input placeholder="$" type="text" name="product_price" class="form-control">
+                                            <input placeholder="$" type="text" name="price" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@
 
                         <div class="card-body">
                             <div class="input-upload">
-                                <input type="file" name="product-image" class="form-control" id="">
+                                <input type="file" name="imageUrl" class="form-control" id="">
                             </div>
                         </div>
 

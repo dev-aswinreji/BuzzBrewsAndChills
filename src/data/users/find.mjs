@@ -10,5 +10,5 @@ export async function findUserAddress(data){
 }
 
 export async function findUserAddressUsingPopulate(data) {
-    return await userCollection.findOne({email:data}).populate('ownerId')
+    return await userCollection.findOne({email:data}).populate('addresses')
 }

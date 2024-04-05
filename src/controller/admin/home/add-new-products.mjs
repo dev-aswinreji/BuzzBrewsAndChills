@@ -24,13 +24,12 @@ export const admin_addNewProductsPost = async (req, res) => {
     console.log(req.query)
 
     const product_data = {
-        name: req.body.product_name,
-        description: req.body.product_description,
-        price: req.body.product_price,
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
         category: categoryData,
-        stock: req.body.product_stock,
+        stock: req.body.stock,
         imageUrl: req.file.filename,
-        // availability:'ACTIVE'
     }
     await insertNewProducts(product_data)
     res.redirect('/admin/add-new-products')
