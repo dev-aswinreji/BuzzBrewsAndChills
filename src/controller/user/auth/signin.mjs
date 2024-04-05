@@ -7,7 +7,8 @@ export const user_signinGet = (req, res) => {
     if (req.session.isUserAuth) {
         res.redirect('/home')
     } else {
-        res.render('signin')
+        const errMessage = req.session.message
+        res.render('signin',{errMessage})
     }
 }
 export const user_signinPost = async (req, res) => {
@@ -31,10 +32,11 @@ export const user_signinPost = async (req, res) => {
         const pass = await compareHashPassword(data.password, userAuth.password)
         console.log(pass)
 
-        if (data.email === userAuth.email && pass === true) {
+        if (data.email === userAuth.email && pass === true && userAuth.accountStatus === 'ACTIVE') {
             req.session.isUserAuth = true
             res.render('home')
         } else {
+            req.session.message = 'Invalid Entry or Account is Blocked'
             res.redirect('/signin')
         }
 
