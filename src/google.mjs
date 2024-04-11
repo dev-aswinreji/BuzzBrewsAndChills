@@ -5,6 +5,7 @@ import { OAuth2Strategy as GoogleStrategy} from 'passport-google-oauth'
 
 
 passport.serializeUser((user, cb) => {
+    console.log(user,'inside serializeUser');
     cb(null, user)
 })
 
@@ -23,8 +24,9 @@ export const googleSignIn = passport.use(new GoogleStrategy({
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.LOCALHOST_URL
 }, (accessToken, refreshToken, profile, done) => {
-    let userProfile = profile;
-    return done(null, userProfile)
+    let user = profile;
+    // console.log(userProfile);
+    return done(null, user)
 }
 ))
 

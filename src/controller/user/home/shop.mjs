@@ -7,6 +7,7 @@ export const user_shopGet = async (req, res) => {
     try {
 
         const productImages = await findAllProductsForUser()
+        console.log(productImages);
         res.render('shop', { data: productImages })
 
     } catch (error) {

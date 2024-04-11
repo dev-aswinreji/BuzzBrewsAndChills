@@ -5,9 +5,6 @@ export const admin_productsGet = async (req, res) => {
 
         const product = await findAllProducts()
 
-        console.log(product[0].category, 'is this is undefined');
-
-        // console.log(product);
         res.render('products', { product })
 
     } else {

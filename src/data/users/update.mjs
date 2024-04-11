@@ -4,7 +4,7 @@ import { userCollection } from "../../model/userData.mjs";
 
 export async function updateUser(data, addressOfUser) {
 
-    return await userCollection.updateOne({ email: data }, { $addToSet: { ownerId: addressOfUser} })
+    return await userCollection.updateOne({ email: data }, { $addToSet: { addresses: addressOfUser} })
 }
 
 export async function updateUserPassword(userEmail, newPassword) {

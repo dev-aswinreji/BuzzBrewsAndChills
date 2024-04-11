@@ -4,19 +4,10 @@ import {user_otpVerificationGet, user_otpVerificationPost, user_otpVerificationR
 import {user_signinGet, user_signinPost} from '../../../controller/user/auth/signin.mjs'
 import {user_forgotPasswordPost} from '../../../controller/user/auth/forgot-password.mjs'
 import {user_emailVerificationGet, user_emailVerificationPost} from '../../../controller/user/auth/email-verification.mjs'
-import {user_googleVerification, user_googleVerificationCallback, user_signinWithGoogleFailed, user_signinWithGoogleSuccess} from '../../../controller/user/auth/google-vefication.mjs'
 import {user_signoutGet} from '../../../controller/user/auth/signout.mjs'
 
 
 const route = express.Router()
-
-
-route.get('/auth/google', user_googleVerification)
-route.get('/auth/google/callback', user_googleVerificationCallback, (req, res) => {
-    res.redirect('/success')
-})
-route.get('/success', user_signinWithGoogleSuccess)
-route.get('/error', user_signinWithGoogleFailed)
 
 route.get('/signup', user_signupGet)
 route.post('/signup', user_signupPost)

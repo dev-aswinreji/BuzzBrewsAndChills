@@ -31,9 +31,10 @@ const productsSchema = mongoose.Schema({
         ref: categoryCollection,
     },
     availability:{
-        type:Boolean,
-        default:true,
-        required:true, 
+        type:String,
+        enum:['AVAILABLE','UNAVAILABLE'],
+        default:'AVAILABLE',
+        required:true
     },
     stock: {
         type: Number,

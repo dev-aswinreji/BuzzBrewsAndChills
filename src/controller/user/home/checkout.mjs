@@ -8,7 +8,7 @@ export const user_checkoutGet = async (req, res) => {
 
     try {
 
-        if (req.session.isAuth) {
+        if (req.session.isUserAuth) {
             const userEmail = req.session.userEmailForAddUserAddress
 
             const user = await findUserAddressUsingPopulate(userEmail)
@@ -27,15 +27,14 @@ export const user_addressPost = async (req, res) => {
 
         const data = {
             name: req.body.name,
-            phonenumber: req.body.phonenumber,
-            home_address: req.body.home_address,
+            phoneNumber: req.body.phoneNumber,
+            homeAddress: req.body.homeAddress,
             city: req.body.city,
             country: req.body.country
         }
 
         const userAddress = await insertUserAddress(data)
         console.log(userAddress, 'userAddress is ==============')
-        console.log(userAddress[0]._id, 'userAddress id is ==============')
 
 
         const userEmail = req.session.userEmailForAddUserAddress
@@ -46,7 +45,7 @@ export const user_addressPost = async (req, res) => {
         console.log(user, 'user data is found ===================')
 
 
-        const success = await updateUser(user.email, userAddress[0]._id)
+        const success = await updateUser(user.email, userAddress)
         console.log(success)
 
         res.redirect('/checkout')

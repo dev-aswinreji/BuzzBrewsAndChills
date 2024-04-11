@@ -177,8 +177,14 @@
                                                 <%= product[i].category.name %>
                                             </td>
                                             <td>
-                                                <span class="badge rounded-pill alert-success"><%= product[i].availability %>
-                                                </span>
+                                                <% if (product[i].availability==='AVAILABLE') { %>
+
+                                                    <span class="badge rounded-pill alert-success"><%= product[i].availability %>
+                                                    </span>
+                                                <% } else {%>
+                                                    <span class="badge rounded-pill alert-danger"><%= product[i].availability %>
+                                                    </span>
+                                                <% } %>
                                             </td>
                                             <td>
                                                 <span><%= product[i].createdAt %>
@@ -189,57 +195,51 @@
                                                     <i class="material-icons md-edit"></i>
                                                     Edit
                                                 </a>
-
-                                                <% if (product[i].availability) { %>
+                                                <% if(product[i].availability ==='AVAILABLE') {%>
                                                     <a href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability %>" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">HIDE
                                                         <i class="material-icons md-delete_forever"></i>
                                                     </a>
                                                 <% } else { %>
-                                                    <a href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability %>" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">UNHIDE
+                                                    <a href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability %>" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">SHOW
                                                         <i class="material-icons md-delete_forever"></i>
                                                     </a>
                                                 <% } %>
                                             </td>
                                         </tr>
-                                    <% } %>
+                                    </td>
                                 </tbody>
-                            </table>
+                            </tr>
                         <% } %>
-                    </div>
+                    </tbody>
+                </table>
+            <% } %>
+        </div>
 
 
-                    <!-- card-body end// -->
-                </div>
-                <!-- card end// -->
-                <div class="pagination-area mt-30 mb-50">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-start">
-                            <li class="page-item active">
-                                <a class="page-link" href="#">01</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">02</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">03</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link dot" href="#">...</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">16</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    <i class="material-icons md-chevron_right"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </section>
-            <!-- content-main end// -->
-
-            <%- include('./partials/footer/footer.ejs') %></body>
+        <!-- card-body end// -->
     </body>
-</html>
+</html></div><!-- card end// --><div class="pagination-area mt-30 mb-50">
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-start">
+        <li class="page-item active">
+            <a class="page-link" href="#">01</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">02</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">03</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link dot" href="#">...</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">16</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">
+                <i class="material-icons md-chevron_right"></i>
+            </a>
+        </li>
+    </ul>
+</nav></div></section><!-- content-main end// --><%- include('./partials/footer/footer.ejs') %></body></body></html>

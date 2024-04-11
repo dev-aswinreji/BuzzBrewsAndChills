@@ -20,5 +20,5 @@ export async function findSingleProduct(id) {
 }
 
 export async function findAllProductsForUser (){
-    return await productCollection.find({availability:true})
+    return await productCollection.find({availability:'AVAILABLE'})
 }

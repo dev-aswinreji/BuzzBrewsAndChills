@@ -1,6 +1,12 @@
 
 
 export const admin_signoutGet = async (req, res) => {
-    req.session.destroy()
-    res.redirect('/admin')
+    try {
+
+        req.session.destroy()
+        res.redirect('/admin')
+
+    } catch (error) {
+        console.log(error, 'ADMIN SIGNOUT GET')
+    }
 }

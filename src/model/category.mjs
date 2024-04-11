@@ -24,10 +24,6 @@ const categorySchema = new mongoose.Schema({
         default:'ACTIVE',
         required:true
     },
-    products: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "products"
-    }],
     createdAt:{
         type:Date,
         default:Date.now,

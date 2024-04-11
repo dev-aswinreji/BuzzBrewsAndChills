@@ -13,7 +13,7 @@ export const admin_userListManage = async (req, res) => {
     const userAccountStatus = req.query.id
 
     if (userAccountStatus === 'ACTIVE') {
-
+        req.session.userAllowed = 'BLOCKED' 
         await updateUserStatus(userId, { accountStatus: 'BLOCKED' })
     } else {
         await updateUserStatus(userId, { accountStatus: 'ACTIVE' })
