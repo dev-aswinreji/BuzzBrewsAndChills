@@ -2,9 +2,7 @@
 import dotenv from 'dotenv'
 import passport from 'passport'
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth'
-import { userCollection } from './model/userData.mjs'
 import { insertGoogle } from './data/users/insert.mjs'
-import { googleCollection } from './model/signin-with-google.mjs'
 import { findSigninWithGoogleUser } from './data/users/find.mjs'
 
 
@@ -57,6 +55,7 @@ export const googleSignIn = passport.use(new GoogleStrategy({
             done(null, newUser)
         }
     } catch (error) {
+        console.log(error,'googleSignin Passport Error');
         done(null, error);
     }
 }
