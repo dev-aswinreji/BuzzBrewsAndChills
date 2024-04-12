@@ -1,7 +1,11 @@
 
-import  dotenv  from 'dotenv'
+import dotenv from 'dotenv'
 import passport from 'passport'
-import { OAuth2Strategy as GoogleStrategy} from 'passport-google-oauth'
+import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth'
+import { userCollection } from './model/userData.mjs'
+import { insertGoogle } from './data/users/insert.mjs'
+import { googleCollection } from './model/signin-with-google.mjs'
+import { findSigninWithGoogleUser } from './data/users/find.mjs'
 
 
 passport.serializeUser((user, cb) => {
@@ -22,9 +26,39 @@ export const googleSignIn = passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.LOCALHOST_URL
-}, (accessToken, refreshToken, profile, done) => {
-    let user = profile;
-    return done(null, user)
+}, async (accessToken, refreshToken, profile, done) => {
+    try {
+        // await accessToken,refreshToken
+        const googleData = await profile
+
+        console.log(googleData._json.email);
+
+        console.log('inside try block');
+
+        const user = await findSigninWithGoogleUser(googleData.id)
+        console.log(user, 'USER CREATED');
+        
+        if (user) {
+            console.log(user,'user exist');
+            done(null, user)
+        } else {
+            console.log('inside else');
+            const userData = {
+                googleId: googleData.id,
+
+                fullName: googleData.displayName,
+
+                email: googleData._json.email,
+            }
+            console.log(userData);
+
+            const newUser = await insertGoogle(userData)
+
+            done(null, newUser)
+        }
+    } catch (error) {
+        done(null, error);
+    }
 }
 ))
 
