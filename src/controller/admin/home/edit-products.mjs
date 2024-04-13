@@ -16,7 +16,7 @@ export const admin_editProductsGet = async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error)
+        console.log(error,'ADMIN EDIT PRODUCTS GET')
     }
 }
 
@@ -55,7 +55,7 @@ export const admin_editProductsPost = async (req, res) => {
         res.redirect('/admin/products')
 
     } catch (error) {
-        console.error(error)
+        console.error(error,'ADMIN EDIT PRODUCTS POST')
     }
 }
 

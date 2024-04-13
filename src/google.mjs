@@ -26,7 +26,7 @@ export const googleSignIn = passport.use(new GoogleStrategy({
     callbackURL: process.env.LOCALHOST_URL
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        // await accessToken,refreshToken
+        await accessToken,refreshToken
         const googleData = await profile
 
         console.log(googleData._json.email);
