@@ -12,7 +12,7 @@ export const user_shopGet = async (req, res) => {
 
     } catch (error) {
 
-        console.error(error)
+        console.error(error, 'USER SHOP GET')
     }
 
 }

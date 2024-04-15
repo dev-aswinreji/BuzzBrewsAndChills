@@ -14,7 +14,7 @@ export const admin_categoriesGet = async (req, res) => {
             res.redirect('/admin')
         }
     } catch (error) {
-        console.log(error,'CATEGORY GET');
+        console.log(error,'ADMIN CATEGORY GET');
     }
 }
 
@@ -32,7 +32,7 @@ export const admin_categoriesPost = async (req, res) => {
         res.redirect('/admin/category')
 
     } catch (error) {
-        console.log(error,'CATEGORY POST');
+        console.log(error,'ADMIN CATEGORY POST');
     }
 
 

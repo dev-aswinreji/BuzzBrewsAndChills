@@ -5,13 +5,19 @@ import { otpVerificationForForgotPasswordUser, otpVerificationForNewUser, otpVer
 
 
 export const user_otpVerificationGet = async (req, res) => {
-    if (req.session.isUserAuth) {
-        res.redirect('/home')
-    } else {
+    try {
 
-        const errorOtp = req.session.newUserOtpError || req.session.resetPasswordOtp
-        res.render('otpVerification', { errorOtp })
+        if (req.session.isUserAuth) {
+            res.redirect('/home')
+        } else {
 
+            const errorOtp = req.session.newUserOtpError || req.session.resetPasswordOtp
+            res.render('otpVerification', { errorOtp })
+
+        }
+
+    } catch (error) {
+        console.log(error, 'USER OTP VERIFICATION POST');
     }
 }
 
@@ -22,24 +28,24 @@ export const user_otpVerificationPost = async (req, res) => {
     try {
 
 
-        const otpFromSessionForNewUser = req.session.otpForNewUser 
+        const otpFromSessionForNewUser = req.session.otpForNewUser
         console.log(otpFromSessionForNewUser, 'session otp ');
         const otpFromSessionForForgotPassword = req.session.otpForForgotPassword
         const resendOtp = req.session.resendOtp
-        
-        setImmediate(()=>{
+
+        setImmediate(() => {
             isOtpNewUser = otpExpiring()
-        }) 
+        })
         let isOtpNewUser = await otpVerificationForNewUser(token_check, otpFromSessionForNewUser)
         console.log(isOtpNewUser);
         const isOtpForgotPass = await otpVerificationForForgotPasswordUser(token_check, otpFromSessionForForgotPassword)
-        const isResendOtp = await otpVerificationForUser(token_check,resendOtp)
-        
+        const isResendOtp = await otpVerificationForUser(token_check, resendOtp)
+
         if (isOtpForgotPass === true) {
             res.render('forgotPassword')
         }
-        
-        if (isOtpNewUser || isResendOtp === true ) {
+
+        if (isOtpNewUser || isResendOtp === true) {
             console.log('otp verfication is working');
             const userdata = req.session.userTemporaryData
             req.session.userEmailForAddUserAddress = userdata.email
@@ -48,16 +54,16 @@ export const user_otpVerificationPost = async (req, res) => {
             console.log('authentication is true');
             return res.redirect('/home')
         }
-        
+
         if (isOtpNewUser || isOtpForgotPass === false) {
             req.session.newUserOtpError = 'Entered otp is invalid'
             res.redirect('/otp-verification')
         }
-           
 
-        console.log(isOtpNewUser,'below expiring function');
+
+        console.log(isOtpNewUser, 'below expiring function');
     } catch (error) {
-        console.log(error.message)
+        console.log(error, 'USER OTP VERIFICATION POST')
     }
 
 }
@@ -75,7 +81,7 @@ export const user_otpVerificationResentOtpGet = async (req, res) => {
         sendEmailForNewUser(userdata.email, userdata.fullname, OTP)
         res.redirect('/otp-verification')
     } catch (error) {
-        console.error(error)
+        console.error(error, 'USER RESEND OTP VERIFICATION POST')
     }
 }
 
@@ -83,7 +89,7 @@ function otpExpiring() {
     setTimeout(() => {
         console.log('otp expiring working or not ');
         return false
-    },10000)
+    }, 10000)
 }
 
 

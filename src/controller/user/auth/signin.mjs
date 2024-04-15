@@ -15,7 +15,7 @@ export const user_signinGet = (req, res) => {
         }
 
     } catch (error) {
-        console.log(error, 'SIGNIN GET')
+        console.log(error, 'USER SIGNIN GET')
     }
 }
 export const user_signinPost = async (req, res) => {
@@ -52,8 +52,8 @@ export const user_signinPost = async (req, res) => {
         }
 
     } catch (error) {
-        res.status(500).json({error:'Login Failed'})
-        console.error(error, 'SIGNIN POST')
+        res.status(500).json({ error: 'Login Failed' })
+        console.error(error, 'USER SIGNIN POST')
     }
 
 }

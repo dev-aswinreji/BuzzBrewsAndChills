@@ -12,7 +12,7 @@ import adminHomeRoute from './route/admin/home/admin-home.mjs'
 
 import passport from 'passport'
 import bodyParser from 'body-parser'
-import  Jwt  from 'jsonwebtoken'
+import Jwt from 'jsonwebtoken'
 import axios from 'axios'
 import redis from 'redis'
 import googleRoute from './route/google/signin-with-google.mjs'
@@ -22,7 +22,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const PORT = process.env.PORT
 
-export const imageDirectory = path.join(__dirname,'../public/product-images')
+export const imageDirectory = path.join(__dirname, '../public/product-images')
 
 dotenv.config()
 const app = express()
@@ -44,7 +44,7 @@ app.set('views', [
 app.set('view engine', 'ejs')
 
 app.use(session({
-    secret:process.env.SECRET_KEY,
+    secret: process.env.SECRET_KEY,
     saveUninitialized: true,
     resave: false
 }))
@@ -53,19 +53,19 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function(req,res,next){
+app.use(function (req, res, next) {
     res.locals.session = req.session;
     next()
 })
 
-app.use('/',route)
-app.use('/',routeHome)
-app.use('/admin',authRoute)
-app.use('/admin',adminHomeRoute)
-app.use('/',googleRoute)
-app.use((req,res)=>{
-    console.log(req.session.userAllowed,'working userallowed');
-    if(req.session.userAllowed !== 'ACTIVE'){
+app.use('/', route)
+app.use('/', routeHome)
+app.use('/admin', authRoute)
+app.use('/admin', adminHomeRoute)
+app.use('/', googleRoute)
+app.use((req, res) => {
+    console.log(req.session.userAllowed, 'working userallowed');
+    if (req.session.userAllowed !== 'ACTIVE') {
         console.log('inside if ');
         req.session.isUserAuth = false
         res.redirect('/signin')
@@ -73,14 +73,14 @@ app.use((req,res)=>{
 })
 
 app.use((err, req, res, next) => {
-        
-       if(err){
-        console.error(err,'error caught')
+
+    if (err) {
+        console.error(err, 'error caught')
         res.send(404)
-       }
+    }
 })
 
-app.use((err,req,res,next)=>{
+app.use((err, req, res, next) => {
     res.render('404-not-found')
     next()
 })
@@ -91,4 +91,4 @@ app.listen(PORT, () => {
 })
 
 
- 
+

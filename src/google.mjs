@@ -26,7 +26,7 @@ export const googleSignIn = passport.use(new GoogleStrategy({
     callbackURL: process.env.LOCALHOST_URL
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        await accessToken,refreshToken
+        await accessToken, refreshToken
         const googleData = await profile
 
         console.log(googleData._json.email);
@@ -35,9 +35,9 @@ export const googleSignIn = passport.use(new GoogleStrategy({
 
         const user = await findSigninWithGoogleUser(googleData.id)
         console.log(user, 'USER CREATED');
-        
+
         if (user) {
-            console.log(user,'user exist');
+            console.log(user, 'user exist');
             done(null, user)
         } else {
             console.log('inside else');
@@ -55,7 +55,7 @@ export const googleSignIn = passport.use(new GoogleStrategy({
             done(null, newUser)
         }
     } catch (error) {
-        console.log(error,'googleSignin Passport Error');
+        console.log(error, 'googleSignin Passport Error');
         done(null, error);
     }
 }

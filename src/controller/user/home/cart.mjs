@@ -1,7 +1,13 @@
 export const user_cartGet = async (req, res) => {
-    if (req.session.isUserAuth) {
-        res.render('cart')
-    } else {
-        res.redirect('/signin')
+    try {
+
+        if (req.session.isUserAuth) {
+            res.render('cart')
+        } else {
+            res.redirect('/signin')
+        }
+
+    } catch (error) {
+        console.log(error, 'USER CART GET');
     }
 }

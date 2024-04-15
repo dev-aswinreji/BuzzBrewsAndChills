@@ -18,7 +18,7 @@ export const user_signupGet = async (req, res) => {
         }
 
     } catch (error) {
-        console.error(error)
+        console.error(error, 'USER SIGNUP GET')
     }
 }
 
@@ -47,7 +47,7 @@ export const user_signupPost = async (req, res) => {
 
         req.session.userTemporaryData = data
         console.log(await checkDataDuplication(data.email));
-            const user = await findUser(data.email)
+        const user = await findUser(data.email)
 
         if (await checkDataDuplication(user) === 'EXIST') {
             req.session.emailExist = 'email already exist try again with other one'
@@ -67,7 +67,7 @@ export const user_signupPost = async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error)
+        console.log(error, 'USER SIGNUP POST')
     }
 
 
