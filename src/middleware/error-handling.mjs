@@ -1,10 +1,17 @@
 
 import express from 'express'
 
-const route = express.Router()
+try {
 
- route.use((err,req,res,next)=>{
-    res.render('404-not-found')
-})
+    const routeError = express.Router()
 
-export default route
+    routeError.use((err, req, res, next) => {
+        res.render('404-not-found')
+    })
+    
+} catch (error) {
+    console.log(error, 'ERROR HANDLING MIDDLEWARE');
+}
+
+
+export default routeError

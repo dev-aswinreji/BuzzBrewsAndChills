@@ -1,7 +1,7 @@
-import { findSingleProduct } from "../../../data/products/find.mjs"
+import { imageDirectory } from "../../../app.mjs"
+import { findSingleProduct, findUniqueCategory } from "../../../data/products/find.mjs"
 import { updateProducts } from "../../../data/products/update.mjs"
-import { productCollection } from "../../../model/product.mjs"
-
+import fs from 'fs'
 
 export const admin_editProductsGet = async (req, res) => {
     try {
@@ -16,7 +16,7 @@ export const admin_editProductsGet = async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error)
+        console.log(error,'ADMIN EDIT PRODUCTS GET')
     }
 }
 
@@ -24,19 +24,38 @@ export const admin_editProductsGet = async (req, res) => {
 export const admin_editProductsPost = async (req, res) => {
 
     try {
-        const data = {
-            name: req.body.product_name,
-            category:req.body.category,
-            description:req.body.product_description,
-            price:req.body.price
-        }
-        console.log(req.body.productId);
-        const id = data.productId
+        const id = req.body.productId
+        const categoryName = req.body.category
+        const categoryData = await findUniqueCategory(categoryName)
+        let new_image = ''
 
-        updateProducts()
+        if(req.file){
+            new_image = req.file.filename
+            try {
+                fs.unlinkSync(imageDirectory+req.body.old_imageUrl)
+            } catch (error) {
+                console.log(error);
+            }
+        }else{
+            new_image = req.body.old_imageUrl
+        }
+
+        const data = {
+            name: req.body.name,
+            category:categoryData,
+            description:req.body.description,
+            price:req.body.price,
+            stock:req.body.stock,
+            imageUrl:new_image
+        }
+
+        console.log(req.body.productId);
+
+        await updateProducts(id,data)
+        res.redirect('/admin/products')
 
     } catch (error) {
-        console.error(error)
+        console.error(error,'ADMIN EDIT PRODUCTS POST')
     }
 }
 

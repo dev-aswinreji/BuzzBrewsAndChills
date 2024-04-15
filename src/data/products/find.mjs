@@ -11,10 +11,14 @@ export async function findUniqueCategory (name){
 }
 
 export async function findAllProducts() {
-    return  await productCollection.find()
+    return  await productCollection.find().populate('category')
 }
 
 export async function findSingleProduct(id) {
     return await productCollection.findOne({ _id: id }).populate('category')
 
+}
+
+export async function findAllProductsForUser (){
+    return await productCollection.find({availability:'AVAILABLE'})
 }

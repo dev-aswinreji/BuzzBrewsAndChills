@@ -3,6 +3,7 @@ import { sendEmailForNewUser } from "../../../utils/otp-email-verification.mjs"
 import { otpGenForNewUser } from "../../../utils/otp-generator.mjs"
 import { hashPassword } from "../../../utils/password-hashing.mjs"
 import validator from 'email-validator'
+import { checkDataDuplication } from "../../../validation/checking-duplicateData.mjs"
 
 export const user_signupGet = async (req, res) => {
     try {
@@ -17,7 +18,7 @@ export const user_signupGet = async (req, res) => {
         }
 
     } catch (error) {
-        console.error(error)
+        console.error(error, 'USER SIGNUP GET')
     }
 }
 
@@ -45,8 +46,10 @@ export const user_signupPost = async (req, res) => {
         console.log(hash)
 
         req.session.userTemporaryData = data
+        console.log(await checkDataDuplication(data.email));
+        const user = await findUser(data.email)
 
-        if (await isNull(data) === true) {
+        if (await checkDataDuplication(user) === 'EXIST') {
             req.session.emailExist = 'email already exist try again with other one'
             res.redirect('/signup')
 
@@ -64,22 +67,9 @@ export const user_signupPost = async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error)
+        console.log(error, 'USER SIGNUP POST')
     }
 
-
-}
-
-
-async function isNull(data) {
-    console.log('is null is working')
-    const emailExist = await findUser(data.email)
-    if (emailExist === null) {
-        return false
-    }
-    if (data.email === emailExist.email) {
-        return true
-    }
 
 }
 

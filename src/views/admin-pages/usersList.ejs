@@ -1,126 +1,228 @@
 <!DOCTYPE HTML>
 <html lang="en">
 
-<%- include('./partials/head/head.ejs') %>
+    <%- include('./partials/head/head.ejs') %>
 
     <body>
 
-        <%- include('./partials/aside/aside.ejs') %>
+        <div class="screen-overlay"></div>
+        <aside class="navbar-aside" id="offcanvas_aside">
+            <div class="aside-top">
+                <a href="index.html" class="brand-wrap">
+                    <img src="assets/imgs/theme/logo.svg" class="logo" alt="BuzzBrews & Chills">
+                </a>
+                <div>
+                    <button class="btn btn-icon btn-aside-minimize">
+                        <i class="text-muted material-icons md-menu_open"></i>
+                    </button>
+                </div>
+            </div>
+            <nav>
+                <div class="menu-aside">
 
-            <main class="main-wrap">
+                    <a class="menu-link" href="/admin/dashboard">
+                        <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/products">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">Products</span>
+                        </a>
+                    </div>
+                    <div class="menu-item ">
+                        <a class="menu-link" href="/admin/category">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">categories</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/orders">
+                            <i class="icon material-icons md-shopping_cart"></i>
+                            <span class="text">Orders</span>
+                        </a>
+                    </div>
+                    <div class="menu-item active">
+                        <a class="menu-link" href="/admin/users-list">
+                            <i class="icon material-icons md-person"></i>
+                            <span class="text">Users</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/add-new-products">
+                            <i class="icon material-icons md-add_box"></i>
+                            <span class="text">Add product</span>
+                        </a>
+                    </div>
+                    <li class="menu-item">
+                        <a class="menu-link" href="/admin/transaction">
+                            <i class="icon material-icons md-monetization_on"></i>
+                            <span class="text">Transactions</span>
+                        </a>
+                    </li>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/">
+                            <i class="icon material-icons md-person"></i>
+                            <span class="text">User Login</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/reviews">
+                            <i class="icon material-icons md-comment"></i>
+                            <span class="text">Reviews</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/brands">
+                            <i class="icon material-icons md-stars"></i>
+                            <span class="text">Brands</span>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+                <br>
+                <br>
+            </nav>
+        </aside>
 
-                <%- include('./partials/header/header.ejs') %>
 
-                    <section class="content-main">
-                        <div class="content-header">
-                            <h2 class="content-title">Sellers list</h2>
-                            <div>
-                                <a href="#" class="btn btn-primary"><i class="material-icons md-plus"></i> Create
-                                    new</a>
+        <main class="main-wrap">
+
+            <%- include('./partials/header/header.ejs') %>
+
+            <section class="content-main">
+                <div class="content-header">
+                    <h2 class="content-title">Users list</h2>
+                    <div>Sellers
+                        <a href="#" class="btn btn-primary">
+                            <i class="material-icons md-plus"></i>
+                            Create new</a>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <header class="card-header">
+                        <div class="row gx-3">
+                            <div class="col-lg-4 col-md-6 me-auto">
+                                <input type="text" placeholder="Search..." class="form-control">
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-6">
+                                <select class="form-select">
+                                    <option>Status</option>
+                                    <option>Active</option>
+                                    <option>Disabled</option>
+                                    <option>Show all</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-6">
+                                <select class="form-select">
+                                    <option>Show 20</option>
+                                    <option>Show 30</option>
+                                    <option>Show 40</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="card mb-4">
-                            <header class="card-header">
-                                <div class="row gx-3">
-                                    <div class="col-lg-4 col-md-6 me-auto">
-                                        <input type="text" placeholder="Search..." class="form-control">
-                                    </div>
-                                    <div class="col-lg-2 col-md-3 col-6">
-                                        <select class="form-select">
-                                            <option>Status</option>
-                                            <option>Active</option>
-                                            <option>Disabled</option>
-                                            <option>Show all</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-2 col-md-3 col-6">
-                                        <select class="form-select">
-                                            <option>Show 20</option>
-                                            <option>Show 30</option>
-                                            <option>Show 40</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </header> <!-- card-header end// -->
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Seller</th>
-                                                <th>Email</th>
-                                                <th>Status</th>
-                                                <th>Registered</th>
-                                                <th class="text-end"> Action </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                    </header>
+                    <!-- card-header end// -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Users Name</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Registered</th>
+                                        <th class="text-end px-4">
+                                            Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
 
-                                            <% if(userList){ for(let i=0 ; i< userList.length ;i++){ %>
-                                                <tr>
-                                                    <td width="40%">
-                                                        <a href="#" class="itemside">
-                                                            <div class="left">
-                                                                <img src="assets/imgs/people/avatar1.jpg"
-                                                                    class="img-sm img-avatar" alt="Userpic">
-                                                            </div>
-                                                            <div class="info pl-3">
-                                                                <h6 class="mb-0 title">
-                                                                    <%= userList[i].full_name%>
-                                                                </h6>
-                                                                <small class="text-muted">
+                                    <% if(userList){ for(let i=0 ; i< userList.length ;i++){ %>
+                                        <tr>
+                                            <td width="20%">
 
-                                                                </small>
-                                                            </div>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <h5 class="__cf_email__">
-                                                            <%= userList[i].email%>
-                                                        </h5>
-                                                    </td>
-                                                    <td><span class="badge rounded-pill alert-success">Active</span>
-                                                    </td>
-                                                    <td>
-                                                        <%=userList[i].accountCreated%>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <a href="/admin/block?id<%= userList[i]._id %> "
-                                                            class="btn btn-sm btn-brand rounded font-sm mt-15">
-                                                            Block</a>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <a href="/admin/unblock?id<%= userList[i]._id %> "
-                                                            class="btn btn-sm btn-brand rounded font-sm mt-15">
-                                                             Un Block</a>
-                                                    </td>
-                                                </tr>
-                                                <% } } %>
+                                                <div class="info pl-3">
+                                                    <h6 class="mb-0 title">
+                                                        <%= userList[i].fullName%>
+                                                    </h6>
+                                                    <small class="text-muted"></small>
+                                                </div>
 
-                                        </tbody>
-                                    </table> <!-- table-responsive.// -->
-                                </div>
-                            </div> <!-- card-body end// -->
-                        </div> <!-- card end// -->
-                        <div class="pagination-area mt-15 mb-50">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-start">
-                                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">02</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">03</a></li>
-                                    <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">16</a></li>
-                                    <li class="page-item"><a class="page-link" href="#"><i
-                                                class="material-icons md-chevron_right"></i></a></li>
-                                </ul>
-                            </nav>
+                                            </td>
+                                            <td>
+                                                <h5>
+                                                    <%= userList[i].email%>
+                                                </h5>
+                                            </td>
+                                            <td>
+                                                <% if (userList[i].accountStatus === 'ACTIVE') { %>
+
+                                                    <span class="badge rounded-pill alert-success w-60 h-20"><%= userList[i].accountStatus %>
+                                                    <% }else{ %>
+                                                        <span class="badge rounded-pill alert-danger w-60 h-20"><%= userList[i].accountStatus %>
+
+                                                        <% } %>
+                                                    </span>
+                                                </td>
+                                            </td>
+                                            <td>
+                                                <%=userList[i].accountCreated%>
+                                            </td>
+                                            <td class="text-end">
+                                                <% if (userList[i].accountStatus === 'ACTIVE') { %>
+
+                                                    <a href="/admin/user-manage/<%= userList[i]._id %>?id=<%= userList[i].accountStatus %>  " class="btn btn-sm btn-brand rounded font-sm mt-15" style="width: 5rem;height: 2rem;">
+                                                        Block</a>
+                                                <% }else{ %>
+
+                                                    <a href="/admin/user-manage/<%= userList[i]._id %>?id?=<%= userList[i].accountStatus %>  " class="btn btn-sm btn-brand rounded font-sm mt-15" style="width: 5rem;height: 2rem;">
+                                                        Un Block</a>
+                                                <% } %>
+                                                <br>
+                                            </td>
+
+                                        </tr>
+                                    <% } } %>
+
+                                </tbody>
+                            </table>
+                            <!-- table-responsive.// -->
                         </div>
-                    </section> <!-- content-main end// -->
-                    <%- include('./partials/footer/footer.ejs') %>
-
-
+                    </div>
+                    <!-- card-body end// -->
+                </div>
+                <!-- card end// -->
+                <div class="pagination-area mt-15 mb-50">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-start">
+                            <li class="page-item active">
+                                <a class="page-link" href="#">01</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">02</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">03</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link dot" href="#">...</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">16</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">
+                                    <i class="material-icons md-chevron_right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+            <!-- content-main end// -->
+            <%- include('./partials/footer/footer.ejs') %></body>
     </body>
-
-
 </html>

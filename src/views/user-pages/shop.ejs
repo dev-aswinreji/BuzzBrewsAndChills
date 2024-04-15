@@ -66,15 +66,15 @@
                                 <div class="single-product-item">
                                     <a href="/product-view/<%= data[i]._id %>">
                                         <div class="product-image">
-                                            <img src="/product-images/<%= data[i].imageUrl %>" alt="<%= data[i].name %>">
+                                            <img style="width: 40rem;height: 15rem;" src="/product-images/<%= data[i].imageUrl %>" alt="<%= data[i].name %>">
                                         </div>
                                     </a>
                                     <h3>
                                         <%= data[i].name %>
                                     </h3>
                                     <p class="product-price">
-                                        <span>Per ml</span>
-                                        <%= data[i].price %>
+                                        <span>Per piece</span>
+                                        <%= data[i].price %> Rs
                                     </p>
                                     <a href="/cart/id?<%= data[i]._id %> " class="cart-btn">
                                         <i class="fas fa-shopping-cart"></i>

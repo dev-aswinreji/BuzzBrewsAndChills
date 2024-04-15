@@ -12,7 +12,7 @@ export const admin_ordersGet = async (req, res) => {
         }
         
     } catch (error) {
-        console.error(error)
+        console.error(error,' ADMIN ORDERS GET ')
     }
 
 }

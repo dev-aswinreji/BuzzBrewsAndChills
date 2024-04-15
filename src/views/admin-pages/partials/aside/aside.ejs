@@ -12,46 +12,46 @@
     <nav>
         <div class="menu-aside" >
 
-            <a class="menu-link" href="/admin/dashboard" onclick="addingActiveAttributeToClass()"> <i class="icon material-icons md-home"></i>
+            <a class="menu-link" href="/admin/dashboard"> <i class="icon material-icons md-home"></i>
                 <span class="text">Dashboard</span>
             </a>
-            <div class="menu-item" onclick="addingActiveAttributeToClass()">
-                <a class="menu-link" href="/admin/products" onclick="addingActiveAttributeToClass()"> <i class="icon material-icons md-shopping_bag"></i>
+            <div class="menu-item">
+                <a class="menu-link" href="/admin/products"> <i class="icon material-icons md-shopping_bag"></i>
                     <span class="text">Products</span>
                 </a>
             </div>
-            <div class="menu-item " onclick="addingActiveAttributeToClass()">
-                <a class="menu-link" href="/admin/category" onclick="addingActiveAttributeToClass()" > <i class="icon material-icons md-shopping_bag"></i>
+            <div class="menu-item ">
+                <a class="menu-link" href="/admin/category"> <i class="icon material-icons md-shopping_bag"></i>
                     <span class="text">categories</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a class="menu-link" href="/admin/orders" onclick="addingActiveAttributeToClass()"> <i class="icon material-icons md-shopping_cart"></i>
+                <a class="menu-link" href="/admin/orders"> <i class="icon material-icons md-shopping_cart"></i>
                     <span class="text">Orders</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a class="menu-link" href="/admin/users-list" onclick="addingActiveAttributeToClass()"> <i class="icon material-icons md-person"></i>
+                <a class="menu-link" href="/admin/users-list"> <i class="icon material-icons md-person"></i>
                     <span class="text">Users</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a class="menu-link" href="/admin/add-new-products" onclick="addingActiveAttributeToClass()"> <i class="icon material-icons md-add_box"></i>
+                <a class="menu-link" href="/admin/add-new-products"> <i class="icon material-icons md-add_box"></i>
                     <span class="text">Add product</span>
                 </a>
             </div>
             <li class="menu-item">
-                <a class="menu-link" href="/admin/transaction" onclick="addingActiveAttributeToClass()"> <i class="icon material-icons md-monetization_on"></i>
+                <a class="menu-link" href="/admin/transaction"> <i class="icon material-icons md-monetization_on"></i>
                     <span class="text">Transactions</span>
                 </a>
             </li>
             <div class="menu-item">
-                <a class="menu-link" href="/" onclick="addingActiveAttributeToClass()"> <i class="icon material-icons md-person"></i>
+                <a class="menu-link" href="/"> <i class="icon material-icons md-person"></i>
                     <span class="text">User Login</span>
                 </a>
             </div>
             <div class="menu-item">
-                <a class="menu-link" href="/admin/reviews" onclick="addingActiveAttributeToClass()"> <i class="icon material-icons md-comment"></i>
+                <a class="menu-link" href="/admin/reviews"> <i class="icon material-icons md-comment"></i>
                     <span class="text">Reviews</span>
                 </a>
             </div>
@@ -66,15 +66,3 @@
     </nav>
 </aside>
 
-<script>
-
-    function addingActiveAttributeToClass () {
-        var div = document.getElementsByTagName('div')
-
-        for(let i =0;i<div.length;i++){
-            div[i].classList.remove('active')
-        }
-
-        elem.classList.add('active')
-    }
-    </script>

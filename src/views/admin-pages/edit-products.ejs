@@ -5,7 +5,86 @@
 
     <body>
 
-        <%- include('./partials/aside/aside.ejs') %>
+        <div class="screen-overlay"></div>
+        <aside class="navbar-aside" id="offcanvas_aside">
+            <div class="aside-top">
+                <a href="index.html" class="brand-wrap">
+                    <img src="assets/imgs/theme/logo.svg" class="logo" alt="BuzzBrews & Chills">
+                </a>
+                <div>
+                    <button class="btn btn-icon btn-aside-minimize">
+                        <i class="text-muted material-icons md-menu_open"></i>
+                    </button>
+                </div>
+            </div>
+            <nav>
+                <div class="menu-aside">
+
+                    <a class="menu-link" href="/admin/dashboard">
+                        <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/products">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">Products</span>
+                        </a>
+                    </div>
+                    <div class="menu-item ">
+                        <a class="menu-link" href="/admin/category">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">categories</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/orders">
+                            <i class="icon material-icons md-shopping_cart"></i>
+                            <span class="text">Orders</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/users-list">
+                            <i class="icon material-icons md-person"></i>
+                            <span class="text">Users</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/add-new-products">
+                            <i class="icon material-icons md-add_box"></i>
+                            <span class="text">Add product</span>
+                        </a>
+                    </div>
+                    <li class="menu-item">
+                        <a class="menu-link" href="/admin/transaction">
+                            <i class="icon material-icons md-monetization_on"></i>
+                            <span class="text">Transactions</span>
+                        </a>
+                    </li>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/">
+                            <i class="icon material-icons md-person"></i>
+                            <span class="text">User Login</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/reviews">
+                            <i class="icon material-icons md-comment"></i>
+                            <span class="text">Reviews</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/brands">
+                            <i class="icon material-icons md-stars"></i>
+                            <span class="text">Brands</span>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+                <br>
+                <br>
+            </nav>
+        </aside>
+
 
         <main class="main-wrap">
 
@@ -17,7 +96,7 @@
                         <div class="row">
                             <div class="col-9">
                                 <div class="content-header">
-                                    <h2 class="content-title">Add New Product</h2>
+                                    <h2 class="content-title">Edit Product</h2>
                                     <div>
                                         <button type="submit" class="btn btn-md rounded font-sm hover-up">Confirm</button>
                                     </div>
@@ -34,7 +113,7 @@
                                         <div class="mb-4">
                                             <input type="text" name="productId" value="<%= product._id %>" hidden id="">
                                             <label for="product_name" class="form-label">Product Name</label>
-                                            <input type="text" placeholder="Type here" name="product_name" class="form-control" value="<%= product.name %> " id="product_name">
+                                            <input type="text" placeholder="Type here" name="name" class="form-control" value="<%= product.name %> " id="product_name">
                                         </div>
 
 
@@ -57,11 +136,11 @@
 
                                 <div class="mb-4">
                                     <label for="product_stock" class="form-label">Product Stock</label>
-                                    <input type="text" placeholder="Type here" name="product_stock" class="form-control" value="<%= product.stock %> " id="product_name">
+                                    <input type="text" placeholder="Type here" name="stock" class="form-control" value="<%= product.stock %> " id="product_name">
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Full description</label>
-                                    <textarea placeholder="Type here" class="form-control" name="product_description" rows="4"><%= product.description %>
+                                    <textarea placeholder="Type here" class="form-control" name="description" rows="4"><%= product.description %>
                                     </textarea>
                                 </div>
                                 <div class="row">
@@ -69,7 +148,7 @@
                                         <div class="mb-4">
                                             <label class="form-label">Regular price</label>
                                             <div class="row gx-2">
-                                                <input placeholder="$" type="text" name="product_price" value="<%= product.price %> " class="form-control">
+                                                <input placeholder="$" type="text" name="price" value="<%= product.price %> " class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -105,9 +184,9 @@
 
                             <div class="card-body">
                                 <div class="input-upload">
-                                    <input type="file" name="product-image" class="form-control" id="">
+                                    <input type="file" name="imageUrl" class="form-control" id="">
                                     <img src="/product-images/<%= product.imageUrl %>" alt="">
-                                    <input type="text" name="oldImageUrl" value="<%= product.imageUrl %>" hidden id="">
+                                    <input type="text" name="old_imageUrl" value="<%= product.imageUrl %>" hidden id="">
                                 </div>
                             </div>
 

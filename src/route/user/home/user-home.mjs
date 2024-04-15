@@ -20,6 +20,7 @@ routeHome.get('/contact',user_contactGet)
 
 routeHome.get('/shop',user_shopGet)
 
+routeHome.get('/contact',user_contactGet)
 
 routeHome.get('/checkout', user_checkoutGet)
 routeHome.post('/address', user_addressPost)

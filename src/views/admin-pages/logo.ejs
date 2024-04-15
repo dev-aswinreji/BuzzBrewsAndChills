@@ -1,276 +1,394 @@
 <!DOCTYPE HTML>
 <html lang="en">
 
-<%- include('./partials/head/head.ejs') %>
+    <%- include('./partials/head/head.ejs') %>
 
     <body>
 
-        <%- include('./partials/aside/aside.ejs') %>
+        <div class="screen-overlay"></div>
+        <aside class="navbar-aside" id="offcanvas_aside">
+            <div class="aside-top">
+                <a href="index.html" class="brand-wrap">
+                    <img src="assets/imgs/theme/logo.svg" class="logo" alt="BuzzBrews & Chills">
+                </a>
+                <div>
+                    <button class="btn btn-icon btn-aside-minimize">
+                        <i class="text-muted material-icons md-menu_open"></i>
+                    </button>
+                </div>
+            </div>
+            <nav>
+                <div class="menu-aside">
 
-            <main class="main-wrap">
+                    <a class="menu-link" href="/admin/dashboard">
+                        <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/products">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">Products</span>
+                        </a>
+                    </div>
+                    <div class="menu-item ">
+                        <a class="menu-link" href="/admin/category">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">categories</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/orders">
+                            <i class="icon material-icons md-shopping_cart"></i>
+                            <span class="text">Orders</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/users-list">
+                            <i class="icon material-icons md-person"></i>
+                            <span class="text">Users</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/add-new-products">
+                            <i class="icon material-icons md-add_box"></i>
+                            <span class="text">Add product</span>
+                        </a>
+                    </div>
+                    <li class="menu-item">
+                        <a class="menu-link" href="/admin/transaction">
+                            <i class="icon material-icons md-monetization_on"></i>
+                            <span class="text">Transactions</span>
+                        </a>
+                    </li>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/">
+                            <i class="icon material-icons md-person"></i>
+                            <span class="text">User Login</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/reviews">
+                            <i class="icon material-icons md-comment"></i>
+                            <span class="text">Reviews</span>
+                        </a>
+                    </div>
+                    <div class="menu-item active">
+                        <a class="menu-link" href="/admin/brands">
+                            <i class="icon material-icons md-stars"></i>
+                            <span class="text">Brands</span>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+                <br>
+                <br>
+            </nav>
+        </aside>
 
-                <%- include('./partials/header/header.ejs') %>
 
-                    <section class="content-main">
-                        <div class="content-header">
-                            <div>
-                                <h2 class="content-title card-title">Brand </h2>
-                                <p>Brand and vendor management</p>
+        <main class="main-wrap">
+
+            <%- include('./partials/header/header.ejs') %>
+
+            <section class="content-main">
+                <div class="content-header">
+                    <div>
+                        <h2 class="content-title card-title">Brand
+                        </h2>
+                        <p>Brand and vendor management</p>
+                    </div>
+                    <div>
+                        <a href="#" class="btn btn-primary">
+                            <i class="text-muted material-icons md-post_add"></i>Add New Brand</a>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <header class="card-header">
+                        <div class="row gx-3">
+                            <div class="col-lg-4 mb-lg-0 mb-15 me-auto">
+                                <input type="text" placeholder="Search..." class="form-control">
                             </div>
-                            <div>
-                                <a href="#" class="btn btn-primary"><i
-                                        class="text-muted material-icons md-post_add"></i>Add New Brand</a>
+                            <div class="col-lg-2 col-6">
+                                <div class="custom_select">
+                                    <select class="form-select select-nice">
+                                        <option selected>Categories</option>
+                                        <option>Technology</option>
+                                        <option>Fashion</option>
+                                        <option>Home Decor</option>
+                                        <option>Healthy</option>
+                                        <option>Travel</option>
+                                        <option>Auto-car</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-6">
+                                <input type="date" class="form-control" name="">
                             </div>
                         </div>
-                        <div class="card mb-4">
-                            <header class="card-header">
-                                <div class="row gx-3">
-                                    <div class="col-lg-4 mb-lg-0 mb-15 me-auto">
-                                        <input type="text" placeholder="Search..." class="form-control">
+                    </header>
+                    <!-- card-header end// -->
+                    <div class="card-body">
+                        <div class="row gx-3">
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-1.jpg" class="img-fluid" alt="Logo">
                                     </div>
-                                    <div class="col-lg-2 col-6">
-                                        <div class="custom_select">
-                                            <select class="form-select select-nice">
-                                                <option selected>Categories</option>
-                                                <option>Technology</option>
-                                                <option>Fashion</option>
-                                                <option>Home Decor</option>
-                                                <option>Healthy</option>
-                                                <option>Travel</option>
-                                                <option>Auto-car</option>
-                                            </select>
-                                        </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Cardinal</h6>
+                                        <a href="#">
+                                            398 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-2.jpg" class="img-fluid" alt="Logo">
                                     </div>
-                                    <div class="col-lg-2 col-6">
-                                        <input type="date" class="form-control" name="">
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">BirdFly</h6>
+                                        <a href="#">
+                                            13 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-3.jpg" class="img-fluid" alt="Logo">
                                     </div>
-                                </div>
-                            </header> <!-- card-header end// -->
-                            <div class="card-body">
-                                <div class="row gx-3">
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-1.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Cardinal</h6>
-                                                <a href="#"> 398 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-2.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">BirdFly</h6>
-                                                <a href="#"> 13 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-3.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Cocorico</h6>
-                                                <a href="#"> 13 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-4.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Yogilist</h6>
-                                                <a href="#"> 87 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-5.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Acerie</h6>
-                                                <a href="#"> 10 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-6.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Shivakin</h6>
-                                                <a href="#"> 398 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-7.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Acera</h6>
-                                                <a href="#"> 398 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-8.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Lion electronics</h6>
-                                                <a href="#"> 398 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-9.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">TwoHand</h6>
-                                                <a href="#"> 398 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-10.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Kiaomin</h6>
-                                                <a href="#"> 398 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-11.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Nokine</h6>
-                                                <a href="#"> 398 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-12.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Company name</h6>
-                                                <a href="#"> 13 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-13.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Company name</h6>
-                                                <a href="#"> 398 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-14.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Company name</h6>
-                                                <a href="#"> 13 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-15.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Company name</h6>
-                                                <a href="#"> 398 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-16.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Company name</h6>
-                                                <a href="#"> 13 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-17.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Company name</h6>
-                                                <a href="#"> 13 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                    <div class="col-xl-2 col-lg-3 col-md-4 col-6">
-                                        <figure class="card border-1">
-                                            <div class="card-header bg-white text-center">
-                                                <img height="76" src="assets/imgs/brands/brand-18.jpg" class="img-fluid"
-                                                    alt="Logo">
-                                            </div>
-                                            <figcaption class="card-body text-center">
-                                                <h6 class="card-title m-0">Company name</h6>
-                                                <a href="#"> 13 items </a>
-                                            </figcaption>
-                                        </figure>
-                                    </div> <!-- col.// -->
-                                </div> <!-- row.// -->
-                            </div> <!-- card-body end// -->
-                        </div> <!-- card end// -->
-                    </section> <!-- content-main end// -->
-                    <%- include('./partials/footer/footer.ejs') %>
-
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Cocorico</h6>
+                                        <a href="#">
+                                            13 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-4.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Yogilist</h6>
+                                        <a href="#">
+                                            87 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-5.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Acerie</h6>
+                                        <a href="#">
+                                            10 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-6.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Shivakin</h6>
+                                        <a href="#">
+                                            398 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-7.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Acera</h6>
+                                        <a href="#">
+                                            398 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-8.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Lion electronics</h6>
+                                        <a href="#">
+                                            398 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-9.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">TwoHand</h6>
+                                        <a href="#">
+                                            398 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-10.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Kiaomin</h6>
+                                        <a href="#">
+                                            398 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-11.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Nokine</h6>
+                                        <a href="#">
+                                            398 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-12.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Company name</h6>
+                                        <a href="#">
+                                            13 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-13.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Company name</h6>
+                                        <a href="#">
+                                            398 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-14.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Company name</h6>
+                                        <a href="#">
+                                            13 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-15.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Company name</h6>
+                                        <a href="#">
+                                            398 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-16.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Company name</h6>
+                                        <a href="#">
+                                            13 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-17.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Company name</h6>
+                                        <a href="#">
+                                            13 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                                <figure class="card border-1">
+                                    <div class="card-header bg-white text-center">
+                                        <img height="76" src="assets/imgs/brands/brand-18.jpg" class="img-fluid" alt="Logo">
+                                    </div>
+                                    <figcaption class="card-body text-center">
+                                        <h6 class="card-title m-0">Company name</h6>
+                                        <a href="#">
+                                            13 items
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- col.// -->
+                        </div>
+                        <!-- row.// -->
+                    </div>
+                    <!-- card-body end// -->
+                </div>
+                <!-- card end// -->
+            </section>
+            <!-- content-main end// -->
+            <%- include('./partials/footer/footer.ejs') %></body>
     </body>
-
-
 </html>

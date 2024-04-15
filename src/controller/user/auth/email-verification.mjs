@@ -11,7 +11,7 @@ export const user_emailVerificationGet = async (req, res) => {
         res.render('emailVerification')
 
     } catch (error) {
-        console.error(error)
+        console.error(error, 'USER EMAIL VERIFICATION GET')
     }
 }
 
@@ -24,19 +24,22 @@ export const user_emailVerificationPost = async (req, res) => {
         const userData = await findUser(data)
 
         if (userData === null) {
-            req.redirect('/email-verification')
+            res.redirect('/email-verification')
         }
         else {
             req.session.userEmailForChangePassword = userData.email
+
+            req.session.userTemporaryData = userData
             const OTP = await otpGenForForgotPassword()
             sendEmailForForgotPassword(userData.email, userData.full_name, OTP)
 
             console.log(OTP)
             req.session.otpForForgotPassword = OTP
-            res.render('otpVerification')
+            const errorOtp = req.session.message
+            res.render('otpVerification', { errorOtp })
         }
 
     } catch (error) {
-        console.error(error)
+        console.error(error, 'USER EMAIL VERIFICATION POST')
     }
 }
