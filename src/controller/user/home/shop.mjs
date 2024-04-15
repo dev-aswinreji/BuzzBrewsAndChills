@@ -1,5 +1,5 @@
-import { findAllProducts, findAllProductsForUser } from "../../../data/products/find.mjs"
-import { productCollection } from "../../../model/product.mjs"
+import { findAllProductsForUser } from "../../../data/products/find.mjs"
+
 
 
 
