@@ -165,7 +165,8 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle">
-                                                <img src="/product-images/<%= product[i].imageUrl %>" class="img-sm img-thumbnail" alt="Item">
+
+                                                <img src="/product-images/<%= product[i].imageUrl[0] %>" class="img-sm img-thumbnail" alt="Item">
                                             </td>
                                             <td>
                                                 $<%= product[i].price %>
@@ -191,16 +192,22 @@
                                                 </span>
                                             </td>
                                             <td>
+                                                <% const id = product[i]._id %>
+                                                <% console.log(id,'id are showing'); %>
+
                                                 <a href="/admin/edit-products/<%= product[i]._id %>" class="btn btn-sm font-sm rounded btn-brand m-3">
                                                     <i class="material-icons md-edit"></i>
                                                     Edit
                                                 </a>
                                                 <% if(product[i].availability ==='AVAILABLE') {%>
-                                                    <a href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability %>" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">HIDE
+
+                                                    <% const availability = product[i].availability %>
+
+                                                    <button href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability %>" onclick="HideAndUnhide('<%= id %>',' <%= availability%>')" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">HIDE
                                                         <i class="material-icons md-delete_forever"></i>
-                                                    </a>
+                                                    </button>
                                                 <% } else { %>
-                                                    <a href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability %>" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">SHOW
+                                                    <a href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability %>" onclick="HideAndUnhide('<%= id %>',' <%= availability%>')" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">SHOW
                                                         <i class="material-icons md-delete_forever"></i>
                                                     </a>
                                                 <% } %>
@@ -242,4 +249,31 @@
             </a>
         </li>
     </ul>
+    <script>
+
+        // function HideAndUnhide(id,availability) {
+        //     console.log(id);
+        //     console.log(availability);
+        //     // const param = id
+        //     // console.log(id, 'id is working hurray');
+        //     // axios.get(`http://localhost:3000/admin/products/+${param}`).then((result) => {
+        //     //     console.log(result, 'result is working');
+        //     // }).catch((err) => {});
+        // }
+        function HideAndUnhide(id, availability) {
+            console.log(id, 'fetched id is showing');
+            console.log(availability);
+            fetch('/admin/manage-products/', {
+                method: 'get',
+                query:JSON.stringify({
+                    availability:availability
+                }),
+                params:JSON.stringify({
+                    id:id
+                })
+               
+                
+            })
+        }
+    </script>
 </nav></div></section><!-- content-main end// --><%- include('./partials/footer/footer.ejs') %></body></body></html>

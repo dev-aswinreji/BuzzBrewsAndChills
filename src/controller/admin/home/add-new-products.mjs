@@ -31,14 +31,24 @@ export const admin_addNewProductsPost = async (req, res) => {
         const categoryData = await findUniqueCategory(categoryName)
         console.log(categoryData)
         console.log(req.query)
-    
+        console.log(req.files.filename);
+
+        let imageUrlMultiple = []
+        let count = 0
+        for(const file of req.files){
+            imageUrlMultiple[count] = file.filename
+            count++
+        }
+
+        console.log(imageUrlMultiple,'imageurl Multiple ');
+
         const product_data = {
             name: req.body.name,
             description: req.body.description,
             price: req.body.price,
             category: categoryData,
             stock: req.body.stock,
-            imageUrl: req.file.filename,
+            imageUrl: imageUrlMultiple
         }
         await insertNewProducts(product_data)
         res.redirect('/admin/add-new-products')

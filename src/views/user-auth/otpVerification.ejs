@@ -40,12 +40,9 @@
 
 <script>
                     // Start the initial countdown
-                    let countdownValue = 60; // Countdown duration in seconds
+                    let countdownValue = 10; // Countdown duration in seconds
                     let countdownInterval;
-                    if(60 === startCountdown()){
-                    
-                        startCountdown();
-                    }
+                 
 
                     function startCountdown() {
                         countdownInterval = setInterval(function () {
@@ -68,9 +65,10 @@
 
                         // Disable the resend button and start the countdown
                         document.getElementById('resendButton').disabled = true;
-                        countdownValue = 60; // Reset countdown value
+                        countdownValue = 10; // Reset countdown value
                         startCountdown();
                     }
+                    startCountdown()
 
                 </script>
             </div>

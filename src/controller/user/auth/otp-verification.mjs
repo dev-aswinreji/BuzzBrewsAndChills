@@ -33,10 +33,8 @@ export const user_otpVerificationPost = async (req, res) => {
         const otpFromSessionForForgotPassword = req.session.otpForForgotPassword
         const resendOtp = req.session.resendOtp
 
-        setImmediate(() => {
-            isOtpNewUser = otpExpiring()
-        })
-        let isOtpNewUser = await otpVerificationForNewUser(token_check, otpFromSessionForNewUser)
+        
+        const isOtpNewUser = await otpVerificationForNewUser(token_check, otpFromSessionForNewUser)
         console.log(isOtpNewUser);
         const isOtpForgotPass = await otpVerificationForForgotPasswordUser(token_check, otpFromSessionForForgotPassword)
         const isResendOtp = await otpVerificationForUser(token_check, resendOtp)
@@ -72,25 +70,16 @@ export const user_otpVerificationPost = async (req, res) => {
 export const user_otpVerificationResentOtpGet = async (req, res) => {
     try {
 
-        const userdata = req.session.userTemporaryData
-        console.log(userdata);
+        const {email,fullName,timeStamp} = req.session.userTemporaryData
+        console.log(timeStamp);
         const OTP = await otpGenForNewUser()
         console.log('resend otp working');
-        req.session.resendOtp = OTP
+        req.session.otpForNewUser = OTP
         console.log(OTP)
-        sendEmailForNewUser(userdata.email, userdata.fullname, OTP)
+        sendEmailForNewUser(email, fullName, OTP)
         res.redirect('/otp-verification')
     } catch (error) {
         console.error(error, 'USER RESEND OTP VERIFICATION POST')
     }
 }
-
-function otpExpiring() {
-    setTimeout(() => {
-        console.log('otp expiring working or not ');
-        return false
-    }, 10000)
-}
-
-
 

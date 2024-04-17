@@ -16,7 +16,7 @@ adminHomeRoute.get('/users-list', admin_userListGet)
 adminHomeRoute.get('/user-manage/:id',admin_userListManage)
 
 adminHomeRoute.get('/add-new-products', admin_addNewProductsGet)
-adminHomeRoute.post('/add-new-products', upload.single("imageUrl"), admin_addNewProductsPost)
+adminHomeRoute.post('/add-new-products', upload.array("imageUrl",5), admin_addNewProductsPost)
 
 adminHomeRoute.get('/category', admin_categoriesGet)
 adminHomeRoute.post('/category', admin_categoriesPost)

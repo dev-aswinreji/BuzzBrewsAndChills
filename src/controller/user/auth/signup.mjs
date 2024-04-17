@@ -35,19 +35,15 @@ export const user_signupPost = async (req, res) => {
 
         const hash = await hashPassword(req.body.password)
         console.log(hash, 'password is hashed')
+        console.log(req.body);
+        const { fullName, lastName, email } = req.body
 
-        const data = {
-            fullName: req.body.fullname,
-            lastName: req.body.lastname,
-            email: req.body.email,
-            password: hash,
-        }
-        console.log(data)
-        console.log(hash)
+        const timeStamp = new Date().getTime()
 
-        req.session.userTemporaryData = data
-        console.log(await checkDataDuplication(data.email));
-        const user = await findUser(data.email)
+        req.session.userTemporaryData = { fullName, lastName, email, hash, timeStamp }
+        console.log(req.session.userTemporaryData);
+
+        const user = await findUser(email)
 
         if (await checkDataDuplication(user) === 'EXIST') {
             req.session.emailExist = 'email already exist try again with other one'
@@ -59,7 +55,7 @@ export const user_signupPost = async (req, res) => {
             console.log(OTP)
             req.session.otpForNewUser = OTP
 
-            sendEmailForNewUser(data.email, data.fullName, OTP)
+            sendEmailForNewUser(email, fullName, OTP)
 
             res.redirect('/otp-verification')
 
