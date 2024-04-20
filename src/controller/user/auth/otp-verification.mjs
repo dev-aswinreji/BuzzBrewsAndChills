@@ -27,17 +27,15 @@ export const user_otpVerificationPost = async (req, res) => {
 
     try {
 
-
+        console.log(token_check,'otp sended by user ========================================================================================================whyyyyyy');
         const otpFromSessionForNewUser = req.session.otpForNewUser
         console.log(otpFromSessionForNewUser, 'session otp ');
         const otpFromSessionForForgotPassword = req.session.otpForForgotPassword
         const resendOtp = req.session.resendOtp
 
-        setImmediate(() => {
-            isOtpNewUser = otpExpiring()
-        })
-        let isOtpNewUser = await otpVerificationForNewUser(token_check, otpFromSessionForNewUser)
-        console.log(isOtpNewUser);
+        
+        const isOtpNewUser = await otpVerificationForNewUser(token_check, otpFromSessionForNewUser)
+        console.log(isOtpNewUser,'otp for new User is ');
         const isOtpForgotPass = await otpVerificationForForgotPasswordUser(token_check, otpFromSessionForForgotPassword)
         const isResendOtp = await otpVerificationForUser(token_check, resendOtp)
 
@@ -60,8 +58,6 @@ export const user_otpVerificationPost = async (req, res) => {
             res.redirect('/otp-verification')
         }
 
-
-        console.log(isOtpNewUser, 'below expiring function');
     } catch (error) {
         console.log(error, 'USER OTP VERIFICATION POST')
     }
@@ -72,25 +68,16 @@ export const user_otpVerificationPost = async (req, res) => {
 export const user_otpVerificationResentOtpGet = async (req, res) => {
     try {
 
-        const userdata = req.session.userTemporaryData
-        console.log(userdata);
+        const {email,fullName,timeStamp} = req.session.userTemporaryData
+        console.log(timeStamp);
         const OTP = await otpGenForNewUser()
         console.log('resend otp working');
-        req.session.resendOtp = OTP
+        req.session.otpForNewUser = OTP
         console.log(OTP)
-        sendEmailForNewUser(userdata.email, userdata.fullname, OTP)
+        sendEmailForNewUser(email, fullName, OTP)
         res.redirect('/otp-verification')
     } catch (error) {
         console.error(error, 'USER RESEND OTP VERIFICATION POST')
     }
 }
-
-function otpExpiring() {
-    setTimeout(() => {
-        console.log('otp expiring working or not ');
-        return false
-    }, 10000)
-}
-
-
 

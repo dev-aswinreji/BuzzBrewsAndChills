@@ -183,11 +183,14 @@
                             </div>
 
                             <div class="card-body">
-                                <div class="input-upload">
-                                    <input type="file" name="imageUrl" class="form-control" id="">
-                                    <img src="/product-images/<%= product.imageUrl %>" alt="">
-                                    <input type="text" name="old_imageUrl" value="<%= product.imageUrl %>" hidden id="">
-                                </div>
+                                <% for( let i = 0; i < product.imageUrl.length; i++ ) { %>
+
+                                    <div class="input-upload">
+                                        <input type="file" name="imageUrl" class="form-control" id="">
+                                        <img src="/product-images/<%= product.imageUrl[i] %>" alt="">
+                                        <input type="text" name="old_imageUrl" value="<%= product.imageUrl[i] %>" hidden id="">
+                                    </div>
+                                <% } %>
                             </div>
 
                         </div>

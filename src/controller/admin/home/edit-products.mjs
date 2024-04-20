@@ -9,6 +9,7 @@ export const admin_editProductsGet = async (req, res) => {
         const param = req.params.id
         console.log(param)
         const product = await findSingleProduct(param)
+        const category = await         
         console.log(product, 'single product is logged ');
         res.render('edit-products', { product })
         }else{
@@ -27,32 +28,40 @@ export const admin_editProductsPost = async (req, res) => {
         const id = req.body.productId
         const categoryName = req.body.category
         const categoryData = await findUniqueCategory(categoryName)
-        let new_image = ''
+        let new_image = []
+        const images = req.body.old_imageUrl                                  // values getting from req.body.old_image url is in the form of array
+        console.log(images,'images from req.body is array or string');
+        console.log(req.files,'req.files is');
+        // if(req.files){
+        //     new_image = req.files.filename
+        //     try {
+        //         console.log( req.body.old_imageUrl,'old imageUrl is showing');
+        //         console.log(images);
+        //         for(const image of images){ 
+        //             fs.unlinkSync(imageDirectory+"/"+image)
+        //         }
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }else{
+        //     for (const image of images) {
+                
+        //         new_image.push(image)
+        //         console.log(new_image,'new image in else case');
+        //     }
+        // }
 
-        if(req.file){
-            new_image = req.file.filename
-            try {
-                fs.unlinkSync(imageDirectory+req.body.old_imageUrl)
-            } catch (error) {
-                console.log(error);
-            }
-        }else{
-            new_image = req.body.old_imageUrl
-        }
+        // const data = {
+        //     name: req.body.name,
+        //     category:categoryData,
+        //     description:req.body.description,
+        //     price:req.body.price,
+        //     stock:req.body.stock,
+        //     imageUrl:new_image
+        // }
 
-        const data = {
-            name: req.body.name,
-            category:categoryData,
-            description:req.body.description,
-            price:req.body.price,
-            stock:req.body.stock,
-            imageUrl:new_image
-        }
-
-        console.log(req.body.productId);
-
-        await updateProducts(id,data)
-        res.redirect('/admin/products')
+        // await updateProducts(id,data)
+        // res.redirect('/admin/products')
 
     } catch (error) {
         console.error(error,'ADMIN EDIT PRODUCTS POST')

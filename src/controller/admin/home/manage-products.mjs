@@ -1,10 +1,9 @@
 import { updateProducts } from "../../../data/products/update.mjs"
 
-
 export const admin_manageProducts = async (req, res) => {
     try {
         const productId = req.params.id
-        const productAvailability = req.query.id
+        const productAvailability = req.query.availability
 
         console.log(productAvailability, 'productAvailability')  //type is String productAvailability
         console.log(productId, 'productId');

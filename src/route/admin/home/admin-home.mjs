@@ -16,7 +16,7 @@ adminHomeRoute.get('/users-list', admin_userListGet)
 adminHomeRoute.get('/user-manage/:id',admin_userListManage)
 
 adminHomeRoute.get('/add-new-products', admin_addNewProductsGet)
-adminHomeRoute.post('/add-new-products', upload.single("imageUrl"), admin_addNewProductsPost)
+adminHomeRoute.post('/add-new-products', upload.array("imageUrl",5), admin_addNewProductsPost)
 
 adminHomeRoute.get('/category', admin_categoriesGet)
 adminHomeRoute.post('/category', admin_categoriesPost)
@@ -24,7 +24,7 @@ adminHomeRoute.post('/category', admin_categoriesPost)
 adminHomeRoute.get('/dashboard', admin_dashboardGet)
 
 adminHomeRoute.get('/edit-products/:id', admin_editProductsGet)
-adminHomeRoute.post('/edit-products', upload.single("imageUrl"), admin_editProductsPost)
+adminHomeRoute.post('/edit-products', upload.array("imageUrl",5), admin_editProductsPost)
 
 adminHomeRoute.get('/manage-products/:id', admin_manageProducts)
 

@@ -107,16 +107,12 @@
                             <div class="col-md-3">
                                 <form action="/admin/category" method="post">
                                     <div class="mb-4">
-                                        <label for="product_name" class="form-label">Name</label>
-                                        <input type="text" placeholder="Type here" name="name" class="form-control" id="product_name"/>
-                                    </div>
-                                    <div class="mb-4">
                                         <label class="form-label">category</label>
-                                        <input type="text" name="category" placeholder="Type here" class="form-control" id="category">
+                                        <input type="text" name="name" placeholder="Type here" class="form-control" id="category" required>
                                     </div>
                                     <div class="mb-4">
                                         <label class="form-label">Description</label>
-                                        <textarea placeholder="Type here" name="description" class="form-control"></textarea>
+                                        <textarea placeholder="Type here" name="description" class="form-control" id="description"></textarea>
                                     </div>
                                     <div class="d-grid">
                                         <button type="submit" class="btn btn-primary">Create category</button>
@@ -124,6 +120,8 @@
                                 </form>
                             </div>
                             <div class="col-md-9">
+                                <span id="error" class="text-danger fs-5 fw-bold"><%= message %>
+                                </span>
                                 <div class="table-responsive">
 
                                     <table class="table table-hover">
@@ -131,16 +129,11 @@
 
                                         <thead>
                                             <tr>
-                                                <th class="text-center">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""/>
-                                                    </div>
+                                                <th>No.</th>
+                                                <th>
+                                                    Categories
                                                 </th>
-                                                <th>ID</th>
-                                                <th>Name</th>
                                                 <th>Description</th>
-                                                <th>Order</th>
-                                                admin
                                                 <th class="text-end">Action</th>
                                             </tr>
                                         </thead>
@@ -148,51 +141,89 @@
                                             <% for( let i = 0; i < category.length; i++ ) { %>
                                                 <tbody>
                                                     <tr>
-                                                        <td class="text-center">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" value=""/>
-                                                            </div>
+                                                        <td><%= (1+i) %>
                                                         </td>
-                                                        <td>21</td>
                                                         <td>
                                                             <b><%= category[i].name %>
                                                             </b>
+
                                                         </td>
                                                         <td><%= category[i].description %>
                                                         </td>
-                                                        <td>1</td>
                                                         <td class="text-end">
-                                                            <div class="dropdown">
-                                                                <a href="" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm">
-                                                                    <i class="material-icons md-more_horiz"></i>
+                                                            <a class="dropdown-item" href="#">Edit info</a>
+                                                            <% if(category[i].availability ==='ACTIVE') {%>
+
+                                                                <button href="/admin/manage-category/<%= category[i]._id %>?id=<%= category[i].availability %>" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">HIDE
+                                                                    <i class="material-icons md-delete_forever"></i>
+                                                                </button>
+                                                            <% } else { %>
+                                                                <a href="/admin/manage-category<%= category[i]._id %>?id=<%= category[i].availability %>" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">SHOW
+                                                                    <i class="material-icons md-delete_forever"></i>
                                                                 </a>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" href="/">View detail</a>
-                                                                    <a class="dropdown-item" href="#">Edit info</a>
-                                                                    <a class="dropdown-item text-danger" href="#">Delete</a>
-                                                                </div>
-                                                            </div>
-                                                            <!-- dropdown //end -->
+                                                            <% } %>
                                                         </td>
                                                     </tr>
-
                                                 </tbody>
-                                            <% } %>
+                                            </div>
+                                            <!-- dropdown //end -->
+                                        </td>
+                                    </tr>
 
-                                        <% } %>
-                                    </table>
-                                </div>
-                            </div>
-                            <!-- .col// -->
-                        </div>
-                        <!-- .row // -->
-                    </div>
-                    <!-- card body .// -->
+                                </tbody>
+                            <% } %>
+
+                        <% } %>
+                    </table>
                 </div>
-                <!-- card .// -->
-            </section>
-            <!-- content-main end// -->
-
-            <%- include('./partials/footer/footer.ejs') %></body>
+            </div>
+            <!-- .col// -->
+        </div>
+        <!-- .row // -->
     </body>
-</html>
+</html></div><!-- card body .// --></div><!-- card .// --></section><!-- content-main end// --><%- include('./partials/footer/footer.ejs') %></body><script>reload()
+let errorMsg = document.getElementById('error')
+
+function reload() {
+    setTimeout(() => {
+        errorMsg.innerHTML = ''
+    }, 4000)
+}</script></body></html>
+
+<script>
+const categoryInput = document.getElementById('category');
+const descriptionInput = document.getElementById('description');
+const submitButton = document.querySelector('form button[type="submit"]'); // Select the submit button
+const error = document.getElementById('error');
+
+categoryInput.addEventListener('keyup', validateAndEnableSubmit);
+descriptionInput.addEventListener('keyup', validateAndEnableSubmit);
+
+function validateAndEnableSubmit() {
+  const categoryValue = categoryInput.value;
+  const descriptionValue = descriptionInput.value;
+  let errorMessage = '';
+
+  // Check for minimum 3 letters (same as before)
+  if (categoryValue.length < 3) {
+    errorMessage = 'Category name must be at least 3 letters long.';
+  }
+
+  // Check for special characters and numbers (excluding letters) (same as before)
+  if (!/^[a-zA-Z]+$/.test(categoryValue)) {
+    errorMessage = 'Category name can only contain letters.';
+  }
+
+  // Check if description is empty
+  if (!descriptionValue.trim()) {
+    errorMessage += '\nDescription cannot be empty.';
+  }
+
+  // Update error message
+  error.innerHTML = errorMessage;
+
+  // Enable/disable submit button based on validation
+  submitButton.disabled = errorMessage !== ''; // Disable if there's an error message
+}
+</script>
+
