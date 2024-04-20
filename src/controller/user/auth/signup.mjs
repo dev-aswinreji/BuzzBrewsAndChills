@@ -33,14 +33,14 @@ export const user_signupPost = async (req, res) => {
             return res.redirect('/signup')
         }
 
-        const hash = await hashPassword(req.body.password)
-        console.log(hash, 'password is hashed')
+        const  password = await hashPassword(req.body.password)
+        console.log(password, 'password is hashed')
         console.log(req.body);
         const { fullName, lastName, email } = req.body
-
+        console.log(email);
         const timeStamp = new Date().getTime()
 
-        req.session.userTemporaryData = { fullName, lastName, email, hash, timeStamp }
+        req.session.userTemporaryData = { fullName, lastName, email, password, timeStamp }
         console.log(req.session.userTemporaryData);
 
         const user = await findUser(email)

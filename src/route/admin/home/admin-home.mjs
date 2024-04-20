@@ -24,7 +24,7 @@ adminHomeRoute.post('/category', admin_categoriesPost)
 adminHomeRoute.get('/dashboard', admin_dashboardGet)
 
 adminHomeRoute.get('/edit-products/:id', admin_editProductsGet)
-adminHomeRoute.post('/edit-products', upload.single("imageUrl"), admin_editProductsPost)
+adminHomeRoute.post('/edit-products', upload.array("imageUrl",5), admin_editProductsPost)
 
 adminHomeRoute.get('/manage-products/:id', admin_manageProducts)
 

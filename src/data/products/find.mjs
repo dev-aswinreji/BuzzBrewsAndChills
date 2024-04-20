@@ -7,7 +7,7 @@ export async function findCategory() {
 }
 
 export async function findUniqueCategory (name){
-    return await categoryCollection.findOne({name:name})
+    return await categoryCollection.findOne({name:{$regex: new RegExp(name,'i')}})
 }
 
 export async function findAllProducts() {

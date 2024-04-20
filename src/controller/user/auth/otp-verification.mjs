@@ -27,7 +27,7 @@ export const user_otpVerificationPost = async (req, res) => {
 
     try {
 
-
+        console.log(token_check,'otp sended by user ========================================================================================================whyyyyyy');
         const otpFromSessionForNewUser = req.session.otpForNewUser
         console.log(otpFromSessionForNewUser, 'session otp ');
         const otpFromSessionForForgotPassword = req.session.otpForForgotPassword
@@ -35,7 +35,7 @@ export const user_otpVerificationPost = async (req, res) => {
 
         
         const isOtpNewUser = await otpVerificationForNewUser(token_check, otpFromSessionForNewUser)
-        console.log(isOtpNewUser);
+        console.log(isOtpNewUser,'otp for new User is ');
         const isOtpForgotPass = await otpVerificationForForgotPasswordUser(token_check, otpFromSessionForForgotPassword)
         const isResendOtp = await otpVerificationForUser(token_check, resendOtp)
 
@@ -58,8 +58,6 @@ export const user_otpVerificationPost = async (req, res) => {
             res.redirect('/otp-verification')
         }
 
-
-        console.log(isOtpNewUser, 'below expiring function');
     } catch (error) {
         console.log(error, 'USER OTP VERIFICATION POST')
     }

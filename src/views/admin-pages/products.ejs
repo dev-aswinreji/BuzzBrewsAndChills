@@ -265,15 +265,15 @@
             console.log(availability);
             fetch('/admin/manage-products/', {
                 method: 'get',
-                query:JSON.stringify({
-                    availability:availability
-                }),
-                params:JSON.stringify({
-                    id:id
-                })
-               
-                
+                query: JSON.stringify(
+                    {availability: availability}
+                ),
+                params: JSON.stringify(
+                    {id: id}
+                )
+
+
             })
         }
     </script>
-</nav></div></section><!-- content-main end// --><%- include('./partials/footer/footer.ejs') %></body></body></html>
+</nav></div></section><!-- content-main end// --><%- include('./partials/footer/footer.ejs') %></></html>
