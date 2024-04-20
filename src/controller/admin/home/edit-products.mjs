@@ -1,5 +1,5 @@
 import { imageDirectory } from "../../../app.mjs"
-import { findSingleProduct, findUniqueCategory } from "../../../data/products/find.mjs"
+import { findCategory, findSingleProduct, findUniqueCategory } from "../../../data/products/find.mjs"
 import { updateProducts } from "../../../data/products/update.mjs"
 import fs from 'fs'
 
@@ -9,9 +9,9 @@ export const admin_editProductsGet = async (req, res) => {
         const param = req.params.id
         console.log(param)
         const product = await findSingleProduct(param)
-        const category = await         
+        const category = await findCategory()    
         console.log(product, 'single product is logged ');
-        res.render('edit-products', { product })
+        res.render('edit-products', { product ,category})
         }else{
         res.redirect('/admin/signin')
         }

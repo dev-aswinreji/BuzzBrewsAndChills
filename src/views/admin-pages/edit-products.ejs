@@ -120,14 +120,16 @@
                                         <div class="mb-4">
                                             <label for="product_category" class="form-label">Category
                                             </label>
+                                            <% if (category) { %>
 
-                                            <select name="category" id="" required>
-                                                <% for( cate of category ) { %>
+                                                <select name="category" id="" required>
+                                                    <% for( cate of category ) { %>
 
-                                                    <option value="" selected disabled></option>
-                                                    <option value="<%= cate.name %>"><%= cate.name %></option>
-                                                <% } %>
-                                            </select>
+                                                        <option value="" selected disabled></option>
+                                                        <option value="<%= cate.name %>"><%= cate.name %></option>
+                                                    <% } %>
+                                                </select>
+                                            <% } %>
                                         </div>
 
 
