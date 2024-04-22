@@ -221,104 +221,6 @@
                         </div>
                     </div>
                 </form>
-<<<<<<< HEAD
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-                <!-- Include Cropper.js library -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-                <script>
-
-                    // Define croppers array in the outer scope
-                    var croppers = [];
-                    console.log('inside script working or not ======================================================<>====================================');
-                    document.getElementById('upload').addEventListener('change', function (event) {
-                        console.log('some sort of error');
-                        var files = event.target.files;
-                        console.log(files, 'files are ===========================================================================================');
-                        var imagePreview = document.getElementById('image-preview');
-                        imagePreview.innerHTML = ''; // Clear previous previews
-                        croppers = []; // Reset croppers array
-
-                        for (var i = 0; i < files.length; i++) {
-                            var file = files[i];
-
-                            var reader = new FileReader();
-
-                            reader.onload = (function (file) {
-                                return function (e) {
-                                    var previewContainer = document.createElement('div');
-                                    previewContainer.className = 'preview-container';
-                                    var img = document.createElement('img');
-                                    img.src = e.target.result;
-                                    previewContainer.appendChild(img);
-
-                                    var removeBtn = document.createElement('button');
-                                    removeBtn.textContent = 'X';
-                                    removeBtn.className = 'remove-btn btn btn-danger';
-                                    removeBtn.addEventListener('click', function () { // Remove the preview container when the remove button is clicked
-                                        previewContainer.remove();
-
-                                        // Filter out the removed file from croppers array
-                                        croppers = croppers.filter(function (c) {
-                                            return c.input !== file;
-                                        });
-
-                                        // Remove the corresponding file from the input selection
-                                        var newFiles = Array.from(document.getElementById('upload').files).filter(function (f) {
-                                            return f !== file;
-                                        });
-                                        document.getElementById('upload').files = new FileList(newFiles, 'files');
-                                    });
-                                    previewContainer.appendChild(removeBtn);
-
-                                    imagePreview.appendChild(previewContainer);
-
-                                    // Initialize Cropper for the current image
-                                    var cropper = new Cropper(img, {
-                                        aspectRatio: 1, // Adjust as needed for your fixed aspect ratio
-                                        viewMode: 1, // Set to 1 for fixed size cropping
-                                        autoCropArea: 1 // Set to 1 to always auto crop the entire image
-                                    });
-
-                                    // Store the Cropper instance and the associated input file
-                                    croppers.push({cropper: cropper, input: file});
-                                };
-                            })(file);
-
-                            reader.readAsDataURL(file);
-                        }
-                    });
-
-                    document.getElementById('upload-btn').addEventListener('click', function () {
-                        var croppedImages = [];
-                        var imagePreview = document.getElementById('image-preview');
-                        imagePreview.innerHTML = ''; // Clear previous previews
-
-                        croppers.forEach(function (c) {
-                            var croppedCanvas = c.cropper.getCroppedCanvas();
-                            croppedCanvas.toBlob(function (blob) {
-                                var croppedImg = document.createElement('img');
-                                croppedImg.src = URL.createObjectURL(blob); // Set the src of the image to the blob URL
-                                croppedImg.className = 'cropped-image';
-                                // Add a class for styling if needed
-
-                                // Append the cropped image to the image-preview div
-                                imagePreview.appendChild(croppedImg);
-
-                                // Store the blob in the croppedImages array for further processing if needed
-                                croppedImages.push(blob);
-
-                                if (croppedImages.length === croppers.length) { // Submit cropped images or perform further actions
-                                    console.log("Cropped Images:is working or not ", croppedImages);
-                                }
-                            }, 'image/jpeg');
-                        });
-                    });
-                </script>
-            </body>
-        </section>
-        <%- include('./partials/footer/footer.ejs') %>
-        <!-- Include Bootstrap JS -->
-=======
             </section>
             <%- include('./partials/footer/footer.ejs') %>
 
@@ -450,6 +352,5 @@
 </script>
 
         </body>
->>>>>>> add-new-products
     </body>
 </html>
