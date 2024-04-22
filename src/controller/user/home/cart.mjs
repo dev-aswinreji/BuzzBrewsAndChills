@@ -6,7 +6,7 @@ export const user_cartGet = async (req, res) => {
 
   try {
 
-    if (req.session.isAuth) {
+    if (req.session.isUserAuth) {
       const data = req.params.id
       console.log(data)
       const cartProduct = await findAllProducts(data)
