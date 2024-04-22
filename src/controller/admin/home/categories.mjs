@@ -38,7 +38,7 @@ export const admin_categoriesPost = async (req, res) => {
          res.redirect('/admin/category')
        }else{
            await insertCategoryForProducts(data)
-
+           res.redirect('/admin/category')
        }
     
     } catch (error) {
