@@ -24,32 +24,32 @@ export const admin_addNewProductsPost = async (req, res) => {
 
     try {
         
-        console.log(req.body)
-        const categoryName = req.body.category
-        console.log(categoryName)
+        // console.log(req.body)
+        console.log(req.body,'req.body is ');
+        console.log(req.body.data);
+        console.log(req.body.formData);
+        console.log(req.body.croppedImage,'cropped images is showing');
+        const categoryName = JSON.parse(JSON.stringify(req.body.category))
+        console.log(FormData,'formData is what');
     
-        const categoryData = await findUniqueCategory(categoryName)
-        console.log(categoryData)
-        console.log(req.query)
-        console.log(req.files.filename);
+        // const categoryData = await findUniqueCategory(categoryName)
+        console.log(req.files,'req.files is working');
 
-        let imageUrlMultiple = []
+        let imageUrl = []
         let count = 0
         for(const file of req.files){
-            imageUrlMultiple[count] = file.filename
+            imageUrl[count] = file.filename
             count++
         }
 
-        console.log(imageUrlMultiple,'imageurl Multiple ');
+        console.log(imageUrl,'imageurl Multiple ');
+        const {name,description,price,stock} = JSON.parse(JSON.stringify(req.body))
 
-        const product_data = {
-            name: req.body.name,
-            description: req.body.description,
-            price: req.body.price,
-            category: categoryData,
-            stock: req.body.stock,
-            imageUrl: imageUrlMultiple
-        }
+        const category = await findUniqueCategory(categoryName)
+
+        const product_data = {name,description,price,category,stock,imageUrl}
+        console.log(product_data,'product data is showing successfully');
+        
         await insertNewProducts(product_data)
         res.redirect('/admin/add-new-products')
 

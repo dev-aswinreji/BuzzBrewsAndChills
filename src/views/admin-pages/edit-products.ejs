@@ -109,98 +109,101 @@
                                     <div class="card-header">
                                         <h4>Basic</h4>
                                     </div>
+                                    <span id="error" class="text-danger fw-bold fs-5"><%= error %>
+                                    </span>
                                     <div class="card-body">
                                         <div class="mb-4">
                                             <input type="text" name="productId" value="<%= product._id %>" hidden id="">
                                             <label for="product_name" class="form-label">Product Name</label>
-                                            <input type="text" placeholder="Type here" name="name" class="form-control" value="<%= product.name %> " id="product_name">
+                                            <input type="text" placeholder="Type here" name="name" class="form-control" value="<%= product.name%> " id="product_name">
                                         </div>
 
 
                                         <div class="mb-4">
                                             <label for="product_category" class="form-label">Category
                                             </label>
+                                            <% if (category) { %>
 
-                                            <select name="category" id="" required>
+                                                <select name="category" id="" required>
+                                                    <% for( cate of category ) { %>
+
+                                                        <option value="" selected disabled></option>
+                                                        <option value="<%= cate.name %>"><%= cate.name %></option>
+                                                    <% } %>
+                                                </select>
+                                            <% } %>
+                                        </div>
 
 
-                                                <option value="" selected disabled></option>
-                                                <option value="<%= product.category.name %>"><%= product.category.name %></option>
-                                                %>
-                                            </option>
-
-                                        </select>
-                                    </option>
-                                </div>
-
-
-                                <div class="mb-4">
-                                    <label for="product_stock" class="form-label">Product Stock</label>
-                                    <input type="text" placeholder="Type here" name="stock" class="form-control" value="<%= product.stock %> " id="product_name">
-                                </div>
-                                <div class="mb-4">
-                                    <label class="form-label">Full description</label>
-                                    <textarea placeholder="Type here" class="form-control" name="description" rows="4"><%= product.description %>
-                                    </textarea>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-4">
                                         <div class="mb-4">
-                                            <label class="form-label">Regular price</label>
-                                            <div class="row gx-2">
-                                                <input placeholder="$" type="text" name="price" value="<%= product.price %> " class="form-control">
+                                            <label for="product_stock" class="form-label">Product Stock</label>
+                                            <input type="text" placeholder="Type here" name="stock" class="form-control" value="<%= product.stock %> " id="product_name">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label">Full description</label>
+                                            <textarea placeholder="Type here" class="form-control" name="description" rows="4"><%= product.description %>
+                                            </textarea>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="mb-4">
+                                                    <label class="form-label">Regular price</label>
+                                                    <div class="row gx-2">
+                                                        <input placeholder="$" type="text" name="price" value="<%= product.price %> " class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="mb-4">
+                                                    <label class="form-label">Promotional price</label>
+                                                    <input placeholder="$" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label class="form-label">Currency</label>
+                                                <select class="form-select">
+                                                    <option>
+                                                        USD
+                                                    </option>
+                                                    <option>
+                                                        EUR
+                                                    </option>
+                                                    <option>
+                                                        RUBL
+                                                    </option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Promotional price</label>
-                                            <input placeholder="$" type="text" class="form-control">
-                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h4>Product Image</h4>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <label class="form-label">Currency</label>
-                                        <select class="form-select">
-                                            <option>
-                                                USD
-                                            </option>
-                                            <option>
-                                                EUR
-                                            </option>
-                                            <option>
-                                                RUBL
-                                            </option>
-                                        </select>
+
+                                    <div class="card-body">
+                                        <% for( let i = 0; i < product.imageUrl.length; i++ ) { %>
+
+                                            <div class="input-upload">
+                                                <img src="/product-images/<%= product.imageUrl[i] %>" alt="">
+                                            </div>
+                                            <input type="text" name="old_imageUrl" value="<%= product.imageUrl[i] %>" hidden id="">
+                                        <% } %>
+                                        <input type="file" name="imageUrl" class="form-control" id="">
                                     </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h4>Product Image</h4>
-                            </div>
 
-                            <div class="card-body">
-                                <% for( let i = 0; i < product.imageUrl.length; i++ ) { %>
-
-                                    <div class="input-upload">
-                                        <input type="file" name="imageUrl" class="form-control" id="">
-                                        <img src="/product-images/<%= product.imageUrl[i] %>" alt="">
-                                        <input type="text" name="old_imageUrl" value="<%= product.imageUrl[i] %>" hidden id="">
-                                    </div>
-                                <% } %>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </form>
-        <% }else{ %>
-            <h1>No Product Available Right Now
-            </h1>
-        <% }  %>
+                    </form>
+                <% }else{ %>
+                    <h1>No Product Available Right Now
+                    </h1>
+                <% }  %>
+            </section>
+            <%- include('./partials/footer/footer.ejs') %></body>
     </body>
-</html></section><%- include('./partials/footer/footer.ejs') %></body></body></html>
+</html>
