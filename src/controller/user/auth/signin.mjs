@@ -1,38 +1,59 @@
+import jwt from "jsonwebtoken"
 import { findUser } from "../../../data/users/find.mjs"
 import { compareHashPassword } from "../../../utils/password-hashing.mjs"
-import { isUserNull } from "../../../validation/is-null.mjs"
-
+import { checkDataDuplication } from "../../../validation/checking-duplicateData.mjs"
 
 export const user_signinGet = (req, res) => {
-    if (req.session.isAuth) {
-        res.redirect('/home')
-    } else {
-        res.render('signin')
+
+    try {
+
+        if (req.session.isUserAuth) {
+            res.redirect('/home')
+        } else {
+            const errMessage = req.session.message
+            res.render('signin', { errMessage })
+        }
+
+    } catch (error) {
+        console.log(error, 'USER SIGNIN GET')
     }
 }
 export const user_signinPost = async (req, res) => {
-    const data = {
-        email: req.body.email,
-        password: req.body.password
-    }
-    const userAuth = await findUser(data.email)
-    const userData = await isUserNull(userAuth)
 
-    if(userData === true){
-        return res.redirect('/signin')
-    }
+    try {
 
-    req.session.userEmailForAddUserAddress = userAuth.email
+        const data = {
+            email: req.body.email,
+            password: req.body.password
+        }
+        const userAuth = await findUser(data.email)
+        const userData = await checkDataDuplication(userAuth)
 
+        if (userData === 'NOT EXIST') {
+            req.session.message = 'Invalid User Entry Please Try to Signin'
+            return res.redirect('/signin')
+        }
 
-    const pass = await compareHashPassword(data.password, userAuth.password)
-    console.log(pass)
+        req.session.userEmailForAddUserAddress = userAuth.email
 
-    if (data.email === userAuth.email && pass === true) {
-        req.session.isAuth = true
-        res.render('home')
-    } else {
-        res.redirect('/signin')
+        const pass = await compareHashPassword(data.password, userAuth.password)
+        console.log(pass)
+
+        if (data.email === userAuth.email && pass === true && userAuth.accountStatus === 'ACTIVE') {
+            req.session.isUserAuth = true
+            const token = jwt.sign({ userId: userAuth._id }, process.env.JWT_SECRET_KEY, {
+                expiresIn: '1h',
+            })
+            res.status(200)
+            res.render('home')
+        } else {
+            req.session.message = 'Invalid Entry or Account is Blocked'
+            res.redirect('/signin')
+        }
+
+    } catch (error) {
+        res.status(500).json({ error: 'Login Failed' })
+        console.error(error, 'USER SIGNIN POST')
     }
 
 }

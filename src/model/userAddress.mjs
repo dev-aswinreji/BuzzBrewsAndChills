@@ -10,11 +10,11 @@ const userAddressSchema = mongoose.Schema({
         type:String,
         required:true,
     },
-    phonenumber: {
+    phoneNumber: {
         type: Number,
         required: true
     },
-    home_address: {
+    homeAddress: {
         type: String,
         requied: true
     },

@@ -1,428 +1,279 @@
 <!DOCTYPE HTML>
 <html lang="en">
 
-<%- include('./partials/head/head.ejs') %>
+    <%- include('./partials/head/head.ejs') %>
 
     <body>
 
-        <%- include('./partials/aside/aside.ejs') %>
+        <div class="screen-overlay"></div>
+        <aside class="navbar-aside" id="offcanvas_aside">
+            <div class="aside-top">
+                <a href="index.html" class="brand-wrap">
+                    <img src="assets/imgs/theme/logo.svg" class="logo" alt="BuzzBrews & Chills">
+                </a>
+                <div>
+                    <button class="btn btn-icon btn-aside-minimize">
+                        <i class="text-muted material-icons md-menu_open"></i>
+                    </button>
+                </div>
+            </div>
+            <nav>
+                <div class="menu-aside">
 
-            <main class="main-wrap">
+                    <a class="menu-link" href="/admin/dashboard">
+                        <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                    <div class="menu-item active">
+                        <a class="menu-link" href="/admin/products">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">Products</span>
+                        </a>
+                    </div>
+                    <div class="menu-item ">
+                        <a class="menu-link" href="/admin/category">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">categories</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/orders">
+                            <i class="icon material-icons md-shopping_cart"></i>
+                            <span class="text">Orders</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/users-list">
+                            <i class="icon material-icons md-person"></i>
+                            <span class="text">Users</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/add-new-products">
+                            <i class="icon material-icons md-add_box"></i>
+                            <span class="text">Add product</span>
+                        </a>
+                    </div>
+                    <li class="menu-item">
+                        <a class="menu-link" href="/admin/transaction">
+                            <i class="icon material-icons md-monetization_on"></i>
+                            <span class="text">Transactions</span>
+                        </a>
+                    </li>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/">
+                            <i class="icon material-icons md-person"></i>
+                            <span class="text">User Login</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/reviews">
+                            <i class="icon material-icons md-comment"></i>
+                            <span class="text">Reviews</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/brands">
+                            <i class="icon material-icons md-stars"></i>
+                            <span class="text">Brands</span>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+                <br>
+                <br>
+            </nav>
+        </aside>
 
-                <%- include('./partials/header/header.ejs') %>
 
-                    <section class="content-main">
-                        <div class="content-header">
-                            <div>
-                                <h2 class="content-title card-title">Products List</h2>
-                                <p>Lorem ipsum dolor sit amet.</p>
-                            </div>
-                            <div>
-                                <a href="#" class="btn btn-light rounded font-md">Export</a>
-                                <a href="#" class="btn btn-light rounded  font-md">Import</a>
-                                <a href="#" class="btn btn-primary btn-sm rounded">Create new</a>
-                            </div>
-                        </div>
-                        <div class="card mb-4">
-                            <header class="card-header">
-                                <div class="row align-items-center">
-                                    <div class="col col-check flex-grow-0">
-                                        <div class="form-check ms-2">
-                                            <input class="form-check-input" type="checkbox" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
-                                        <select class="form-select">
-                                            <option selected>All category</option>
-                                            <option>Electronics</option>
-                                            <option>Clothes</option>
-                                            <option>Automobile</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2 col-6">
-                                        <input type="date" value="02.05.2021" class="form-control">
-                                    </div>
-                                    <div class="col-md-2 col-6">
-                                        <select class="form-select">
-                                            <option selected>Status</option>
-                                            <option>Active</option>
-                                            <option>Disabled</option>
-                                            <option>Show all</option>
-                                        </select>
-                                    </div>
+        <main class="main-wrap">
+
+            <%- include('./partials/header/header.ejs') %>
+
+            <section class="content-main">
+                <div class="content-header">
+                    <div>
+                        <h2 class="content-title card-title">Products List</h2>
+                        <p>Lorem ipsum dolor sit amet.</p>
+                    </div>
+                    <div>
+                        <a href="#" class="btn btn-light rounded font-md">Export</a>
+                        <a href="#" class="btn btn-light rounded  font-md">Import</a>
+                        <a href="/admin/add-new-products" class="btn btn-primary btn-sm rounded">Create new</a>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <header class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col col-check flex-grow-0">
+                                <div class="form-check ms-2">
+                                    <input class="form-check-input" type="checkbox" value="">
                                 </div>
-                            </header> <!-- card-header end// -->
-                            <div class="card-body">
-                                <article class="itemlist">
-                                    <div class="row align-items-center">
-                                        <div class="col col-check flex-grow-0">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                                            <a class="itemside" href="#">
-                                                <div class="left">
-                                                    <img src="assets/imgs/items/1.jpg" class="img-sm img-thumbnail"
-                                                        alt="Item">
-                                                </div>
-                                                <div class="info">
-                                                    <h6 class="mb-0">T-shirt for men medium size</h6>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>$34.50</span> </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                                            <span class="badge rounded-pill alert-success">Active</span>
-                                        </div>
-                                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                                            <span>02.11.2021</span>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                                            <a href="#" class="btn btn-sm font-sm rounded btn-brand">
-                                                <i class="material-icons md-edit"></i> Edit
-                                            </a>
-                                            <a href="#" class="btn btn-sm font-sm btn-light rounded">
-                                                <i class="material-icons md-delete_forever"></i> Delete
-                                            </a>
-                                        </div>
-                                    </div> <!-- row .// -->
-                                </article> <!-- itemlist  .// -->
-                                <article class="itemlist">
-                                    <div class="row align-items-center">
-                                        <div class="col col-check flex-grow-0">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                                            <a class="itemside" href="#">
-                                                <div class="left">
-                                                    <img src="assets/imgs/items/2.jpg" class="img-sm img-thumbnail"
-                                                        alt="Item">
-                                                </div>
-                                                <div class="info">
-                                                    <h6 class="mb-0">Helionic Hooded Down Jacket</h6>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>$990.99</span> </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                                            <span class="badge rounded-pill alert-success">Active</span>
-                                        </div>
-                                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                                            <span>02.11.2021</span>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                                            <a href="#" class="btn btn-sm font-sm rounded btn-brand">
-                                                <i class="material-icons md-edit"></i> Edit
-                                            </a>
-                                            <a href="#" class="btn btn-sm font-sm btn-light rounded">
-                                                <i class="material-icons md-delete_forever"></i> Delete
-                                            </a>
-                                        </div>
-                                    </div> <!-- row .// -->
-                                </article> <!-- itemlist  .// -->
-                                <article class="itemlist">
-                                    <div class="row align-items-center">
-                                        <div class="col col-check flex-grow-0">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                                            <a class="itemside" href="#">
-                                                <div class="left">
-                                                    <img src="assets/imgs/items/3.jpg" class="img-sm img-thumbnail"
-                                                        alt="Item">
-                                                </div>
-                                                <div class="info">
-                                                    <h6 class="mb-0">Lace mini dress with faux leather</h6>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>$76.99</span> </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                                            <span class="badge rounded-pill alert-warning">Archived</span>
-                                        </div>
-                                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                                            <span>02.11.2021</span>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                                            <a href="#" class="btn btn-sm font-sm rounded btn-brand">
-                                                <i class="material-icons md-edit"></i> Edit
-                                            </a>
-                                            <a href="#" class="btn btn-sm font-sm btn-light rounded">
-                                                <i class="material-icons md-delete_forever"></i> Delete
-                                            </a>
-                                        </div>
-                                    </div> <!-- row .// -->
-                                </article> <!-- itemlist  .// -->
-                                <article class="itemlist">
-                                    <div class="row align-items-center">
-                                        <div class="col col-check flex-grow-0">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                                            <a class="itemside" href="#">
-                                                <div class="left">
-                                                    <img src="assets/imgs/items/4.jpg" class="img-sm img-thumbnail"
-                                                        alt="Item">
-                                                </div>
-                                                <div class="info">
-                                                    <h6 class="mb-0">Fanmis Men's Travel Bag</h6>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>$18.00</span> </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                                            <span class="badge rounded-pill alert-success">Active</span>
-                                        </div>
-                                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                                            <span>02.11.2021</span>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                                            <a href="#" class="btn btn-sm font-sm rounded btn-brand">
-                                                <i class="material-icons md-edit"></i> Edit
-                                            </a>
-                                            <a href="#" class="btn btn-sm font-sm btn-light rounded">
-                                                <i class="material-icons md-delete_forever"></i> Delete
-                                            </a>
-                                        </div>
-                                    </div> <!-- row .// -->
-                                </article> <!-- itemlist  .// -->
-                                <article class="itemlist">
-                                    <div class="row align-items-center">
-                                        <div class="col col-check flex-grow-0">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                                            <a class="itemside" href="#">
-                                                <div class="left">
-                                                    <img src="assets/imgs/items/3.jpg" class="img-sm img-thumbnail"
-                                                        alt="Item">
-                                                </div>
-                                                <div class="info">
-                                                    <h6 class="mb-0">Jeans Shorts for Men</h6>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>$76.99</span> </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                                            <span class="badge rounded-pill alert-danger">Disabled</span>
-                                        </div>
-                                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                                            <span>02.11.2021</span>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                                            <a href="#" class="btn btn-sm font-sm rounded btn-brand">
-                                                <i class="material-icons md-edit"></i> Edit
-                                            </a>
-                                            <a href="#" class="btn btn-sm font-sm btn-light rounded">
-                                                <i class="material-icons md-delete_forever"></i> Delete
-                                            </a>
-                                        </div>
-                                    </div> <!-- row .// -->
-                                </article> <!-- itemlist  .// -->
-                                <article class="itemlist">
-                                    <div class="row align-items-center">
-                                        <div class="col col-check flex-grow-0">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                                            <a class="itemside" href="#">
-                                                <div class="left">
-                                                    <img src="assets/imgs/items/5.jpg" class="img-sm img-thumbnail"
-                                                        alt="Item">
-                                                </div>
-                                                <div class="info">
-                                                    <h6 class="mb-0">Wallet made of leather brown color</h6>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>$18.00</span> </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                                            <span class="badge rounded-pill alert-warning">Archived</span>
-                                        </div>
-                                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                                            <span>02.11.2021</span>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                                            <a href="#" class="btn btn-sm font-sm rounded btn-brand">
-                                                <i class="material-icons md-edit"></i> Edit
-                                            </a>
-                                            <a href="#" class="btn btn-sm font-sm btn-light rounded">
-                                                <i class="material-icons md-delete_forever"></i> Delete
-                                            </a>
-                                        </div>
-                                    </div> <!-- row .// -->
-                                </article> <!-- itemlist  .// -->
-                                <article class="itemlist">
-                                    <div class="row align-items-center">
-                                        <div class="col col-check flex-grow-0">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                                            <a class="itemside" href="#">
-                                                <div class="left">
-                                                    <img src="assets/imgs/items/6.jpg" class="img-sm img-thumbnail"
-                                                        alt="Item">
-                                                </div>
-                                                <div class="info">
-                                                    <h6 class="mb-0">Modern Armchair for home interiors</h6>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>$76.99</span> </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                                            <span class="badge rounded-pill alert-success">Active</span>
-                                        </div>
-                                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                                            <span>02.11.2021</span>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                                            <a href="#" class="btn btn-sm font-sm rounded btn-brand">
-                                                <i class="material-icons md-edit"></i> Edit
-                                            </a>
-                                            <a href="#" class="btn btn-sm font-sm btn-light rounded">
-                                                <i class="material-icons md-delete_forever"></i> Delete
-                                            </a>
-                                        </div>
-                                    </div> <!-- row .// -->
-                                </article> <!-- itemlist  .// -->
-                                <article class="itemlist">
-                                    <div class="row align-items-center">
-                                        <div class="col col-check flex-grow-0">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                                            <a class="itemside" href="#">
-                                                <div class="left">
-                                                    <img src="assets/imgs/items/4.jpg" class="img-sm img-thumbnail"
-                                                        alt="Item">
-                                                </div>
-                                                <div class="info">
-                                                    <h6 class="mb-0">Lace mini dress with faux leather</h6>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>$18.00</span> </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                                            <span class="badge rounded-pill alert-success">Active</span>
-                                        </div>
-                                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                                            <span>02.11.2021</span>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                                            <a href="#" class="btn btn-sm font-sm rounded btn-brand">
-                                                <i class="material-icons md-edit"></i> Edit
-                                            </a>
-                                            <a href="#" class="btn btn-sm font-sm btn-light rounded">
-                                                <i class="material-icons md-delete_forever"></i> Delete
-                                            </a>
-                                        </div>
-                                    </div> <!-- row .// -->
-                                </article> <!-- itemlist  .// -->
-                                <article class="itemlist">
-                                    <div class="row align-items-center">
-                                        <div class="col col-check flex-grow-0">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
-                                            <a class="itemside" href="#">
-                                                <div class="left">
-                                                    <img src="assets/imgs/items/3.jpg" class="img-sm img-thumbnail"
-                                                        alt="Item">
-                                                </div>
-                                                <div class="info">
-                                                    <h6 class="mb-0">Lace mini dress with faux leather</h6>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>$76.99</span> </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                                            <span class="badge rounded-pill alert-success">Active</span>
-                                        </div>
-                                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                                            <span>02.11.2021</span>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                                            <a href="#" class="btn btn-sm font-sm rounded btn-brand">
-                                                <i class="material-icons md-edit"></i> Edit
-                                            </a>
-                                            <a href="#" class="btn btn-sm font-sm btn-light rounded">
-                                                <i class="material-icons md-delete_forever"></i> Delete
-                                            </a>
-                                        </div>
-                                    </div> <!-- row .// -->
-                                </article> <!-- itemlist  .// -->
-                                <article class="itemlist">
-                                    <div class="row align-items-center">
-                                        <div class="col col-check flex-grow-0">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-4 col-8 flex-grow-1 col-name">
-                                            <a class="itemside" href="#">
-                                                <div class="left">
-                                                    <img src="assets/imgs/items/4.jpg" class="img-sm img-thumbnail"
-                                                        alt="Item">
-                                                </div>
-                                                <div class="info">
-                                                    <h6 class="mb-0">Lace mini dress with faux leather</h6>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>$180.99</span> </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-status">
-                                            <span class="badge rounded-pill alert-success">Active</span>
-                                        </div>
-                                        <div class="col-lg-1 col-sm-2 col-4 col-date">
-                                            <span>02.11.2021</span>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                                            <a href="#" class="btn btn-sm font-sm rounded btn-brand">
-                                                <i class="material-icons md-edit"></i> Edit
-                                            </a>
-                                            <a href="#" class="btn btn-sm font-sm btn-light rounded">
-                                                <i class="material-icons md-delete_forever"></i> Delete
-                                            </a>
-                                        </div>
-                                    </div> <!-- row .// -->
-                                </article> <!-- itemlist  .// -->
-                            </div> <!-- card-body end// -->
-                        </div> <!-- card end// -->
-                        <div class="pagination-area mt-30 mb-50">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-start">
-                                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">02</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">03</a></li>
-                                    <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">16</a></li>
-                                    <li class="page-item"><a class="page-link" href="#"><i
-                                                class="material-icons md-chevron_right"></i></a></li>
-                                </ul>
-                            </nav>
+                            </div>
+                            <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                                <select class="form-select">
+                                    <option selected>All category</option>
+                                    <option>Electronics</option>
+                                    <option>Clothes</option>
+                                    <option>Automobile</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-6">
+                                <input type="date" value="02.05.2021" class="form-control">
+                            </div>
+                            <div class="col-md-2 col-6">
+                                <select class="form-select">
+                                    <option selected>Status</option>
+                                    <option>Active</option>
+                                    <option>Disabled</option>
+                                    <option>Show all</option>
+                                </select>
+                            </div>
                         </div>
-                    </section> <!-- content-main end// -->
+                    </header>
+                    <!-- card-header end// -->
+                    <div class="card-body">
+                        <% console.log('hello'); %>
+                        <% if (product.length) { %>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">
+                                            <input type="checkbox">
+                                        </th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Stock</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (let i = 0; i < product.length; i++) { %>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td>
+                                                <a href="#">
+                                                    <div class="info">
+                                                        <h6 class="mb-0"><%= product[i].name %></h6>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                            <td class="align-middle">
 
-                    <%- include('./partials/footer/footer.ejs') %>
+                                                <img src="/product-images/<%= product[i].imageUrl[0] %>" class="img-sm img-thumbnail" alt="Item">
+                                            </td>
+                                            <td>
+                                                $<%= product[i].price %>
+                                            </td>
+                                            <td>
+                                                <%= product[i].stock %>
+                                            </td>
+                                            <td>
+                                                <%= product[i].category.name %>
+                                            </td>
+                                            <td>
+                                                <% if (product[i].availability==='AVAILABLE') { %>
 
+                                                    <span class="badge rounded-pill alert-success"><%= product[i].availability %>
+                                                    </span>
+                                                <% } else {%>
+                                                    <span class="badge rounded-pill alert-danger"><%= product[i].availability %>
+                                                    </span>
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <span><%= product[i].createdAt %>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <% const id = product[i]._id %>
+                                                <% console.log(id,'id are showing'); %>
+
+                                                <a href="/admin/edit-products/<%= product[i]._id %>" class="btn btn-sm font-sm rounded btn-brand m-3">
+                                                    <i class="material-icons md-edit"></i>
+                                                    Edit
+                                                </a>
+                                                <% if(product[i].availability ==='AVAILABLE') {%>
+
+                                                    <% const availability = product[i].availability %>
+
+                                                    <button href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability %>" onclick="HideAndUnhide('<%= id %>',' <%= availability%>')" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">HIDE
+                                                        <i class="material-icons md-delete_forever"></i>
+                                                    </button>
+                                                <% } else { %>
+                                                    <a href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability %>" onclick="HideAndUnhide('<%= id %>',' <%= availability%>')" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">SHOW
+                                                        <i class="material-icons md-delete_forever"></i>
+                                                    </a>
+                                                <% } %>
+                                            </td>
+                                        </tr>
+                                    </td>
+                                </tbody>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <% } %>
+        </div>
+
+
+        <!-- card-body end// -->
     </body>
+</html></div><!-- card end// --><div class="pagination-area mt-30 mb-50">
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-start">
+        <li class="page-item active">
+            <a class="page-link" href="#">01</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">02</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">03</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link dot" href="#">...</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">16</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">
+                <i class="material-icons md-chevron_right"></i>
+            </a>
+        </li>
+    </ul>
+    <script>
+
+        // function HideAndUnhide(id,availability) {
+        //     console.log(id);
+        //     console.log(availability);
+        //     // const param = id
+        //     // console.log(id, 'id is working hurray');
+        //     // axios.get(`http://localhost:3000/admin/products/+${param}`).then((result) => {
+        //     //     console.log(result, 'result is working');
+        //     // }).catch((err) => {});
+        // }
+        function HideAndUnhide(id, availability) {
+            console.log(id, 'fetched id is showing');
+            console.log(availability);
+            fetch('/admin/manage-products/', {
+                method: 'get',
+                query: JSON.stringify(
+                    {availability: availability}
+                ),
+                params: JSON.stringify(
+                    {id: id}
+                )
 
 
-</html>
+            })
+        }
+    </script>
+</nav></div></section><!-- content-main end// --><%- include('./partials/footer/footer.ejs') %></></html>

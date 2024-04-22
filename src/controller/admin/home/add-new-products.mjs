@@ -1,26 +1,59 @@
+import { findCategory, findUniqueCategory } from "../../../data/products/find.mjs"
 import { insertNewProducts } from "../../../data/products/insert.mjs"
 
 
-export const admin_addNewProductsGet = async (req,res)=>{
-    if(req.session.isAdminAuthenticated){
+export const admin_addNewProductsGet = async (req, res) => {
 
-        res.render('addNewProducts')
+    try {
 
-    }else{
-        res.redirect('/admin')
+        if (req.session.isAdminAuthenticated) {
+            const category = await findCategory()
+            res.render('addNewProducts', { category })
+
+        } else {
+            res.redirect('/admin')
+        }
+
+    } catch (error) {
+        console.log(error, 'ADMIN ADD NEW PRODUCTS GET');
     }
 }
 
 
-export const admin_addNewProductsPost = async (req,res) => {
-    const product_data = {
-        name:req.body.product_name,
-        description:req.body.product_description,
-        price:req.body.product_price,
-        category:req.body.product_category,
-        stock:req.body.product_stock,
-        imageUrl:req.file.filename
+export const admin_addNewProductsPost = async (req, res) => {
+
+    try {
+        
+        console.log(req.body)
+        const categoryName = req.body.category
+        console.log(categoryName)
+    
+        const categoryData = await findUniqueCategory(categoryName)
+        console.log(categoryData)
+        console.log(req.query)
+        console.log(req.files.filename);
+
+        let imageUrlMultiple = []
+        let count = 0
+        for(const file of req.files){
+            imageUrlMultiple[count] = file.filename
+            count++
+        }
+
+        console.log(imageUrlMultiple,'imageurl Multiple ');
+
+        const product_data = {
+            name: req.body.name,
+            description: req.body.description,
+            price: req.body.price,
+            category: categoryData,
+            stock: req.body.stock,
+            imageUrl: imageUrlMultiple
+        }
+        await insertNewProducts(product_data)
+        res.redirect('/admin/add-new-products')
+
+    } catch (error) {
+        console.log(error,'ADMIN ADD NEW PRODUCTS POST');
     }
-    await insertNewProducts(product_data)
-    res.redirect('/admin/add-new-products')
 }

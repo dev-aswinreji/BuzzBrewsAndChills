@@ -1,4 +1,3 @@
-
 export const user_homeGet = async (req, res) => {
 
     try {
@@ -6,7 +5,7 @@ export const user_homeGet = async (req, res) => {
         res.render('home')
 
     } catch (error) {
-        console.error(error)
+        console.error(error, 'USER HOME GET')
     }
 
 }

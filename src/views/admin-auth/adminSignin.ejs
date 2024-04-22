@@ -9,6 +9,7 @@
                 <div class="card mx-auto card-login">
                     <div class="card-body">
                         <h4 class="card-title mb-4">Sign in</h4>
+                        <span id="error" class="text-danger fs-5 fw-bolder"><%= messageAdmin %></span>
                         <form action="/admin/signin" method="post">
                             <div class="mb-3">
                                 <input class="form-control" placeholder="Email" type="email" name="email">
@@ -47,6 +48,15 @@
             </section>
 
     </body>
+    <script>
+        reload()
+        const errMsg = document.getElementById('error')
+        function reload(){
+            setTimeout(()=>{
+                errMsg.innerHTML = ''
+            },4000)
+        }
+    </script>
 
 
 </html>

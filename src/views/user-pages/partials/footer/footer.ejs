@@ -6,19 +6,19 @@
 				<div class="col-lg-12">
 					<div class="logo-carousel-inner">
 						<div class="single-logo-item">
-							<img src="assets/img/company-logos/1.png" alt="">
+							<img src="/assets/img/company-logos/1.png" alt="">
 						</div>
 						<div class="single-logo-item">
-							<img src="assets/img/company-logos/2.png" alt="">
+							<img src="/assets/img/company-logos/2.png" alt="">
 						</div>
 						<div class="single-logo-item">
-							<img src="assets/img/company-logos/3.png" alt="">
+							<img src="/assets/img/company-logos/3.png" alt="">
 						</div>
 						<div class="single-logo-item">
-							<img src="assets/img/company-logos/4.png" alt="">
+							<img src="/assets/img/company-logos/4.png" alt="">
 						</div>
 						<div class="single-logo-item">
-							<img src="assets/img/company-logos/5.png" alt="">
+							<img src="/assets/img/company-logos/5.png" alt="">
 						</div>
 					</div>
 				</div>
@@ -100,22 +100,105 @@
 	<!-- end copyright -->
 	
 	<!-- jquery -->
-	<script src="assets/js/jquery-1.11.3.min.js"></script>
+	<script src="/assets/js/jquery-1.11.3.min.js"></script>
 	<!-- bootstrap -->
-	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 	<!-- count down -->
-	<script src="assets/js/jquery.countdown.js"></script>
+	<script src="/assets/js/jquery.countdown.js"></script>
 	<!-- isotope -->
-	<script src="assets/js/jquery.isotope-3.0.6.min.js"></script>
+	<script src="/assets/js/jquery.isotope-3.0.6.min.js"></script>
 	<!-- waypoints -->
-	<script src="assets/js/waypoints.js"></script>
+	<script src="/assets/js/waypoints.js"></script>
 	<!-- owl carousel -->
-	<script src="assets/js/owl.carousel.min.js"></script>
+	<script src="/assets/js/owl.carousel.min.js"></script>
 	<!-- magnific popup -->
-	<script src="assets/js/jquery.magnific-popup.min.js"></script>
+	<script src="/assets/js/jquery.magnific-popup.min.js"></script>
 	<!-- mean menu -->
-	<script src="assets/js/jquery.meanmenu.min.js"></script>
+	<script src="/assets/js/jquery.meanmenu.min.js"></script>
 	<!-- sticker js -->
-	<script src="assets/js/sticker.js"></script>
+	<script src="/assets/js/sticker.js"></script>
 	<!-- main js -->
-	<script src="assets/js/main.js"></script>
+	<script src="/assets/js/main.js"></script>
+	<script>
+      reload();
+
+      const errMsg = document.getElementById("email_alert");
+
+      function reload() {
+        setTimeout(() => {
+          errMsg.innerHTML = "";
+        }, 4000);
+      }
+
+      function validate_input(field) {
+        let input = document.getElementById(field).value.trim();
+        let isValid =
+          input.length > 0 && (field === "email" || !/\d/.test(input)); // Check if input is not empty and doesn't contain digits unless it's the email field
+        if (!isValid) {
+          document.getElementById(field + "_alert").style.color = "red";
+          if (/\d/.test(input) && field !== "email") {
+            document.getElementById(field + "_alert").innerHTML =
+              "Numbers are not allowed";
+          } else {
+            document.getElementById(field + "_alert").innerHTML =
+              "Please fill this field";
+          }
+        } else {
+          document.getElementById(field + "_alert").innerHTML = "";
+        }
+      }
+
+      function validate_password() {
+        let pass = document.getElementById("pass").value;
+        let confirm_pass = document.getElementById("confirm_pass").value;
+        if (pass != confirm_pass) {
+          document.getElementById("wrong_pass_alert").style.color = "red";
+          document.getElementById("wrong_pass_alert").innerHTML =
+            "☒ Use same password";
+          document.getElementById("create").disabled = true;
+          document.getElementById("create").style.opacity = 0.4;
+        } else {
+          document.getElementById("wrong_pass_alert").style.color = "green";
+          document.getElementById("wrong_pass_alert").innerHTML =
+            "🗹 Password Matched";
+          document.getElementById("create").disabled = false;
+          document.getElementById("create").style.opacity = 1;
+        }
+      }
+
+      function validateForm() {
+        let isValid = true;
+        ["fullname", "lastname", "email"].forEach(function (field) {
+          let input = document.getElementById(field).value.trim();
+          if (input.length === 0 || (field !== "email" && /\d/.test(input))) {
+            document.getElementById(field + "_alert").style.color = "red";
+            if (/\d/.test(input) && field !== "email") {
+              document.getElementById(field + "_alert").innerHTML =
+                "Numbers are not allowed";
+            } else {
+              document.getElementById(field + "_alert").innerHTML =
+                "Please fill this field";
+            }
+            isValid = false;
+          }
+        });
+
+        if (!isValid) {
+          return false;
+        }
+
+        let pass = document.getElementById("pass").value;
+        let confirm_pass = document.getElementById("confirm_pass").value;
+        if (pass != confirm_pass) {
+          document.getElementById("wrong_pass_alert").style.color = "red";
+          document.getElementById("wrong_pass_alert").innerHTML =
+            "☒ Use same password";
+          document.getElementById("create").disabled = true;
+          document.getElementById("create").style.opacity = 0.4;
+          return false;
+        }
+
+        return true;
+      }
+ 
+	</script>
