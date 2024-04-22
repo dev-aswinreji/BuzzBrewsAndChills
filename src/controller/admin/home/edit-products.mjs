@@ -1,7 +1,5 @@
 import { imageDirectory } from "../../../app.mjs"
-import { findCategory, findSingleProduct, findSingleProductWithSameName, findUniqueCategory } from "../../../data/products/find.mjs"
-import { updateProducts } from "../../../data/products/update.mjs"
-import fs from 'fs'
+import { findCategory, findSingleProduct, findSingleProductWithSameName, } from "../../../data/products/find.mjs"
 import { checkDataDuplication } from "../../../validation/checking-duplicateData.mjs"
 
 export const admin_editProductsGet = async (req, res) => {
@@ -29,25 +27,22 @@ export const admin_editProductsPost = async (req, res) => {
     try {
         const id = req.body.productId
         const productName = req.body.name.trim()
-        console.log(productName);
         const productData = await findSingleProduct(id)
         const isDuplicateProduct = await findSingleProductWithSameName(productName)
-        console.log(isDuplicateProduct);
         const result = await checkDataDuplication(isDuplicateProduct)
-        console.log(result);
-        if(productData.name === productName){
-            res.json(200)
+        if(productData.name === productName || result === 'NOT EXIST'){
+            try {
+                
+            } catch (error) {
+                console.log(error,'Update Product Error');
+            }
         }else{
             req.session.productError = 'product is already exist'
             res.redirect(`/admin/edit-products/${id}`)
         }
-        // if(result === 'EXIST'){
-        //     req.session.productError = 'Product is already exist'
-        //     return res.redirect(`/admin/edit-products/${id}`)
-        // }
 
     } catch (error) {
         console.error(error,'ADMIN EDIT PRODUCTS POST')
+        res.send(500)
     }
 }
-

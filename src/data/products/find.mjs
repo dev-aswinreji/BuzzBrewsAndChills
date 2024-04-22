@@ -20,10 +20,8 @@ export async function findSingleProduct(id) {
 }
 
 export async function findSingleProductWithSameName(productName){
-    console.log(productName,'inside findsingle function');
-    const value = await productCollection.findOne({name:{$regex: new RegExp(productName,'i')}})
-    console.log(value,'something issue is here');
-}
+    return await productCollection.findOne({name:{$regex: new RegExp(productName,'i')}})
+ }
 
 export async function findAllProductsForUser (){
     return await productCollection.find({availability:'AVAILABLE'})
