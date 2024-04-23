@@ -10,6 +10,7 @@ import { user_aboutGet } from '../../../controller/user/home/about.mjs';
 import { user_shopGet } from '../../../controller/user/home/shop.mjs';
 import { user_contactGet } from '../../../controller/user/home/contact.mjs';
 import { user_productView } from '../../../controller/user/home/product-view.mjs';
+import { user_profileGet } from '../../../controller/user/home/user-profile.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -21,6 +22,8 @@ routeHome.get('/contact',user_contactGet)
 routeHome.get('/shop',user_shopGet)
 
 routeHome.get('/contact',user_contactGet)
+
+routeHome.get('/user-profile',user_profileGet)
 
 routeHome.get('/checkout', user_checkoutGet)
 routeHome.post('/address', user_addressPost)
