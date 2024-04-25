@@ -262,37 +262,29 @@
     <script>
         async function hideAndUnhide(id, availability) {
             console.log(id, availability)
-            const response = await fetch(`/admin/manage-products/${id}?availability=${availability}`,{
-                method:'GET',
-                headers:{
-                    'Content-Type':'application/json'
+            const response = await fetch(`/admin/manage-products/${id}?availability=${availability}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
                 }
             })
-            
-            .then(response=>{console.log(response,'response recieved');
 
-                if(!response.ok){
-                    throw err('error occured')
-                }
-                return response.json()
-            }).then(data=>{
-                console.log(data,'data is recieving or not');
-                if (data.id) {
-                    window.location.reload()
-                    console.log('fetched successfull');
-            } else {
-                console.error('fetched unsuccessfull', data.error);
-            }
-            })
-            
-            // console.log(response);
-            
+                .then(response => {
+                    console.log(response, 'response recieved');
 
-
-            // const data = await response.json()
-            // console.log(data, 'something error happened');
-
-          
+                    if (!response.ok) {
+                        throw err('error occured')
+                    }
+                    return response.json()
+                }).then(data => {
+                    console.log(data, 'data is recieving or not');
+                    if (data.id) {
+                        window.location.reload()
+                        console.log('fetched successfull');
+                    } else {
+                        console.error('fetched unsuccessfull', data.error);
+                    }
+                })
         }
 
     </script>
