@@ -9,6 +9,7 @@ import { upload } from "../../../middleware/multer.mjs";
 import { admin_editProductsGet, admin_editProductsPost } from "../../../controller/admin/home/edit-products.mjs";
 import { admin_manageProducts } from "../../../controller/admin/home/manage-products.mjs";
 import { admin_editCategoryGet, admin_editCategoryPost } from "../../../controller/admin/home/edit-category.mjs";
+import { admin_manageCategory } from "../../../controller/admin/home/manage-category.mjs";
 
 const adminHomeRoute = express.Router()
 
@@ -24,6 +25,8 @@ adminHomeRoute.post('/category', admin_categoriesPost)
 
 adminHomeRoute.get('/edit-category/:id',admin_editCategoryGet)
 adminHomeRoute.post('/edit-category/:id',admin_editCategoryPost)
+
+adminHomeRoute.get('/manage-category/:id',admin_manageCategory)
 
 adminHomeRoute.get('/dashboard', admin_dashboardGet)
 
