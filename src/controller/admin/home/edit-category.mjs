@@ -7,7 +7,8 @@ export const admin_editCategoryGet = async (req,res)=>{
     const categoryId = req.params.id
     const category = await findUniqueCategoryUsingId(categoryId)
     console.log(category);
-    res.render('edit-category',{category})
+    const error = req.session.editCategoryError
+    res.render('edit-category',{category,error})
 }
 
 export const admin_editCategoryPost = async (req,res)=>{
@@ -26,6 +27,7 @@ export const admin_editCategoryPost = async (req,res)=>{
         await updateCategory(categoryId,categoryData)
         res.redirect('/admin/category')
     }else{
-        res.redirect('/admin/edit-category')
+        req.session.editCategoryError = 'Category already exist'
+        res.redirect(`/admin/edit-category/${categoryId}`)
     }
 }

@@ -102,6 +102,7 @@
                     <input type="text" placeholder="Search Categories" class="form-control bg-white">
                 </div>
             </div>
+            <span id="error" class="text-danger fw-bold fs-6"> <%= error %> </span>
             <div class="">
                 <div class="card-body">
                     <div class="row">
@@ -165,6 +166,16 @@
         error.innerHTML = errorMessage;
 
         submitButton.disabled = errorMessage !== '';
+    }
+</script>
+
+<script>
+    reload()
+    const errMsg = document.getElementById('error')
+    function reload(){
+        setTimeout(()=>{
+            errMsg.innerHTML = ''
+        },4000)
     }
 </script>
 
