@@ -23,7 +23,7 @@ export const admin_addNewProductsGet = async (req, res) => {
 export const admin_addNewProductsPost = async (req, res) => {
 
     try {
-        
+        console.log(req.query,'what is working here');
         // console.log(req.body)
         console.log(req.body,'req.body is ');
         console.log(req.body.data);

@@ -318,15 +318,37 @@
             </script>
             
 <script>
-   const response = await fetch('/admin/add-new-products',{
-    method:'POST',
-    headers:{
-        'Content-Type':'application/json'
-    },
-    body:{
-        id:''
-    }
-   })
+    document.getElementById('upload-btn').addEventListener('click', function () {
+        var formData = new FormData(); // Create a FormData object
+
+        // Append the cropped images to the FormData object
+        croppers.forEach(function (cropper, index) {
+            var croppedCanvas = cropper.cropper.getCroppedCanvas();
+            croppedCanvas.toBlob(function (blob) {
+                formData.append('croppedImage' + index, blob, 'croppedImage' + index + '.jpg');
+            }, 'image/jpeg');
+        });
+
+        // Append other form data to the FormData object if needed
+        // For example:
+        formData.append('name', document.getElementById('product_name').value);
+        formData.append('category', document.getElementById('product_category').value);
+        formData.append('stock', document.getElementById('product_stock').value);
+        formData.append('description', document.getElementById('product_description').value);
+        formData.append('price', document.getElementById('product_price').value); 
+
+        // Submit the form with the FormData object
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/admin/add-new-products', true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                console.log('Images uploaded successfully:', xhr.responseText);
+            } else {
+                console.error('Error uploading images:', xhr.statusText);
+            }
+        };
+        xhr.send(formData);
+    });
 </script>
 
         </body>
