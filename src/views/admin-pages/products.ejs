@@ -1,7 +1,7 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 
-    <%- include('./partials/head/head.ejs') %>
+<%- include('./partials/head/head.ejs') %>
 
     <body>
 
@@ -90,190 +90,212 @@
 
             <%- include('./partials/header/header.ejs') %>
 
-            <section class="content-main">
-                <div class="content-header">
-                    <div>
-                        <h2 class="content-title card-title">Products List</h2>
-                        <p>Lorem ipsum dolor sit amet.</p>
+                <section class="content-main">
+                    <div class="content-header">
+                        <div>
+                            <h2 class="content-title card-title">Products List</h2>
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                        <div>
+                            <a href="#" class="btn btn-light rounded font-md">Export</a>
+                            <a href="#" class="btn btn-light rounded  font-md">Import</a>
+                            <a href="/admin/add-new-products" class="btn btn-primary btn-sm rounded">Create new</a>
+                        </div>
                     </div>
-                    <div>
-                        <a href="#" class="btn btn-light rounded font-md">Export</a>
-                        <a href="#" class="btn btn-light rounded  font-md">Import</a>
-                        <a href="/admin/add-new-products" class="btn btn-primary btn-sm rounded">Create new</a>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <header class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col col-check flex-grow-0">
-                                <div class="form-check ms-2">
-                                    <input class="form-check-input" type="checkbox" value="">
+                    <div class="card mb-4">
+                        <header class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col col-check flex-grow-0">
+                                    <div class="form-check ms-2">
+                                        <input class="form-check-input" type="checkbox" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                                    <select class="form-select">
+                                        <option selected>All category</option>
+                                        <option>Electronics</option>
+                                        <option>Clothes</option>
+                                        <option>Automobile</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <input type="date" value="02.05.2021" class="form-control">
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <select class="form-select">
+                                        <option selected>Status</option>
+                                        <option>Active</option>
+                                        <option>Disabled</option>
+                                        <option>Show all</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
-                                <select class="form-select">
-                                    <option selected>All category</option>
-                                    <option>Electronics</option>
-                                    <option>Clothes</option>
-                                    <option>Automobile</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2 col-6">
-                                <input type="date" value="02.05.2021" class="form-control">
-                            </div>
-                            <div class="col-md-2 col-6">
-                                <select class="form-select">
-                                    <option selected>Status</option>
-                                    <option>Active</option>
-                                    <option>Disabled</option>
-                                    <option>Show all</option>
-                                </select>
-                            </div>
-                        </div>
-                    </header>
-                    <!-- card-header end// -->
-                    <div class="card-body">
-                        <% console.log('hello'); %>
-                        <% if (product.length) { %>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">
-                                            <input type="checkbox">
-                                        </th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Image</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Stock</th>
-                                        <th scope="col">Category</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% for (let i = 0; i < product.length; i++) { %>
-                                        <tr>
-                                            <td>
-                                                <input type="checkbox">
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    <div class="info">
-                                                        <h6 class="mb-0"><%= product[i].name %></h6>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td class="align-middle">
+                        </header>
+                        <!-- card-header end// -->
+                        <div class="card-body">
+                            <% console.log('hello'); %>
+                                <% if (product.length) { %>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">
+                                                    <input type="checkbox">
+                                                </th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Image</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Stock</th>
+                                                <th scope="col">Category</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for (let i=0; i < product.length; i++) { %>
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox">
+                                                    </td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <div class="info">
+                                                                <h6 class="mb-0">
+                                                                    <%= product[i].name %>
+                                                                </h6>
+                                                            </div>
+                                                        </a>
+                                                    </td>
+                                                    <td class="align-middle">
 
-                                                <img src="/product-images/<%= product[i].imageUrl[0] %>" class="img-sm img-thumbnail" alt="Item">
-                                            </td>
-                                            <td>
-                                                $<%= product[i].price %>
-                                            </td>
-                                            <td>
-                                                <%= product[i].stock %>
-                                            </td>
-                                            <td>
-                                                <%= product[i].category.name %>
-                                            </td>
-                                            <td>
-                                                <% if (product[i].availability==='AVAILABLE') { %>
+                                                        <img src="/product-images/<%= product[i].imageUrl[0] %>"
+                                                            class="img-sm img-thumbnail" alt="Item">
+                                                    </td>
+                                                    <td>
+                                                        $<%= product[i].price %>
+                                                    </td>
+                                                    <td>
+                                                        <%= product[i].stock %>
+                                                    </td>
+                                                    <td>
+                                                        <%= product[i].category.name %>
+                                                    </td>
+                                                    <td>
+                                                        <% if (product[i].availability==='AVAILABLE' ) { %>
 
-                                                    <span class="badge rounded-pill alert-success"><%= product[i].availability %>
-                                                    </span>
-                                                <% } else {%>
-                                                    <span class="badge rounded-pill alert-danger"><%= product[i].availability %>
-                                                    </span>
-                                                <% } %>
-                                            </td>
-                                            <td>
-                                                <span><%= product[i].createdAt %>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <% const id = product[i]._id %>
-                                                <% console.log(id,'id are showing'); %>
+                                                            <span class="badge rounded-pill alert-success">
+                                                                <%= product[i].availability %>
+                                                            </span>
+                                                            <% } else {%>
+                                                                <span class="badge rounded-pill alert-danger">
+                                                                    <%= product[i].availability %>
+                                                                </span>
+                                                                <% } %>
+                                                    </td>
+                                                    <td>
+                                                        <span>
+                                                            <%= product[i].createdAt %>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="/admin/edit-products/<%= product[i]._id %>"
+                                                            class="btn btn-sm font-sm rounded btn-brand m-3">
+                                                            <i class="material-icons md-edit"></i>
+                                                            Edit
+                                                        </a>
 
-                                                <a href="/admin/edit-products/<%= product[i]._id %>" class="btn btn-sm font-sm rounded btn-brand m-3">
-                                                    <i class="material-icons md-edit"></i>
-                                                    Edit
-                                                </a>
-                                                <% if(product[i].availability ==='AVAILABLE') {%>
-
-                                                    <% const availability = product[i].availability %>
-
-                                                    <button href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability %>" onclick="HideAndUnhide('<%= id %>',' <%= availability%>')" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">HIDE
-                                                        <i class="material-icons md-delete_forever"></i>
-                                                    </button>
-                                                <% } else { %>
-                                                    <a href="/admin/manage-products/<%= product[i]._id %>?id=<%= product[i].availability %>" onclick="HideAndUnhide('<%= id %>',' <%= availability%>')" class="btn btn-sm font-sm btn-light rounded" style="width: 6rem;">SHOW
-                                                        <i class="material-icons md-delete_forever"></i>
-                                                    </a>
-                                                <% } %>
-                                            </td>
+                                                        <button
+                                                            onclick="hideAndUnhide('<%= product[i]._id %>','<%= product[i].availability %>')"
+                                                            class="btn btn-sm font-sm btn-light rounded"
+                                                            id="productButton_<%= product[i]._id %>"
+                                                            style="width: 6rem;">
+                                                            <% if(product[i].availability==='AVAILABLE' ) {%>
+                                                                HIDE
+                                                                <% } else { %>
+                                                                    SHOW
+                                                                    <% } %>
+                                                                        <i class="material-icons md-delete_forever"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                </td>
+                                        </tbody>
                                         </tr>
-                                    </td>
-                                </tbody>
-                            </tr>
-                        <% } %>
-                    </tbody>
-                </table>
-            <% } %>
-        </div>
+                                        <% } %>
+                                            </tbody>
+                                    </table>
+                                    <% } %>
+                        </div>
 
 
-        <!-- card-body end// -->
+                        <!-- card-body end// -->
     </body>
-</html></div><!-- card end// --><div class="pagination-area mt-30 mb-50">
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-start">
-        <li class="page-item active">
-            <a class="page-link" href="#">01</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">02</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">03</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link dot" href="#">...</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">16</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">
-                <i class="material-icons md-chevron_right"></i>
-            </a>
-        </li>
-    </ul>
+
+</html>
+</div><!-- card end// -->
+<div class="pagination-area mt-30 mb-50">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-start">
+            <li class="page-item active">
+                <a class="page-link" href="#">01</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">02</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">03</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link dot" href="#">...</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">16</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">
+                    <i class="material-icons md-chevron_right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div><%- include('./partials/footer/footer.ejs') %>
     <script>
-
-        // function HideAndUnhide(id,availability) {
-        //     console.log(id);
-        //     console.log(availability);
-        //     // const param = id
-        //     // console.log(id, 'id is working hurray');
-        //     // axios.get(`http://localhost:3000/admin/products/+${param}`).then((result) => {
-        //     //     console.log(result, 'result is working');
-        //     // }).catch((err) => {});
-        // }
-        function HideAndUnhide(id, availability) {
-            console.log(id, 'fetched id is showing');
-            console.log(availability);
-            fetch('/admin/manage-products/', {
-                method: 'get',
-                query: JSON.stringify(
-                    {availability: availability}
-                ),
-                params: JSON.stringify(
-                    {id: id}
-                )
-
-
+        async function hideAndUnhide(id, availability) {
+            console.log(id, availability)
+            const response = await fetch(`/admin/manage-products/${id}?availability=${availability}`,{
+                method:'GET',
+                headers:{
+                    'Content-Type':'application/json'
+                }
             })
+            
+            .then(response=>{console.log(response,'response recieved');
+
+                if(!response.ok){
+                    throw err('error occured')
+                }
+                return response.json()
+            }).then(data=>{
+                console.log(data,'data is recieving or not');
+                if (data.id) {
+                    window.location.reload()
+                    console.log('fetched successfull');
+            } else {
+                console.error('fetched unsuccessfull', data.error);
+            }
+            })
+            
+            // console.log(response);
+            
+
+
+            // const data = await response.json()
+            // console.log(data, 'something error happened');
+
+          
         }
+
     </script>
-</nav></div></section><!-- content-main end// --><%- include('./partials/footer/footer.ejs') %></></html>
+    </body>
+
+    </html>
