@@ -12,6 +12,7 @@ import { user_contactGet } from '../../../controller/user/home/contact.mjs';
 import { user_productView } from '../../../controller/user/home/product-view.mjs';
 import { user_profileGet } from '../../../controller/user/home/user-profile.mjs';
 import { user_authentication } from '../../../middleware/user-auth.mjs';
+import { user_setNewPasswordGet, user_setNewPasswordPost } from '../../../controller/user/home/set-new-password.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -30,6 +31,9 @@ routeHome.get('/checkout', user_checkoutGet)
 routeHome.post('/address', user_addressPost)
 
 routeHome.get('/cart',user_authentication, user_cartGet)
+
+routeHome.get('/set-new-password',user_authentication,user_setNewPasswordGet)
+routeHome.post('/set-new-password',user_authentication,user_setNewPasswordPost)
 
 routeHome.get('/product-view/:id',user_productView)
 
