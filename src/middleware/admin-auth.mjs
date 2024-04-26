@@ -1,5 +1,5 @@
 
-const admin_authentication = async (req,res,next)=>{
+export const admin_authentication = async (req,res,next)=>{
   if(req.session.isAdminAuthencticated){
     next()
   }else{
