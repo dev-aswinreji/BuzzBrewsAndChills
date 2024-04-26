@@ -23,23 +23,11 @@ export const admin_addNewProductsGet = async (req, res) => {
 export const admin_addNewProductsPost = async (req, res) => {
 
     try {
-        console.log(req.query,'what is working here');
-        // console.log(req.body)
-        console.log(req.body,'req.body is ');
-        console.log(req.body.data);
-        console.log(req.body.formData);
-        console.log(req.body.croppedImage,'cropped images is showing');
-        const categoryName = JSON.parse(JSON.stringify(req.body.category))
-        console.log(FormData,'formData is what');
-    
-        // const categoryData = await findUniqueCategory(categoryName)
-        console.log(req.files,'req.files is working');
-
         let imageUrl = []
         let count = 0
         for(const file of req.files){
             imageUrl[count] = file.filename
-            count++
+              count++
         }
 
         console.log(imageUrl,'imageurl Multiple ');
