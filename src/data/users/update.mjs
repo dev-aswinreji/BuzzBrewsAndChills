@@ -11,3 +11,7 @@ export async function updateUserPassword(userEmail, newPassword) {
     const updated = await userCollection.updateOne({ email: userEmail }, { $set: { password: newPassword } })
     console.log(updated)
 }
+
+export async function updateUserPasswordUsingId (id,newPassword){
+    return await userCollection.findByIdAndUpdate(id,{password:newPassword})
+}
