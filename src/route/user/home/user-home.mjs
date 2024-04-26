@@ -25,7 +25,7 @@ routeHome.get('/contact', user_contactGet)
 
 routeHome.get('/user-profile', user_profileGet)
 
-routeHome.get('/checkout', user_authentication, user_checkoutGet)
+routeHome.get('/checkout', user_authentication,user_checkoutGet)
 routeHome.post('/address', user_addressPost)
 
 routeHome.get('/cart', user_authentication, user_cartGet)
