@@ -18,8 +18,8 @@ export const admin_userListManage = async (req, res) => {
     try {
 
         const userId = req.params.id
-        const userAccountStatus = req.query.id
-
+        const userAccountStatus = req.query.accountStatus
+        
         if (userAccountStatus === 'ACTIVE') {
             req.session.userAllowed = 'BLOCKED'
             await updateUserStatus(userId, {accountStatus: 'BLOCKED'})
@@ -27,7 +27,9 @@ export const admin_userListManage = async (req, res) => {
             await updateUserStatus(userId, {accountStatus: 'ACTIVE'})
         }
 
-        res.redirect('/admin/users-list')
+        res.json({id:userId})
+
+        // res.redirect('/admin/users-list')
     } catch (error) {
         console.log(error, 'ADMIN USER LIST POST');
     }
