@@ -23,6 +23,8 @@ export const admin_addNewProductsGet = async (req, res) => {
 export const admin_addNewProductsPost = async (req, res) => {
 
     try {
+        const file = req.files
+        const categoryName = req.body.category
         let imageUrl = []
         let count = 0
         for(const file of req.files){
@@ -30,13 +32,21 @@ export const admin_addNewProductsPost = async (req, res) => {
               count++
         }
 
-        console.log(imageUrl,'imageurl Multiple ');
-        const {name,description,price,stock} = JSON.parse(JSON.stringify(req.body))
-
         const category = await findUniqueCategory(categoryName)
+        
+        const product_data = {
+            name:req.body.name,
+            description:req.body.description,
+            price:req.body.price,
+            category:category,
+            stock:req.body.stock,
+            imageUrl:imageUrl
+        }
 
-        const product_data = {name,description,price,category,stock,imageUrl}
-        console.log(product_data,'product data is showing successfully');
+        console.log(imageUrl,'imageurl Multiple ');
+
+        // const product_data = {name,description,price,category,stock,imageUrl}
+        // console.log(product_data,'product data is showing successfully');
         
         await insertNewProducts(product_data)
         res.redirect('/admin/add-new-products')
