@@ -11,6 +11,7 @@ import { user_shopGet } from '../../../controller/user/home/shop.mjs';
 import { user_contactGet } from '../../../controller/user/home/contact.mjs';
 import { user_productView } from '../../../controller/user/home/product-view.mjs';
 import { user_profileGet } from '../../../controller/user/home/user-profile.mjs';
+import { user_authentication } from '../../../middleware/user-auth.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -28,7 +29,7 @@ routeHome.get('/user-profile',user_profileGet)
 routeHome.get('/checkout', user_checkoutGet)
 routeHome.post('/address', user_addressPost)
 
-routeHome.get('/cart', user_cartGet)
+routeHome.get('/cart',user_authentication, user_cartGet)
 
 routeHome.get('/product-view/:id',user_productView)
 
