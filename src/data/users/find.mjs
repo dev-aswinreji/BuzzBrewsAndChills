@@ -17,3 +17,7 @@ export async function findUserAddressUsingPopulate(data) {
 export async function findSigninWithGoogleUser (data){
     return await googleCollection.findOne({googleId:data})
 }
+
+export async function findUserUsingIdAndPopulateAddress(userId){
+    return await userCollection.findById(userId).populate('addresses')
+}

@@ -175,6 +175,8 @@
                                     <label>Current Address:</label>
                                     <% if (user.addresses.length>0) { %>
                                         <%= user.addresses %>
+
+                                        <a href="/edit-address/?id=<%= user._id %> ">Edit Address</a>
                                         
                                         <% }else{ %>
                                             No address found
