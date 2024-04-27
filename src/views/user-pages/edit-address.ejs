@@ -82,31 +82,42 @@
                         <div class="col-lg-8 offset-lg-2 text-center">
                             <div class="breadcrumb-text">
                                 <p>Fresh and Organic</p>
-                                <h1>User Profile</h1>
+                                <h1>Edit Address</h1>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <% if (user.addresses.length>0) { %>
-
-                <div class="mainDiv">
-                    <div class="form-group">
-                        <input type="text" class="form-control" value="<%= user.addresses.phoneNumber %> "
-                            id="inputState" placeholder="Phone Number">
-
-                        <input type="text" class="form-control" value="<%= user.addresses.homeAddress %> "
-                            id="autocomplete" placeholder="Home Address">
-
-                        <input type="city" class="form-control" value="<%= user.address.city %> " id="inputCity"
-                            placeholder="City">
-
-                        <input type="zip" class="form-control" id="inputZip" placeholder="Zip">
-
-                        <input type="country" class="form-control" value="<%= user.addresses.country %> "
-                            id="inputCountry" placeholder="Country">
+                <form action="/edit-address/?id=<%= user.addresses[0]._id %>" method="post">
+                    <div class="mainDiv">
+                        <div class="form-group">
+                                <h5 for="">Name </h5>
+                            <input type="text" class="form-control" value="<%= user.addresses[0].name %>" name="name"
+                                id="inputState" placeholder="Name">
+                            <br>
+                            <h5 for="">Phone Number</h5>
+                            <input type="text" class="form-control" value="<%= user.addresses[0].phoneNumber %>" name="phoneNumber"
+                                id="inputState" placeholder="Phone Number">
+                            <br>
+                            <h5 for="">Home Address</h5>
+                            <input type="text" class="form-control" value="<%= user.addresses[0].homeAddress %>" id="" name="homeAddress"
+                                placeholder="Home Address">
+                            <br>
+                            <h5>City</h5>
+                            <input type="city" class="form-control" value="<%= user.addresses[0].city %>" name="city"
+                                id="inputCity" placeholder="City">
+                            <br>
+                            <H5>Zip</H5>
+                            <input type="zip" class="form-control" id="inputZip" placeholder="Zip">
+                            <br>
+                            <h5>Country</h5>
+                            <input type="country" class="form-control" value="<%= user.addresses[0].country %>" name="country"
+                                id="inputCountry" placeholder="Country">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
                     </div>
-                </div>
+                </form>
                 <% }else{ %>
                     <div class="mainDiv">
 
@@ -115,7 +126,7 @@
                     <% } %>
                         <%- include('./partials/footer/footer.ejs') %>
     </body>
-    <script>
+    <!-- <script>
         let placeSearch, autocomplete;
 
         // List all address components (corresponds to form field IDs and Google address object)
@@ -185,4 +196,4 @@
             }
         }
 
-    </script>
+    </script> -->
