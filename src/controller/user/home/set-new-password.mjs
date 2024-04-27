@@ -1,5 +1,4 @@
-import { hash } from "bcrypt";
-import { updateUserPassword, updateUserPasswordUsingId } from "../../../data/users/update.mjs"
+import { updateUserPasswordUsingId } from "../../../data/users/update.mjs"
 import { hashPassword } from "../../../utils/password-hashing.mjs";
 
 export const user_setNewPasswordGet = async (req,res)=>{
