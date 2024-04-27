@@ -174,18 +174,18 @@
                                 <p>
                                     <label>Current Address:</label>
                                     <% if (user.addresses.length>0) { %>
-                                        <%= user.addresses %>
-
-                                        <a href="/edit-address/?id=<%= user._id %> ">Edit Address</a>
-                                        
-                                        <% }else{ %>
-                                            No address found
-                                            <% } %> 
-                                    </p>
-                                    <p>
-                                        <label>Joined:</label>
-                                        January 1, 2020
-                                    </p>
+                                        <%= user.addresses[0].homeAddress%>
+                                        <br>
+                                            <button class="btn btn-success btn-round"> <a href="/edit-address/?id=<%= user._id %> " class="text-light">Edit Address</a>
+                                            </button>
+                                            <% }else{ %>
+                                                No address found
+                                                <% } %>
+                                </p>
+                                <p>
+                                    <label>Joined:</label>
+                                    January 1, 2020
+                                </p>
                             </div>
                             <div class="profile-bio">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla varius libero quis
