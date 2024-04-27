@@ -7,6 +7,7 @@ export const user_updateProfileGet = async (req,res) =>{
     try {
         const userId = req.query.id 
         const user = await findUserUsingId(userId)
+        console.log(user,'user data is showing properly');
         res.render('update-profile',{user})
 
     } catch (error) {
