@@ -1,5 +1,6 @@
 
 
+import { userAddressCollection } from "../../model/userAddress.mjs";
 import { userCollection } from "../../model/userData.mjs";
 
 export async function updateUser(data, addressOfUser) {
@@ -14,4 +15,8 @@ export async function updateUserPassword(userEmail, newPassword) {
 
 export async function updateUserPasswordUsingId (id,newPassword){
     return await userCollection.findByIdAndUpdate(id,{password:newPassword})
+}
+
+export async function updateUserAddressUsingId (id,userData){
+    return await userAddressCollection.findByIdAndUpdate(id,userData)
 }
