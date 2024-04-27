@@ -4,7 +4,7 @@ const routeHome = express.Router()
 
 import {user_homeGet} from "../../../controller/user/home/home.mjs";
 import {user_addressPost, user_checkoutGet} from '../../../controller/user/home/checkout.mjs';
-import {user_cartGet} from '../../../controller/user/home/cart.mjs';
+import {user_addToCartGet, user_cartGet} from '../../../controller/user/home/cart.mjs';
 import {user_aboutGet} from '../../../controller/user/home/about.mjs';
 import {user_shopGet} from '../../../controller/user/home/shop.mjs';
 import {user_contactGet} from '../../../controller/user/home/contact.mjs';
@@ -38,6 +38,7 @@ routeHome.get('/checkout', user_checkoutGet)
 routeHome.post('/address', user_addressPost)
 
 routeHome.get('/cart', user_authentication, user_cartGet)
+routeHome.get('/add-to-cart', user_authentication, user_addToCartGet)
 
 routeHome.get('/set-new-password', user_authentication, user_setNewPasswordGet)
 routeHome.post('/set-new-password', user_authentication, user_setNewPasswordPost)

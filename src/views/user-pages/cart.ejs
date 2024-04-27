@@ -21,6 +21,7 @@
 				</div>
 			</div>
 			<!-- end breadcrumb section -->
+			<% if (cartDatas.length>0) { %>
 
 			<!-- cart -->
 			<div class="cart-section mt-150 mb-150">
@@ -40,39 +41,25 @@
 										</tr>
 									</thead>
 									<tbody>
+										<%# console.log(cart,'cart data in ejs file'); %> 
+										 
+									<% for( let i = 0; i < 	cartDatas.length; i++ ) { %>
+										<% console.log(cartDatas.length); %> 
+									
 										<tr class="table-body-row">
 											<td class="product-remove"><a href="#"><i
-														class="far fa-window-close"></i></a></td>
-											<td class="product-image"><img src="assets/img/products/product-img-1.jpg"
+												class="far fa-window-close"></i></a></td>
+												<td class="product-image"><img src="/product-images/<%= cartDatas[i].items[0].productId.imageUrl[0] %> "
 													alt="">
-											</td>
-											<td class="product-name">Strawberry</td>
-											<td class="product-price">$85</td>
-											<td class="product-quantity"><input type="number" placeholder="0"></td>
-											<td class="product-total">1</td>
-										</tr>
-										<tr class="table-body-row">
-											<td class="product-remove"><a href="#"><i
-														class="far fa-window-close"></i></a></td>
-											<td class="product-image"><img src="assets/img/products/product-img-2.jpg"
-													alt="">
-											</td>
-											<td class="product-name">Berry</td>
-											<td class="product-price">$70</td>
-											<td class="product-quantity"><input type="number" placeholder="0"></td>
-											<td class="product-total">1</td>
-										</tr>
-										<tr class="table-body-row">
-											<td class="product-remove"><a href="#"><i
-														class="far fa-window-close"></i></a></td>
-											<td class="product-image"><img src="assets/img/products/product-img-3.jpg"
-													alt="">
-											</td>
-											<td class="product-name">Lemon</td>
-											<td class="product-price">$35</td>
-											<td class="product-quantity"><input type="number" placeholder="0"></td>
-											<td class="product-total">1</td>
-										</tr>
+												</td>
+												<td class="product-name"><%= cartDatas[i].items[0].productId.name %> </td>
+												<td class="product-price">Rs <%= cartDatas[i].items[0].productId.price %> </td>
+												<% console.log(cartDatas[i].items[0].quantity ); %> 
+												<td class="product-quantity"><input type="number" name="test" min="1" value="<%= cartDatas[i].items[0].quantity %>" placeholder="1" oninput="validity.valid||(value='');"></td>
+												<td class="product-total"></td>
+											</tr>
+											<% } %>
+										
 									</tbody>
 								</table>
 							</div>
@@ -122,7 +109,38 @@
 				</div>
 			</div>
 			<!-- end cart -->
+			<% }else{ %>
+				
+<style>
+    /* Custom CSS for styling */
+    .empty-cart {
+        margin-top: 50px;
+        text-align: center;
+    }
 
+    .empty-cart h2 {
+        color: #333;
+    }
+
+    .empty-cart a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .empty-cart a:hover {
+        text-decoration: underline;
+    }
+</style>
+            <div class="container">
+                <div class="empty-cart">
+                    <h2>Your cart is empty</h2>
+                    <p>Continue shopping <a href="#">here</a>.</p>
+                </div>
+            </div>
+
+
+            <!-- end cart -->>
+				<% } %> 
 
 			<%- include('./partials/footer/footer.ejs') %>
 
