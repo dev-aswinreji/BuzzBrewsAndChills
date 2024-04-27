@@ -13,6 +13,7 @@ import { user_productView } from '../../../controller/user/home/product-view.mjs
 import { user_profileGet } from '../../../controller/user/home/user-profile.mjs';
 import { user_authentication } from '../../../middleware/user-auth.mjs';
 import { user_setNewPasswordGet, user_setNewPasswordPost } from '../../../controller/user/home/set-new-password.mjs';
+import { user_editAddressGet } from '../../../controller/user/home/edit-address.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -24,6 +25,8 @@ routeHome.get('/contact',user_contactGet)
 routeHome.get('/shop',user_shopGet)
 
 routeHome.get('/contact',user_contactGet)
+
+routeHome.get('/edit-address',user_authentication,user_editAddressGet)
 
 routeHome.get('/user-profile',user_authentication,user_profileGet)
 
