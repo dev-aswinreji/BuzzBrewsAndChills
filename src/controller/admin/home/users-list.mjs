@@ -1,33 +1,35 @@
-import { findAllUser } from "../../../data/admin/find.mjs"
-import { updateUserStatus } from "../../../data/admin/update.mjs"
+import {findAllUser} from "../../../data/admin/find.mjs"
+import {updateUserStatus} from "../../../data/admin/update.mjs"
 
 
 export const admin_userListGet = async (req, res) => {
     try {
-        
+
+        const userList = await findAllUser()
+        console.log(userList)
+        res.render('usersList', {userList})
+
     } catch (error) {
-        console.log(error,'ADMIN USER LIST GET');
-        
+        console.log(error, 'ADMIN USER LIST GET');
     }
-    const userList = await findAllUser()
-    console.log(userList)
-    res.render('usersList', { userList })
 }
 
 export const admin_userListManage = async (req, res) => {
     try {
 
         const userId = req.params.id
-        const userAccountStatus = req.query.id
-
+        const userAccountStatus = req.query.accountStatus
+        
         if (userAccountStatus === 'ACTIVE') {
             req.session.userAllowed = 'BLOCKED'
-            await updateUserStatus(userId, { accountStatus: 'BLOCKED' })
+            await updateUserStatus(userId, {accountStatus: 'BLOCKED'})
         } else {
-            await updateUserStatus(userId, { accountStatus: 'ACTIVE' })
+            await updateUserStatus(userId, {accountStatus: 'ACTIVE'})
         }
 
-        res.redirect('/admin/users-list')
+        res.json({id:userId})
+
+        // res.redirect('/admin/users-list')
     } catch (error) {
         console.log(error, 'ADMIN USER LIST POST');
     }
