@@ -6,6 +6,10 @@ export async function findUser (data){
     return await userCollection.findOne({email:data})
 }
 
+export async function findUserUsingId (userId){
+    return await userCollection.findById(userId)    
+}
+
 export async function findUserAddress(data){
     return await userAddressCollection.findOne({home_address:data})
 }
