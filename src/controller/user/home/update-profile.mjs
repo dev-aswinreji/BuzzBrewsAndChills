@@ -22,12 +22,14 @@ export const user_updateProfilePost = async (req,res) =>{
     try {
         
         const userId = req.query.id
+        
         const userData = {
-            name:req.body.name,
+            fullName:req.body.fullName,
             lastName:req.body.lastName,
             email:req.body.email
         }
-        await updateUserUsingId(userId,userData)
+        const updatedData = await updateUserUsingId(userId,userData)
+        
         res.redirect('/user-profile')
 
     } catch (error) {

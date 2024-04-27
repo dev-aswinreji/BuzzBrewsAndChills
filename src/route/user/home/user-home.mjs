@@ -13,7 +13,7 @@ import {user_profileGet} from '../../../controller/user/home/user-profile.mjs';
 import {user_authentication} from '../../../middleware/user-auth.mjs';
 import {user_setNewPasswordGet, user_setNewPasswordPost} from '../../../controller/user/home/set-new-password.mjs';
 import {user_editAddressGet, user_editAddressPost} from '../../../controller/user/home/edit-address.mjs';
-import {user_updateProfileGet} from '../../../controller/user/home/update-profile.mjs';
+import {user_updateProfileGet, user_updateProfilePost} from '../../../controller/user/home/update-profile.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -32,6 +32,7 @@ routeHome.post('/edit-address', user_authentication, user_editAddressPost)
 routeHome.get('/user-profile', user_authentication, user_profileGet)
 
 routeHome.get('/update-profile', user_authentication, user_updateProfileGet)
+routeHome.post('/update-profile',user_authentication,user_updateProfilePost)
 
 
 routeHome.get('/checkout', user_checkoutGet)
