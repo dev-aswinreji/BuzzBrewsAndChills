@@ -53,17 +53,47 @@ export const user_addToCartGet = async (req, res) => {
 
             await insertCartData(cartData)
 
-        } else { 
-            if(quantity>1){
-                await updateCartDatas(userId, product,quantity)
-                
-            }else{
+        } else {
+            console.log( quantity,'what happened to quantity');
+            if (quantity > 1) {
+                const cartQuantityCheck = await findCartDataDuplicate(userId, product)
+                console.log( cartQuantityCheck, 'cart quanity checking');
+                let quantityNumber = Number(cartQuantityCheck.items[0].quantity) + Number(quantity)
+                console.log( quantityNumber,'total is nan or what');
+                if(quantityNumber<=10){
+                    
+                    await updateCartDatas(userId, product, quantity)
+                }else{
+                    return res.json({id:'error'})
+                }
 
-                await updateCartDatas(userId,product)
+            } else {
+                const cartQuantityCheck = await findCartDataDuplicate(userId, product)
+                console.log(cartQuantityCheck, 'cart quanity checking');
+                let quantityNumber = Number(cartQuantityCheck.items[0].quantity) + 1
+            
+                console.log(quantityNumber,'quantity number is');
+                if (quantityNumber <= 10) {
+
+                    await updateCartDatas(userId, product)
+
+                }else{
+
+                    return res.redirect(`/${path}`)
+                }
+
             }
         }
+        console.log('last working or not ');
         // window.location.reload()
-        res.redirect(`/${path}`)
+        if (! quantity) {
+
+            res.redirect(`/${path}`)
+
+        } else {
+
+            res.json({id: 'success'})
+        }
     } catch (error) {
         console.log(error, 'USER ADD TO CART GET');
         res.send(500)

@@ -1,209 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
-    <style>
-        .product-image-container {
-          position: relative;
-          display: inline-block;
-          margin-right: 20px; /* Adjust spacing between images */
-        }
+<style>
+    .product-image-container {
+        position: relative;
+        display: inline-block;
+        margin-right: 20px;
+        /* Adjust spacing between images */
+    }
 
-        .image-magnifier {
-          width: 400px; /* Adjust as needed */
-          position: relative;
-        }
+    .image-magnifier {
+        width: 400px;
+        /* Adjust as needed */
+        position: relative;
+    }
 
-        .product-image {
-          width: 100%;
-          vertical-align: top;
-        }
+    .product-image {
+        width: 100%;
+        vertical-align: top;
+    }
 
-        .magnifier {
-          width: 150px; /* Adjust as needed */
-          height: 150px; /* Adjust as needed */
-          position: absolute;
-          border: 2px solid #000;
-          cursor: none;
-          display: none;
-          pointer-events: none;
-          background-size: 800px 800px;
-          background-repeat: no-repeat;
-        }
-    </style>
-    <%- include ('partials/head/head.ejs' ) %>
+    .magnifier {
+        width: 150px;
+        /* Adjust as needed */
+        height: 150px;
+        /* Adjust as needed */
+        position: absolute;
+        border: 2px solid #000;
+        cursor: none;
+        display: none;
+        pointer-events: none;
+        background-size: 800px 800px;
+        background-repeat: no-repeat;
+    }
+</style>
+<%- include ('partials/head/head.ejs' ) %>
+
     <body>
 
         <%- include('partials/header/header.ejs') %>
 
-        <!-- breadcrumb-section -->
-        <div class="breadcrumb-section breadcrumb-bg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2 text-center">
-                        <div class="breadcrumb-text">
-                            <p>See more Details</p>
-                            <h1>Single Product</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end breadcrumb section -->
-
-        <!-- single product -->
-        <div class="single-product mt-150 mb-150">
-            <% if (product) { %>
+            <!-- breadcrumb-section -->
+            <div class="breadcrumb-section breadcrumb-bg">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-5">
-                            <div class="single-product-img">
-                                <div class="product-image-container">
-                                    <div class="image-magnifier">
-                                        <img src="/product-images/<%= product.imageUrl[0] %> " alt="Product Image" class="product-image">
-                                        <div class="magnifier"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-7">
-                            <div class="single-product-content">
-                                <h3>Green apples have polyphenols</h3>
-                                <p class="single-product-pricing">
-                                    <span>Per Kg</span>
-                                    $50</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta sint dignissimos, rem commodi cum voluptatem quae reprehenderit repudiandae ea tempora incidunt ipsa, quisquam animi perferendis eos eum modi! Tempora, earum.</p>
-                                <div class="single-product-form">
-                                    <form action="/cart?">
-                                        <input type="number" name="test" min="1" placeholder="1" oninput="validity.valid||(value='');"><br>
-                                    </form>
-                                    <a href="/add-to-cart/?productId=<%= product._id %>&path=product-view/<%= product._id %>" class="cart-btn">
-                                        <i class="fas fa-shopping-cart"></i>
-                                        Add to Cart</a>
-                                    <p>
-                                        <strong>Categories:
-                                        </strong>Fruits, Organic</p>
-                                </div>
-                                <h4>Share:</h4>
-                                <ul class="product-share">
-                                    <li>
-                                        <a href="">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="">
-                                            <i class="fab fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="">
-                                            <i class="fab fa-google-plus-g"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="">
-                                            <i class="fab fa-linkedin"></i>
-                                        </a>
-                                    </li>
-                                </ul>
+                        <div class="col-lg-8 offset-lg-2 text-center">
+                            <div class="breadcrumb-text">
+                                <p>See more Details</p>
+                                <h1>Single Product</h1>
                             </div>
                         </div>
                     </div>
-                </div>
-            <% } %>
-        </div>
-        <!-- end single product -->
-
-        <!-- more products -->
-        <div class="more-products mb-150">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2 text-center">
-                        <div class="section-title">
-                            <h3>
-                                <span class="orange-text">Related</span>
-                                Products</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
-                        </div>
-                    </div>
-                </div>
-                <% for( let i = 0; i < relatedProduct.length; i++ ) { %>
-                    <div class="row">
-
-                        <% console.log(product._id,'haa', relatedProduct[i]._id); %>
-
-                        <% if (!relatedProduct[i]._id !== product._id) { %>
-
-                            <% console.log(product._id,'what should i do', relatedProduct[i]._id); %>
-
-                            <div class="col-lg-4 col-md-6 text-center">
-                                <div class="single-product-item">
-                                    <div class="product-image">
-                                        <a href="single-product.html"><img src="/product-images/<%= relatedProduct[i].imageUrl %> " alt=""></a>
-                                    </div>
-                                    <h3>Strawberry</h3>
-                                    <p class="product-price">
-                                        <span>Per Kg</span>
-                                        85$
-                                    </p>
-                                    <a href="cart.html" class="cart-btn">
-                                        <i class="fas fa-shopping-cart"></i>
-                                        Add to Cart</a>
-                                </div>
-                            <% } %>
-                        </div>
-                    <% } %>
                 </div>
             </div>
-        </div>
-        <!-- end more products -->
-        <%- include('partials/footer/footer.ejs') %>
-       
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          var magnifiers = document.querySelectorAll(".image-magnifier");
+            <!-- end breadcrumb section -->
 
-          magnifiers.forEach(function (element) {
-            var img = element.querySelector(".product-image");
-            var magnifier = element.querySelector(".magnifier");
-            var magnifierWidth = magnifier.offsetWidth;
-            var magnifierHeight = magnifier.offsetHeight;
-            var ratio = 2; // Adjust as needed for magnification level
+            <!-- single product -->
+            <div class="single-product mt-150 mb-150">
+                <% if (product) { %>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="single-product-img">
+                                    <div class="product-image-container">
+                                        <div class="image-magnifier">
+                                            <img src="/product-images/<%= product.imageUrl[0] %> " alt="Product Image"
+                                                class="product-image">
+                                            <div class="magnifier"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="single-product-content">
+                                    <h3>Green apples have polyphenols</h3>
+                                    <p class="single-product-pricing">
+                                        <span>Per Kg</span>
+                                        $50
+                                    </p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta sint dignissimos,
+                                        rem commodi cum voluptatem quae reprehenderit repudiandae ea tempora incidunt
+                                        ipsa, quisquam animi perferendis eos eum modi! Tempora, earum.</p>
+                                    <div class="single-product-form">
+                                        <form action="/cart?">
+                                            <input type="number" name="test" min="1" placeholder="1" id="quantity"
+                                                oninput="validity.valid||(value='');"><br>
+                                        </form>
+                                        <button
+                                            onclick="addToCartUsingFetch(`<%= product._id %>`,`product-view/<%= product._id %>`)"
+                                            class="cart-btn">
+                                            <i class="fas fa-shopping-cart"></i>
+                                            Add to Cart</button>
+                                        <p>
+                                            <strong>Categories:
+                                            </strong>Fruits, Organic
+                                        </p>
+                                    </div>
+                                    <h4>Share:</h4>
+                                    <ul class="product-share">
+                                        <li>
+                                            <a href="">
+                                                <i class="fab fa-facebook-f"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="">
+                                                <i class="fab fa-google-plus-g"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="">
+                                                <i class="fab fa-linkedin"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+            <!-- end single product -->
 
-            img.addEventListener("mousemove", function (e) {
-              var pos = getCursorPos(e, img);
-              magnify(e, pos);
-            });
+            <!-- more products -->
+            <div class="more-products mb-150">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-2 text-center">
+                            <div class="section-title">
+                                <h3>
+                                    <span class="orange-text">Related</span>
+                                    Products
+                                </h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque
+                                    eveniet beatae optio.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <% for( let i=0; i < relatedProduct.length; i++ ) { %>
+                        <div class="row">
 
-            function getCursorPos(e, img) {
-              var a, x = 0, y = 0;
-              e = e || window.event;
-              a = img.getBoundingClientRect();
-              x = e.pageX - a.left;
-              y = e.pageY - a.top;
-              x = x - window.pageXOffset;
-              y = y - window.pageYOffset;
-              return {x : x, y : y};
-            }
+                            <% console.log(product._id,'haa', relatedProduct[i]._id); %>
 
-            function magnify(e, pos) {
-              var x, y;
-              x = pos.x - (magnifierWidth / 2);
-              y = pos.y - (magnifierHeight / 2);
-              magnifier.style.left = x + "px";
-              magnifier.style.top = y + "px";
-              magnifier.style.backgroundImage = "url('" + img.src + "')";
-              magnifier.style.backgroundPosition = "-" + (pos.x * ratio - magnifierWidth / 2) + "px -" + (pos.y * ratio - magnifierHeight / 2) + "px";
-            }
+                                <% if (!relatedProduct[i]._id !==product._id) { %>
 
-            img.addEventListener("mouseenter", function () {
-              magnifier.style.display = "block";
-            });
+                                    <% console.log(product._id,'what should i do', relatedProduct[i]._id); %>
 
-            img.addEventListener("mouseleave", function () {
-              magnifier.style.display = "none";
-            });
-          });
-        });
-    </script>
+                                        <div class="col-lg-4 col-md-6 text-center">
+                                            <div class="single-product-item">
+                                                <div class="product-image">
+                                                    <a href="single-product.html"><img
+                                                            src="/product-images/<%= relatedProduct[i].imageUrl %> "
+                                                            alt=""></a>
+                                                </div>
+                                                <h3>Strawberry</h3>
+                                                <p class="product-price">
+                                                    <span>Per Kg</span>
+                                                    85$
+                                                </p>
+                                                <a href="cart.html" class="cart-btn">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                    Add to Cart</a>
+                                            </div>
+                                            <% } %>
+                                        </div>
+                                        <% } %>
+                        </div>
+                </div>
+            </div>
+            <!-- end more products -->
+            <%- include('partials/footer/footer.ejs') %>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <script>
+                    async function addToCartUsingFetch(productId, path) {
+                        const quantity = document.getElementById('quantity').value
+                        await fetch(`/add-to-cart?productId=${productId}&path=${path}&quantity=${quantity}`)
+                            .then(response => {
+                                console.log(response);
+                                if (!response.ok) {
+                                    console.log('Some error occured in fetch method product view page');
+                                }
+                                return response.json()
+                            }).then(data => {
+                                if (data.id === 'success') {
+                                    console.log('data fetched successfully');
+                                    Swal.fire({
+                                        position: "center",
+                                        icon: "success",
+                                        title: "Item added successfully",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                } if (data.id === 'error') {
+                                    Swal.fire({
+                                        title: "Alert!",
+                                        text: "Max Limit of this product is Exceeded!",
+                                        icon: "error",
+
+                                    }).then(() => {
+                                        location.reload()
+                                    })
+
+                                }
+                                else {
+                                    console.error('data fetched got some error');
+                                }
+                            }).catch(err => {
+                                console.log(err, 'some error occured in product view fetch method');
+                            })
+                    }
+                </script>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        var magnifiers = document.querySelectorAll(".image-magnifier");
+
+                        magnifiers.forEach(function (element) {
+                            var img = element.querySelector(".product-image");
+                            var magnifier = element.querySelector(".magnifier");
+                            var magnifierWidth = magnifier.offsetWidth;
+                            var magnifierHeight = magnifier.offsetHeight;
+                            var ratio = 2; // Adjust as needed for magnification level
+
+                            img.addEventListener("mousemove", function (e) {
+                                var pos = getCursorPos(e, img);
+                                magnify(e, pos);
+                            });
+
+                            function getCursorPos(e, img) {
+                                var a, x = 0, y = 0;
+                                e = e || window.event;
+                                a = img.getBoundingClientRect();
+                                x = e.pageX - a.left;
+                                y = e.pageY - a.top;
+                                x = x - window.pageXOffset;
+                                y = y - window.pageYOffset;
+                                return { x: x, y: y };
+                            }
+
+                            function magnify(e, pos) {
+                                var x, y;
+                                x = pos.x - (magnifierWidth / 2);
+                                y = pos.y - (magnifierHeight / 2);
+                                magnifier.style.left = x + "px";
+                                magnifier.style.top = y + "px";
+                                magnifier.style.backgroundImage = "url('" + img.src + "')";
+                                magnifier.style.backgroundPosition = "-" + (pos.x * ratio - magnifierWidth / 2) + "px -" + (pos.y * ratio - magnifierHeight / 2) + "px";
+                            }
+
+                            img.addEventListener("mouseenter", function () {
+                                magnifier.style.display = "block";
+                            });
+
+                            img.addEventListener("mouseleave", function () {
+                                magnifier.style.display = "none";
+                            });
+                        });
+                    });
+                </script>
     </body>
+
 </html>
