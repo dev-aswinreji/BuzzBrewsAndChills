@@ -23,127 +23,216 @@
 			<!-- end breadcrumb section -->
 			<% if (cartDatas.length>0) { %>
 
-			<!-- cart -->
-			<div class="cart-section mt-150 mb-150">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-8 col-md-12">
-							<div class="cart-table-wrap">
-								<table class="cart-table">
-									<thead class="cart-table-head">
-										<tr class="table-head-row">
-											<th class="product-remove"></th>
-											<th class="product-image">Product Image</th>
-											<th class="product-name">Name</th>
-											<th class="product-price">Price</th>
-											<th class="product-quantity">Quantity</th>
-											<th class="product-total">Total</th>
-										</tr>
-									</thead>
-									<tbody>
-										<%# console.log(cart,'cart data in ejs file'); %> 
-										 
-									<% for( let i = 0; i < 	cartDatas.length; i++ ) { %>
-										<% console.log(cartDatas.length); %> 
-									
-										<tr class="table-body-row">
-											<td class="product-remove"><a href="#"><i
-												class="far fa-window-close"></i></a></td>
-												<td class="product-image"><img src="/product-images/<%= cartDatas[i].items[0].productId.imageUrl[0] %> "
-													alt="">
-												</td>
-												<td class="product-name"><%= cartDatas[i].items[0].productId.name %> </td>
-												<td class="product-price">Rs <%= cartDatas[i].items[0].productId.price %> </td>
-												<% console.log(cartDatas[i].items[0].quantity ); %> 
-												<td class="product-quantity"><input type="number" name="test" min="1" value="<%= cartDatas[i].items[0].quantity %>" placeholder="1" oninput="validity.valid||(value='');"></td>
-												<td class="product-total"></td>
+				<!-- cart -->
+				<div class="cart-section mt-150 mb-150">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-8 col-md-12">
+								<div class="cart-table-wrap">
+									<table class="cart-table">
+										<thead class="cart-table-head">
+											<tr class="table-head-row">
+												<th class="product-remove"></th>
+												<th class="product-image">Product Image</th>
+												<th class="product-name">Name</th>
+												<th class="product-price">Price</th>
+												<th class="product-quantity">Quantity</th>
+												<th class="product-total">Total</th>
 											</tr>
-											<% } %>
-										
-									</tbody>
-								</table>
-							</div>
-						</div>
+										</thead>
+										<tbody>
+											<%# console.log(cart,'cart data in ejs file'); %>
 
-						<div class="col-lg-4">
-							<div class="total-section">
-								<table class="total-table">
-									<thead class="total-table-head">
-										<tr class="table-total-row">
-											<th>Total</th>
-											<th>Price</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class="total-data">
-											<td><strong>Subtotal: </strong></td>
-											<td>$500</td>
-										</tr>
-										<tr class="total-data">
-											<td><strong>Shipping: </strong></td>
-											<td>$45</td>
-										</tr>
-										<tr class="total-data">
-											<td><strong>Total: </strong></td>
-											<td>$545</td>
-										</tr>
-									</tbody>
-								</table>
-								<div class="cart-buttons">
-									<a href="/cart" class="boxed-btn">Update Cart</a>
-									<a href="/checkout" class="boxed-btn black">Check Out</a>
+												<% for( let i=0; i < cartDatas.length; i++ ) { %>
+													<% console.log(cartDatas.length); %>
+
+														<tr class="table-body-row">
+															<td class="product-remove"><a href="#"><i
+																		class="far fa-window-close"></i></a></td>
+															<td class="product-image"><img
+																	src="/product-images/<%= cartDatas[i].items[0].productId.imageUrl[0] %>"
+																	alt="">
+															</td>
+															<td class="product-name">
+																<%= cartDatas[i].items[0].productId.name %>
+															</td>
+															<td class="product-price" id="price_<%= i %>">Rs <%=
+																	cartDatas[i].items[0].productId.price %>
+															</td>
+															<td class="product-quantity">
+																<!-- <button onclick="increaseQuantity()">+</button> -->
+																<input type="number" name="test" min="1"
+																	id="quantity_<%= i %>"
+																	value="<%= cartDatas[i].items[0].quantity %>"
+																	placeholder="1"
+																	oninput="validity.valid||(value='');incrementOrDecrement(`<%= i %>`,`<%= cartDatas[i].items[0].productId._id %>`,this.value)">
+																<!-- <button onclick="decreaseQuantity()">-</button> -->
+															</td>
+															<td class="product-total" id="totalPrice_<%= i %>">
+																<%= cartDatas[i].totalPrice %>
+															</td>
+														</tr>
+														<% } %>
+
+										</tbody>
+									</table>
 								</div>
 							</div>
 
-							<div class="coupon-section">
-								<h3>Apply Coupon</h3>
-								<div class="coupon-form-wrap">
-									<form action="index.html">
-										<p><input type="text" placeholder="Coupon"></p>
-										<p><input type="submit" value="Apply"></p>
-									</form>
+							<div class="col-lg-4">
+								<div class="total-section">
+									<table class="total-table">
+										<thead class="total-table-head">
+											<tr class="table-total-row">
+												<th>Total</th>
+												<th>Price</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="total-data">
+												<td><strong>Subtotal: </strong></td>
+												<td>$500</td>
+											</tr>
+											<tr class="total-data">
+												<td><strong>Shipping: </strong></td>
+												<td>$45</td>
+											</tr>
+											<tr class="total-data">
+												<td><strong>Total: </strong></td>
+												<td>$545</td>
+											</tr>
+										</tbody>
+									</table>
+									<div class="cart-buttons">
+										<a href="/cart" class="boxed-btn">Update Cart</a>
+										<a href="/checkout" class="boxed-btn black">Check Out</a>
+									</div>
+								</div>
+
+								<div class="coupon-section">
+									<h3>Apply Coupon</h3>
+									<div class="coupon-form-wrap">
+										<form action="index.html">
+											<p><input type="text" placeholder="Coupon"></p>
+											<p><input type="submit" value="Apply"></p>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<!-- end cart -->
-			<% }else{ %>
-				
-<style>
-    /* Custom CSS for styling */
-    .empty-cart {
-        margin-top: 50px;
-        text-align: center;
-    }
+				<!-- end cart -->
+				<% }else{ %>
 
-    .empty-cart h2 {
-        color: #333;
-    }
+					<style>
+						/* Custom CSS for styling */
+						.empty-cart {
+							margin-top: 50px;
+							text-align: center;
+						}
 
-    .empty-cart a {
-        color: #007bff;
-        text-decoration: none;
-    }
+						.empty-cart h2 {
+							color: #333;
+						}
 
-    .empty-cart a:hover {
-        text-decoration: underline;
-    }
-</style>
-            <div class="container">
-                <div class="empty-cart">
-                    <h2>Your cart is empty</h2>
-                    <p>Continue shopping <a href="#">here</a>.</p>
-                </div>
-            </div>
+						.empty-cart a {
+							color: #007bff;
+							text-decoration: none;
+						}
+
+						.empty-cart a:hover {
+							text-decoration: underline;
+						}
+					</style>
+					<div class="container">
+						<div class="empty-cart">
+							<h2>Your cart is empty</h2>
+							<p>Continue shopping <a href="#">here</a>.</p>
+						</div>
+					</div>
 
 
-            <!-- end cart -->>
-				<% } %> 
+					<!-- end cart -->>
+					<% } %>
 
-			<%- include('./partials/footer/footer.ejs') %>
+						<%- include('./partials/footer/footer.ejs') %>
 
 	</body>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<script>
+
+		// function increaseQuantity() {
+		// 	var quantityInput = document.getElementById('quantity');
+		// 	quantityInput.value = parseInt(quantityInput.value) + 1;
+		// }
+
+		// function decreaseQuantity() {
+		// 	var quantityInput = document.getElementById('quantity');
+		// 	if (parseInt(quantityInput.value) > 1) {
+		// 		quantityInput.value = parseInt(quantityInput.value) - 1;
+		// 	}
+		// }
+
+
+		async function incrementOrDecrement(index, productId, quantity) {
+			let previousQuantity ;
+			console.log('previous',previousQuantity);
+			if (quantity <= 10) {
+				
+				 previousQuantity = document.getElementById('quantity_' + index).value
+				 console.log('previo inside if',previousQuantity);
+				 
+
+				const priceText = document.getElementById('price_' + index).innerText
+
+				const price = parseFloat(priceText.replace('Rs ', '').trim());
+
+				const totalPrice = price * quantity
+
+				document.getElementById('totalPrice_' + index).innerText = totalPrice
+
+				await totalPriceUsingFetch(productId, quantity, totalPrice)
+			} else {
+				
+				Swal.fire({
+					title: "Alert!",
+					text: "Max Limit of this product is Exceeded!",
+					icon: "error"
+				}).then(()=>{
+					location.reload()
+				})
+
+			}
+
+		}
+
+		async function totalPriceUsingFetch(productId, quantity, totalPrice) {
+
+			await fetch(`/add-to-cart-totalPrice/?productId=${productId}&quantity=${quantity}&totalPrice=${totalPrice}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+				.then(response => {
+					if (!response.ok) {
+						console.log('some network failure heppen');
+					}
+					return response.json()
+				}).then(data => {
+					if (data.id) {
+						// window.location.reload() /*reloading the page disabled */
+						console.log('data fetched successfully');
+					} else {
+						console.log('data fetched unssuccessfull');
+					}
+				}).catch(err => {
+					console.log(err, 'some error occured in fetching');
+				})
+		}
+
+	</script>
 
 </html>

@@ -50,8 +50,7 @@ export const user_addToCartGet = async (req, res) => {
                 ],
                 totalPrice: product.price
             }
-            // console.log(cartData, 'cart data is showing');
-            // console.log(cartData.items[0].productId.name);
+            
 
             await insertCartData(cartData)
 
@@ -69,11 +68,15 @@ export const user_addToCartGet = async (req, res) => {
 export const user_addToCartFetchToUpdatingTotalPrice = async (req, res) => {
     try {
 
-        const id = req.query.productId
+        const productId = req.query.productId
         const userId = req.session.USER_ID
         const totalPrice = req.query.totalPrice
+        const quantity = req.query.quantity
+        console.log(productId,userId,totalPrice,quantity);
 
-        await updateCartDataOfTotalPrice(userId,id,totalPrice)
+        await updateCartDataOfTotalPrice(userId,productId,quantity,totalPrice)
+
+        res.json({id:userId})
 
     } catch (error) {
         console.log(error, 'USER ADD TO CART FETCH TO UPDATE TOTAL PRICE');
