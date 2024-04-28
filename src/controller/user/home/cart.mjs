@@ -27,7 +27,7 @@ export const user_cartGet = async (req, res) => {
 export const user_addToCartGet = async (req, res) => {
     try {
         const id = req.query.productId
-
+        const path = req.query.path
         const userEmail = req.session.userEmailForAddUserAddress
 
         const product = await findSingleProduct(id)
@@ -56,7 +56,7 @@ export const user_addToCartGet = async (req, res) => {
             await updateCartDatas(user._id,id)
         }
         // window.location.reload()
-        res.redirect('/shop')
+        res.redirect(`/${path}`)
     } catch (error) {
         console.log(error, 'USER ADD TO CART GET');
         res.send(500)

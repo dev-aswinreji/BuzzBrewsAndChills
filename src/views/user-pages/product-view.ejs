@@ -75,7 +75,7 @@
                                     <form action="/cart?">
                                         <input type="number" name="test" min="1" placeholder="1" oninput="validity.valid||(value='');"><br>
                                     </form>
-                                    <a href="/add-to-cart/?productId=<%= product._id %>" class="cart-btn">
+                                    <a href="/add-to-cart/?productId=<%= product._id %>&path=product-view/<%= product._id %>" class="cart-btn">
                                         <i class="fas fa-shopping-cart"></i>
                                         Add to Cart</a>
                                     <p>
