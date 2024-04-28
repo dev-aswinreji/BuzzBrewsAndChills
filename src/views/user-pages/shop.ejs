@@ -45,18 +45,20 @@
                             <% for(let i=0; i<products.length;i++){%>
                                 <div class="col-lg-4 col-md-6 text-center berry">
                                     <div class="single-product-item">
-                                        <div class="product-image">
-                                            <img src="/product-images/<%= products[i].imageUrl[0] %>"
-                                                alt="<%= products[i].name %>">
-                                        </div>
+                                        <a href="/product-view/<%= products[i]._id %> ">
+                                            <div class="product-image">
+                                                <img src="/product-images/<%= products[i].imageUrl[0] %>"
+                                                    alt="<%= products[i].name %>">
+                                            </div>
+                                        </a>
                                         <h3>
                                             <%= products[i].name %>
                                         </h3>
                                         <p class="product-price"><span>Per ml</span>
                                             <%= products[i].price %>
                                         </p>
-                                        <a href="/add-to-cart/?productId=<%= products[i]._id %>&path=shop" class="cart-btn"><i
-                                                class="fas fa-shopping-cart"></i> Add to
+                                        <a href="/add-to-cart/?productId=<%= products[i]._id %>&path=shop"
+                                            class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to
                                             Cart</a>
                                     </div>
                                 </div>
