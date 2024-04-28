@@ -1,14 +1,15 @@
 import {cartCollection} from "../../model/cart.mjs";
 
 
-export async function updateCartDatas(id, productId) {
+export async function updateCartDatas(id, product,quantity = 1) {
+    console.log(product.price,'what is happening');
     const data = await cartCollection.updateOne({
         userId: id,
-        "items.productId": productId
+        "items.productId": product._id
     }, {
         $inc: {
-            'items.$.quantity': 1,
-            totalPrice: 1
+            'items.$.quantity': quantity,
+            totalPrice: product.price * quantity
         }
     })
     console.log(data, 'updated data is showing');

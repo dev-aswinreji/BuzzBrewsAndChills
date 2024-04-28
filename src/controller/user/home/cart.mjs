@@ -28,20 +28,19 @@ export const user_addToCartGet = async (req, res) => {
     try {
         const id = req.query.productId
         const path = req.query.path
-        const userEmail = req.session.userEmailForAddUserAddress
-        console.log('useremail is set', userEmail);
-        console.log(id, 'product id pakka');
+        const userId = req.session.USER_ID
+        const quantity = req.query.quantity
         const product = await findSingleProduct(id)
         console.log(product, 'product data is showing ');
-        const user = await findUser(userEmail)
-        console.log(user, 'user data is showing');
-        const cartDupicate = await findCartDataDuplicate(user._id, id)
+
+        console.log(userId, 'user id is showing');
+        const cartDupicate = await findCartDataDuplicate(userId, id)
         console.log(cartDupicate, 'cart duplicate');
         const result = await checkDataDuplication(cartDupicate)
         console.log(result, 'result of check data dupe');
         if (result === 'NOT EXIST') {
             const cartData = {
-                userId: user,
+                userId: userId,
                 items: [
                     {
                         productId: product,
@@ -50,12 +49,18 @@ export const user_addToCartGet = async (req, res) => {
                 ],
                 totalPrice: product.price
             }
-            
+
 
             await insertCartData(cartData)
 
-        } else { // console.log('update data is working or not ');
-            await updateCartDatas(user._id, id)
+        } else { 
+            if(quantity>1){
+                await updateCartDatas(userId, product,quantity)
+                
+            }else{
+
+                await updateCartDatas(userId,product)
+            }
         }
         // window.location.reload()
         res.redirect(`/${path}`)
@@ -72,11 +77,11 @@ export const user_addToCartFetchToUpdatingTotalPrice = async (req, res) => {
         const userId = req.session.USER_ID
         const totalPrice = req.query.totalPrice
         const quantity = req.query.quantity
-        console.log(productId,userId,totalPrice,quantity);
+        console.log(productId, userId, totalPrice, quantity);
 
-        await updateCartDataOfTotalPrice(userId,productId,quantity,totalPrice)
+        await updateCartDataOfTotalPrice(userId, productId, quantity, totalPrice)
 
-        res.json({id:userId})
+        res.json({id: userId})
 
     } catch (error) {
         console.log(error, 'USER ADD TO CART FETCH TO UPDATE TOTAL PRICE');
