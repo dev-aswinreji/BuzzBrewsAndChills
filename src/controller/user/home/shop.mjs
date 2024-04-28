@@ -1,14 +1,12 @@
-import { findAllProductsForUser } from "../../../data/products/find.mjs"
-
-
+import {findAllProductsForUser} from "../../../data/products/find.mjs"
 
 
 export const user_shopGet = async (req, res) => {
     try {
 
-        const productImages = await findAllProductsForUser()
-        console.log(productImages);
-        res.render('shop', { data: productImages })
+        const products = await findAllProductsForUser()
+        console.log(products);
+        res.render('shop', {products})
 
     } catch (error) {
 
@@ -16,4 +14,3 @@ export const user_shopGet = async (req, res) => {
     }
 
 }
-
