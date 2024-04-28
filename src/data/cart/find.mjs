@@ -5,5 +5,5 @@ export async function findCartDatasOfUser (){
 }
 
 export async function findCartDataDuplicate (id,productId){
-    return await cartCollection.find({userId:id,"items.productId":productId})
+    return await cartCollection.findOne({userId:id,"items.productId":productId})
 }

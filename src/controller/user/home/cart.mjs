@@ -29,12 +29,16 @@ export const user_addToCartGet = async (req, res) => {
         const id = req.query.productId
         const path = req.query.path
         const userEmail = req.session.userEmailForAddUserAddress
-
+        console.log('useremail is set',userEmail);
+        console.log(id,'product id pakka');
         const product = await findSingleProduct(id)
         console.log(product, 'product data is showing ');
         const user = await findUser(userEmail)
-        const cartDupicate = findCartDataDuplicate(id, user._id)
+        console.log(user,'user data is showing');
+        const cartDupicate = await findCartDataDuplicate(user._id, id)
+        console.log(cartDupicate,'cart duplicate');
         const result = await checkDataDuplication(cartDupicate)
+        console.log(result,'result of check data dupe');
         if (result === 'NOT EXIST') {
             const cartData = {
                 userId: user,
@@ -44,15 +48,15 @@ export const user_addToCartGet = async (req, res) => {
                         quantity: 1
                     }
                 ],
-                totalPrice: 40
+                totalPrice: product.price
             }
-            console.log(cartData, 'cart data is showing');
-            console.log(cartData.items[0].productId.name);
+            // console.log(cartData, 'cart data is showing');
+            // console.log(cartData.items[0].productId.name);
 
             await insertCartData(cartData)
             
         }else{
-            console.log('update data is working or not ');
+            // console.log('update data is working or not ');
             await updateCartDatas(user._id,id)
         }
         // window.location.reload()
