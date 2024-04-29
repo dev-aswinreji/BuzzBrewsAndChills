@@ -23,6 +23,9 @@ export const user_cartGet = async (req, res) => {
 
 }
 
+export const user_addToCartLimitChecking = async (req,res)=>{
+    
+}
 
 export const user_addToCartGet = async (req, res) => {
     try {
@@ -70,17 +73,31 @@ export const user_addToCartGet = async (req, res) => {
             } else {
                 const cartQuantityCheck = await findCartDataDuplicate(userId, product)
                 console.log(cartQuantityCheck, 'cart quanity checking');
-                let quantityNumber = Number(cartQuantityCheck.items[0].quantity) + 1
-            
-                console.log(quantityNumber,'quantity number is');
-                if (quantityNumber <= 10) {
+                if(!quantity){
 
-                    await updateCartDatas(userId, product)
-
+                    let quantityNumber = Number(cartQuantityCheck.items[0].quantity)
+                    if (quantityNumber <= 10) {
+    
+                        await updateCartDatas(userId, product)
+    
+                    }else{
+    
+                        return res.redirect(`/${path}`)
+                    }
                 }else{
 
-                    return res.redirect(`/${path}`)
+                    let quantityNumber = Number(cartQuantityCheck.items[0].quantity) + Number(quantity)
+                    console.log(quantityNumber,'quantity number is============================omg==================');
+                    if (quantityNumber <= 10) {
+    
+                        await updateCartDatas(userId, product)
+    
+                    }else{
+    
+                        return res.json({id:'error'})
+                    }
                 }
+                
 
             }
         }
@@ -116,4 +133,16 @@ export const user_addToCartFetchToUpdatingTotalPrice = async (req, res) => {
     } catch (error) {
         console.log(error, 'USER ADD TO CART FETCH TO UPDATE TOTAL PRICE');
     }
+}
+
+export const user_addToCartAggregationToShowTotalAmount = async (req,res)=>{
+
+    try {
+
+        const totalPrice = req.query.totalPrice
+
+    } catch (error) {
+        console.log(error,'USER ADD TO CART AGGREGATION');
+    }
+
 }
