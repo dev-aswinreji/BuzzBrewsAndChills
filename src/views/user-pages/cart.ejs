@@ -161,7 +161,7 @@
 	</body>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
+	<script>
 
 		// function increaseQuantity() {
 		// 	var quantityInput = document.getElementById('quantity');
@@ -177,13 +177,12 @@
 
 
 		async function incrementOrDecrement(index, productId, quantity) {
-			let previousQuantity ;
-			console.log('previous',previousQuantity);
+
 			if (quantity <= 10) {
-				
-				 previousQuantity = document.getElementById('quantity_' + index).value
-				 console.log('previo inside if',previousQuantity);
-				 
+
+				previousQuantity = document.getElementById('quantity_' + index).value
+				console.log('previo inside if', previousQuantity);
+
 
 				const priceText = document.getElementById('price_' + index).innerText
 
@@ -195,12 +194,12 @@
 
 				await totalPriceUsingFetch(productId, quantity, totalPrice)
 			} else {
-				
+
 				Swal.fire({
 					title: "Alert!",
 					text: "Max Limit of this product is Exceeded!",
 					icon: "error"
-				}).then(()=>{
+				}).then(() => {
 					location.reload()
 				})
 
@@ -222,12 +221,18 @@
 					}
 					return response.json()
 				}).then(data => {
-					if (data.id) {
-						// window.location.reload() /*reloading the page disabled */
-						console.log('data fetched successfully');
-					} else {
-						console.log('data fetched unssuccessfull');
-					}
+					console.log(data);
+					if (data.id === 'success') {
+
+						console.log('data fetched success');
+						Swal.fire({
+							position: "center",
+							icon: "success",
+							title: "Item updated successfully",
+							showConfirmButton: false,
+							timer: 1500
+						})
+					} 
 				}).catch(err => {
 					console.log(err, 'some error occured in fetching');
 				})

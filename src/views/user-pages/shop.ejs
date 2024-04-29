@@ -57,9 +57,9 @@
                                         <p class="product-price"><span>Per ml</span>
                                             <%= products[i].price %>
                                         </p>
-                                        <a href="/add-to-cart/?productId=<%= products[i]._id %>&path=shop"
+                                        <button onclick="addToCartUsingFetch(`<%= products[i]._id %>`)"
                                             class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to
-                                            Cart</a>
+                                            Cart</button>
                                     </div>
                                 </div>
                                 <% }%>
@@ -83,7 +83,45 @@
             <!-- end products -->
 
             <%- include('./partials/footer/footer.ejs') %>
+
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+                <script>
+                    async function addToCartUsingFetch(productId) {
+                        console.log(productId);
+                        await fetch(`/add-to-cart/?productId=${productId}`)
+                            .then(response => {
+                                console.log(response);
+                                if (!response.ok) {
+                                    console.log('Some network error occured');
+                                }
+                                return response.json()
+                            }).then(data => {
+                                if (data.id === 'success') {
+
+                                    console.log('data fetched success');
+                                    Swal.fire({
+                                        position: "center",
+                                        icon: "success",
+                                        title: "Item added successfully",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                } if (data.id === 'error') {
+                                    console.log('data fetched unsuccessfull');
+                                    Swal.fire({
+                                        title: "Alert!",
+                                        text: "Max Limit of this product is Exceeded!",
+                                        icon: "error",
+
+                                    })
+                                }
+                            }).catch(err => {
+                                console.log(err, 'Some error occured using fetch method in shop page');
+                            })
+                    }
+                </script>
     </body>
-    </body>
+
 
 </html>
