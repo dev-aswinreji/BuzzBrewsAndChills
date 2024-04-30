@@ -65,7 +65,7 @@
 																	id="quantity_<%= i %>"
 																	value="<%= cartDatas[i].items[0].quantity %>"
 																	placeholder="1"
-																	oninput="validity.valid||(value='');incrementOrDecrement(`<%= i %>`,`<%= cartDatas[i].items[0].productId._id %>`,this.value)">
+																	oninput="validity.valid||(value='');">
 																<!-- <button onclick="decreaseQuantity()">-</button> -->
 															</td>
 															<td class="product-total" id="totalPrice_<%= i %>">
@@ -160,84 +160,5 @@
 
 	</body>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-	<script>
-
-		// function increaseQuantity() {
-		// 	var quantityInput = document.getElementById('quantity');
-		// 	quantityInput.value = parseInt(quantityInput.value) + 1;
-		// }
-
-		// function decreaseQuantity() {
-		// 	var quantityInput = document.getElementById('quantity');
-		// 	if (parseInt(quantityInput.value) > 1) {
-		// 		quantityInput.value = parseInt(quantityInput.value) - 1;
-		// 	}
-		// }
-
-
-		async function incrementOrDecrement(index, productId, quantity) {
-
-			if (quantity <= 10) {
-
-				previousQuantity = document.getElementById('quantity_' + index).value
-				console.log('previo inside if', previousQuantity);
-
-
-				const priceText = document.getElementById('price_' + index).innerText
-
-				const price = parseFloat(priceText.replace('Rs ', '').trim());
-
-				const totalPrice = price * quantity
-
-				document.getElementById('totalPrice_' + index).innerText = totalPrice
-
-				await totalPriceUsingFetch(productId, quantity, totalPrice)
-			} else {
-
-				Swal.fire({
-					title: "Alert!",
-					text: "Max Limit of this product is Exceeded!",
-					icon: "error"
-				}).then(() => {
-					location.reload()
-				})
-
-			}
-
-		}
-
-		async function totalPriceUsingFetch(productId, quantity, totalPrice) {
-
-			await fetch(`/add-to-cart-totalPrice/?productId=${productId}&quantity=${quantity}&totalPrice=${totalPrice}`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			})
-				.then(response => {
-					if (!response.ok) {
-						console.log('some network failure heppen');
-					}
-					return response.json()
-				}).then(data => {
-					console.log(data);
-					if (data.id === 'success') {
-
-						console.log('data fetched success');
-						Swal.fire({
-							position: "center",
-							icon: "success",
-							title: "Item updated successfully",
-							showConfirmButton: false,
-							timer: 1500
-						})
-					} 
-				}).catch(err => {
-					console.log(err, 'some error occured in fetching');
-				})
-		}
-
-	</script>
 
 </html>

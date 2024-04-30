@@ -85,9 +85,7 @@
                                             <input type="number" name="test" min="1" placeholder="1" id="quantity"
                                                 oninput="validity.valid||(value='');"><br>
                                         </form>
-                                        <button
-                                            onclick="addToCartUsingFetch(`<%= product._id %>`,`product-view/<%= product._id %>`)"
-                                            class="cart-btn">
+                                        <button onclick="'i need to give function here'" class="cart-btn">   //add to cart
                                             <i class="fas fa-shopping-cart"></i>
                                             Add to Cart</button>
                                         <p>
@@ -175,45 +173,7 @@
             <!-- end more products -->
             <%- include('partials/footer/footer.ejs') %>
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                <script>
-                    async function addToCartUsingFetch(productId, path) {
-                        const quantity = document.getElementById('quantity').value
-                        await fetch(`/add-to-cart?productId=${productId}&path=${path}&quantity=${quantity}`)
-                            .then(response => {
-                                console.log(response);
-                                if (!response.ok) {
-                                    console.log('Some error occured in fetch method product view page');
-                                }
-                                return response.json()
-                            }).then(data => {
-                                if (data.id === 'success') {
-                                    console.log('data fetched successfully');
-                                    Swal.fire({
-                                        position: "center",
-                                        icon: "success",
-                                        title: "Item added successfully",
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    })
-                                } if (data.id === 'error') {
-                                    Swal.fire({
-                                        title: "Alert!",
-                                        text: "Max Limit of this product is Exceeded!",
-                                        icon: "error",
 
-                                    }).then(() => {
-                                        location.reload()
-                                    })
-
-                                }
-                                else {
-                                    console.error('data fetched got some error');
-                                }
-                            }).catch(err => {
-                                console.log(err, 'some error occured in product view fetch method');
-                            })
-                    }
-                </script>
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
                         var magnifiers = document.querySelectorAll(".image-magnifier");
