@@ -82,10 +82,10 @@
                                         ipsa, quisquam animi perferendis eos eum modi! Tempora, earum.</p>
                                     <div class="single-product-form">
                                         <form action="/cart?">
-                                            <input type="number" name="test" min="1" placeholder="1" id="quantity"
-                                                oninput="validity.valid||(value='');"><br>
+                                            <input type="number" name="test" min="1" value="1" placeholder="1"
+                                                id="quantity" oninput="validity.valid||(value='');"><br>
                                         </form>
-                                        <button onclick="'i need to give function here'" class="cart-btn">   //add to cart
+                                        <button onclick="addToCartUsingFetch(`<%= product._id %>`)" class="cart-btn">
                                             <i class="fas fa-shopping-cart"></i>
                                             Add to Cart</button>
                                         <p>
@@ -160,7 +160,7 @@
                                                     <span>Per Kg</span>
                                                     85$
                                                 </p>
-                                                <a href="cart.html" class="cart-btn">
+                                                <a class="cart-btn">
                                                     <i class="fas fa-shopping-cart"></i>
                                                     Add to Cart</a>
                                             </div>
@@ -174,6 +174,53 @@
             <%- include('partials/footer/footer.ejs') %>
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+                <script>
+                    async function addToCartUsingFetch(productId) {
+
+                        const quantity = document.getElementById('quantity').value
+
+                        if (quantity > 10) {
+
+                            Swal.fire({
+                                position: "center",
+                                icon: "error",
+                                title: "Maximum product per person is 10 ",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        } else {
+
+                            console.log(productId, 'product Id is working');
+                            await fetch(`/add-to-cart/?productId=${productId}&quantity=${quantity}`, {
+                                method: 'GET',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            }).then(response => !response.ok ?
+                                console.log('some network error occurred in product view fetch method')
+                                : response.json()
+                            ).then(data => {
+                                console.log(data.result)
+                                data.result === 'within limit' ?
+                                    Swal.fire({
+                                        position: "center",
+                                        icon: "success",
+                                        title: "Successfully product added to cart",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }) : Swal.fire({
+                                        position: "center",
+                                        icon: "error",
+                                        title: "Maximum product limit is exceeded",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                            })
+                        }
+
+                    }
+                </script>
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
                         var magnifiers = document.querySelectorAll(".image-magnifier");

@@ -96,15 +96,25 @@
                     'Content-Type': 'applicaton/json'
                 }
             }).then(response => !response.ok ? console.log('some network error occured') : response.json())
-            .then(data=>{
-                if(data.success==='success'){
-                    console.log('data fetched success');
-                }else{
-                    console.log('data fetched unsuccess ');
-                }
-            }).catch(err=>{
-                console.log(err,'Some error occured in fetch method in shop page');
-            })
+                .then(data => {
+                    console.log(data.result)
+                    data.result === 'within limit' ?
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Successfully product added to cart",
+                            showConfirmButton: false,
+                            timer: 1500
+                        }) : Swal.fire({
+                            position: "center",
+                            icon: "error",
+                            title: "Maximum product limit is exceeded",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                }).catch(err => {
+                    console.log(err, 'Some error occured in fetch method in shop page');
+                })
         }
     </script>
 
