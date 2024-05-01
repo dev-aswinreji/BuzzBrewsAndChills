@@ -5,6 +5,7 @@
 
 	<body>
 
+
 		<%- include('./partials/header/header.ejs') %>
 
 			<!-- breadcrumb-section -->
@@ -21,7 +22,7 @@
 				</div>
 			</div>
 			<!-- end breadcrumb section -->
-			<% if (cartDatas.length>0) { %>
+			<% if (cart) { %>
 
 				<!-- cart -->
 				<div class="cart-section mt-150 mb-150">
@@ -41,38 +42,34 @@
 											</tr>
 										</thead>
 										<tbody>
-											<%# console.log(cart,'cart data in ejs file'); %>
 
-												<% for( let i=0; i < cartDatas.length; i++ ) { %>
-													<% console.log(cartDatas.length); %>
+											<% for( let i=0; i < cart.items.length; i++ ) { %>
 
-														<tr class="table-body-row">
-															<td class="product-remove"><a href="#"><i
-																		class="far fa-window-close"></i></a></td>
-															<td class="product-image"><img
-																	src="/product-images/<%= cartDatas[i].items[0].productId.imageUrl[0] %>"
-																	alt="">
-															</td>
-															<td class="product-name">
-																<%= cartDatas[i].items[0].productId.name %>
-															</td>
-															<td class="product-price" id="price_<%= i %>">Rs <%=
-																	cartDatas[i].items[0].productId.price %>
-															</td>
-															<td class="product-quantity">
-																<!-- <button onclick="increaseQuantity()">+</button> -->
-																<input type="number" name="test" min="1"
-																	id="quantity_<%= i %>"
-																	value="<%= cartDatas[i].items[0].quantity %>"
-																	placeholder="1"
-																	oninput="validity.valid||(value='');">
-																<!-- <button onclick="decreaseQuantity()">-</button> -->
-															</td>
-															<td class="product-total" id="totalPrice_<%= i %>">
-																<%= cartDatas[i].totalPrice %>
-															</td>
-														</tr>
-														<% } %>
+												<tr class="table-body-row">
+													<td class="product-remove"><a href="#"><i
+																class="far fa-window-close"></i></a></td>
+													<td class="product-image"><img
+															src="/product-images/<%= cart.items[i].productId.imageUrl[0] %>"
+															alt="">
+													</td>
+													<td class="product-name">
+														<%= cart.items[i].productId.name %>
+													</td>
+													<td class="product-price" id="price_<%= i %>">Rs <%=
+															cart.items[i].productId.price %>
+													</td>
+													<td class="product-quantity">
+														<!-- <button onclick="increaseQuantity()">+</button> -->
+														<input type="number" name="test" min="1" id="quantity_<%= i %>"
+															value="<%= cart.items[i].quantity %>" placeholder="1"
+															oninput="validity.valid||(value='');">
+														<!-- <button onclick="decreaseQuantity()">-</button> -->
+													</td>
+													<td class="product-total" id="productTotal_<%= i %>">
+														<%= cart.items[i].quantity * cart.items[i].productId.price %>
+													</td>
+												</tr>
+												<% } %>
 
 										</tbody>
 									</table>
@@ -148,7 +145,7 @@
 					<div class="container">
 						<div class="empty-cart">
 							<h2>Your cart is empty</h2>
-							<p>Continue shopping <a href="#">here</a>.</p>
+							<p>Continue shopping <a href="/shop">here</a>.</p>
 						</div>
 					</div>
 

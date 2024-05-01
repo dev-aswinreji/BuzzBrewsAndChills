@@ -13,6 +13,8 @@ import {user_authentication} from '../../../middleware/user-auth.mjs';
 import {user_setNewPasswordGet, user_setNewPasswordPost} from '../../../controller/user/home/set-new-password.mjs';
 import {user_editAddressGet, user_editAddressPost} from '../../../controller/user/home/edit-address.mjs';
 import {user_updateProfileGet} from '../../../controller/user/home/update-profile.mjs';
+import { user_cartGet } from '../../../controller/user/home/cart.mjs';
+import { user_addToCartGet } from '../../../controller/user/home/add-to-cart.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -36,8 +38,8 @@ routeHome.get('/update-profile', user_authentication, user_updateProfileGet)
 routeHome.get('/checkout', user_checkoutGet)
 routeHome.post('/address', user_addressPost)
 
-routeHome.get('/cart', user_authentication,)
-routeHome.get('/add-to-cart', user_authentication,)
+routeHome.get('/cart', user_authentication,user_cartGet)
+routeHome.get('/add-to-cart', user_authentication,user_addToCartGet)
 routeHome.get('/add-to-cart-totalPrice',user_authentication,)
 
 routeHome.get('/set-new-password', user_authentication, user_setNewPasswordGet)

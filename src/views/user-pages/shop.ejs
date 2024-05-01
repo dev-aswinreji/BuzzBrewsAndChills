@@ -57,7 +57,7 @@
                                         <p class="product-price"><span>Per ml</span>
                                             <%= products[i].price %>
                                         </p>
-                                        <button onclick=""
+                                        <button onclick="addToCartUsingFetch(`<%= products[i]._id %>`)"
                                             class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to
                                             Cart</button>
                                     </div>
@@ -87,5 +87,25 @@
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
 
+    <script>
+        async function addToCartUsingFetch(productId) {
+
+            await fetch(`/add-to-cart/?productId=${productId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'applicaton/json'
+                }
+            }).then(response => !response.ok ? console.log('some network error occured') : response.json())
+            .then(data=>{
+                if(data.success==='success'){
+                    console.log('data fetched success');
+                }else{
+                    console.log('data fetched unsuccess ');
+                }
+            }).catch(err=>{
+                console.log(err,'Some error occured in fetch method in shop page');
+            })
+        }
+    </script>
 
 </html>
