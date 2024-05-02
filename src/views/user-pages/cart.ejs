@@ -62,7 +62,7 @@
 														<!-- <button onclick="increaseQuantity()">+</button> -->
 														<input type="number" name="test" min="1" id="quantity_<%= i %>"
 															value="<%= cart.items[i].quantity %>" placeholder="1"
-															oninput="validity.valid||(value='');">
+															oninput="validity.valid||(value='');addtoCartUsingFetch(`<%= i %>`,`<%= cart.items[i].productId._id %>`)">
 														<!-- <button onclick="decreaseQuantity()">-</button> -->
 													</td>
 													<td class="product-total" id="productTotal_<%= i %>">
@@ -101,7 +101,8 @@
 										</tbody>
 									</table>
 									<div class="cart-buttons">
-										<a href="/cart" class="boxed-btn">Update Cart</a>
+
+										<button class="boxed-btn">Update Cart</button>
 										<a href="/checkout" class="boxed-btn black">Check Out</a>
 									</div>
 								</div>
@@ -159,8 +160,48 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<script>
-		const quantity = document.getElementById('quantity_'+index).value
-		console.log(quantity);
+
+		async function addtoCartUsingFetch(index, productId) {
+			console.log(index, 'index is not changing');
+			const quantity = document.getElementById('quantity_' + index).value
+			console.log(quantity, 'quantity of each product is getting');
+			// if (quantity > 10) {
+			// 	Swal.fire({
+			// 		text: 'limit exceeded'
+			// 	}).then(() => {
+			// 		location.reload()
+			// 	})
+			// } else {
+			await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(response => response.ok ? response.json() : console.log('Some network error occured while fetching'))
+				.then(
+					data => {
+						console.log(data.result)
+						data.result === 'within limit' ?
+							Swal.fire({
+								position: "center",
+								icon: "success",
+								title: "Successfully product added to cart",
+								showConfirmButton: false,
+								timer: 1500
+							}) : Swal.fire({
+								position: "center",
+								icon: "error",
+								title: "Maximum product limit is exceeded",
+								showConfirmButton: false,
+								timer: 1500
+							})
+					})
+				.catch(err => {
+					console.log(err, 'Some error occured while fetching in cart page');
+				})
+		}
+		// }
+
 	</script>
 
 </html>

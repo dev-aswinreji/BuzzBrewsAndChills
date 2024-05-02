@@ -9,7 +9,7 @@ export const user_addToCartGet = async (req, res) => {
     const userId = req.session.USER_ID
     const productId = req.query.productId
     const quantity = req.query.quantity
-
+    console.log(quantity,'quantity of product as query');
     const product = await findSingleProduct(productId)
 
     const cart = await findDuplicateCartProducts(userId, product)
@@ -21,15 +21,15 @@ export const user_addToCartGet = async (req, res) => {
         await addToCartData(userId, product)
         return res.json({result: 'within limit'})
     } else {
-            const cartItem = cart.items.find(item => item.productId.toString() === productId.toString())
-            const cartQuantityOfSpecificProduct = cartItem.quantity
-            console.log(cartQuantityOfSpecificProduct, 'quantity of each product is');
-            const response = cartQuantityOfSpecificProduct< 10 ? await addToCartDataSameProductUpdate(userId, product, quantity)
-            .then(() =>({result: 'within limit'})) : ({result: 'limit exceeded'})
-        console.log(response,'response is showing');
+        const cartItem = cart.items.find(item => item.productId.toString() === productId.toString())
+        const cartQuantityOfSpecificProduct = cartItem.quantity
+        console.log(cartQuantityOfSpecificProduct, 'quantity of each product is');
+        const response = cartQuantityOfSpecificProduct < 10 ? await addToCartDataSameProductUpdate(userId, product, quantity)
+        .then(() => ({result: 'within limit'})) : ({result: 'limit exceeded'})
+        console.log(response, 'response is showing');
         return res.json(response)
     }
-d
+
 
     // res.json({success: 'success'})
 }

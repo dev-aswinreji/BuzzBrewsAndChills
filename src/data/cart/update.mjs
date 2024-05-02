@@ -1,20 +1,50 @@
-import { ObjectId } from "mongodb";
+import {ObjectId} from "mongodb";
 import {cartCollection} from "../../model/cart.mjs";
-import { findAllCartDatas } from "./find.mjs";
 
 
-export async function addToCartDataSameProductUpdate(userId, product,quantity=1) {
+export async function addToCartDataSameProductUpdate(userId, product, quantity = 1) {
 
-    await cartCollection.updateOne({
-        userId: userId,
-        "items.productId": product
-    }, {
-        $inc: {
-           "items.$.quantity":quantity,
-        }
-    })
+    try {
+        await cartCollection.updateOne({
+            userId: userId,
+            "items.productId": product
+        }, {
+            $inc: {
+                "items.$.quantity": quantity
+            }
+        })
 
-    const uniqueProduct = await cartCollection.findOne({"items.productId":new ObjectId(product._id)})
-    console.log(uniqueProduct,'unique product is showing');
+        const uniqueProduct = await cartCollection.findOne({
+            "items.productId": new ObjectId(product._id)
+        })
+        console.log(uniqueProduct, 'unique product is showing');
+
+    } catch (error) {
+        console.log(error, 'USER ADD TO CART SAMPLE PRODUCT UPDATE FUNCTION');
+    }
+
+}
+
+export async function addToCartDataManageQuantity(userId, product, quantity) {
+
+    try {
+
+        await cartCollection.updateOne({
+            userId: userId,
+            "items.productId": product
+        }, {
+            $addToSet: {
+                "items.quantity": quantity
+            }
+        })
+        const uniqueProduct = await cartCollection.findOne({
+            "items.productId": new ObjectId(product._id)
+        })
+        console.log(uniqueProduct, 'unique product is showing');
+        console.log(quantity, 'quantity in manage q func');
+
+    } catch (error) {
+        console.log(error, 'USER ADD TO CART MANAGE QUANTITY FUNCTION');
+    }
 
 }
