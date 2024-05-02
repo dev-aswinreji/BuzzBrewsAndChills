@@ -28,13 +28,13 @@ export async function addToCartDataSameProductUpdate(userId, product, quantity =
 export async function addToCartDataManageQuantity(userId, product, quantity) {
 
     try {
-
+        console.log(quantity,'quanti in manage func ');
         await cartCollection.updateOne({
             userId: userId,
             "items.productId": product
         }, {
-            $addToSet: {
-                "items.quantity": quantity
+            $set: {
+                "items.$.quantity": quantity
             }
         })
         const uniqueProduct = await cartCollection.findOne({
