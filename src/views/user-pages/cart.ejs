@@ -3,7 +3,7 @@
 
 <%- include ('./partials/head/head.ejs' ) %>
 
-	<body>
+	<body onpageshow="cart()">
 
 
 		<%- include('./partials/header/header.ejs') %>
@@ -88,7 +88,9 @@
 										<tbody>
 											<tr class="total-data">
 												<td><strong>Subtotal: </strong></td>
-												<td>$500</td>
+												<td>
+													<%= cart.totalPrice %>
+												</td>
 											</tr>
 											<tr class="total-data">
 												<td><strong>Shipping: </strong></td>
@@ -160,18 +162,19 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<script>
-
+		async function cart(){
+			await fetch('/cart',{
+				method:'GET',
+				headers:{
+					'Content-Type':'application/json'
+				}
+			})
+		}
 		async function addtoCartUsingFetch(index, productId) {
 			console.log(index, 'index is not changing');
 			const quantity = document.getElementById('quantity_' + index).value
 			console.log(quantity, 'quantity of each product is getting');
-			// if (quantity > 10) {
-			// 	Swal.fire({
-			// 		text: 'limit exceeded'
-			// 	}).then(() => {
-			// 		location.reload()
-			// 	})
-			// } else {
+			cart()
 			await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
 				method: 'GET',
 				headers: {
@@ -188,6 +191,8 @@
 								title: "Successfully product added to cart",
 								showConfirmButton: false,
 								timer: 1500
+							}).then(()=>{
+								location.reload()
 							}) : Swal.fire({
 								position: "center",
 								icon: "error",
@@ -201,6 +206,8 @@
 				})
 		}
 		// }
+
+		
 
 	</script>
 
