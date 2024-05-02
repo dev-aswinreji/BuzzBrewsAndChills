@@ -19,7 +19,7 @@ export async function findAllProducts() {
 }
 
 export async function findSingleProduct(id) {
-    return await productCollection.findOne({ _id: id }).populate('category')
+    return await productCollection.findById(id).populate('category')
 
 }
 

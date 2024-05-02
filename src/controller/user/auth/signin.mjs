@@ -27,6 +27,7 @@ export const user_signinPost = async (req, res) => {
             password: req.body.password
         }
         const userAuth = await findUser(data.email)
+        req.session.USER_ID = userAuth._id
         const userData = await checkDataDuplication(userAuth)
 
         if (userData === 'NOT EXIST') {
