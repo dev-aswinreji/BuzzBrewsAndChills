@@ -65,6 +65,53 @@
         .address-item .btn:hover {
             background-color: #2d5521;
         }
+
+        /* Add this CSS code to your existing styles */
+        .add-address-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .add-address-btn {
+            padding: 8px 16px;
+            background-color: #54585c;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-address-btn a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .add-address-btn:hover {
+            background-color: #2d5521;
+        }
+
+        /* Other existing styles */
+        /* Add this CSS code to your existing styles */
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #54585c;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+            /* Add margin between buttons */
+        }
+
+        .btn:hover {
+            background-color: #2d5521;
+        }
     </style>
 
     <%- include ('partials/head/head.ejs' ) %>
@@ -86,38 +133,45 @@
         </div>
         <!-- end breadcrumb section -->
         </head>
-
-  <h4><a href="/add-address">Add New Address</a></h4>
         <div class="container-address">
-            <h1> Addresses</h1>
-            <% console.log(userAddresses.addresses); %>
-                <% userAddresses.addresses.forEach(address=> { %>
-
-                    <ul class="address-list">
-                        <!-- Sample address item -->
-                        <li class="address-item">
-                            <h2>
-                                <%= address.name %>
-                            </h2>
-                            <h5>
-                                <%= address.phoneNumber %>
-                            </h5>
-                            <h5>
-                                <%= address.homeAddress %>
-                            </h5>
-                            <h6>
-                                <%= address.city %>
-                            </h6>
-                            <a href="/edit-address/?id=<%= userAddresses._id %>" class="btn">Edit</a>
-                            <button class="btn">Delete</button>
-                            <button class="btn">Make Default</button>
-                        </li>
-
-                    </ul>
-                    <% }) %>
+            <div class="add-address-container">
+                <h1> Addresses</h1>
+                <button class="add-address-btn"><a href="/add-address">Add New Address</a></button>
+            </div>
+            <% userAddresses.addresses.forEach(address=> { %>
+                <ul class="address-list">
+                    <!-- Sample address item -->
+                    <li class="address-item">
+                        <h2>
+                            Name :<%= address.name %>
+                        </h2>
+                        <p>Home: <%= address.homeAddress %>
+                        </p>
+                        <p>Number: <%= address.phoneNumber %>
+                        </p>
+                        <p>City: <%= address.city %>
+                        </p>
+                        <p>State: <%= address.state %>
+                        </p>
+                        <p>Country: <%= address.country %> 
+                        </p>
+                        <% console.log(address._id); %> 
+                        <a href="/edit-address/?id=<%= address._id %>" class="btn">Edit</a>
+                        
+                        <% if (address.isDefault === 'YES') { %>
+                            <span style="font-weight: bold;font-size:large;color: #2d5521;">Default Address</span>
+                            <% }else{ %>
+                                <button class="btn">Delete</button>
+                                <button class="btn" onclick="makeDefault()">Make Default</button>
+                        <% } %> 
+                    </li>
+                </ul>
+                <% }) %>
         </div>
 
         <%- include('./partials/footer/footer.ejs') %>
 </body>
 
 </html>
+
+

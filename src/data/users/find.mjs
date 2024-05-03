@@ -14,6 +14,10 @@ export async function findUserAddress(data){
     return await userAddressCollection.findOne({home_address:data})
 }
 
+export async function findUserAddressUsingId (addressId){
+    return await userAddressCollection.findById(addressId)
+}
+
 export async function findUserAddressUsingIdAndPopulate(userId){
     return await userCollection.findById(userId).populate('addresses')
 }

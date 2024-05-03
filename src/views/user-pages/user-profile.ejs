@@ -174,7 +174,7 @@
                                 </p>
                                 <p>
                                     <label>Current Address:</label>
-                                    <% if (user.addresses.length>0) { %>
+                                    <% if (user.addresses.length>0 && user.addresses.isDefault === 'YES') { %>
                                         <%= user.addresses[0].homeAddress%>
                                         <br>
                                             <button class="btn btn-success btn-round"> <a href="/edit-address/?id=<%= user._id %>" class="text-light">Edit Address</a>

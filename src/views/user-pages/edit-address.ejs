@@ -89,31 +89,31 @@
                 </div>
             </div>
             <h4><a href="/add-address">Add New Address</a></h4>
-            <% if (user.addresses.length>0) { %>
-                <form action="/edit-address/?id=<%= user.addresses[0]._id %>" method="post">
+            <% if (address) { %>
+                <form action="/edit-address/?id=<%= address._id %>" method="post">
                     <div class="mainDiv">
                         <div class="form-group">
                                 <h5 for="">Name </h5>
-                            <input type="text" class="form-control" value="<%= user.addresses[0].name %>" name="name"
+                            <input type="text" class="form-control" value="<%= address.name %>" name="name"
                                 id="inputState" placeholder="Name">
                             <br>
                             <h5 for="">Phone Number</h5>
-                            <input type="text" class="form-control" value="<%= user.addresses[0].phoneNumber %>" name="phoneNumber"
+                            <input type="text" class="form-control" value="<%= address.phoneNumber %>" name="phoneNumber"
                                 id="inputState" placeholder="Phone Number">
                             <br>
                             <h5 for="">Home Address</h5>
-                            <input type="text" class="form-control" value="<%= user.addresses[0].homeAddress %>" id="" name="homeAddress"
+                            <input type="text" class="form-control" value="<%= address.homeAddress %>" id="" name="homeAddress"
                                 placeholder="Home Address">
                             <br>
                             <h5>City</h5>
-                            <input type="city" class="form-control" value="<%= user.addresses[0].city %>" name="city"
+                            <input type="city" class="form-control" value="<%= address.city %>" name="city"
                                 id="inputCity" placeholder="City">
                             <br>
                             <H5>Zip</H5>
                             <input type="zip" class="form-control" id="inputZip" placeholder="Zip">
                             <br>
                             <h5>Country</h5>
-                            <input type="country" class="form-control" value="<%= user.addresses[0].country %>" name="country"
+                            <input type="country" class="form-control" value="<%= address.country %>" name="country"
                                 id="inputCountry" placeholder="Country">
                                 <button type="submit" class="btn btn-success">Submit</button>
                         </div>
