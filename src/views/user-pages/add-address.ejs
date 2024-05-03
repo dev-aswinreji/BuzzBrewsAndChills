@@ -88,10 +88,11 @@
                     </div>
                 </div>
             </div>
-            <form action="/add-address" method="post">
+            <form action="/add-address/?path='address'" method="post">
                 <div class="mainDiv">
                     <div class="form-group">
                         <h5 for="">Name </h5>
+                        <input type="text" name="path" value="address" hidden id="">
                         <input type="text" class="form-control" name="name" id="inputState" placeholder="Name">
                         <br>
                         <h5 for="">Phone Number</h5>

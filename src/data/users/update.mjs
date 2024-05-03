@@ -9,7 +9,7 @@ export async function updateUser(data, addressOfUser) {
 }
 
 export async function updateUserUsingIdForAddress(userId,addressOfUser) {
-    return await userCollection.findByIdAndUpdate({userId},{addresses:addressOfUser})
+    return await userCollection.findByIdAndUpdate(userId,{$addToSet:{addresses:addressOfUser}})
 }
 export async function updateUserUsingId (userId,userData){
     return await userCollection.findByIdAndUpdate(userId,userData)

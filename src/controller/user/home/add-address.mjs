@@ -1,6 +1,5 @@
-import { findUserAddress, findUserAddressUsingIdAndPopulate } from "../../../data/users/find.mjs"
 import {insertUserAddress} from "../../../data/users/insert.mjs"
-import { updateUserUsingIdForAddress } from "../../../data/users/update.mjs"
+import {updateUserUsingIdForAddress} from "../../../data/users/update.mjs"
 
 export const user_addAddressGet = async (req, res) => {
 
@@ -17,12 +16,12 @@ export const user_addAddressPost = async (req, res) => {
         city: req.body.city,
         country: req.body.country
     }
+    const path = req.body.path
     const userId = req.session.USER_ID
-    const addresses = await insertUserAddress(userAddress)
-    console.log(addresses,'user addresses are showing below ==================================================xxxxxxxxxx=============================');
-    // await updateUserUsingIdForAddress(userId,addresses)
-    const allAddress = await findUserAddressUsingIdAndPopulate(userId)
-  
-    console.log(allAddress,'user address all of them========================================================================================yyyyyyyyyyyyyyyyyyyyyyyyyyyyyy===========================');
-    res.redirect('/address')
+
+    const newAddress = await insertUserAddress(userAddress)
+
+    await updateUserUsingIdForAddress(userId, newAddress)
+
+    res.redirect(`/${path}`)
 }
