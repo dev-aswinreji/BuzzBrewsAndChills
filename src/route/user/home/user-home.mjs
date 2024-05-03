@@ -12,7 +12,7 @@ import {user_profileGet} from '../../../controller/user/home/user-profile.mjs';
 import {user_authentication} from '../../../middleware/user-auth.mjs';
 import {user_setNewPasswordGet, user_setNewPasswordPost} from '../../../controller/user/home/set-new-password.mjs';
 import {user_editAddressGet, user_editAddressPost} from '../../../controller/user/home/edit-address.mjs';
-import {user_updateProfileGet} from '../../../controller/user/home/update-profile.mjs';
+import {user_updateProfileGet, user_updateProfilePost} from '../../../controller/user/home/update-profile.mjs';
 import {user_cartGet} from '../../../controller/user/home/cart.mjs';
 import {user_addToCartGet} from '../../../controller/user/home/add-to-cart.mjs';
 import {user_addToCartManageGet} from '../../../controller/user/home/add-to-cart-manage.mjs';
