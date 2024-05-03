@@ -196,6 +196,7 @@
         });
     }
     async function checkingSwal(addressId) {
+
         await fetch(`/delete-address/?id=${addressId}`, {
             method: 'DELETE',
             headers: {
@@ -216,17 +217,39 @@
 </script>
 <script>
     async function makeDefault(index) {
-        
         const addressId = document.getElementById('address_' + index).value
-        
-        await fetch(`/update-default-address/?addressId=${addressId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Change it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                checkingSwalInUpdateDefaultAddress(addressId)
             }
-        }).then(response => response.ok ? response.json() : console.log('network failure occurd while fetching'))
-            .then(data => data.result === 'success' ? Swal.fire('success').then() : Swal.fire('fail'))
-            .catch(err => console.log(err, 'some error occured while fetching make defaul address in address page'))
+        });
+
+        async function checkingSwalInUpdateDefaultAddress(addressId) {
+            await fetch(`/update-default-address/?addressId=${addressId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.ok ? response.json() :
+                console.log('Oops some network error happened while deleting the user'))
+                .then(data => data.result === 'success' ?
+                    Swal.fire({
+                        title: "Changed!",
+                        text: "Default address has been changed successfully.",
+                        icon: "success"
+                    }) : 'some error occured').then(() => {
+                        location.reload()
+                    })
+                .catch(err => console.log(err, 'some error occured in fetch method update default addrses page'))
+        }
+
     }
 </script>
 
