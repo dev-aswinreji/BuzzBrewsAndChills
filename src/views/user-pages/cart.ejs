@@ -162,11 +162,11 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<script>
-		async function cart(){
-			await fetch('/cart',{
-				method:'GET',
-				headers:{
-					'Content-Type':'application/json'
+		async function cart() {
+			await fetch('/cart', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
 				}
 			})
 		}
@@ -174,8 +174,9 @@
 			console.log(index, 'index is not changing');
 			const quantity = document.getElementById('quantity_' + index).value
 			console.log(quantity, 'quantity of each product is getting');
-			cart()
-			await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
+
+
+			quantity <= 10 ? await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json'
@@ -191,7 +192,7 @@
 								title: "Successfully product added to cart",
 								showConfirmButton: false,
 								timer: 1500
-							}).then(()=>{
+							}).then(() => {
 								location.reload()
 							}) : Swal.fire({
 								position: "center",
@@ -203,11 +204,17 @@
 					})
 				.catch(err => {
 					console.log(err, 'Some error occured while fetching in cart page');
-				})
+				}) : Swal.fire({
+					position: "center",
+					icon: "error",
+					title: "Maximum product limit is exceeded",
+					showConfirmButton: false,
+					timer: 1500
+				}).then(() => location.reload())
 		}
 		// }
 
-		
+
 
 	</script>
 
