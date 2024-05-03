@@ -1,4 +1,3 @@
-This is a ecommerce website
-/n
+This is a ecommerce website/
 use npm init to build the project 
  
