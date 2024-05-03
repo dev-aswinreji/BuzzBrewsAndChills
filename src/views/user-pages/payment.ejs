@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Method</title>
+    <style>
+        .container-payment {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<%- include ('partials/head/head.ejs' ) %>
+
+    <body>
+
+        <%- include('partials/header/header.ejs') %>
+
+            <!-- breadcrumb-section -->
+            <div class="breadcrumb-section breadcrumb-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-2 text-center">
+                            <div class="breadcrumb-text">
+                                <p>See more Details</p>
+                                <h1>Single Product</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end breadcrumb section -->
+            <div class="container-payment">
+                <h3>Select Payment Method</h3>
+                <form action="/checkout" method="post">
+                    <h4>Cash on delevery</h4>
+                    <input type="hidden" name="paymentMethod" value="cash-on-delivery" id="paymentMethod">
+                    <button type="submit" onclick="orderPlace()">Confirm Payment</button>
+                </form>
+            </div>
+    </body>
+    <%- include('partials/footer/footer.ejs') %>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+       
+
+</html>

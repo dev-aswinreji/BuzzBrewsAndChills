@@ -21,6 +21,7 @@ import {user_addAddressGet, user_addAddressPost} from '../../../controller/user/
 import {user_addressDeleteDelete} from '../../../controller/user/home/delete-address.mjs';
 import {user_updateDefaultAddressGet} from '../../../controller/user/update-default-address.mjs';
 import { user_deleteCartProductDelete } from '../../../views/user-pages/delete-cart.mjs';
+import { user_paymentGet } from '../../../controller/user/home/payment.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -62,5 +63,7 @@ routeHome.get('/set-new-password', user_authentication, user_setNewPasswordGet)
 routeHome.post('/set-new-password', user_authentication, user_setNewPasswordPost)
 
 routeHome.get('/product-view/:id', user_productView)
+
+routeHome.get('/payment',user_paymentGet)
 
 export default routeHome
