@@ -217,6 +217,11 @@
 </script>
 <script>
     async function makeDefault(index) {
+        try {
+
+        } catch (error) {
+
+        }
         const addressId = document.getElementById('address_' + index).value
         Swal.fire({
             title: "Are you sure?",
