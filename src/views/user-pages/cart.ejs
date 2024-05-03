@@ -3,7 +3,8 @@
 
 <%- include ('./partials/head/head.ejs' ) %>
 
-	<body>
+	<body onpageshow="cart()">
+
 
 		<%- include('./partials/header/header.ejs') %>
 
@@ -21,7 +22,7 @@
 				</div>
 			</div>
 			<!-- end breadcrumb section -->
-			<% if (cartDatas.length>0) { %>
+			<% if (cart) { %>
 
 				<!-- cart -->
 				<div class="cart-section mt-150 mb-150">
@@ -41,38 +42,34 @@
 											</tr>
 										</thead>
 										<tbody>
-											<%# console.log(cart,'cart data in ejs file'); %>
 
-												<% for( let i=0; i < cartDatas.length; i++ ) { %>
-													<% console.log(cartDatas.length); %>
+											<% for( let i=0; i < cart.items.length; i++ ) { %>
 
-														<tr class="table-body-row">
-															<td class="product-remove"><a href="#"><i
-																		class="far fa-window-close"></i></a></td>
-															<td class="product-image"><img
-																	src="/product-images/<%= cartDatas[i].items[0].productId.imageUrl[0] %>"
-																	alt="">
-															</td>
-															<td class="product-name">
-																<%= cartDatas[i].items[0].productId.name %>
-															</td>
-															<td class="product-price" id="price_<%= i %>">Rs <%=
-																	cartDatas[i].items[0].productId.price %>
-															</td>
-															<td class="product-quantity">
-																<!-- <button onclick="increaseQuantity()">+</button> -->
-																<input type="number" name="test" min="1"
-																	id="quantity_<%= i %>"
-																	value="<%= cartDatas[i].items[0].quantity %>"
-																	placeholder="1"
-																	oninput="validity.valid||(value='');incrementOrDecrement(`<%= i %>`,`<%= cartDatas[i].items[0].productId._id %>`,this.value)">
-																<!-- <button onclick="decreaseQuantity()">-</button> -->
-															</td>
-															<td class="product-total" id="totalPrice_<%= i %>">
-																<%= cartDatas[i].totalPrice %>
-															</td>
-														</tr>
-														<% } %>
+												<tr class="table-body-row">
+													<td class="product-remove"><a href="#"><i
+																class="far fa-window-close"></i></a></td>
+													<td class="product-image"><img
+															src="/product-images/<%= cart.items[i].productId.imageUrl[0] %>"
+															alt="">
+													</td>
+													<td class="product-name">
+														<%= cart.items[i].productId.name %>
+													</td>
+													<td class="product-price" id="price_<%= i %>">Rs <%=
+															cart.items[i].productId.price %>
+													</td>
+													<td class="product-quantity">
+														<!-- <button onclick="increaseQuantity()">+</button> -->
+														<input type="number" name="test" min="1" id="quantity_<%= i %>"
+															value="<%= cart.items[i].quantity %>" placeholder="1"
+															oninput="validity.valid||(value='');addtoCartUsingFetch(`<%= i %>`,`<%= cart.items[i].productId._id %>`)">
+														<!-- <button onclick="decreaseQuantity()">-</button> -->
+													</td>
+													<td class="product-total" id="productTotal_<%= i %>">
+														<%= cart.items[i].quantity * cart.items[i].productId.price %>
+													</td>
+												</tr>
+												<% } %>
 
 										</tbody>
 									</table>
@@ -91,7 +88,9 @@
 										<tbody>
 											<tr class="total-data">
 												<td><strong>Subtotal: </strong></td>
-												<td>$500</td>
+												<td>
+													<%= cart.totalPrice %>
+												</td>
 											</tr>
 											<tr class="total-data">
 												<td><strong>Shipping: </strong></td>
@@ -104,7 +103,8 @@
 										</tbody>
 									</table>
 									<div class="cart-buttons">
-										<a href="/cart" class="boxed-btn">Update Cart</a>
+
+										<button class="boxed-btn">Update Cart</button>
 										<a href="/checkout" class="boxed-btn black">Check Out</a>
 									</div>
 								</div>
@@ -148,7 +148,7 @@
 					<div class="container">
 						<div class="empty-cart">
 							<h2>Your cart is empty</h2>
-							<p>Continue shopping <a href="#">here</a>.</p>
+							<p>Continue shopping <a href="/shop">here</a>.</p>
 						</div>
 					</div>
 
@@ -162,76 +162,52 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<script>
-
-		// function increaseQuantity() {
-		// 	var quantityInput = document.getElementById('quantity');
-		// 	quantityInput.value = parseInt(quantityInput.value) + 1;
-		// }
-
-		// function decreaseQuantity() {
-		// 	var quantityInput = document.getElementById('quantity');
-		// 	if (parseInt(quantityInput.value) > 1) {
-		// 		quantityInput.value = parseInt(quantityInput.value) - 1;
-		// 	}
-		// }
-
-
-		async function incrementOrDecrement(index, productId, quantity) {
-			let previousQuantity ;
-			console.log('previous',previousQuantity);
-			if (quantity <= 10) {
-				
-				 previousQuantity = document.getElementById('quantity_' + index).value
-				 console.log('previo inside if',previousQuantity);
-				 
-
-				const priceText = document.getElementById('price_' + index).innerText
-
-				const price = parseFloat(priceText.replace('Rs ', '').trim());
-
-				const totalPrice = price * quantity
-
-				document.getElementById('totalPrice_' + index).innerText = totalPrice
-
-				await totalPriceUsingFetch(productId, quantity, totalPrice)
-			} else {
-				
-				Swal.fire({
-					title: "Alert!",
-					text: "Max Limit of this product is Exceeded!",
-					icon: "error"
-				}).then(()=>{
-					location.reload()
-				})
-
-			}
-
+		async function cart(){
+			await fetch('/cart',{
+				method:'GET',
+				headers:{
+					'Content-Type':'application/json'
+				}
+			})
 		}
-
-		async function totalPriceUsingFetch(productId, quantity, totalPrice) {
-
-			await fetch(`/add-to-cart-totalPrice/?productId=${productId}&quantity=${quantity}&totalPrice=${totalPrice}`, {
+		async function addtoCartUsingFetch(index, productId) {
+			console.log(index, 'index is not changing');
+			const quantity = document.getElementById('quantity_' + index).value
+			console.log(quantity, 'quantity of each product is getting');
+			cart()
+			await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			})
-				.then(response => {
-					if (!response.ok) {
-						console.log('some network failure heppen');
-					}
-					return response.json()
-				}).then(data => {
-					if (data.id) {
-						// window.location.reload() /*reloading the page disabled */
-						console.log('data fetched successfully');
-					} else {
-						console.log('data fetched unssuccessfull');
-					}
-				}).catch(err => {
-					console.log(err, 'some error occured in fetching');
+			}).then(response => response.ok ? response.json() : console.log('Some network error occured while fetching'))
+				.then(
+					data => {
+						console.log(data.result)
+						data.result === 'within limit' ?
+							Swal.fire({
+								position: "center",
+								icon: "success",
+								title: "Successfully product added to cart",
+								showConfirmButton: false,
+								timer: 1500
+							}).then(()=>{
+								location.reload()
+							}) : Swal.fire({
+								position: "center",
+								icon: "error",
+								title: "Maximum product limit is exceeded",
+								showConfirmButton: false,
+								timer: 1500
+							})
+					})
+				.catch(err => {
+					console.log(err, 'Some error occured while fetching in cart page');
 				})
 		}
+		// }
+
+		
 
 	</script>
 

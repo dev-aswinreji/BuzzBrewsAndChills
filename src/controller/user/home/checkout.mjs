@@ -19,38 +19,3 @@ export const user_checkoutGet = async (req, res) => {
         console.error(error, 'USER CHECKOUT GET')
     }
 }
-export const user_addressPost = async (req, res) => {
-
-    try {
-
-        const data = {
-            name: req.body.name,
-            phoneNumber: req.body.phoneNumber,
-            homeAddress: req.body.homeAddress,
-            city: req.body.city,
-            country: req.body.country
-        }
-
-        const userAddress = await insertUserAddress(data)
-        console.log(userAddress, 'userAddress is ==============')
-
-
-        const userEmail = req.session.userEmailForAddUserAddress
-        console.log(userEmail, 'userEmail is ?')
-
-
-        const user = await findUser(userEmail)
-        console.log(user, 'user data is found ===================')
-
-
-        const success = await updateUser(user.email, userAddress)
-        console.log(success)
-
-        res.redirect('/checkout')
-
-    } catch (error) {
-
-        console.error(error, 'USER CHECKOUT ADDRESS POST')
-    }
-
-}

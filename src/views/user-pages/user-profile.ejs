@@ -138,7 +138,10 @@
                         <div class="profile-actions">
                             <a href="/update-profile/?id=<%= user._id %> " class="profile-action update-profile">
                                 <i class="fas fa-user-edit"></i>
-                                Update Profile</a>
+                                 Profile</a>
+                                <a href="/address" class="profile-action logout">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Address</a>
                             <a href="/shop" class="profile-action continue-shopping">
                                 <i class="fas fa-shopping-cart"></i>
                                 Continue Shopping</a>
@@ -151,9 +154,7 @@
                             <a href="/order-history" class="profile-action order-history">
                                 <i class="fas fa-history"></i>
                                 Order History</a>
-                            <a href="/signout" class="profile-action logout">
-                                <i class="fas fa-sign-out-alt"></i>
-                                Sign Out</a>
+                           
                         </div>
                     </div>
                     <div class="profile-info-container">
@@ -176,7 +177,7 @@
                                     <% if (user.addresses.length>0) { %>
                                         <%= user.addresses[0].homeAddress%>
                                         <br>
-                                            <button class="btn btn-success btn-round"> <a href="/edit-address/?id=<%= user._id %> " class="text-light">Edit Address</a>
+                                            <button class="btn btn-success btn-round"> <a href="/edit-address/?id=<%= user._id %>" class="text-light">Edit Address</a>
                                             </button>
                                             <% }else{ %>
                                                 No address found

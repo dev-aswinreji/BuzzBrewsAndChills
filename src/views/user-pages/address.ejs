@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Existing Addresses</title>
+    <style>
+        /* body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        } */
+
+        .container-address {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .address-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .address-item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .address-item h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .address-item p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .address-item .btn {
+            padding: 5px 10px;
+            background-color: #54585c;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .address-item .btn:hover {
+            background-color: #2d5521;
+        }
+    </style>
+
+    <%- include ('partials/head/head.ejs' ) %>
+
+<body>
+    <%- include('partials/header/header.ejs') %>
+        <!-- breadcrumb-section -->
+        <div class="breadcrumb-section breadcrumb-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 text-center">
+                        <div class="breadcrumb-text">
+                            <p>Fresh and Organic</p>
+                            <h1>User Address</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end breadcrumb section -->
+        </head>
+
+  <h4><a href="/add-address">Add New Address</a></h4>
+        <div class="container-address">
+            <h1> Addresses</h1>
+            <% console.log(userAddresses.addresses); %>
+                <% userAddresses.addresses.forEach(address=> { %>
+
+                    <ul class="address-list">
+                        <!-- Sample address item -->
+                        <li class="address-item">
+                            <h2>
+                                <%= address.name %>
+                            </h2>
+                            <h5>
+                                <%= address.phoneNumber %>
+                            </h5>
+                            <h5>
+                                <%= address.homeAddress %>
+                            </h5>
+                            <h6>
+                                <%= address.city %>
+                            </h6>
+                            <a href="/edit-address/?id=<%= userAddresses._id %>" class="btn">Edit</a>
+                            <button class="btn">Delete</button>
+                            <button class="btn">Make Default</button>
+                        </li>
+
+                    </ul>
+                    <% }) %>
+        </div>
+
+        <%- include('./partials/footer/footer.ejs') %>
+</body>
+
+</html>

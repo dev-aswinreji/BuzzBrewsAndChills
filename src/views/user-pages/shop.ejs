@@ -57,9 +57,9 @@
                                         <p class="product-price"><span>Per ml</span>
                                             <%= products[i].price %>
                                         </p>
-                                        <a href="/add-to-cart/?productId=<%= products[i]._id %>&path=shop"
+                                        <button onclick="addToCartUsingFetch(`<%= products[i]._id %>`)"
                                             class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to
-                                            Cart</a>
+                                            Cart</button>
                                     </div>
                                 </div>
                                 <% }%>
@@ -83,7 +83,39 @@
             <!-- end products -->
 
             <%- include('./partials/footer/footer.ejs') %>
+
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
-    </body>
+
+    <script>
+        async function addToCartUsingFetch(productId) {
+
+            await fetch(`/add-to-cart/?productId=${productId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'applicaton/json'
+                }
+            }).then(response => !response.ok ? console.log('some network error occured') : response.json())
+                .then(data => {
+                    console.log(data.result)
+                    data.result === 'within limit' ?
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Successfully product added to cart",
+                            showConfirmButton: false,
+                            timer: 1500
+                        }) : Swal.fire({
+                            position: "center",
+                            icon: "error",
+                            title: "Maximum product limit is exceeded",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                }).catch(err => {
+                    console.log(err, 'Some error occured in fetch method in shop page');
+                })
+        }
+    </script>
 
 </html>
