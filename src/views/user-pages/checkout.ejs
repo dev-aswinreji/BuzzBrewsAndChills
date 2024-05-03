@@ -1,163 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <%- include ('./partials/head/head.ejs' ) %>
+<%- include ('./partials/head/head.ejs' ) %>
 
     <body>
 
         <%- include('./partials/header/header.ejs') %>
 
-        <!-- breadcrumb-section -->
-        <div class="breadcrumb-section breadcrumb-bg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2 text-center">
-                        <div class="breadcrumb-text">
-                            <p>Fresh and Organic</p>
-                            <h1>Check Out Product</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br><br><br><br>
-        <!-- end breadcrumb section -->
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="checkout-accordion">
-                        <div class="accordion" id="accordionExample">
-                            <div class="card single-accordion">
-                                <div class="card-header" id="headingOne">
-                                    <h5 class="mb-0">
-                                        <button>
-                                            <h6>My Address</h6>
-                                            <% console.log(user.addresses.length); %>
-                                            <% if(user.addresses.length > 0){ %>
-                                                <% console.log((user,'inside checkout.ejs')) %>
-                                                <form action="/change-address" method="post">
-                                                    <% user.addresses.forEach(address=> { %>
-                                                        <label>
-                                                            <input type="radio" name="selectedAddress" value="<%= address._id %>">
-                                                            <span class="p-2">Name:<%= address.name.toUpperCase() %></span>
-                                                            <span class="p-2">Phone No.<%= address.phoneNumber %></span>
-                                                            <span class="p-2">Home Address:<%= address.homeAddress %></span>
-                                                            <% console.log(address.phonenumber) %>
-                                                        </label><br>
-                                                    <% }) %>
-                                                </form>
-                                            <% }else{ %>
-                                                <h4>No address Found</h4>
-                                            <% } %>
-                                        </button>
-                                    </h5>
-                                </div>
+            <!-- breadcrumb-section -->
+            <div class="breadcrumb-section breadcrumb-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-2 text-center">
+                            <div class="breadcrumb-text">
+                                <p>Fresh and Organic</p>
+                                <h1>Check Out Product</h1>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-        <br><br>
-
-
-        <!-- check out section -->
-        <div class="checkout-section mt-150 mb-150">
+            <br><br><br><br>
+            <!-- end breadcrumb section -->
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8">
-                        <div class="checkout-accordion-wrap">
+                        <div class="checkout-accordion">
                             <div class="accordion" id="accordionExample">
                                 <div class="card single-accordion">
                                     <div class="card-header" id="headingOne">
                                         <h5 class="mb-0">
-                                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                Billing Address
+                                            <button>
+                                                <h6>My Address</h6>
+                                                <% if(defaultAddress){ %>
+                                                    <% console.log((defaultAddress,'inside checkout.ejs')) %>
+                                                        <form action="/change-address" method="post">
+                                                            <label>
+                                                                <input type="radio" name="selectedAddress"
+                                                                    value="<%= defaultAddress._id %>">
+                                                                <span class="p-2">Name:<%=
+                                                                        defaultAddress.name.toUpperCase() %></span>
+                                                                <span class="p-2">Phone No.<%=
+                                                                        defaultAddress.phoneNumber %></span>
+                                                                <span class="p-2">Home Address:<%=
+                                                                        defaultAddress.homeAddress %></span>
+                                                                <span class="p-2">State: <%= defaultAddress.state %>
+                                                                </span>
+                                                            </label><br>
+                                                        </form>
+                                                        <% }else{ %>
+                                                            <h4>No address Found</h4>
+                                                            <% } %>
                                             </button>
                                         </h5>
-                                    </div>
-
-                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="billing-address-form">
-                                                <form action="/add-address" method="post">
-                                                    <input type="text" name="path" value="checkout" hidden id="">
-                                                    <p><input type="name" name="name" placeholder="Name"></p>
-                                                    <p><input type="tel" name="phoneNumber" placeholder="Phone"></p>
-                                                    <p><input type="text" name="homeAddress" placeholder="Home Address">
-                                                    </p>
-                                                    <p><input type="text" name="city" placeholder="City"></p>
-                                                    <p><input type="text" name="country" placeholder="Country"></p>
-
-                                                    <p>
-                                                        <textarea name="bill" id="bill" cols="30" rows="10" placeholder="Say Something"></textarea>
-                                                    </p>
-                                                    <button class="btn btn-dark" type="submit">ADD</button>
-                                                </form>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                     </div>
+                </div>
+            </div>
+            <br><br>
 
-                    <div class="col-lg-4">
-                        <div class="order-details-wrap">
-                            <table class="order-details">
-                                <thead>
-                                    <tr>
-                                        <th>Your order Details</th>
-                                        <th>Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="order-details-body">
-                                    <tr>
-                                        <td>Product</td>
-                                        <td>Total</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Strawberry</td>
-                                        <td>$85.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Berry</td>
-                                        <td>$70.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Lemon</td>
-                                        <td>$35.00</td>
-                                    </tr>
-                                </tbody>
-                                <tbody class="checkout-details">
-                                    <tr>
-                                        <td>Subtotal</td>
-                                        <td>$190</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shipping</td>
-                                        <td>$50</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total</td>
-                                        <td>$240</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <a href="#" class="boxed-btn">Place Order</a>
+
+            <!-- check out section -->
+            <div class="checkout-section mt-150 mb-150">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="checkout-accordion-wrap">
+                                <div class="accordion" id="accordionExample">
+                                    <div class="card single-accordion">
+                                        <div class="card-header" id="headingOne">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                    data-target="#collapseOne" aria-expanded="true"
+                                                    aria-controls="collapseOne">
+                                                    Billing Address
+                                                </button>
+                                            </h5>
+                                        </div>
+
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                            data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <div class="billing-address-form">
+                                                    <form action="/add-address" method="post">
+                                                        <input type="text" name="path" value="checkout" hidden id="">
+                                                        <p><input type="name" name="name" placeholder="Name"></p>
+                                                        <p><input type="tel" name="phoneNumber" placeholder="Phone"></p>
+                                                        <p><input type="text" name="homeAddress"
+                                                                placeholder="Home Address">
+                                                        </p>
+                                                        <p><input type="text" name="city" placeholder="City"></p>
+                                                        <p><input type="text" name="country" placeholder="Country"></p>
+
+                                                        <p>
+                                                            <textarea name="bill" id="bill" cols="30" rows="10"
+                                                                placeholder="Say Something"></textarea>
+                                                        </p>
+                                                        <button class="btn btn-dark" type="submit">ADD</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="order-details-wrap">
+                                <table class="order-details">
+                                    <thead>
+                                        <tr>
+                                            <th>Your order Details</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="order-details-body">
+                                        <tr>
+                                            <td>Product</td>
+                                            <td>Total</td>
+                                        </tr>
+                                        <% cartDatas.items.forEach(product=> { %>
+
+                                            <tr>
+                                                <td>
+                                                    <%= product.productId.name %>
+                                                </td>
+                                                <td>
+                                                    <%= product.productId.price %>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+
+                                    </tbody>
+                                    <tbody class="checkout-details">
+                                        <tr>
+                                            <td>Subtotal</td>
+                                            <td><%= cartDatas.totalPrice %> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Shipping</td>
+                                            <td>$50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total</td>
+                                            <td id="totalPrice"><%= cartDatas.totalPrice %> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <a href="#" class="boxed-btn">Place Order</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
-        <!-- end check out section -->
+            <!-- end check out section -->
 
-        <%- include('./partials/footer/footer.ejs') %>
+            <%- include('./partials/footer/footer.ejs') %>
 
     </body>
+
+    <script>
+        async function checkout (){
+            await fetch('/checkout')
+        }
+    </script>
 
 </html>
