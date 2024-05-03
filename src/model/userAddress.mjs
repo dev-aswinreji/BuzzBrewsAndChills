@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose from "mongoose";
 const db = await import ("./database.mjs").then((instance) => instance.default);
 
 function userModel(collectionName, schema) {
