@@ -81,7 +81,8 @@
                                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="billing-address-form">
-                                                <form action="/address" method="post">
+                                                <form action="/add-address" method="post">
+                                                    <input type="text" name="path" value="checkout" hidden id="">
                                                     <p><input type="name" name="name" placeholder="Name"></p>
                                                     <p><input type="tel" name="phoneNumber" placeholder="Phone"></p>
                                                     <p><input type="text" name="homeAddress" placeholder="Home Address">
