@@ -18,7 +18,8 @@ import {user_addToCartGet} from '../../../controller/user/home/add-to-cart.mjs';
 import {user_addToCartManageGet} from '../../../controller/user/home/add-to-cart-manage.mjs';
 import {user_addressGet} from '../../../controller/user/home/address.mjs';
 import {user_addAddressGet, user_addAddressPost} from '../../../controller/user/home/add-address.mjs';
-import { user_addressDeleteDelete } from '../../../controller/user/home/delete-address.mjs';
+import {user_addressDeleteDelete} from '../../../controller/user/home/delete-address.mjs';
+import {user_updateDefaultAddressGet} from '../../../controller/user/update-default-address.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -37,14 +38,16 @@ routeHome.post('/edit-address', user_authentication, user_editAddressPost)
 routeHome.get('/user-profile', user_authentication, user_profileGet)
 
 routeHome.get('/update-profile', user_authentication, user_updateProfileGet)
-routeHome.post('/update-profile',user_authentication,user_updateProfilePost)
+routeHome.post('/update-profile', user_authentication, user_updateProfilePost)
 
 routeHome.get('/address', user_authentication, user_addressGet)
 
 routeHome.get('/add-address', user_authentication, user_addAddressGet)
 routeHome.post('/add-address', user_authentication, user_addAddressPost)
 
-routeHome.delete('/delete-address',user_addressDeleteDelete)
+routeHome.delete('/delete-address', user_addressDeleteDelete)
+
+routeHome.get('/update-default-address', user_updateDefaultAddressGet)
 
 routeHome.get('/checkout', user_checkoutGet)
 routeHome.post('/address', user_addAddressPost)

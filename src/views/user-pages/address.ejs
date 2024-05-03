@@ -139,38 +139,38 @@
                 <button class="add-address-btn"><a href="/add-address">Add New Address</a></button>
             </div>
             <% userAddresses.addresses.forEach((address,index)=> { %>
-            
-                        <ul class="address-list">
-                            <!-- Sample address item -->
-                            <input type="text" name="" value="<%= address._id %>" id="address_<%= index %>" hidden >
-                            <li class="address-item">
-                                <h2>
-                                    Name :<%= address.name %>
-                                </h2>
-                                <p>Home: <%= address.homeAddress %>
-                                </p>
-                                <p>Number: <%= address.phoneNumber %>
-                                </p>
-                                <p>City: <%= address.city %>
-                                </p>
-                                <p>State: <%= address.state %>
-                                </p>
-                                <p>Country: <%= address.country %>
-                                </p>
 
-                                <% console.log(address._id); %>
-                                    <a href="/edit-address/?id=<%= address._id %>" class="btn">Edit</a>
+                <ul class="address-list">
+                    <!-- Sample address item -->
+                    <input type="text" name="" value="<%= address._id %>" id="address_<%= index %>" hidden>
+                    <li class="address-item">
+                        <h2>
+                            Name :<%= address.name %>
+                        </h2>
+                        <p>Home: <%= address.homeAddress %>
+                        </p>
+                        <p>Number: <%= address.phoneNumber %>
+                        </p>
+                        <p>City: <%= address.city %>
+                        </p>
+                        <p>State: <%= address.state %>
+                        </p>
+                        <p>Country: <%= address.country %>
+                        </p>
 
-                                    <% if (address.isDefault==='YES' ) { %>
-                                        <span style="font-weight: bold;font-size:large;color: #2d5521;">Default
-                                            Address</span>
-                                        <% }else{ %>
-                                            <button class="btn" onclick="deleteButton(`<%= index %>`)">Delete</button>
-                                            <button class="btn" onclick="makeDefault()">Make Default</button>
-                                            <% } %>
-                            </li>
-                        </ul>
-                        <% }) %>
+                        <% console.log(address._id); %>
+                            <a href="/edit-address/?id=<%= address._id %>" class="btn">Edit</a>
+
+                            <% if (address.isDefault==='YES' ) { %>
+                                <span style="font-weight: bold;font-size:large;color: #2d5521;">Default
+                                    Address</span>
+                                <% }else{ %>
+                                    <button class="btn" onclick="deleteButton(`<%= index %>`)">Delete</button>
+                                    <button class="btn" onclick="makeDefault(`<%= index %>`)">Make Default</button>
+                                    <% } %>
+                    </li>
+                </ul>
+                <% }) %>
         </div>
 
         <%- include('./partials/footer/footer.ejs') %>
@@ -180,7 +180,7 @@
     async function deleteButton(index) {
 
         const addressId = document.getElementById('address_' + index).value
-     
+
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -212,6 +212,21 @@
                     location.reload()
                 })
             .catch(err => console.log(err, 'some error occured in fetch method addresss page'))
+    }
+</script>
+<script>
+    async function makeDefault(index) {
+        
+        const addressId = document.getElementById('address_' + index).value
+        
+        await fetch(`/update-default-address/?addressId=${addressId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.ok ? response.json() : console.log('network failure occurd while fetching'))
+            .then(data => data.result === 'success' ? Swal.fire('success').then() : Swal.fire('fail'))
+            .catch(err => console.log(err, 'some error occured while fetching make defaul address in address page'))
     }
 </script>
 
