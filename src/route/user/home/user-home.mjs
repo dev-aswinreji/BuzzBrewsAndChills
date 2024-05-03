@@ -36,6 +36,7 @@ routeHome.post('/edit-address', user_authentication, user_editAddressPost)
 routeHome.get('/user-profile', user_authentication, user_profileGet)
 
 routeHome.get('/update-profile', user_authentication, user_updateProfileGet)
+routeHome.post('/update-profile',user_authentication,user_updateProfilePost)
 
 routeHome.get('/address', user_authentication, user_addressGet)
 
