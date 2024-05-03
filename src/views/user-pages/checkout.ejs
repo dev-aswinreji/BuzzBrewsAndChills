@@ -31,7 +31,7 @@
                                     <div class="card-header" id="headingOne">
                                         <h5 class="mb-0">
                                             <button>
-                                                <h6>My Address</h6>
+                                                <h6>My Address <a class="pl-4" href="/address">Change Address</a></h6>
                                                 <% if(defaultAddress){ %>
                                                     <% console.log((defaultAddress,'inside checkout.ejs')) %>
                                                         <form action="/change-address" method="post">
@@ -141,7 +141,9 @@
                                     <tbody class="checkout-details">
                                         <tr>
                                             <td>Subtotal</td>
-                                            <td><%= cartDatas.totalPrice %> </td>
+                                            <td>
+                                                <%= cartDatas.totalPrice %>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Shipping</td>
@@ -149,11 +151,13 @@
                                         </tr>
                                         <tr>
                                             <td>Total</td>
-                                            <td id="totalPrice"><%= cartDatas.totalPrice %> </td>
+                                            <td id="totalPrice">
+                                                <%= cartDatas.totalPrice %>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <a href="#" class="boxed-btn">Place Order</a>
+                                <a href="/payment?addressId=<%= defaultAddress._id %>" class="boxed-btn">Place Order</a>
                             </div>
                         </div>
                     </div>
@@ -167,10 +171,5 @@
 
     </body>
 
-    <script>
-        async function checkout (){
-            await fetch('/checkout')
-        }
-    </script>
 
 </html>
