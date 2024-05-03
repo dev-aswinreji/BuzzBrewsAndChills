@@ -1,22 +1,19 @@
-import Swal from "sweetalert2"
-import { findAllProducts } from "../../../data/products/find.mjs"
-
+import {ObjectId} from "mongodb"
+import {aggregationForTotalPrice} from "../../../data/cart/aggregation.mjs"
+import {findAllCartDatas} from "../../../data/cart/find.mjs"
+import {cartCollection} from "../../../model/cart.mjs"
 
 export const user_cartGet = async (req, res) => {
+    const userId = req.session.USER_ID
 
-  try {
+    const totalPrice = await aggregationForTotalPrice(userId)
 
-    if (req.session.isUserAuth) {
-      const data = req.params.id
-      console.log(data)
-      const cartProduct = await findAllProducts(data)
-      res.render('cartempty', { cartProduct })
-    } else {
-      res.redirect('/signin')
-    }
+    await cartCollection.updateOne({
+        userId: userId
+    }, {totalPrice: totalPrice[0].totalPrice})
 
-  } catch (error) {
-    console.error(error)
-  }
+    const cart = await findAllCartDatas()
 
+    // res.render('cart', {cart})
+    res.render('cart',{cart})
 }
