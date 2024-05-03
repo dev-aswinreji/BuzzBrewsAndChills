@@ -16,6 +16,7 @@ import {user_updateProfileGet} from '../../../controller/user/home/update-profil
 import { user_cartGet } from '../../../controller/user/home/cart.mjs';
 import { user_addToCartGet } from '../../../controller/user/home/add-to-cart.mjs';
 import { user_addToCartManageGet } from '../../../controller/user/home/add-to-cart-manage.mjs';
+import { user_addressGet } from '../../../controller/user/home/address.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -34,6 +35,8 @@ routeHome.post('/edit-address', user_authentication, user_editAddressPost)
 routeHome.get('/user-profile', user_authentication, user_profileGet)
 
 routeHome.get('/update-profile', user_authentication, user_updateProfileGet)
+
+routeHome.get('/address',user_authentication,user_addressGet)
 
 
 routeHome.get('/checkout', user_checkoutGet)
