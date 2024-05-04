@@ -7,3 +7,8 @@ export async function findAllCartDatas (){
 export async function findDuplicateCartProducts(userId,product){
     return await cartCollection.findOne({userId:userId,"items.productId":product})
 }
+
+
+export async function findCartDataUsingUserId(userId){
+    return await cartCollection.findOne({userId:userId}).populate('items.productId')
+}
