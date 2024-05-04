@@ -54,25 +54,44 @@
                                         <h3>
                                             <%= products[i].name %>
                                         </h3>
-                                        <% if (products[i].stock <=40) { %>
-                                            <p class="product-stock">
-                                                <span class="text-danger"
-                                                    style="font-weight: bolder;font-size: medium;">Hot
-                                                    Deal!</span><br>
-                                                <span class="text-success"
-                                                    style="font-size: medium;font-weight: bold;">In
-                                                    Stock </span>,only <span id="stock_<%= i %>"><%= products[i].stock %></span> left
-                                            </p>
-                                            <% } %>
-                                                <p class="product-price">
-                                                    <span>Per Kg</span>
-                                                    <%= products[i].price %>
+                                        <% if (products[i].stock <40) { %>
+                                            <% if (products[i].stock===0) { %>
+                                                <p style="font-weight: bold;font-size: medium;" class="text-danger">
+                                                    Product is currently <br>
+                                                    out of stock!!!</p>
+                                                <% }else{ %>
+                                                    <p class="product-stock">
+                                                        <span class="text-danger"
+                                                            style="font-weight: bolder;font-size: medium;">Hot
+                                                            Deal!</span><br>
+                                                        <span class="text-success"
+                                                            style="font-size: medium;font-weight: bold;">In
+                                                            Stock </span>,only <span id="stock_<%= i %>">
+                                                            <%= products[i].stock %>
+                                                        </span> left
+                                                    </p>
+                                                    <% } %>
+                                                        <% } %>
+                                                            <p class="product-price">
+                                                                <span>Per Kg</span>
+                                                                <%= products[i].price %>
 
-                                                </p>
-                                                <button
-                                                    onclick="addToCartUsingFetch('<%= i %>',`<%= products[i]._id %>`)"
-                                                    class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to
-                                                    Cart</button>
+                                                            </p>
+                                                            <% if (products[i].stock> 0){ %>
+
+                                                                <button
+                                                                    onclick="addToCartUsingFetch('<%= i %>',`<%= products[i]._id %>`)"
+                                                                    class="cart-btn"><i
+                                                                        class="fas fa-shopping-cart"></i> Add to
+                                                                    Cart</button>
+                                                                <% }else{ %>
+                                                                    <button
+                                                                        onclick="addToCartUsingFetch('<%= i %>',`<%= products[i]._id %>`)"
+                                                                        class="cart-btn" disabled><i
+                                                                            class="fas fa-shopping-cart"></i> Add to
+                                                                        Cart</button>
+                                                                    </button>
+                                                                    <% } %>
                                     </div>
                                 </div>
                                 <% }%>
