@@ -58,30 +58,35 @@
             <!-- end breadcrumb section -->
             <div class="container-payment">
                 <h3>Select Payment Method</h3>
-               
-                    <h4>Cash on delevery</h4>
+
+                <h4>Cash on delevery</h4>
+                <!-- <form action="/order-add" method="post"> -->
+
                     <input type="hidden" name="paymentMethod" value="cash on delivery" id="paymentMethod">
                     <button type="submit" onclick="orderPlace()">Confirm Payment</button>
-                
+                <!-- </form> -->
+
             </div>
     </body>
     <%- include('partials/footer/footer.ejs') %>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             async function orderPlace() {
-                const paymentMethod = document.getElementById('paymentMethod').value 
-                console.log(paymentMethod,'payment method is showing');
-                await fetch(`/order-add/?paymentMethod=${paymentMethod}`,{
-                    method:'GET',
-                    headers:{
+                const paymentMethod = document.getElementById('paymentMethod').value
+                console.log(paymentMethod, 'payment method is showing');
+                await fetch(`/order-add/?paymentMethod=${paymentMethod}`, {
+                    method: 'GET',
+                    headers: {
                         'Content-Type': 'application/json'
                     }
-                }).then(response=>response.ok?response.json():console.log('Some network error occured while fetching the data'))
-                .then((data)=>{
-                    if(data.result === 'success')
-                    res.redirect('/order')
-                })
-        }
+                }).then(response => response.ok ? response.json() : console.log('Some network error occured while fetching the data'))
+                    .then((data) => {
+                        if (data.result === 'success')
+                            window.location.href = '/order'
+                    }).catch(err=>{
+                        console.log(err,'some error occured while fetchind data in payment page');
+                    })
+            }
         </script>
 
 </html>
