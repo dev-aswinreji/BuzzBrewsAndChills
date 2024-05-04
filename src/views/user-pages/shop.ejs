@@ -73,7 +73,7 @@
                                                     <% } %>
                                                         <% } %>
                                                             <p class="product-price">
-                                                                <span>Per Kg</span>
+                                                                <span>Per Kg</span>Rs
                                                                 <%= products[i].price %>
 
                                                             </p>
@@ -85,11 +85,9 @@
                                                                         class="fas fa-shopping-cart"></i> Add to
                                                                     Cart</button>
                                                                 <% }else{ %>
-                                                                    <button
-                                                                        onclick="addToCartUsingFetch('<%= i %>',`<%= products[i]._id %>`)"
-                                                                        class="cart-btn" disabled><i
-                                                                            class="fas fa-shopping-cart"></i> Add to
-                                                                        Cart</button>
+                                                                    <button class="cart-btn" disabled>
+                                                                        <i class="fas fa-shopping-cart"></i>
+                                                                        Add to Cart</button>
                                                                     </button>
                                                                     <% } %>
                                     </div>

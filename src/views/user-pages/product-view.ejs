@@ -75,23 +75,53 @@
                                     <h3>Green apples have polyphenols</h3>
                                     <p class="single-product-pricing">
                                         <span>Per Kg</span>
-                                        $50
+                                        Rs <%= product.price %>
                                     </p>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta sint dignissimos,
                                         rem commodi cum voluptatem quae reprehenderit repudiandae ea tempora incidunt
                                         ipsa, quisquam animi perferendis eos eum modi! Tempora, earum.</p>
                                     <div class="single-product-form">
-                                        <form action="/cart?">
+                                        <% if (product.stock> 0) { %>
+
                                             <input type="number" name="test" min="1" value="1" placeholder="1"
                                                 id="quantity" oninput="validity.valid||(value='');"><br>
-                                        </form>
-                                        <button onclick="addToCartUsingFetch(`<%= product._id %>`)" class="cart-btn">
-                                            <i class="fas fa-shopping-cart"></i>
-                                            Add to Cart</button>
-                                        <p>
-                                            <strong>Categories:
-                                            </strong>Fruits, Organic
-                                        </p>
+                                            <% }else{ %>
+                                                <input disabled type="number" name="test" min="1" value="1" placeholder="1"
+                                                    id="quantity" oninput="validity.valid||(value='');"><br>
+                                                <% } %>
+
+                                                    <% if (product.stock> 0) { %>
+
+                                                        <button onclick="addToCartUsingFetch(`<%= product._id %>`)"
+                                                            class="cart-btn">
+                                                            <i class="fas fa-shopping-cart"></i>
+                                                            Add to Cart</button>
+                                                        <p>
+                                                            <% } %>
+                                                                <strong>Categories:
+                                                                </strong>
+                                                                <%= product.category.name %> , Organic
+                                                        </p>
+                                                        <% if (product.stock <40) { %>
+                                                            <% if (product.stock===0) { %>
+                                                                <p style="font-weight: bold;font-size: medium;"
+                                                                    class="text-danger">
+                                                                    Product is currently <br>
+                                                                    out of stock!!!</p>
+                                                                <% }else{ %>
+                                                                    <p class="product-stock">
+                                                                        <span class="text-danger"
+                                                                            style="font-weight: bolder;font-size: medium;">Hot
+                                                                            Deal!</span><br>
+                                                                        <span class="text-success"
+                                                                            style="font-size: medium;font-weight: bold;">In
+                                                                            Stock </span>,only <span
+                                                                            id="stock_<%= i %>">
+                                                                            <%= product.stock %>
+                                                                        </span> left
+                                                                    </p>
+                                                                    <% }} %>
+
                                     </div>
                                     <h4>Share:</h4>
                                     <ul class="product-share">
