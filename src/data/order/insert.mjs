@@ -1,6 +1,6 @@
 import { cartCollection } from "../../model/cart.mjs";
 import { orderCollection } from "../../model/order.mjs";
-import { otpGenForNewUser } from "../../utils/otp-generator.mjs";
+import { otpGenForForgotPassword } from "../../utils/otp-generator.mjs";
 import { findCartDataUsingUserId } from "../cart/find.mjs";
 import { findUserAddressUsingId } from "../users/find.mjs";
 import { updateProductStockInOrder } from "./update.mjs";
@@ -9,7 +9,7 @@ export async function insertOrder(userId, userAddressId, paymentMethod) {
   const address = await findUserAddressUsingId(userAddressId);
 
   const cart = await findCartDataUsingUserId(userId);
-  const orderId = await otpGenForNewUser();
+  const orderId = await otpGenForForgotPassword();
 
   console.log(cart, "cart data is ");
   console.log(orderId, "order id is working");
@@ -28,12 +28,9 @@ export async function insertOrder(userId, userAddressId, paymentMethod) {
         paymentMethod: paymentMethod,
       },
     ]);
-    console.log(
-      order,
-      "is order is working================================================================"
-    );
-    const deleted = await cartCollection.deleteOne({_id:cart._id});
-    console.log(deleted,'===================================why it is not working');
+
+    await cartCollection.deleteOne({ _id: cart._id });
+
     await updateProductStockInOrder(order);
   }
   console.log(cart, "what is cart");

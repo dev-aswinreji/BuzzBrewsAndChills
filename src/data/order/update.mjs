@@ -1,3 +1,4 @@
+import { orderCollection } from "../../model/order.mjs";
 import { findSingleProduct } from "../products/find.mjs";
 import { updateProducts } from "../products/update.mjs";
 
@@ -15,5 +16,14 @@ export async function updateProductStockInOrder (order){
         
     } catch (error) {
         console.log(error,'update product stock func in order');
+    }
+}
+
+export async function updateCancelProduct(productId){
+    try {
+        const data = await orderCollection.updateOne({"items.productId":productId},{$set:{productStatus:'CANCELLED'}})
+        console.log(data,'cancelled data is working');
+    } catch (error) {
+        console.log(error,'update cancel product func error');
     }
 }

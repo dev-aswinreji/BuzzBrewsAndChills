@@ -23,6 +23,7 @@ import { user_deleteCartProductDelete } from '../../../views/user-pages/delete-c
 import { user_paymentGet } from '../../../controller/user/home/payment.mjs';
 import { user_orderAddGet, user_orderListGet } from '../../../controller/user/home/order.mjs';
 import { user_updateDefaultAddressGet } from '../../../controller/user/home/update-default-address.mjs';
+import { user_cancelOrderGet } from '../../../controller/user/home/cancel-order.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -60,6 +61,7 @@ routeHome.get('/add-to-cart', user_authentication, user_addToCartGet)
 routeHome.get('/add-to-cart-manage', user_authentication, user_addToCartManageGet)
 routeHome.delete('/delete-cart-product',user_deleteCartProductDelete)
 
+
 routeHome.get('/set-new-password', user_authentication, user_setNewPasswordGet)
 routeHome.post('/set-new-password', user_authentication, user_setNewPasswordPost)
 
@@ -68,6 +70,8 @@ routeHome.get('/product-view/:id', user_productView)
 routeHome.get('/payment',user_paymentGet)
 
 routeHome.get('/order-add',user_orderAddGet)
+
+routeHome.get('/cancel-order',user_cancelOrderGet)
 
 routeHome.get('/order',user_orderListGet)
 

@@ -81,10 +81,10 @@
                 <% console.log(order); %>
                     <% if (order) { %>
 
-                        <% order.forEach(orderList=> { %>
+                        <% order.forEach((orderList,index)=> { %>
 
 
-                            <% orderList.items.forEach(item=> { %>
+                            <% orderList.items.forEach((item)=> { %>
                                 <div class="order">
 
                                     <div class="order-header">
@@ -93,9 +93,15 @@
                                             <%= orderList.status %>
                                         </span>
                                     </div>
+                                    <input type="text" hidden value="<%= item.productId._id %>" name=""
+                                        id="productId_<%= index %>">
+                                    <input type="text" hidden value="<%= item.quantity %>" name=""
+                                        id="quantity_<%= index %>">
                                     <p class="order-details">Date: <%= orderList.createdAt %>
                                     </p>
                                     <p class="order-details"> price: Rs <%= item.productId.price %>
+                                    </p>
+
                                     </p>
                                     <p class="order-details">Items: <%= item.productId.name %>
                                     </p>
@@ -105,6 +111,13 @@
                                         class="img-sm img-thumbnail" alt="">
                                     <p class="order-details">Total Amount : Rs <%= orderList.totalPrice %>
                                     </p>
+                                    <% if (orderList.productStatus==='CANCELLED' ) { %>
+                                        <h4 class="text-danger">Order is Cancelled</h4>
+
+                                        <% }else{ %>
+                                            <button class="text-danger" style="font-weight: bold;"
+                                                onclick="cancelOrder('<%= index %>')">Cancel</button>
+                                            <% } %>
                                 </div>
                                 <% }) %>
                                     <% }) %>
@@ -114,5 +127,26 @@
             </div>
     </body>
     <%- include('partials/footer/footer.ejs') %>
+        <script>
+            async function cancelOrder(index) {
+                const productId = document.getElementById('productId_' + index).value
+                const quantity = document.getElementById('quantity_' + index).value
+                console.log(productId, 'product id is ',);
+                console.log(quantity, 'quanity is ');
+                await fetch(`/cancel-order/?productId=${productId}&quantity=${quantity}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.ok ? response.json() : console.log('some network failure occured while fetching the data'))
+                    .then(data => {
+                        if (data.result === 'success') {
+                            location.reload()
+                            console.log('data fetched successfully');
+                        }
+                    }).catch(err => console.log(err, 'some error occured while using fetch in order page'))
+            }
+        </script>
 
 </html>

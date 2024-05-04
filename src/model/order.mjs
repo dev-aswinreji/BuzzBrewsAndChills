@@ -45,12 +45,17 @@ const orderSchema = mongoose.Schema({
     },
     status:{
         type:String,
-        enum:['PENDING','PROCESSING','COMPLETED'],
-        default: 'PENDING'
+        enum:['PROCESSING','OUT FOR DELIHVERY','DELIVERED'],
+        default: 'PROCESSING'
     },
     paymentMethod:{
         type:String,
         required:true,
+    },
+    productStatus:{
+        type:String,
+        enum :['ACTIVE','CANCELLED'],
+        default:'ACTIVE'
     },
     createdAt:{
         type:Date,
