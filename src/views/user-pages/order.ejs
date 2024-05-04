@@ -116,7 +116,7 @@
 
                                         <% }else{ %>
                                             <button class="text-danger" style="font-weight: bold;"
-                                                onclick="cancelOrder('<%= index %>')">Cancel</button>
+                                                onclick="cancelOrder('<%= index %>','<%= orderList.orderId %>')">Cancel</button>
                                             <% } %>
                                 </div>
                                 <% }) %>
@@ -128,12 +128,12 @@
     </body>
     <%- include('partials/footer/footer.ejs') %>
         <script>
-            async function cancelOrder(index) {
+            async function cancelOrder(index,orderId) {
                 const productId = document.getElementById('productId_' + index).value
                 const quantity = document.getElementById('quantity_' + index).value
                 console.log(productId, 'product id is ',);
                 console.log(quantity, 'quanity is ');
-                await fetch(`/cancel-order/?productId=${productId}&quantity=${quantity}`, {
+                await fetch(`/cancel-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
