@@ -4,7 +4,7 @@ import { cartCollection } from "../../model/cart.mjs";
 
 export async function deleteCartProduct(userId,productRemoveId){
     
-    const result = await cartCollection.updateOne({userId:userId},{$pull:{items:{productId:productRemoveId}}})
+    const result = await cartCollection.deleteOne({userId:userId,"items.productId":productRemoveId})
     
     console.log(result)
     return result
