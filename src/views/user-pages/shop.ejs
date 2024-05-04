@@ -54,12 +54,25 @@
                                         <h3>
                                             <%= products[i].name %>
                                         </h3>
-                                        <p class="product-price"><span>Per ml</span>
-                                            <%= products[i].price %>
-                                        </p>
-                                        <button onclick="addToCartUsingFetch(`<%= products[i]._id %>`)"
-                                            class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to
-                                            Cart</button>
+                                        <% if (products[i].stock <=40) { %>
+                                            <p class="product-stock">
+                                                <span class="text-danger"
+                                                    style="font-weight: bolder;font-size: medium;">Hot
+                                                    Deal!</span><br>
+                                                <span class="text-success"
+                                                    style="font-size: medium;font-weight: bold;">In
+                                                    Stock </span>,only <span id="stock_<%= i %>"><%= products[i].stock %></span> left
+                                            </p>
+                                            <% } %>
+                                                <p class="product-price">
+                                                    <span>Per Kg</span>
+                                                    <%= products[i].price %>
+
+                                                </p>
+                                                <button
+                                                    onclick="addToCartUsingFetch('<%= i %>',`<%= products[i]._id %>`)"
+                                                    class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to
+                                                    Cart</button>
                                     </div>
                                 </div>
                                 <% }%>
@@ -88,9 +101,10 @@
     </body>
 
     <script>
-        async function addToCartUsingFetch(productId) {
-
-            await fetch(`/add-to-cart/?productId=${productId}`, {
+        async function addToCartUsingFetch(index, productId) {
+            const productStock = document.getElementById('stock_' + index).innerHTML
+            console.log(productStock, 'productstock is showing');
+            await fetch(`/add-to-cart/?productId=${productId}&stock=${productStock}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'applicaton/json'
