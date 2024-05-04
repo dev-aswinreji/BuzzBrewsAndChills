@@ -1,4 +1,4 @@
-import {findAllCartDatas, findDuplicateCartProducts} from "../../../data/cart/find.mjs"
+import {findDuplicateCartProducts} from "../../../data/cart/find.mjs"
 import {addToCartData} from "../../../data/cart/insert.mjs"
 import {addToCartDataSameProductUpdate} from "../../../data/cart/update.mjs"
 import {findSingleProduct} from "../../../data/products/find.mjs"

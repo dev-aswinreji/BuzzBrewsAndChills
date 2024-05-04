@@ -3,7 +3,7 @@
 
 <%- include ('./partials/head/head.ejs' ) %>
 
-	<body onpageshow="cart()">
+	<body>
 
 
 		<%- include('./partials/header/header.ejs') %>
@@ -22,7 +22,7 @@
 				</div>
 			</div>
 			<!-- end breadcrumb section -->
-			<% if (cart.items.length> 0) { %>
+			<% if (cart) { %>
 
 				<!-- cart -->
 				<div class="cart-section mt-150 mb-150">
