@@ -14,12 +14,13 @@ export const user_addToCartGet = async (req, res) => {
     console.log(quantity,'quantity of product as query');
     const product = await findSingleProduct(productId)
     console.log(product,'product data is showing');
-    const cart = await findDuplicateCartProducts(userId)
+    const cart = await findDuplicateCartProducts(userId,product)
     console.log(cart,'cart data is showing ===================================');
     const result = await checkDataDuplication(cart)
 
-
+    console.log(result,'is resutl is ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ working');
     if (result === 'NOT EXIST') {
+        console.log('what is happning');
         await addToCartData(userId, product)
         return res.json({result: 'within limit'})
     } else {
