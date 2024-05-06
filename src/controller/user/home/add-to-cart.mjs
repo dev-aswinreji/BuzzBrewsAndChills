@@ -8,34 +8,26 @@ import {checkDataDuplication} from "../../../validation/checking-duplicateData.m
 export const user_addToCartGet = async (req, res) => {
     const userId = req.session.USER_ID
     const productId = req.query.productId
-    const quantity = req.query.quantity
-    const stock = req.query.stock
-    console.log(stock);
-    console.log(quantity,'quantity of product as query');
+    const quantityFromQuery = req.query.quantity
+    console.log(quantityFromQuery,'quantity is showing');
+    const stockFromQuery = req.query.stock
     const product = await findSingleProduct(productId)
-    console.log(product,'product data is showing');
     const cart = await findDuplicateCartProducts(userId,product)
-    console.log(cart,'cart data is showing ===================================');
     const result = await checkDataDuplication(cart)
-
-    console.log(result,'is resutl is ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ working');
     if (result === 'NOT EXIST') {
-        console.log('what is happning');
         await addToCartData(userId, product)
         return res.json({result: 'within limit'})
     } else {
         const cartItem = cart.items.filter(item => item.productId._id.toString() === productId.toString())
-        console.log(cartItem,'what is inside cartItem=======================================l;fjglk;sd======================');
-        const quantity = cartItem[0].quantity
+        console.log(cartItem,'cart item is ============================================ i neeed to fix thisssssssssssssssssssssssssss showign');
+        const cartQuantity = cartItem[0].quantity
         const stock = cartItem[0].productId.stock
-        console.log(stock,'stock is showing');
-        console.log(quantity, 'quantity of each product is');
-        const response = stock > 0 && quantity < 10 ? await addToCartDataSameProductUpdate(userId, product, quantity)
+        if(stock <= cartQuantity){
+            
+        }
+        const response = stock - cartQuantity > 0 || cartQuantity < stock && quantityFromQuery < 10 ? await addToCartDataSameProductUpdate(userId, product, quantityFromQuery)
         .then(() => ({result: 'within limit'})) : ({result: 'limit exceeded'})
         console.log(response, 'response is showing');
         return res.json(response)
     }
-
-
-    // res.json({success: 'success'})
 }

@@ -44,7 +44,7 @@
 										<tbody>
 
 											<% for( let i=0; i < cart.items.length; i++ ) { %>
-
+												<input type="text" name="" value="cart.items[i].productId.stock" hidden id="stock_<%= i %>">
 												<tr class="table-body-row">
 													<td class="product-remove"><button
 															onclick="deleteCartProduct(`<%= cart.items[i].productId._id %>`)">
@@ -163,26 +163,24 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<script>
-		async function cart() {
-			await fetch('/cart', {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			})
-		}
+		
 		async function addtoCartUsingFetch(index, productId) {
 			console.log(index, 'index is not changing');
 			const quantity = document.getElementById('quantity_' + index).value
 			console.log(quantity, 'quantity of each product is getting');
 
+			const stock = document.getElementById('stock_' + index).value 
 
-			quantity <= 10 ? await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
+			console.log(stock);
+
+
+
+			stock > 0 || stock <= quantity && quantity <= 10 ? await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			}).then(response => response.ok ? response.json() : console.log('Some network error occured while fetching'))
+			}).then(response =>console.log('working or not hehe')? response.json() : console.log('Some network error occured while fetching'))
 				.then(
 					data => {
 						console.log(data.result)
