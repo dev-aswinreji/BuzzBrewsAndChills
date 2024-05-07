@@ -10,7 +10,8 @@ export async function insertOrder(userId, userAddressId, paymentMethod) {
 
   const cart = await findCartDataUsingUserId(userId);
   const orderId = await otpGenForForgotPassword();
-
+  const cartItems = cart.items.filter(item=>item.productId.stock.toString() <= item.quantity.toString() )
+  console.log(cartItems,'cartItems is working');
   console.log(cart, "cart data is ");
   console.log(orderId, "order id is working");
   if (cart.items.length > 0) {
