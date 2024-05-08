@@ -26,6 +26,5 @@ export const user_cartGet = async (req, res) => {
 
   const cart = await findAllCartDatas();
   console.log(cart, "cart data is shwoing");
-  // res.render('cart', {cart})
   res.render("cart", { cart });
 };
