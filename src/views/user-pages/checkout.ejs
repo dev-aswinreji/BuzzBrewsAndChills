@@ -157,7 +157,22 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <a href="/payment?addressId=<%= defaultAddress._id %>" class="boxed-btn">Place Order</a>
+                                <br>
+                                <% if (defaultAddress) { %>
+                                    <a href="/payment?addressId=<%= defaultAddress._id %>&totalPrice=<%= cartDatas.totalPrice %>" class="boxed-btn">Place Order</a>
+                                 
+                                <% } else{%>
+                                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                                    <script>
+                                        Swal.fire({
+                                            title:'Address Not Found!',
+                                            text:'Add address to continue'
+                                        }).then(()=>{
+                                            window.location.href = '/add-address'
+                                        })
+                                    </script>
+                                    
+                                    <% } %> 
                             </div>
                         </div>
                     </div>
