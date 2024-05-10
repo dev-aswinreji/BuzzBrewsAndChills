@@ -24,6 +24,7 @@ import { user_orderAddGet, user_orderListGet } from '../../../controller/user/ho
 import { user_updateDefaultAddressGet } from '../../../controller/user/home/update-default-address.mjs';
 import { user_cancelOrderGet } from '../../../controller/user/home/cancel-order.mjs';
 import { user_deleteCartProductDelete } from '../../../controller/user/home/delete-cart.mjs';
+import { user_razorpay } from '../../../controller/user/home/razorpay.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -68,6 +69,7 @@ routeHome.post('/set-new-password', user_authentication, user_setNewPasswordPost
 routeHome.get('/product-view/:id', user_productView)
 
 routeHome.get('/payment',user_paymentGet)
+routeHome.get('/razorpay-payment',user_razorpay)
 
 routeHome.get('/order-add',user_orderAddGet)
 

@@ -62,15 +62,35 @@
                 <h4>Cash on delevery</h4>
                 <!-- <form action="/order-add" method="post"> -->
 
-                    <input type="hidden" name="paymentMethod" value="cash on delivery" id="paymentMethod">
-                    <button type="submit" onclick="orderPlace()">Confirm Payment</button>
-                <!-- </form> -->
+                < <div>
+                    <h4>Razorpay</h4>
+                    <input type="text" name="" value="<%= cartDatas.totalPrice %> " id="">
+                    <button onclick="placeOrder('razorpay')">Pay with Razorpay</button>
+            </div>
+
+            <!-- Cash on Delivery (COD) Payment Method -->
+            <div>
+                <h4>Cash on Delivery</h4>
+                <button onclick="placeOrder('cod')">Pay with Cash on Delivery</button>
+            </div>
+            <!-- </form> -->
 
             </div>
     </body>
     <%- include('partials/footer/footer.ejs') %>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
+            async function placeOrder(paymentMethod) {
+                if (paymentMethod === 'razorpay') {
+                    // Redirect to Razorpay payment page or trigger Razorpay checkout
+                    window.location.href = "/razorpay-payment"; // Replace with your Razorpay payment route
+
+                } else if (paymentMethod === 'cod') {
+                    // Submit form for Cash on Delivery payment
+                    document.getElementById('paymentMethod').value = 'cash on delivery';
+                    await orderPlace()
+                }
+            }
             async function orderPlace() {
                 const paymentMethod = document.getElementById('paymentMethod').value
                 console.log(paymentMethod, 'payment method is showing');
@@ -83,8 +103,8 @@
                     .then((data) => {
                         if (data.result === 'success')
                             window.location.href = '/order'
-                    }).catch(err=>{
-                        console.log(err,'some error occured while fetchind data in payment page');
+                    }).catch(err => {
+                        console.log(err, 'some error occured while fetchind data in payment page');
                     })
             }
         </script>
