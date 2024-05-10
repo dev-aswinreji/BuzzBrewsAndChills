@@ -1,4 +1,5 @@
-import { deleteCartProduct } from "../../data/cart/delete.mjs";
+import { deleteCartProduct } from "../../../data/cart/delete.mjs";
+
 
 export const user_deleteCartProductDelete = async (req, res) => {
   const productId = req.query.productId;
