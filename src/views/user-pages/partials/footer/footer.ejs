@@ -202,3 +202,73 @@
       }
  
 	</script>
+	<!-- <script>
+
+		// function increaseQuantity() {
+		// 	var quantityInput = document.getElementById('quantity');
+		// 	quantityInput.value = parseInt(quantityInput.value) + 1;
+		// }
+
+		// function decreaseQuantity() {
+		// 	var quantityInput = document.getElementById('quantity');
+		// 	if (parseInt(quantityInput.value) > 1) {
+		// 		quantityInput.value = parseInt(quantityInput.value) - 1;
+		// 	}
+		// }
+
+
+		async function incrementOrDecrement(index, productId, quantity) {
+
+			if (quantity <= 10) {
+				
+				 quantityData = document.getElementById('quantity_' + index).value
+
+				const priceText = document.getElementById('price_' + index).innerText
+
+				const price = parseFloat(priceText.replace('Rs ', '').trim());
+
+				const totalPrice = price * quantity
+
+				document.getElementById('totalPrice_' + index).innerText = totalPrice
+
+				await totalPriceUsingFetch(productId, quantity, totalPrice)
+			} else {
+				
+				Swal.fire({
+					title: "Alert!",
+					text: "Max Limit of this product is Exceeded!",
+					icon: "error"
+				}).then(()=>{
+					location.reload()
+				})
+
+			}
+
+		}
+
+		async function totalPriceUsingFetch(productId, quantity, totalPrice) {
+
+			await fetch(`/add-to-cart-totalPrice/?productId=${productId}&quantity=${quantity}&totalPrice=${totalPrice}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+				.then(response => {
+					if (!response.ok) {
+						console.log('some network failure heppen');
+					}
+					return response.json()
+				}).then(data => {
+					if (data.id) {
+						// window.location.reload() /*reloading the page disabled */
+						console.log('data fetched successfully');
+					} else {
+						console.log('data fetched unssuccessfull');
+					}
+				}).catch(err => {
+					console.log(err, 'some error occured in fetching');
+				})
+		}
+
+	</script> -->

@@ -6,6 +6,10 @@ export async function findCategory() {
     return await categoryCollection.find()
 }
 
+export async function findUniqueCategoryUsingId(id){
+    return await categoryCollection.findById(id)
+}
+
 export async function findUniqueCategory (categoryName){
     return await categoryCollection.findOne({name:{$regex: new RegExp(categoryName,'i')}})
 }
@@ -15,7 +19,7 @@ export async function findAllProducts() {
 }
 
 export async function findSingleProduct(id) {
-    return await productCollection.findOne({ _id: id }).populate('category')
+    return await productCollection.findById(id).populate('category')
 
 }
 

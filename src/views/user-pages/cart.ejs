@@ -5,6 +5,7 @@
 
 	<body>
 
+
 		<%- include('./partials/header/header.ejs') %>
 
 			<!-- breadcrumb-section -->
@@ -21,111 +22,236 @@
 				</div>
 			</div>
 			<!-- end breadcrumb section -->
+			<% if (cart) { %>
 
-			<!-- cart -->
-			<div class="cart-section mt-150 mb-150">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-8 col-md-12">
-							<div class="cart-table-wrap">
-								<table class="cart-table">
-									<thead class="cart-table-head">
-										<tr class="table-head-row">
-											<th class="product-remove"></th>
-											<th class="product-image">Product Image</th>
-											<th class="product-name">Name</th>
-											<th class="product-price">Price</th>
-											<th class="product-quantity">Quantity</th>
-											<th class="product-total">Total</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class="table-body-row">
-											<td class="product-remove"><a href="#"><i
-														class="far fa-window-close"></i></a></td>
-											<td class="product-image"><img src="assets/img/products/product-img-1.jpg"
-													alt="">
-											</td>
-											<td class="product-name">Strawberry</td>
-											<td class="product-price">$85</td>
-											<td class="product-quantity"><input type="number" placeholder="0"></td>
-											<td class="product-total">1</td>
-										</tr>
-										<tr class="table-body-row">
-											<td class="product-remove"><a href="#"><i
-														class="far fa-window-close"></i></a></td>
-											<td class="product-image"><img src="assets/img/products/product-img-2.jpg"
-													alt="">
-											</td>
-											<td class="product-name">Berry</td>
-											<td class="product-price">$70</td>
-											<td class="product-quantity"><input type="number" placeholder="0"></td>
-											<td class="product-total">1</td>
-										</tr>
-										<tr class="table-body-row">
-											<td class="product-remove"><a href="#"><i
-														class="far fa-window-close"></i></a></td>
-											<td class="product-image"><img src="assets/img/products/product-img-3.jpg"
-													alt="">
-											</td>
-											<td class="product-name">Lemon</td>
-											<td class="product-price">$35</td>
-											<td class="product-quantity"><input type="number" placeholder="0"></td>
-											<td class="product-total">1</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
+				<!-- cart -->
+				<div class="cart-section mt-150 mb-150">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-8 col-md-12">
+								<div class="cart-table-wrap">
+									<table class="cart-table">
+										<thead class="cart-table-head">
+											<tr class="table-head-row">
+												<th class="product-remove"></th>
+												<th class="product-image">Product Image</th>
+												<th class="product-name">Name</th>
+												<th class="product-price">Price</th>
+												<th class="product-quantity">Quantity</th>
+												<th class="product-total">Total</th>
+											</tr>
+										</thead>
+										<tbody>
 
-						<div class="col-lg-4">
-							<div class="total-section">
-								<table class="total-table">
-									<thead class="total-table-head">
-										<tr class="table-total-row">
-											<th>Total</th>
-											<th>Price</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class="total-data">
-											<td><strong>Subtotal: </strong></td>
-											<td>$500</td>
-										</tr>
-										<tr class="total-data">
-											<td><strong>Shipping: </strong></td>
-											<td>$45</td>
-										</tr>
-										<tr class="total-data">
-											<td><strong>Total: </strong></td>
-											<td>$545</td>
-										</tr>
-									</tbody>
-								</table>
-								<div class="cart-buttons">
-									<a href="/cart" class="boxed-btn">Update Cart</a>
-									<a href="/checkout" class="boxed-btn black">Check Out</a>
+											<% for( let i=0; i < cart.items.length; i++ ) { %>
+												<input type="text" name="" value="cart.items[i].productId.stock" hidden id="stock_<%= i %>">
+												<tr class="table-body-row">
+													<td class="product-remove"><button
+															onclick="deleteCartProduct(`<%= cart.items[i].productId._id %>`)">
+															<i class="far fa-window-close"></i></button></td>
+													<td class="product-image"><img
+															src="/product-images/<%= cart.items[i].productId.imageUrl[0] %>"
+															alt="">
+													</td>
+													<td class="product-name">
+														<%= cart.items[i].productId.name %>
+													</td>
+													<td class="product-price" id="price_<%= i %>">Rs <%=
+															cart.items[i].productId.price %>
+													</td>
+													<td class="product-quantity">
+														<!-- <button onclick="increaseQuantity()">+</button> -->
+														<input type="number" name="test" min="1" id="quantity_<%= i %>"
+															value="<%= cart.items[i].quantity %>" placeholder="1"
+															oninput="validity.valid||(value='');addtoCartUsingFetch(`<%= i %>`,`<%= cart.items[i].productId._id %>`)">
+														<!-- <button onclick="decreaseQuantity()">-</button> -->
+													</td>
+													<td class="product-total" id="productTotal_<%= i %>">
+														<%= cart.items[i].quantity * cart.items[i].productId.price %>
+													</td>
+												</tr>
+												<% } %>
+
+										</tbody>
+									</table>
 								</div>
 							</div>
 
-							<div class="coupon-section">
-								<h3>Apply Coupon</h3>
-								<div class="coupon-form-wrap">
-									<form action="index.html">
-										<p><input type="text" placeholder="Coupon"></p>
-										<p><input type="submit" value="Apply"></p>
-									</form>
+							<div class="col-lg-4">
+								<div class="total-section">
+									<table class="total-table">
+										<thead class="total-table-head">
+											<tr class="table-total-row">
+												<th>Total</th>
+												<th>Price</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="total-data">
+												<td><strong>Subtotal: </strong></td>
+												<td>
+													<%= cart.totalPrice %>
+												</td>
+											</tr>
+											<tr class="total-data">
+												<td><strong>Shipping: </strong></td>
+												<td>$45</td>
+											</tr>
+											<tr class="total-data">
+												<td><strong>Total: </strong></td>
+												<td>$545</td>
+											</tr>
+										</tbody>
+									</table>
+									<div class="cart-buttons">
+
+										<button class="boxed-btn">Update Cart</button>
+										<a href="/checkout" class="boxed-btn black">Check Out</a>
+									</div>
+								</div>
+
+								<div class="coupon-section">
+									<h3>Apply Coupon</h3>
+									<div class="coupon-form-wrap">
+										<form action="index.html">
+											<p><input type="text" placeholder="Coupon"></p>
+											<p><input type="submit" value="Apply"></p>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<!-- end cart -->
+				<!-- end cart -->
+				<% }else{ %>
+
+					<style>
+						/* Custom CSS for styling */
+						.empty-cart {
+							margin-top: 50px;
+							text-align: center;
+						}
+
+						.empty-cart h2 {
+							color: #333;
+						}
+
+						.empty-cart a {
+							color: #007bff;
+							text-decoration: none;
+						}
+
+						.empty-cart a:hover {
+							text-decoration: underline;
+						}
+					</style>
+					<div class="container">
+						<div class="empty-cart">
+							<h2>Your cart is empty</h2>
+							<p>Continue shopping <a href="/shop">here</a>.</p>
+						</div>
+					</div>
 
 
-			<%- include('./partials/footer/footer.ejs') %>
+					<!-- end cart -->>
+					<% } %>
+
+						<%- include('./partials/footer/footer.ejs') %>
 
 	</body>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<script>
+		
+		async function addtoCartUsingFetch(index, productId) {
+			console.log(index, 'index is not changing');
+			const quantity = document.getElementById('quantity_' + index).value
+			console.log(quantity, 'quantity of each product is getting');
+
+			const stock = document.getElementById('stock_' + index).value 
+
+			console.log(stock);
+
+
+
+			stock > 0 || stock <= quantity && quantity <= 10 ? await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(response =>console.log('working or not hehe')? response.json() : console.log('Some network error occured while fetching'))
+				.then(
+					data => {
+						console.log(data.result)
+						data.result === 'within limit' ?
+							Swal.fire({
+								position: "center",
+								icon: "success",
+								title: "Successfully product added to cart",
+								showConfirmButton: false,
+								timer: 1500
+							}).then(() => {
+								location.reload()
+							}) : Swal.fire({
+								position: "center",
+								icon: "error",
+								title: "Maximum product limit is exceeded",
+								showConfirmButton: false,
+								timer: 1500
+							})
+					})
+				.catch(err => {
+					console.log(err, 'Some error occured while fetching in cart page');
+				}) : Swal.fire({
+					position: "center",
+					icon: "error",
+					title: "Maximum product limit is exceeded",
+					showConfirmButton: false,
+					timer: 1500
+				}).then(() => location.reload())
+		}
+
+
+
+
+	</script>
+	<script>
+
+		async function deleteCartProduct(productId) {
+			Swal.fire({
+				title: "Are you sure?",
+				text: "You won't be able to revert this!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, Delete it!"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					checkingSwal(productId)
+				}
+			})
+
+		}
+
+		async function checkingSwal(productId) {
+			console.log(productId);
+			await fetch(`/delete-cart-product/?productId=${productId}`, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(response => response.ok ? response.json() : console.log('some network failure occured while using fetch'))
+				.then(data => data.result === 'success' ?
+					Swal.fire({
+						title: "Deleted!",
+						text: "Product has been deleted successfully.",
+						icon: "success"
+					}) : 'some error occured').then(() => {
+						location.reload()
+					}).catch(err => console.log('some error occured while try to delte using fetch',err))
+		}
+	</script>
 
 </html>

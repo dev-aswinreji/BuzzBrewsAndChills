@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order List</title>
+    <style>
+        .container-order {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .order {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .order-number {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .order-status {
+            font-weight: bold;
+        }
+
+        .order-details {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .order .img-thumbnail {
+            width: 100px;
+            /* Set the desired width */
+            height: auto;
+            /* Maintain aspect ratio */
+        }
+    </style>
+</head>
+
+<%- include ('partials/head/head.ejs' ) %>
+
+    <body>
+
+        <%- include('partials/header/header.ejs') %>
+            <!-- breadcrumb-section -->
+            <div class="breadcrumb-section breadcrumb-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-2 text-center">
+                            <div class="breadcrumb-text">
+                                <p>See more Details</p>
+                                <h1>Order List</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end breadcrumb section -->
+            <div class="container-order">
+                <h1>Order List</h1>
+                <% console.log(order); %>
+                    <% if (order) { %>
+
+                        <% order.forEach((orderList,index)=> { %>
+
+
+                            <% orderList.items.forEach((item)=> { %>
+                                <div class="order">
+
+                                    <div class="order-header">
+                                        <span class="order-number">Order ID : <%= orderList.orderId %> </span>
+                                        <span class="order-status">
+                                            <%= orderList.status %>
+                                        </span>
+                                    </div>
+                                    <input type="text" hidden value="<%= item.productId._id %>" name=""
+                                        id="productId_<%= index %>">
+                                    <input type="text" hidden value="<%= item.quantity %>" name=""
+                                        id="quantity_<%= index %>">
+                                    <p class="order-details">Date: <%= orderList.createdAt %>
+                                    </p>
+                                    <p class="order-details"> price: Rs <%= item.productId.price %>
+                                    </p>
+
+                                    </p>
+                                    <p class="order-details">Items: <%= item.productId.name %>
+                                    </p>
+                                    <p class="order-details">Payment Method: <%= order.paymentMethod %>
+                                    </p>
+                                    <img src="/product-images/<%= item.productId.imageUrl[0] %>"
+                                        class="img-sm img-thumbnail" alt="">
+                                    <p class="order-details">Total Amount : Rs <%= orderList.totalPrice %>
+                                    </p>
+                                    <% if (orderList.productStatus==='CANCELLED' ) { %>
+                                        <h4 class="text-danger">Order is Cancelled</h4>
+
+                                        <% }else{ %>
+                                            <button class="text-danger" style="font-weight: bold;"
+                                                onclick="cancelOrder('<%= index %>','<%= orderList.orderId %>')">Cancel</button>
+                                            <% } %>
+                                </div>
+                                <% }) %>
+                                    <% }) %>
+                                        <% }else{ %>
+                                            No order yet place
+                                            <% } %>
+            </div>
+    </body>
+    <%- include('partials/footer/footer.ejs') %>
+        <script>
+            async function cancelOrder(index,orderId) {
+                const productId = document.getElementById('productId_' + index).value
+                const quantity = document.getElementById('quantity_' + index).value
+                console.log(productId, 'product id is ',);
+                console.log(quantity, 'quanity is ');
+                await fetch(`/cancel-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.ok ? response.json() : console.log('some network failure occured while fetching the data'))
+                    .then(data => {
+                        if (data.result === 'success') {
+                            location.reload()
+                            console.log('data fetched successfully');
+                        }
+                    }).catch(err => console.log(err, 'some error occured while using fetch in order page'))
+            }
+        </script>
+
+</html>

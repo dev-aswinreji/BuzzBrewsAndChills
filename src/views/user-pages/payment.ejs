@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Method</title>
+    <style>
+        .container-payment {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<%- include ('partials/head/head.ejs' ) %>
+
+    <body>
+
+        <%- include('partials/header/header.ejs') %>
+
+            <!-- breadcrumb-section -->
+            <div class="breadcrumb-section breadcrumb-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-2 text-center">
+                            <div class="breadcrumb-text">
+                                <p>See more Details</p>
+                                <h1>Single Product</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end breadcrumb section -->
+            <div class="container-payment">
+                <h3>Select Payment Method</h3>
+
+                <h4>Cash on delevery</h4>
+                <!-- <form action="/order-add" method="post"> -->
+
+                < <div>
+                    <h4>Razorpay</h4>
+                    <input type="text" name="" hidden value="<%= amount %>" id="amount">
+                    <button id="pay-button">Pay with Razorpay</button>
+            </div>
+
+            <!-- Cash on Delivery (COD) Payment Method -->
+            <div>
+                <h4>Cash on Delivery</h4>
+                <button onclick="placeOrder('cod')">Pay with Cash on Delivery</button>
+            </div>
+            <!-- </form> -->
+
+            </div>
+    </body>
+    <%- include('partials/footer/footer.ejs') %>
+
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+
+            document.getElementById('pay-button').addEventListener('click', async function (e) {
+                e.preventDefault();
+
+                // Get amount from the form
+                const amount = document.getElementById('amount').value;
+                console.log(amount, 'amount is showing');
+                // Make a POST request to create a Razorpay order
+                try {
+                    const response = await fetch(`/razorpay-payment`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            amount: amount
+                        })
+                    })
+                    console.log(response, 'what is happening here');
+                    if (!response.ok) {
+                        throw new Error('Failed to create order');
+                    }
+
+                    const order = await response.json();
+                    console.log(order, 'order is showing');
+                    // Initialize Razorpay checkout
+                    const options = {
+                        key: 'rzp_test_e55Dk1oHQbvyBo',
+                        amount: order.amount,
+                        currency: order.currency,
+                        order_id: order.id,
+                        name: 'Your Company Name',
+                        description: 'Test Payment',
+                        image: 'https://via.placeholder.com/150',
+                        handler: function (response) {
+                            console.log(response,'response is showing need to check what to do');
+                            Swal.fire({
+                                text:'Payment Successful! Payment ID: ' + response.razorpay_payment_id,
+                                icon:'CONFIRM'
+                            }).then(()=>{
+                                razorpaySuccess(response.razorpay_payment_id)
+                            })
+                            
+                        },
+                        prefill: {
+                            name: 'John Doe',
+                            email: 'john.doe@example.com',
+                            contact: '1234567890'
+                        },
+                        theme: {
+                            color: '#528FF0'
+                        }
+                    };
+
+                    const razorpayInstance = new Razorpay(options);
+                     razorpayInstance.open()
+                    async function razorpaySuccess(paymentId) {
+                        const paymentMethod = 'Online Payment'
+                        await fetch(`/order-add/?paymentMethod=${paymentMethod}&paymentId=${paymentId}`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        }).then(response => response.ok ? response.json() : console.log('Some network error occured while fetching the data'))
+                            .then((data) => {
+                                if (data.result === 'success')
+                                    window.location.href = '/order'
+                            }).catch(err => {
+                                console.log(err, 'some error occured while fetchind data in payment page');
+                            })
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Failed to create order');
+                }
+            });
+
+         function placeOrder(){
+
+                // Submit form for Cash on Delivery payment
+
+                const paymentMethod = 'cash on delivery'
+                orderPlace(paymentMethod)
+                console.log('order func not working');
+           
+            // }
+            async function orderPlace(paymentMethod) {
+                console.log(paymentMethod);
+                await fetch(`/order-add/?paymentMethod=${paymentMethod}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => response.ok ? response.json() : console.log('Some network error occured while fetching the data'))
+                    .then((data) => {
+                        if (data.result === 'success')
+                            window.location.href = '/order'
+                    }).catch(err => {
+                        console.log(err, 'some error occured while fetchind data in payment page');
+                    }) }
+            
+           }
+        </script>
+
+</html>
