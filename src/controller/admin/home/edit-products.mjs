@@ -1,4 +1,5 @@
 import { imageDirectory } from "../../../app.mjs"
+import { deleteProductImageUsingFetch } from "../../../data/products/delete.mjs"
 import { findCategory, findSingleProduct, findSingleProductWithSameName, findUniqueCategory, } from "../../../data/products/find.mjs"
 import { updateProducts } from "../../../data/products/update.mjs"
 import { checkDataDuplication } from "../../../validation/checking-duplicateData.mjs"
@@ -59,4 +60,12 @@ export const admin_editProductsPost = async (req, res) => {
         console.error(error,'ADMIN EDIT PRODUCTS POST')
         res.send(500)
     }
+}
+
+export const admin_deleteProductImages = async(req,res)=>{
+    const productId = req.query.productId 
+    const imageUrl = req.query.filename
+    console.log(productId,imageUrl);
+    await deleteProductImageUsingFetch(productId,imageUrl)
+    res.json({response:'success'})
 }

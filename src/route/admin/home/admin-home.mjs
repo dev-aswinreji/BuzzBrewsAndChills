@@ -6,7 +6,7 @@ import {admin_categoriesGet, admin_categoriesPost} from "../../../controller/adm
 import {admin_dashboardGet} from "../../../controller/admin/home/dashboard.mjs";
 import {admin_productsGet} from "../../../controller/admin/home/products.mjs";
 import {upload} from "../../../middleware/multer.mjs";
-import {admin_editProductsGet, admin_editProductsPost} from "../../../controller/admin/home/edit-products.mjs";
+import {admin_deleteProductImages, admin_editProductsGet, admin_editProductsPost} from "../../../controller/admin/home/edit-products.mjs";
 import {admin_manageProducts} from "../../../controller/admin/home/manage-products.mjs";
 import {admin_editCategoryGet, admin_editCategoryPost} from "../../../controller/admin/home/edit-category.mjs";
 import {admin_manageCategory} from "../../../controller/admin/home/manage-category.mjs";
@@ -38,6 +38,7 @@ adminHomeRoute.get('/manage-products/:id', admin_authentication, admin_managePro
 adminHomeRoute.get('/orders', admin_authentication, admin_ordersGet)
 
 adminHomeRoute.get('/products', admin_authentication, admin_productsGet)
+adminHomeRoute.delete('/delete-image',admin_authentication,admin_deleteProductImages)
 
 
 export default adminHomeRoute
