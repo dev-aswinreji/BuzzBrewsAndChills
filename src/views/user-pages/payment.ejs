@@ -64,7 +64,7 @@
 
                 < <div>
                     <h4>Razorpay</h4>
-                    <input type="text" name="" value="<%= cartDatas.totalPrice %> " id="">
+                    <input type="text" name="" hidden value="<%= amount %>" id="amount">
                     <button onclick="placeOrder('razorpay')">Pay with Razorpay</button>
             </div>
 
@@ -83,17 +83,27 @@
             async function placeOrder(paymentMethod) {
                 if (paymentMethod === 'razorpay') {
                     // Redirect to Razorpay payment page or trigger Razorpay checkout
+                    const amount = document.getElementById('amount').value 
+                    console.log(amount);
+                    const response = await fetch(`/razorpay-payment/?amount=${amount}`,{
+                        method:'GET',
+                        headers:{
+                            'Content-Type':'application/json'
+                        }
+                    })
+                    console.log(response);
                     window.location.href = "/razorpay-payment"; // Replace with your Razorpay payment route
 
                 } else if (paymentMethod === 'cod') {
                     // Submit form for Cash on Delivery payment
-                    document.getElementById('paymentMethod').value = 'cash on delivery';
-                    await orderPlace()
+                  
+                    const paymentMethod = 'cash on delivery'
+                     orderPlace(paymentMethod)
+                     console.log('order func not working');
                 }
             }
-            async function orderPlace() {
-                const paymentMethod = document.getElementById('paymentMethod').value
-                console.log(paymentMethod, 'payment method is showing');
+            async function orderPlace(paymentMethod) {
+                console.log(paymentMethod);
                 await fetch(`/order-add/?paymentMethod=${paymentMethod}`, {
                     method: 'GET',
                     headers: {
