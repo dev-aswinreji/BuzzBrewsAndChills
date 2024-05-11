@@ -60,6 +60,10 @@ const orderSchema = mongoose.Schema({
     createdAt:{
         type:Date,
         default:Date.now
+    },
+    paymentId:{
+        type:String,
+        
     }
 
 })

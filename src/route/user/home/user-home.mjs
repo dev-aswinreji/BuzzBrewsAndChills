@@ -69,7 +69,7 @@ routeHome.post('/set-new-password', user_authentication, user_setNewPasswordPost
 routeHome.get('/product-view/:id', user_productView)
 
 routeHome.get('/payment',user_paymentGet)
-routeHome.get('/razorpay-payment',user_razorpay)
+routeHome.post('/razorpay-payment',user_razorpay)
 
 routeHome.get('/order-add',user_orderAddGet)
 
