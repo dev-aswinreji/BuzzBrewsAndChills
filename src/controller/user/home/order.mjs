@@ -7,8 +7,9 @@ export const user_orderAddGet = async (req, res) => {
 
     const userId = req.session.USER_ID;
     const paymentMethod = req.query.paymentMethod;
+    const paymentId = req.query.paymentId
 
-    await insertOrder(userId, userAddress, paymentMethod);
+    await insertOrder(userId, userAddress, paymentMethod,paymentId);
 
     console.log("is it working");
     res.json({ result: "success" });

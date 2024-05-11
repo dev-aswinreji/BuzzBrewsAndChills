@@ -5,7 +5,7 @@ import { findCartDataUsingUserId } from "../cart/find.mjs";
 import { findUserAddressUsingId } from "../users/find.mjs";
 import { updateProductStockInOrder } from "./update.mjs";
 
-export async function insertOrder(userId, userAddressId, paymentMethod) {
+export async function insertOrder(userId, userAddressId, paymentMethod,paymentId) {
   const address = await findUserAddressUsingId(userAddressId);
 
   const cart = await findCartDataUsingUserId(userId);
@@ -27,6 +27,7 @@ export async function insertOrder(userId, userAddressId, paymentMethod) {
         totalPrice: cart.totalPrice,
         address: address,
         paymentMethod: paymentMethod,
+        paymentId:paymentId
       },
     ]);
 
