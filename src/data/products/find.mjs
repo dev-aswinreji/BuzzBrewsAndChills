@@ -28,5 +28,6 @@ export async function findSingleProductWithSameName(productName){
  }
 
 export async function findAllProductsForUser (){
-    return await productCollection.find({availability:'AVAILABLE'})
+    const products = await productCollection.find({availability:'AVAILABLE'}).populate('category')
+    return products.filter(product=>product.category.availability === 'ACTIVE')
 }
