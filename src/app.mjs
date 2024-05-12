@@ -16,7 +16,7 @@ import Jwt from 'jsonwebtoken'
 import axios from 'axios'
 import redis from 'redis'
 import googleRoute from './route/google/signin-with-google.mjs'
-
+import fileUpload from 'express-fileupload'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -33,7 +33,7 @@ app.use(bodyParser.json())
 app.use(nocache())
 
 app.use(express.static('public'))
-
+app.use(fileUpload())
 app.set('views', [
     path.join(__dirname, 'views/admin-pages'),
     path.join(__dirname, 'views/admin-auth'),
