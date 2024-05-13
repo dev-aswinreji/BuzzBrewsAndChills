@@ -23,10 +23,7 @@ export const admin_addNewProductsGet = async (req, res) => {
 export const admin_addNewProductsPost = async (req, res) => {
 
     try {
-        console.log('is it inside post method');
-        if(!req.files || Object.keys(req.files).length === 0 ){
-            return res.redirect('/add-new-products')
-        }
+       
         const file = req.files
         console.log(file,'file is showing or not ');
 
