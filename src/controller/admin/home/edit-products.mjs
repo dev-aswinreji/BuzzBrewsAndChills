@@ -34,6 +34,7 @@ export const admin_editProductsPost = async (req, res) => {
         const productData = await findSingleProduct(id)
         const isDuplicateProduct = await findSingleProductWithSameName(productName)
         const result = await checkDataDuplication(isDuplicateProduct)
+        console.log(req.files,'req.files is showing below');
         const updatedProductData = {
             name:req.body.name,
             description:req.body.name,
