@@ -63,7 +63,7 @@
                                 <div class="single-product-img">
                                     <div class="product-image-container">
                                         <div class="image-magnifier">
-                                            <img src="/product-images/<%= product.imageUrl[0] %> " alt="Product Image"
+                                            <img src="/product-images/<%= product.imageUrl[0] %>" alt="Product Image"
                                                 class="product-image">
                                             <div class="magnifier"></div>
                                         </div>
@@ -116,8 +116,7 @@
                                                                             Deal!</span><br>
                                                                         <span class="text-success"
                                                                             style="font-size: medium;font-weight: bold;">In
-                                                                            Stock </span>,only <span
-                                                                            id="stock">
+                                                                            Stock </span>,only <span id="stock">
                                                                             <%= product.stock %>
                                                                         </span> left
                                                                     </p>
@@ -183,7 +182,7 @@
                                             <div class="single-product-item">
                                                 <div class="product-image">
                                                     <a href="single-product.html"><img
-                                                            src="/product-images/<%= relatedProduct[i].imageUrl %> "
+                                                            src="/product-images/<%= relatedProduct[i].imageUrl %>"
                                                             alt=""></a>
                                                 </div>
                                                 <h3>Strawberry</h3>
@@ -228,26 +227,38 @@
                                 headers: {
                                     'Content-Type': 'application/json'
                                 }
-                            }).then(response => !response.ok ?
-                                console.log('some network error occurred in product view fetch method')
-                                : response.json()
-                            ).then(data => {
-                                console.log(data.result)
-                                data.result === 'within limit' ?
+                            }).then((respone) => {
+                                if (respone.redirected) {
                                     Swal.fire({
-                                        position: "center",
-                                        icon: "success",
-                                        title: "Successfully product added to cart",
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    }) : Swal.fire({
-                                        position: "center",
-                                        icon: "error",
-                                        title: "Maximum product limit is exceeded",
-                                        showConfirmButton: false,
-                                        timer: 1500
+                                        title: "Warning!",
+                                        text: "Invalid Entry Try Signin To Continue!",
+                                        icon: "error"
+                                    }).then(result => {
+                                        result.isConfirmed ? window.location.href = '/signin' : null;
                                     })
+                                }
+                                else if (!respone.ok) {
+                                    throw new Error('some network error occured while fetching data')
+                                }
+                                return respone.json()
                             })
+                                .then(data => {
+                                    console.log(data.result)
+                                    data.result === 'within limit' ?
+                                        Swal.fire({
+                                            position: "center",
+                                            icon: "success",
+                                            title: "Successfully product added to cart",
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        }) : Swal.fire({
+                                            position: "center",
+                                            icon: "error",
+                                            title: "Maximum product limit is exceeded",
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        })
+                                })
                         }
 
                     }
