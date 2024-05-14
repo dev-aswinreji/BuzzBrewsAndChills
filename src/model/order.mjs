@@ -57,9 +57,9 @@ const orderSchema = mongoose.Schema({
         enum :['ACTIVE','CANCELLED'],
         default:'ACTIVE'
     },
-    createdAt:{
-        type:Date,
-        default:Date.now
+    orderDate:{
+        type: String,
+        default: moment().format('YYYY/MM/DD')
     },
     paymentId:{
         type:String,

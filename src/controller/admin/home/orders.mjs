@@ -1,18 +1,11 @@
-
+import { findAllOrderDataForAdmin } from "../../../data/order/find.mjs";
 
 export const admin_ordersGet = async (req, res) => {
-
-    try {
-        if (req.session.isAdminAuthenticated) {
-
-            res.render('orders')
-
-        } else {
-            res.redirect('/admin')
-        }
-        
-    } catch (error) {
-        console.error(error,' ADMIN ORDERS GET ')
-    }
-
-}
+  try {
+    const orders = await findAllOrderDataForAdmin()
+    console.log(orders,'orders is showing');
+    res.render("orders",{orders});
+  } catch (error) {
+    console.error(error, " ADMIN ORDERS GET ");
+  }
+};
