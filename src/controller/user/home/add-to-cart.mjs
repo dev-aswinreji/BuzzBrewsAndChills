@@ -15,17 +15,20 @@ export const user_addToCartGet = async (req, res) => {
     const cart = await findDuplicateCartProducts(userId,product)
     const result = await checkDataDuplication(cart)
     if (result === 'NOT EXIST') {
-        await addToCartData(userId, product)
+        await addToCartData(userId, product,quantityFromQuery)
         return res.json({result: 'within limit'})
     } else {
         const cartItem = cart.items.filter(item => item.productId._id.toString() === productId.toString())
         console.log(cartItem,'cart item is ============================================ i neeed to fix thisssssssssssssssssssssssssss showign');
         const cartQuantity = cartItem[0].quantity
+        console.log(cartQuantity,'cart quantity is  ==================================================aklsfhasdjflojasolfjasdf==================================================showing');
         const stock = cartItem[0].productId.stock
-        if(stock <= cartQuantity){
+        console.log(stock,'stock is showing is showing below ==================== ===================================');
+        // if(stock <= cartQuantity){
             
-        }
-        const response = stock - cartQuantity > 0 || cartQuantity < stock && quantityFromQuery < 10 ? await addToCartDataSameProductUpdate(userId, product, quantityFromQuery)
+        // }
+        console.log(quantityFromQuery,'quantity from query is showing ========================');
+        const response = cartQuantity < 10 ? await addToCartDataSameProductUpdate(userId, product, quantityFromQuery)
         .then(() => ({result: 'within limit'})) : ({result: 'limit exceeded'})
         console.log(response, 'response is showing');
         return res.json(response)

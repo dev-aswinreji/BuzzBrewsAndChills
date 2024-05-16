@@ -89,7 +89,7 @@
 										<tbody>
 											<tr class="total-data">
 												<td><strong>Subtotal: </strong></td>
-												<td>
+												<td id="totalPrice">
 													<%= cart.totalPrice %>
 												</td>
 											</tr>
@@ -168,6 +168,9 @@
 			console.log(index, 'index is not changing');
 			const quantity = document.getElementById('quantity_' + index).value
 			console.log(quantity, 'quantity of each product is getting');
+			const priceText = document.getElementById('price_'+index).innerHTML 
+			const price = priceText.replace(/Rs/gi,'')
+			console.log(price,'price of each product is showing');
 
 			const stock = document.getElementById('stock_' + index).value 
 
@@ -175,15 +178,17 @@
 
 
 
-			stock > 0 || stock <= quantity && quantity <= 10 ? await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
+			 quantity <= 10 ? await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			}).then(response =>console.log('working or not hehe')? response.json() : console.log('Some network error occured while fetching'))
+			}).then(response =>response.ok ? response.json() : console.log('Some network error occured while fetching'))
 				.then(
 					data => {
-						console.log(data.result)
+						console.log(data)
+						console.log(data.totalPrice[0].totalPrice,'total price is showing ');
+						console.log(data.quantityFromUpdatedData[0].quantity,'quantity of product is showing ');
 						data.result === 'within limit' ?
 							Swal.fire({
 								position: "center",
@@ -192,7 +197,9 @@
 								showConfirmButton: false,
 								timer: 1500
 							}).then(() => {
-								location.reload()
+								document.getElementById('totalPrice').innerHTML = data.totalPrice[0].totalPrice
+								document.getElementById('productTotal_'+ index).innerHTML = data.quantityFromUpdatedData[0].quantity * price
+								// location.reload()
 							}) : Swal.fire({
 								position: "center",
 								icon: "error",

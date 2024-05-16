@@ -1,6 +1,7 @@
 import {cartCollection} from "../../model/cart.mjs";
 
 export async function addToCartData(userId, product, quantity = 1) {
+    console.log(quantity,'quantity is showing');
     console.log(product,'product id is showing');
     await cartCollection.updateOne({
         userId: userId

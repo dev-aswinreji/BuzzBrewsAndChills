@@ -38,14 +38,7 @@ export async function addToCartDataManageQuantity(userId, product, quantity,tota
                 "items.$.quantity": quantity
             }
         })
-        const uniqueProduct = await cartCollection.findOne({
-            "items.productId": new ObjectId(product._id)
-        })
-
-        console.log(uniqueProduct,'uniqueProduct');
-        // await aggregationForTotalPrice(userId)
-        // console.log(uniqueProduct, 'unique product is showing');
-        // console.log(quantity, 'quantity in manage q func');
+      
 
     } catch (error) {
         console.log(error, 'USER ADD TO CART MANAGE QUANTITY FUNCTION');
