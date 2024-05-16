@@ -84,7 +84,7 @@
                         <% order.forEach((orderList,index)=> { %>
 
 
-                            <% orderList.items.forEach((item)=> { %>
+                            <%# orderList.products.forEach((item)=> { %>
                                 <div class="order">
 
                                     <div class="order-header">
@@ -93,21 +93,21 @@
                                             <%= orderList.status %>
                                         </span>
                                     </div>
-                                    <input type="text" hidden value="<%= item.productId._id %>" name=""
+                                    <input type="text" hidden value="<%= products.productId._id %>" name=""
                                         id="productId_<%= index %>">
-                                    <input type="text" hidden value="<%= item.quantity %>" name=""
+                                    <input type="text" hidden value="<%= products.quantity %>" name=""
                                         id="quantity_<%= index %>">
                                     <p class="order-details">Date: <%= orderList.createdAt %>
                                     </p>
-                                    <p class="order-details"> price: Rs <%= item.productId.price %>
+                                    <p class="order-details"> price: Rs <%= products.productId.price %>
                                     </p>
 
                                     </p>
-                                    <p class="order-details">Items: <%= item.productId.name %>
+                                    <p class="order-details">Items: <%= products.productId.name %>
                                     </p>
                                     <p class="order-details">Payment Method: <%= order.paymentMethod %>
                                     </p>
-                                    <img src="/product-images/<%= item.productId.imageUrl[0] %>"
+                                    <img src="/product-images/<%= products.productId.imageUrl[0] %>"
                                         class="img-sm img-thumbnail" alt="">
                                     <p class="order-details">Total Amount : Rs <%= orderList.totalPrice %>
                                     </p>

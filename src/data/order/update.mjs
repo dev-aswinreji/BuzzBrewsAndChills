@@ -5,7 +5,7 @@ import { updateProducts } from "../products/update.mjs";
 export async function updateProductStockInOrder (order){
     try {
 
-        for(const item of order[0].items){
+        for(const item of order){
             const product = await findSingleProduct(item.productId)
             console.log(product.stock,'product stock',item.quantity,'item and quantity');
             let updatedStock = product.stock - item.quantity

@@ -9,7 +9,7 @@ function cartModel(collectionName, schema) {
 
 const orderSchema = mongoose.Schema({
   userId: {
-    type:String,
+    type:Schema.Types.ObjectId,
     trim:true,
     required: true,
   },

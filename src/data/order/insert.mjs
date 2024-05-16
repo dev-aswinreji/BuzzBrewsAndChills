@@ -7,7 +7,7 @@ import { updateProductStockInOrder } from "./update.mjs";
 
 export async function insertOrder(userId, userAddressId, paymentMethod,paymentId) {
   const address = await findUserAddressUsingId(userAddressId);
-
+  console.log(address,'address is showing ');
   const cart = await findCartDataUsingUserId(userId);
   const orderId = await otpGenForForgotPassword();
   const cartItems = cart.items.filter(item=>item.productId.stock.toString() <= item.quantity.toString() )
@@ -19,18 +19,18 @@ export async function insertOrder(userId, userAddressId, paymentMethod,paymentId
       {
         userId: userId,
         orderId: orderId,
-        items: cart.items.map((item) => ({
+        products: cart.items.map((item) => ({
           productId: item.productId._id,
           quantity: item.quantity,
           price: item.productId.price,
         })),
         totalPrice: cart.totalPrice,
-        address: address,
+        address: address.homeAddress,
         paymentMethod: paymentMethod,
         paymentId:paymentId
       },
     ]);
-
+    console.log(order,'order is showing success or not ================================================================================================');
     await cartCollection.deleteOne({ _id: cart._id });
 
     await updateProductStockInOrder(order);
