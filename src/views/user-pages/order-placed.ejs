@@ -10,19 +10,32 @@
             text-decoration: none;
         }
 
+        #address-container {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 700px;
+        }
+
+        .address-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
         .container-order {
             max-width: 800px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #fff;
+            background-color: #fff1f1;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
+        /* h1 {
             text-align: center;
             color: #333;
-        }
+        } */
 
         .order-details {
             margin-top: 20px;
@@ -99,13 +112,15 @@
         }
 
         .btn-shop {
-            background-color: #3498db;
+            background-color: #474f57;
             color: #fff;
+            font-weight: bolder;
         }
 
         .btn-history {
-            background-color: #27ae60;
+            background-color: #75d69e;
             color: #fff;
+            font-weight: bolder;
         }
     </style>
 </head>
@@ -128,40 +143,38 @@
                 </div>
             </div>
             <!-- end breadcrumb section -->
-        <% console.log(order,'order is shwoing'); %> 
-        <% console.log(order[0].products[0].name,'name i sshowing'); %> 
-            <div class="container-order">
-                <h1>Order Details</h1>
-                <div class="order-details">
-                    <h2>Order ID: <%= order[0].orderId %> </h2>
-                    <h2>Date: 2024-05-08</h2>
-                    <div class="order-item">
-                        <span class="product-name"><%= order[0].products[0].name %> </span>
-                        <span class="product-price">$10.00</span>
-                        <button class="cancel-btn">Cancel</button> <!-- Added -->
+            <% console.log(order,'order is shwoing'); %>
+                <!-- <%# console.log(order[0].products[0].name,'name i sshowing'); %> -->
+                    <div class="container-order">
+                        <h1>Order Details</h1>
+                        <% if (order) { %>
+                        
+                        <div class="order-details">
+                            <h4>Order ID: <%#= order[0].orderId %>
+                            </h4>
+                            <h4>Date: 2024-05-08</h4>
+                            <div class="order-item">
+                                <span class="product-name">
+                                    <%#= order[0].products[0].name %>
+                                </span>
+                                <span class="product-price">$10.00</span>
+                            </div>
+                            <div id="address-container">
+                                <div class="address-title"><h4>Delivery Address: los angels america</h4></div>
+                            </div>
+                        </div>
+                        <div class="payment-method">
+                            <h5>Payment Method: Credit Card</h5>
+                        </div>
+                        <div class="total">
+                            <h4>Total: $45.00</h4>
+                        </div>
+                        <div class="btn-container-order">
+                            <button class="btn-shop"><a href="/shop">Return to Shop</a></button>
+                            <button class="btn-history"><a href="/order">Order History</a></button>
+                        </div>
+                        <% } %>
                     </div>
-                    <div class="order-item">
-                        <span class="product-name">Product Name 2</span>
-                        <span class="product-price">$15.00</span>
-                        <button class="cancel-btn">Cancel</button> <!-- Added -->
-                    </div>
-                    <div class="order-item">
-                        <span class="product-name">Product Name 3</span>
-                        <span class="product-price">$20.00</span>
-                        <button class="cancel-btn">Cancel</button> <!-- Added -->
-                    </div>
-                </div>
-                <div class="payment-method">
-                    <h2>Payment Method: Credit Card</h2>
-                </div>
-                <div class="total">
-                    <h2>Total: $45.00</h2>
-                </div>
-                <div class="btn-container-order">
-                    <button class="btn-shop"><a href="/shop">Return to Shop</a></button>
-                    <button class="btn-history"><a href="/order">Order History</a></button>
-                </div>
-            </div>
     </body>
     <%- include('./partials/footer/footer.ejs') %>
 

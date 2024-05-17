@@ -5,13 +5,16 @@ import { updateProducts } from "../products/update.mjs";
 export async function updateProductStockInOrder (order){
     try {
 
-        for(const item of order){
-            const product = await findSingleProduct(item.productId)
-            console.log(product.stock,'product stock',item.quantity,'item and quantity');
-            let updatedStock = product.stock - item.quantity
-            console.log(updatedStock,'updateStock is ');
+        for(const products of order[0].products){
+            // console.log(products,'products is shwoing ');
+            // console.log(products.productId);
+            const product = await findSingleProduct(products.productId)
+            // console.log(product,'product data is showing');
+            // console.log(product.stock,'product stock',products.quantity,'item and quantity');
+            let updatedStock = product.stock - products.quantity
+            // console.log(updatedStock,'updateStock is ');
             const data = await updateProducts(product._id,{stock:updatedStock})
-            console.log(data,'product data is updated');
+            console.log(data,'product data is updated in update products stock of order func');
         }
         
     } catch (error) {

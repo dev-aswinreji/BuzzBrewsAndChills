@@ -6,7 +6,9 @@ import { findUserAddressUsingId } from "../users/find.mjs";
 import { updateProductStockInOrder } from "./update.mjs";
 
 export async function insertOrder(userId, userAddressId, paymentMethod,paymentId) {
-  const address = await findUserAddressUsingId(userAddressId);
+  try {
+
+    const address = await findUserAddressUsingId(userAddressId);
   console.log(address,'address is showing ');
   const cart = await findCartDataUsingUserId(userId);
   const orderId = await otpGenForForgotPassword();
@@ -40,4 +42,9 @@ export async function insertOrder(userId, userAddressId, paymentMethod,paymentId
     return order
   }
   console.log(cart, "what is cart");
+    
+  } catch (error) {
+    console.log(error,'Insert order func ');
+  }
+  
 }
