@@ -25,6 +25,7 @@ import { user_updateDefaultAddressGet } from '../../../controller/user/home/upda
 import { user_cancelOrderGet } from '../../../controller/user/home/cancel-order.mjs';
 import { user_deleteCartProductDelete } from '../../../controller/user/home/delete-cart.mjs';
 import { user_razorpay } from '../../../controller/user/home/razorpay.mjs';
+import { user_orderPlacedGet } from '../../../controller/user/home/order-placed.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -72,6 +73,7 @@ routeHome.get('/payment',user_paymentGet)
 routeHome.post('/razorpay-payment',user_razorpay)
 
 routeHome.get('/order-add',user_orderAddGet)
+routeHome.get('/order-placed',user_authentication,user_orderPlacedGet)
 
 routeHome.get('/cancel-order',user_cancelOrderGet)
 

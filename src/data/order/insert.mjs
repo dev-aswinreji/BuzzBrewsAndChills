@@ -31,9 +31,11 @@ export async function insertOrder(userId, userAddressId, paymentMethod,paymentId
       },
     ]);
     console.log(order,'order is showing success or not ================================================================================================');
+
     await cartCollection.deleteOne({ _id: cart._id });
 
     await updateProductStockInOrder(order);
+    req.session.ORDER_PLACED = order
   }
   console.log(cart, "what is cart");
 }

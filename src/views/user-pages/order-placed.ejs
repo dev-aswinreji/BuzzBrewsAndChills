@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        .container-order {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .order-details {
+            margin-top: 20px;
+        }
+
+        .order-details h2 {
+            color: #666;
+        }
+
+        .order-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            position: relative;
+            /* Added */
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item .product-name {
+            font-weight: bold;
+        }
+
+        .order-item .product-price {
+            color: #888;
+            margin-left: 10px;
+        }
+
+        .cancel-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .cancel-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .total {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .total h2 {
+            color: #333;
+        }
+
+        .payment-method {
+            margin-top: 20px;
+        }
+
+        .payment-method h2 {
+            color: #666;
+        }
+
+        .btn-container-order {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-container-order button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-shop {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .btn-history {
+            background-color: #27ae60;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<%- include ('./partials/head/head.ejs' ) %>
+
+    <body>
+        <%- include('./partials/header/header.ejs') %>
+            <!-- breadcrumb-section -->
+            <div class="breadcrumb-section breadcrumb-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-2 text-center">
+                            <div class="breadcrumb-text">
+                                <p>Fresh and Organic</p>
+                                <h1>Cart</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end breadcrumb section -->
+
+            <div class="container-order">
+                <h1>Order Details</h1>
+                <div class="order-details">
+                    <h2>Order ID: <%#= order.orderId %> /h2>
+                    <h2>Date: 2024-05-08</h2>
+                    <div class="order-item">
+                        <span class="product-name">Product Name 1</span>
+                        <span class="product-price">$10.00</span>
+                        <button class="cancel-btn">Cancel</button> <!-- Added -->
+                    </div>
+                    <div class="order-item">
+                        <span class="product-name">Product Name 2</span>
+                        <span class="product-price">$15.00</span>
+                        <button class="cancel-btn">Cancel</button> <!-- Added -->
+                    </div>
+                    <div class="order-item">
+                        <span class="product-name">Product Name 3</span>
+                        <span class="product-price">$20.00</span>
+                        <button class="cancel-btn">Cancel</button> <!-- Added -->
+                    </div>
+                </div>
+                <div class="payment-method">
+                    <h2>Payment Method: Credit Card</h2>
+                </div>
+                <div class="total">
+                    <h2>Total: $45.00</h2>
+                </div>
+                <div class="btn-container-order">
+                    <button class="btn-shop"><a href="/shop">Return to Shop</a></button>
+                    <button class="btn-history"><a href="/order">Order History</a></button>
+                </div>
+            </div>
+    </body>
+    <%- include('./partials/footer/footer.ejs') %>
+
+
+</html>
