@@ -149,7 +149,7 @@
                         }).then(response => response.ok ? response.json() : console.log('Some network error occured while fetching the data'))
                             .then((data) => {
                                 if (data.result === 'success')
-                                    window.location.href = '/order'
+                                    window.location.href = '/order-placed'
                             }).catch(err => {
                                 console.log(err, 'some error occured while fetchind data in payment page');
                             })
@@ -179,7 +179,7 @@
                 }).then(response => response.ok ? response.json() : console.log('Some network error occured while fetching the data'))
                     .then((data) => {
                         if (data.result === 'success')
-                            window.location.href = '/order'
+                            window.location.href = '/order-placed'
                     }).catch(err => {
                         console.log(err, 'some error occured while fetchind data in payment page');
                     }) }
