@@ -209,7 +209,8 @@
                     async function addToCartUsingFetch(productId) {
 
                         const quantity = document.getElementById('quantity').value
-
+                        const stock = document.getElementById('stock').innerHTML.trim()
+                        console.log(stock,'stock is showing');
                         if (quantity > 10) {
 
                             Swal.fire({
@@ -222,7 +223,7 @@
                         } else {
 
                             console.log(productId, 'product Id is working');
-                            await fetch(`/add-to-cart/?productId=${productId}&quantity=${quantity}`, {
+                            await fetch(`/add-to-cart/?productId=${productId}&quantity=${quantity}&stock=${stock}`, {
                                 method: 'GET',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -244,7 +245,9 @@
                             })
                                 .then(data => {
                                     console.log(data.result)
+                                    console.log(data.stock);
                                     data.result === 'within limit' ?
+                                    
                                         Swal.fire({
                                             position: "center",
                                             icon: "success",
