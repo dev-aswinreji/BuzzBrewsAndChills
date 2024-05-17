@@ -17,7 +17,7 @@ export const user_addToCartGet = async (req, res) => {
     const result = await checkDataDuplication(cart);
     
     if (result === "NOT EXIST") {
-        if(quantityFromQuery<stockFromQuery){
+        if(quantityFromQuery<stockFromQuery || quantityFromQuery === undefined){
             await addToCartData(userId, product, quantityFromQuery);
             return res.json({ result: "within limit" });
         }else{
