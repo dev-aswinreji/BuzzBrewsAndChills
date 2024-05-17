@@ -128,14 +128,15 @@
                 </div>
             </div>
             <!-- end breadcrumb section -->
-
+        <% console.log(order,'order is shwoing'); %> 
+        <% console.log(order[0].products[0].name,'name i sshowing'); %> 
             <div class="container-order">
                 <h1>Order Details</h1>
                 <div class="order-details">
-                    <h2>Order ID: <%#= order.orderId %> /h2>
+                    <h2>Order ID: <%= order[0].orderId %> </h2>
                     <h2>Date: 2024-05-08</h2>
                     <div class="order-item">
-                        <span class="product-name">Product Name 1</span>
+                        <span class="product-name"><%= order[0].products[0].name %> </span>
                         <span class="product-price">$10.00</span>
                         <button class="cancel-btn">Cancel</button> <!-- Added -->
                     </div>

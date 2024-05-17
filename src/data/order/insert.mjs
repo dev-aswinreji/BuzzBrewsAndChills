@@ -15,14 +15,16 @@ export async function insertOrder(userId, userAddressId, paymentMethod,paymentId
   console.log(cart, "cart data is ");
   console.log(orderId, "order id is working");
   if (cart.items.length > 0) {
-    const order = await orderCollection.insertMany([
+    const order = await orderCollection.create([
       {
         userId: userId,
         orderId: orderId,
         products: cart.items.map((item) => ({
           productId: item.productId._id,
+          name:item.productId.name,
           quantity: item.quantity,
           price: item.productId.price,
+          orderId:orderId
         })),
         totalPrice: cart.totalPrice,
         address: address.homeAddress,
@@ -35,7 +37,7 @@ export async function insertOrder(userId, userAddressId, paymentMethod,paymentId
     await cartCollection.deleteOne({ _id: cart._id });
 
     await updateProductStockInOrder(order);
-    req.session.ORDER_PLACED = order
+    return order
   }
   console.log(cart, "what is cart");
 }

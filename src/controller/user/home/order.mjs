@@ -9,9 +9,11 @@ export const user_orderAddGet = async (req, res) => {
     const paymentMethod = req.query.paymentMethod;
     const paymentId = req.query.paymentId
 
-    await insertOrder(userId, userAddress, paymentMethod,paymentId);
+    const order = await insertOrder(userId, userAddress, paymentMethod,paymentId);
 
-    console.log("is it working");
+
+    req.session.ORDER_PLACED = order
+    console.log(order,'order of that product is showing ');
     res.json({ result: "success" });
   } catch (error) {
     console.log(error, "USER ORDER ADD GET");

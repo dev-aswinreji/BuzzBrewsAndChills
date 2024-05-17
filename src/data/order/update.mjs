@@ -21,7 +21,7 @@ export async function updateProductStockInOrder (order){
 
 export async function updateCancelProduct(orderId){
     try {
-        return await orderCollection.updateOne({orderId:orderId},{$set:{productStatus:'CANCELLED'}}) ? 'Success' : 'Fail'
+        return await orderCollection.updateOne({orderId:orderId,},{$set:{productStatus:'CANCELLED'}}) ? 'Success' : 'Fail'
     } catch (error) {
         console.log(error,'update cancel product func error');
     }
