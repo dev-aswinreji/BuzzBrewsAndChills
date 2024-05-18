@@ -210,8 +210,11 @@
 
                         const quantity = document.getElementById('quantity').value
                         const stock = document.getElementById('stock').innerHTML.trim()
-                        console.log(stock,'stock is showing');
-                        if (quantity > 10) {
+                        console.log(stock,'stock is showing','quanity');
+                        const limit = 10
+                        console.log(quantity<stock,'q less than s');
+                        console.log(quantity> limit,'q g than limi');
+                        if (quantity > limit && quantity < stock) {
 
                             Swal.fire({
                                 position: "center",
