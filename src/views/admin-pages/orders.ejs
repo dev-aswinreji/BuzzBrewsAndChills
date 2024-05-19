@@ -123,9 +123,8 @@
                                         <tr>
                                             <th>#ID</th>
                                             <th scope="col">Name</th>
-                                            <th scope="col">Email</th>
                                             <th scope="col">Total</th>
-                                            <th scope="col">Status</th>
+                                            <th scope="col">Method Of Payment</th>
                                             <th scope="col">Date</th>
                                             <th scope="col" class="text-end"> Action </th>
                                         </tr>
@@ -137,95 +136,26 @@
 
 
                                                 <tr>
-                                                    <td>0901</td>
+                                                    <td><%= orders[i].orderId %> </td>
                                                     <td><b>
-                                                            <%= orders[i].userId.fullName %>
+                                                            <%= orders[i].username %>
                                                         </b></td>
-                                                    <td><template class="__cf_email__">
-                                                            <%= orders[i].userId.email %>
-                                                        </template>
-                                                    </td>
+                                            
                                                     <td>Rs <%= orders[i].totalPrice %>
                                                     </td>
                                                     <td>
-                                                        <% if (data.products[i].status=="Pending" ) { %>
-
-
-
-                                                            <select class="form-select"
-                                                                aria-label="Default select example"
-                                                                style="color: green;" name="status">
-                                                                <option style="color: green;">
-                                                                    <%= data.products[i].status %>
-                                                                </option>
-                                                                <option value="Shipped" style="color: green;">Shipped
-                                                                </option>
-                                                                <option value="Out for delivery" style="color: green;">
-                                                                    Out for delivery
-                                                                </option>
-                                                                <option value="Delivered" style="color: green;">
-                                                                    Delivered</option>
-                                                            </select>
-
-                                                            <% } else if (data.products[i].status=="Shipped" ) { %>
-
-                                                                <select class="form-select"
-                                                                    aria-label="Default select example"
-                                                                    style="color: green;" name="status">
-
-                                                                    <option value="Shipped" style="color: green;">
-                                                                        Shipped</option>
-                                                                    <option value="Out for delivery"
-                                                                        style="color: green;">Out for delivery
-                                                                    </option>
-                                                                    <option value="Delivered" style="color: green;">
-                                                                        Delivered</option>
-                                                                </select>
-
-                                                                <% } else if
-                                                                    (data.products[i].status=="Out for delivery" ) { %>
-
-                                                                    <select class="form-select"
-                                                                        aria-label="Default select example"
-                                                                        style="color: green;" name="status">
-                                                                        <option value="Out for delivery"
-                                                                            style="color: green;">Out for delivery
-                                                                        </option>
-                                                                        <option value="Delivered" style="color: green;">
-                                                                            Delivered</option>
-                                                                    </select>
-
-                                                                    <% } else if (data.products[i].status=="Delivered" )
-                                                                        { %>
-
-                                                                        <%= data.products[i].status %>
-
-
-                                                                            <% } %>
-
-
-
-                                                                                <% } %>
+                                                        <%= orders[i].paymentMethod %>
                                                     </td>
                                                     <td>
-                                                        <%= orders[i].createdAt %>
+                                                        <%= orders[i].orderDate %>
                                                     </td>
                                                     <td class="text-end">
-                                                        <a href="#" class="btn btn-md rounded font-sm">Detail</a>
-                                                        <div class="dropdown">
-                                                            <a href="#" data-bs-toggle="dropdown"
-                                                                class="btn btn-light rounded btn-sm font-sm"> <i
-                                                                    class="material-icons md-more_horiz"></i> </a>
-                                                            <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="#">View detail</a>
-                                                                <a class="dropdown-item" href="#">Edit info</a>
-                                                                <a class="dropdown-item text-danger" href="#">Delete</a>
-                                                            </div>
-                                                        </div> <!-- dropdown //end -->
+                                                        <a href="/admin/order-details?orderId=<%= orders[i]._id %>" class="btn btn-md rounded font-sm">Detail</a>
+                                                         <!-- dropdown //end -->
                                                     </td>
                                                 </tr>
                                                 <% } %>
-                                                    <% }else{ %>
+                                                    <%} else{ %>
                                                         <h4>No order placed ye</h4>
                                                         <% } %>
                                     </tbody>

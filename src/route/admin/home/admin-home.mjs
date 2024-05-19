@@ -11,6 +11,7 @@ import {admin_manageProducts} from "../../../controller/admin/home/manage-produc
 import {admin_editCategoryGet, admin_editCategoryPost} from "../../../controller/admin/home/edit-category.mjs";
 import {admin_manageCategory} from "../../../controller/admin/home/manage-category.mjs";
 import {admin_authentication} from "../../../middleware/admin-auth.mjs";
+import { admin_orderDetailsGet } from "../../../controller/admin/home/order-placed.mjs";
 
 const adminHomeRoute = express.Router()
 
@@ -36,6 +37,7 @@ adminHomeRoute.post('/edit-products', upload.array("imageUrl", 5), admin_editPro
 adminHomeRoute.get('/manage-products/:id', admin_authentication, admin_manageProducts)
 
 adminHomeRoute.get('/orders', admin_authentication, admin_ordersGet)
+adminHomeRoute.get('/order-details',admin_authentication,admin_orderDetailsGet)
 
 adminHomeRoute.get('/products', admin_authentication, admin_productsGet)
 adminHomeRoute.delete('/delete-image',admin_authentication,admin_deleteProductImages)

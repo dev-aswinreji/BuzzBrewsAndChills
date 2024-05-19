@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        #address-container, #product-container {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+        }
+        .address-title, .product-title, .status-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main-content">
+        <!-- Other content of your page -->
+        <button id="detail-button">Detail</button>
+    </div>
+
+    <p id="address-title" class="address-title" style="display: none;">Delivery Address:</p>
+    <p id="delivery-address" style="display: none;"></p>
+
+    <p id="product-title" class="product-title" style="display: none;">Product Details:</p>
+    <p id="product-details" style="display: none;"></p>
+
+    <p id="status-title" class="status-title" style="display: none;">Order Status:</p>
+    <select id="status-dropdown" style="display: none;">
+        <option value="order_placed">Order Placed</option>
+        <option value="processing">Processing</option>
+        <option value="out_for_delivery">Out for Delivery</option>
+        <option value="delivered">Delivered</option>
+    </select>
+    <button id="update-status-button" style="display: none;">Update Status</button>
+
+    <script>
+        // Example user address data
+        const userAddress = {
+            name: "John Doe",
+            street: "123 Main St",
+            city: "Springfield",
+            state: "IL",
+            zip: "62701"
+        };
+
+        // Example product details data
+        const productDetails = {
+            name: "Wireless Mouse",
+            price: "$25",
+            description: "A high-precision wireless mouse."
+        };
+
+        // Current order status
+        let currentStatus = "order_placed";
+
+        // Function to display the address, product details, and order status
+        function showDetails() {
+            // Display address
+            const addressTitle = document.getElementById('address-title');
+            const addressElement = document.getElementById('delivery-address');
+
+            addressElement.innerHTML = `
+                Name: ${userAddress.name}<br>
+                ${userAddress.street}<br>
+                ${userAddress.city}, ${userAddress.state} ${userAddress.zip}
+            `;
+            
+            addressTitle.style.display = 'block';
+            addressElement.style.display = 'block';
+
+            // Display product details
+            const productTitle = document.getElementById('product-title');
+            const productElement = document.getElementById('product-details');
+
+            productElement.innerHTML = `
+                Name: ${productDetails.name}<br>
+                Price: ${productDetails.price}<br>
+                Description: ${productDetails.description}
+            `;
+            
+            productTitle.style.display = 'block';
+            productElement.style.display = 'block';
+
+            // Display order status dropdown
+            const statusTitle = document.getElementById('status-title');
+            const statusDropdown = document.getElementById('status-dropdown');
+            const updateStatusButton = document.getElementById('update-status-button');
+            
+            statusTitle.style.display = 'block';
+            statusDropdown.style.display = 'block';
+            updateStatusButton.style.display = 'block';
+
+            updateStatusOptions();
+        }
+
+        // Function to update the status options based on the current status
+        function updateStatusOptions() {
+            const statusDropdown = document.getElementById('status-dropdown');
+            const allOptions = statusDropdown.options;
+
+            for (let i = 0; i < allOptions.length; i++) {
+                allOptions[i].disabled = false;
+            }
+
+            if (currentStatus === "order_placed") {
+                allOptions[0].disabled = true; // Disable "Order Placed"
+                allOptions[3].disabled = true; // Disable "Delivered"
+            } else if (currentStatus === "processing") {
+                allOptions[0].disabled = true; // Disable "Order Placed"
+                allOptions[1].disabled = true; // Disable "Processing"
+                allOptions[3].disabled = true; // Disable "Delivered"
+            } else if (currentStatus === "out_for_delivery") {
+                allOptions[0].disabled = true; // Disable "Order Placed"
+                allOptions[1].disabled = true; // Disable "Processing"
+                allOptions[2].disabled = true; // Disable "Out for Delivery"
+            }
+        }
+
+        // Function to update the current status
+        function updateStatus() {
+            const statusDropdown = document.getElementById('status-dropdown');
+            currentStatus = statusDropdown.value;
+            updateStatusOptions();
+        }
+
+        // Add event listener to the detail button
+        document.getElementById('detail-button').addEventListener('click', showDetails);
+
+        // Add event listener to the update status button
+        document.getElementById('update-status-button').addEventListener('click', updateStatus);
+    </script>
+</body>
+</html>

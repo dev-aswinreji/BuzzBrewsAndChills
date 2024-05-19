@@ -8,32 +8,45 @@ function cartModel(collectionName, schema) {
 }
 
 const orderSchema = mongoose.Schema({
-  userId: {
-    type:Schema.Types.ObjectId,
-    trim:true,
+  username: {
+    type: String,
+    trim: true,
     required: true,
   },
   orderId: {
     type: String,
     required: true,
   },
-  products: {
-    type:Array,
+  products: [
+    {
+      status: {
+        type: String,
+        enum: ["PROCESSING", "OUT FOR DELIHVERY", "DELIVERED", "CANCELLED"],
+        default: "PROCESSING",
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
+  address: {
+    type: String,
     required: true,
-  },
-  address:{
-    type:String,
-    required:true,  
   },
   totalPrice: {
     type: Number,
     min: 0,
     required: true,
-  },
-  status: {
-    type: String,
-    enum: ["PROCESSING", "OUT FOR DELIHVERY", "DELIVERED","CANCELLED"],
-    default: "PROCESSING",
   },
   paymentMethod: {
     type: String,

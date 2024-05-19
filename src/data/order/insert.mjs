@@ -19,14 +19,13 @@ export async function insertOrder(userId, userAddressId, paymentMethod,paymentId
   if (cart.items.length > 0) {
     const order = await orderCollection.create([
       {
-        userId: userId,
+        username: address.name,
         orderId: orderId,
         products: cart.items.map((item) => ({
           productId: item.productId._id,
           name:item.productId.name,
           quantity: item.quantity,
           price: item.productId.price,
-          orderId:orderId
         })),
         totalPrice: cart.totalPrice,
         address: address.homeAddress,
