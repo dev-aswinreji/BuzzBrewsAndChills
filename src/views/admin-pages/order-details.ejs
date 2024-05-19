@@ -1,43 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Details</title>
-    <style>
-        #address-container, #product-container {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 300px;
-        }
-        .address-title, .product-title, .status-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Details</title>
+<style>
+    #container-order {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .title {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .section-order {
+        margin-bottom: 20px;
+    }
+
+    .section-title {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .content {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #fafafa;
+    }
+
+    #status-dropdown {
+        margin-top: 10px;
+        padding: 5px;
+        font-size: 14px;
+    }
+
+    #update-status-button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    #update-status-button:hover {
+        background-color: #218838;
+    }
+
+    .no-data {
+        text-align: center;
+        font-size: 18px;
+        color: #d9534f;
+    }
+</style>
+
+
 <body>
-   
-    <% if (order) { %>
-     
-    
-    <p id="address-title" class="address-title" style="display: none;">Delivery Address:</p>
-    <p id="delivery-address" style="display: none;"></p>
 
-    <p id="product-title" class="product-title" style="display: none;">Product Details:</p>
-    <p id="product-details" style="display: none;"></p>
+    <%- include('./partials/head/head.ejs') %>
 
-    <p id="status-title" class="status-title" style="display: none;">Order Status:</p>
-    <select id="status-dropdown" style="display: none;">
-        <option value="order_placed">Order Placed</option>
-        <option value="processing">Processing</option>
-        <option value="out_for_delivery">Out for Delivery</option>
-        <option value="delivered">Delivered</option>
-    </select>
-    <button id="update-status-button" style="display: none;">Update Status</button>
-    <% } %>
-  
+
+        <div class="screen-overlay"></div>
+        <aside class="navbar-aside" id="offcanvas_aside">
+            <div class="aside-top">
+                <a href="index.html" class="brand-wrap">
+                    <img src="assets/imgs/theme/logo.svg" class="logo" alt="BuzzBrews & Chills">
+                </a>
+                <div>
+                    <button class="btn btn-icon btn-aside-minimize"> <i
+                            class="text-muted material-icons md-menu_open"></i>
+                    </button>
+                </div>
+            </div>
+            <nav>
+                <div class="menu-aside">
+
+                    <a class="menu-link" href="/admin/dashboard"> <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/products"> <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">Products</span>
+                        </a>
+                    </div>
+                    <div class="menu-item ">
+                        <a class="menu-link" href="/admin/category"> <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">categories</span>
+                        </a>
+                    </div>
+                    <div class="menu-item active">
+                        <a class="menu-link" href="/admin/orders"> <i class="icon material-icons md-shopping_cart"></i>
+                            <span class="text">Orders</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/users-list"> <i class="icon material-icons md-person"></i>
+                            <span class="text">Users</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/add-new-products"> <i
+                                class="icon material-icons md-add_box"></i>
+                            <span class="text">Add product</span>
+                        </a>
+                    </div>
+                    <li class="menu-item">
+                        <a class="menu-link" href="/admin/transaction"> <i
+                                class="icon material-icons md-monetization_on"></i>
+                            <span class="text">Transactions</span>
+                        </a>
+                    </li>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/"> <i class="icon material-icons md-person"></i>
+                            <span class="text">User Login</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/reviews"> <i class="icon material-icons md-comment"></i>
+                            <span class="text">Reviews</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/brands"> <i class="icon material-icons md-stars"></i>
+                            <span class="text">Brands</span> </a>
+                    </div>
+                </div>
+                <hr>
+                <br>
+                <br>
+            </nav>
+        </aside>
+
+
+
+
+        <main class="main-wrap">
+
+            <%- include('./partials/header/header.ejs') %>
+                <div id="container-order">
+                    <% if (orderDetails) { %>
+                        <div class="title">Order Details</div>
+                        <h4>Order ID : <span id="orderId"><%= orderDetails.orderId %> </span></h4>
+                        <div class="section-order">
+                            <p id="address-title" class="section-title">Delivery Address</p>
+                            <div id="delivery-address" class="content">
+                                <%= orderDetails.address %>
+                            </div>
+                        </div>
+
+                        <% orderDetails.products.forEach(item=> { %>
+                            <div class="section-order">
+                                <p id="product-title" class="section-title">Product Details</p>
+                                <div id="product-details" class="content">
+                                    <strong>Name:</strong>
+                                    <%= item.name %><br>
+                                        <strong>Status:</strong>
+                                        <%= item.status %>
+                                </div>
+
+                                <p id="status-title" class="section-title">Update Status</p>
+                                <select id="status-dropdown" data-product-id="<%= item.id %>">
+                                    <option value="order-placed" <% if (item.status==='order-placed' ) { %> selected <%
+                                            } %>>Order
+                                            Placed</option>
+                                    <option value="PROCESSING" <% if (item.status==='PROCESSING' ) { %> selected <% } %>
+                                            >Processing
+                                    </option>
+                                    <option value="OUT-FOR-DELIHVERY" <% if (item.status==='OUT-FOR-DELIHVERY' ) { %>
+                                        selected <% } %>
+                                            >Out for Delivery</option>
+                                    <option value="DELIVERED" <% if (item.status==='DELIVERED' ) { %> selected <% } %>
+                                            >Delivered
+                                    </option>
+                                </select>
+                                <button class="update-status-button" onclick="updateStatus(this)">Update Status</button>
+                            </div>
+                            <% }) %>
+                                <% } else { %>
+                                    <div class="no-data">No data found. Some error occurred, kindly check the order.
+                                    </div>
+                                    <% } %>
+                </div>
+        </main>
+
+        <script>
+            async function updateStatus(button) {
+                const dropdown = button.previousElementSibling;
+                const selectedStatus = dropdown.value;
+                const productId = dropdown.getAttribute('data-product-id');
+
+                // Logic to update the status in the backend can be added here
+                console.log(`Updating status for product ${productId} to ${selectedStatus}`);
+                const orderId = document.getElementById('orderId').innerHTML
+                console.log(orderId,'order id is showing');
+                await fetch(`/admin/order-details`,{
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify({
+                        orderId:orderId,
+                        status:selectedStatus,
+                        productId:productId,
+
+                    })
+                })
+                // Example of how to disable irrelevant options based on the selected status
+                const options = dropdown.options; section
+                section
+                for (let i = 0; i < options.length; i++) {
+                    options[i].disabled = false;
+                }
+                if (selectedStatus === 'order-placed') {
+                    options[0].disabled = true; // Disable "Order Placed"
+                } else if (selectedStatus === 'PROCESSESING') {
+                    options[0].disabled = true; // Disable "Order Placed"
+                    options[1].disabled = true; // Disable "Processing"
+                } else if (selectedStatus === 'OUT-DELIHVERY') {
+                    options[0].disabled = true; // Disable "Order Placed"
+                    options[1].disabled = true; // Disable "Processing"
+                    options[2].disabled = true; // Disable "Out for Delivery"
+                }
+            }
+        </script>
+
 </body>
+<%- include('./partials/footer/footer.ejs') %>
+
+
 </html>

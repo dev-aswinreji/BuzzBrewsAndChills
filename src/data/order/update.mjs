@@ -29,3 +29,14 @@ export async function updateCancelProduct(orderId){
         console.log(error,'update cancel product func error');
     }
 }
+
+
+export async function updateOrderedProduct(){
+    try {
+
+        await orderCollection.updateOne({})
+        
+    } catch (error) {
+        console.log(error,'update ordered product func');
+    }
+}

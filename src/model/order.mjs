@@ -19,6 +19,10 @@ const orderSchema = mongoose.Schema({
   },
   products: [
     {
+      productId:{
+        type:String,
+        required:true
+      },
       status: {
         type: String,
         enum: ["PROCESSING", "OUT FOR DELIHVERY", "DELIVERED", "CANCELLED"],
