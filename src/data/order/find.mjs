@@ -6,7 +6,7 @@ export async function findOrderData (userId){
 }
 
 export async function findAllOrderDataForAdmin (){
-    return await orderCollection.find()
+    return await orderCollection.find().sort({timeStamp:-1})
 }
 
 export async function findUniqueOrderToChangeOrderStatus (orderId){

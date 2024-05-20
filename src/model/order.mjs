@@ -7,6 +7,14 @@ function cartModel(collectionName, schema) {
   return db.model(collectionName, schema);
 }
 
+function getFormattedDate() {
+  const now = new Date();
+  const day = String(now.getDate()).padStart(2, '0');
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const year = String(now.getFullYear());
+  const hours = String(now.getHours()).padStart(2, '0'); // Hours in 24-hour format
+  return `${day}${month}${year}${hours}`;
+}
 const orderSchema = mongoose.Schema({
   username: {
     type: String,
@@ -15,6 +23,7 @@ const orderSchema = mongoose.Schema({
   },
   orderId: {
     type: String,
+    trim:true,
     required: true,
   },
   products: [
@@ -25,7 +34,7 @@ const orderSchema = mongoose.Schema({
       },
       status: {
         type: String,
-        enum: ["PROCESSING", "OUT FOR DELIHVERY", "DELIVERED", "CANCELLED"],
+        enum: ["PROCESSING", "OUT FOR DELIVERY", "DELIVERED", "CANCELLED"],
         default: "PROCESSING",
         required: true,
       },
@@ -63,6 +72,10 @@ const orderSchema = mongoose.Schema({
   onlinePaymentId: {
     type: String,
   },
+  timeStamp:{
+    type:String,
+    default:getFormattedDate,
+  }
 });
 
 export const orderCollection = cartModel("order", orderSchema);

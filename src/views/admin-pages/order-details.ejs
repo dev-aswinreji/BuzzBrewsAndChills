@@ -152,7 +152,7 @@
                 <div id="container-order">
                     <% if (orderDetails) { %>
                         <div class="title">Order Details</div>
-                        <h4>Order ID : <span id="orderId"><%= orderDetails.orderId %> </span></h4>
+                        <h4>Order ID : <span id="orderId"><%= orderDetails.orderId %></span></h4>
                         <div class="section-order">
                             <p id="address-title" class="section-title">Delivery Address</p>
                             <div id="delivery-address" class="content">
@@ -178,7 +178,7 @@
                                     <option value="PROCESSING" <% if (item.status==='PROCESSING' ) { %> selected <% } %>
                                             >Processing
                                     </option>
-                                    <option value="OUT-FOR-DELIHVERY" <% if (item.status==='OUT-FOR-DELIHVERY' ) { %>
+                                    <option value="OUT FOR DELIHVERY" <% if (item.status==='OUT FOR DELIHVERY' ) { %>
                                         selected <% } %>
                                             >Out for Delivery</option>
                                     <option value="DELIVERED" <% if (item.status==='DELIVERED' ) { %> selected <% } %>
@@ -225,10 +225,10 @@
                 }
                 if (selectedStatus === 'order-placed') {
                     options[0].disabled = true; // Disable "Order Placed"
-                } else if (selectedStatus === 'PROCESSESING') {
+                } else if (selectedStatus === 'PROCESSING') {
                     options[0].disabled = true; // Disable "Order Placed"
                     options[1].disabled = true; // Disable "Processing"
-                } else if (selectedStatus === 'OUT-DELIHVERY') {
+                } else if (selectedStatus === 'OUT FOR DELIHVERY') {
                     options[0].disabled = true; // Disable "Order Placed"
                     options[1].disabled = true; // Disable "Processing"
                     options[2].disabled = true; // Disable "Out for Delivery"
