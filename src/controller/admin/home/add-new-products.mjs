@@ -34,7 +34,13 @@ export const admin_addNewProductsPost = async (req, res) => {
             imageUrl[count] = file.filename
               count++
         }
-
+        const discount = Number(req.body.discount)
+        const price = Number(req.body.price )
+        console.log(discount)
+        console.log(price,'price is showing');
+        const discount_price = price - (price * discount / 100)
+        console.log(discount_price)
+        
         const category = await findUniqueCategory(categoryName)
         
         const product_data = {
@@ -43,7 +49,8 @@ export const admin_addNewProductsPost = async (req, res) => {
             price:req.body.price,
             category:category,
             stock:req.body.stock,
-            imageUrl:imageUrl
+            imageUrl:imageUrl,
+            discount_price:discount_price
         }
 
         console.log(imageUrl,'imageurl Multiple ');

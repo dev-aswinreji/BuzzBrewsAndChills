@@ -40,7 +40,7 @@
                     </div>
 
                     <div class="row product-lists">
-
+                        <% console.log(products.length); %> 
                         <% if(products){console.log(products.length)} %>
                             <% for(let i=0; i<products.length;i++){%>
                                 <div class="col-lg-4 col-md-6 text-center berry">
@@ -72,11 +72,20 @@
                                                     </p>
                                                     <% } %>
                                                         <% } %>
+                                                        <% console.log(products[i].discount_price,'what is showing here'); %> 
+                                                        <% if (products[i].discount_price === products[i].price) { %>
                                                             <p class="product-price">
                                                                 <span>Per Kg</span>Rs
                                                                 <%= products[i].price %>
+                                                            </p>
+                                                            
+                                                        <% }else{ %>
+                                                            <p class="product-price">
+                                                                <span>Per Kg</span>Rs
+                                                                <del><%= products[i].price %></del> <%= products[i].discount_price %> 
 
                                                             </p>
+                                                            <% } %> 
                                                             <% if (products[i].stock> 0){ %>
 
                                                                 <button

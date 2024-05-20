@@ -25,7 +25,7 @@ export async function insertOrder(userId, userAddressId, paymentMethod,paymentId
           productId: item.productId._id,
           name:item.productId.name,
           quantity: item.quantity,
-          price: item.productId.price,
+          price: item.productId.discount_price,
         })),
         totalPrice: cart.totalPrice,
         address: address.homeAddress,

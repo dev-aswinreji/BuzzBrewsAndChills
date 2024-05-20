@@ -35,7 +35,7 @@ export async function aggregationForTotalPrice(userId) {
                 },
                 totalPrice: {
                     $sum: {
-                        "$multiply": ["$products.price", "$items.quantity"]
+                        "$multiply": ["$products.discount_price", "$items.quantity"]
                     }
                 }
             }

@@ -57,7 +57,7 @@
 														<%= cart.items[i].productId.name %>
 													</td>
 													<td class="product-price" id="price_<%= i %>">Rs <%=
-															cart.items[i].productId.price %>
+															cart.items[i].productId.discount_price %>
 													</td>
 													<td class="product-quantity">
 														<!-- <button onclick="increaseQuantity()">+</button> -->
@@ -67,7 +67,7 @@
 														<!-- <button onclick="decreaseQuantity()">-</button> -->
 													</td>
 													<td class="product-total" id="productTotal_<%= i %>">
-														<%= cart.items[i].quantity * cart.items[i].productId.price %>
+														<%= cart.items[i].quantity * cart.items[i].productId.discount_price %>
 													</td>
 												</tr>
 												<% } %>

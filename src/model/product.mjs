@@ -48,6 +48,13 @@ const productsSchema = mongoose.Schema({
     createdAt:{
         type:Date,
         default:Date.now,
+    },
+    discount:{
+        type:Number,
+    },
+    discount_price:{
+        type:Number,
+
     }
 })
 
