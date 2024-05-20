@@ -37,10 +37,10 @@ export async function updateCancelProduct(orderId) {
   }
 }
 
-export async function updateOrderedProduct(orderId, _id, status) {
+export async function updateOrderedProduct(orderId, productId, status) {
   try {
     console.log(status, "status is showing");
-    console.log(_id,'product id is showing');
+    console.log(productId,'product id is showing');
     const orderData = await orderCollection.findOne({
       orderId: orderId,
     });
@@ -48,7 +48,7 @@ export async function updateOrderedProduct(orderId, _id, status) {
     const result = await orderCollection.updateOne(
         { orderId: orderId },
         { $set: { "products.$[elem].status": status } },
-        { arrayFilters: [{ "elem._id": new ObjectId(_id) }]}
+        { arrayFilters: [{ "elem.productId": productId }]}
       );
     console.log(result, "update ordered data is success");
     const afterUpdate = await orderCollection.findOne({orderId:orderId})
