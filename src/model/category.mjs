@@ -28,6 +28,9 @@ const categorySchema = new mongoose.Schema({
     createdAt:{
         type:Date,
         default:Date.now,
+    },
+    discount:{
+        type:Number
     }
 
 })

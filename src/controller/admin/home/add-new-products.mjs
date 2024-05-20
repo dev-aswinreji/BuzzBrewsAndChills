@@ -26,22 +26,26 @@ export const admin_addNewProductsPost = async (req, res) => {
        
         const file = req.files
         console.log(file,'file is showing or not ');
-
+        
         const categoryName = req.body.category
+        const category = await findUniqueCategory(categoryName)
         let imageUrl = []
         let count = 0
         for(const file of req.files){
             imageUrl[count] = file.filename
               count++
         }
-        const discount = Number(req.body.discount)
+        const categoryDiscount = category.discount
+        console.log(categoryDiscount,'category discount is showing ');
+        const productDiscount = Number(req.body.discount)
+        const discount = categoryDiscount < productDiscount ? productDiscount : categoryDiscount
+        console.log(discount,'discount is showing');
         const price = Number(req.body.price )
         console.log(discount)
         console.log(price,'price is showing');
         const discount_price = price - (price * discount / 100)
         console.log(discount_price)
         
-        const category = await findUniqueCategory(categoryName)
         
         const product_data = {
             name:req.body.name,

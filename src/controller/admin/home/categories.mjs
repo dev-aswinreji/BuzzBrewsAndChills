@@ -27,6 +27,7 @@ export const admin_categoriesPost = async (req, res) => {
         const data = {
             name: req.body.name,
             description: req.body.description,
+            discount:req.body.discount
         }
        const isUnique = await findUniqueCategory(data.name)
        console.log(isUnique);
