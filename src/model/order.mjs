@@ -9,11 +9,13 @@ function cartModel(collectionName, schema) {
 
 function getFormattedDate() {
   const now = new Date();
-  const day = String(now.getDate()).padStart(2, '0');
-  const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
   const year = String(now.getFullYear());
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(now.getDate()).padStart(2, '0');
   const hours = String(now.getHours()).padStart(2, '0'); // Hours in 24-hour format
-  return `${day}${month}${year}${hours}`;
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  return `${day}${month}${year}${hours}${minutes}${seconds}`;
 }
 const orderSchema = mongoose.Schema({
   username: {
@@ -34,8 +36,8 @@ const orderSchema = mongoose.Schema({
       },
       status: {
         type: String,
-        enum: ["PROCESSING", "OUT FOR DELIVERY", "DELIVERED", "CANCELLED"],
-        default: "PROCESSING",
+        enum: ["ORDER PLACED","PROCESSING", "OUT FOR DELIVERY", "DELIVERED", "CANCELLED"],
+        default: "ORDER PLACED",
         required: true,
       },
       name: {

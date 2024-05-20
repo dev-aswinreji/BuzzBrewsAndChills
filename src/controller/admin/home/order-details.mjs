@@ -16,5 +16,6 @@ export const admin_orderDetailsPost = async (req, res) => {
   const productId = req.body.productId;
 
   await updateOrderedProduct(orderId,productId,status);
+  res.json({result:status})
   console.log('', "order details is showing");
 };
