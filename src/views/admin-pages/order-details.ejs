@@ -152,7 +152,9 @@
                 <div id="container-order">
                     <% if (orderDetails) { %>
                         <div class="title">Order Details</div>
-                        <h4>Order ID : <span id="orderId"><%= orderDetails.orderId %></span></h4>
+                        <h4>Order ID : <span id="orderId">
+                                <%= orderDetails.orderId %>
+                            </span></h4>
                         <div class="section-order">
                             <p id="address-title" class="section-title">Delivery Address</p>
                             <div id="delivery-address" class="content">
@@ -172,20 +174,25 @@
 
                                 <p id="status-title" class="section-title">Update Status</p>
                                 <select id="status-dropdown" data-product-id="<%= item.productId %>">
-                                    <option value="order-placed" <% if (item.status==='order-placed' ) { %> selected <%
+                                    <option value="ORDER PLACED" <% if (item.status==='ORDER PLACED' ) { %> selected <%
                                             } %>>Order
                                             Placed</option>
                                     <option value="PROCESSING" <% if (item.status==='PROCESSING' ) { %> selected <% } %>
                                             >Processing
                                     </option>
-                                    <option value="OUT FOR DELIHVERY" <% if (item.status==='OUT FOR DELIHVERY' ) { %>
+                                    <option value="OUT FOR DELIVERY" <% if (item.status==='OUT FOR DELIVERY' ) { %>
                                         selected <% } %>
                                             >Out for Delivery</option>
                                     <option value="DELIVERED" <% if (item.status==='DELIVERED' ) { %> selected <% } %>
                                             >Delivered
                                     </option>
                                 </select>
-                                <button class="update-status-button" onclick="updateStatus(this)">Update Status</button>
+                                <% if (item.status==='DELIVERED' ) { %>
+                                    <button class="update-status-button" disabled>Update Status</button>
+                                    <% }else{ %>
+                                        <button class="update-status-button" onclick="updateStatus(this)">Update
+                                            Status</button>
+                                        <% } %>
                             </div>
                             <% }) %>
                                 <% } else { %>
@@ -194,45 +201,101 @@
                                     <% } %>
                 </div>
         </main>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('select[id^="status-dropdown"]').forEach(dropdown => {
+                    const selectedStatus = dropdown.value;
+                    const options = dropdown.options
+                    console.log(`Selected value for ${dropdown.id}: ${selectedStatus}`);
+                    // You can now use this value in your script as needed
+                    console.log(options, 'options is shwoing');
+                    for (let i = 0; i < options.length; i++) {
+                        options[i].disabled = false;
+                    }
+                    if (selectedStatus === 'ORDER PLACED') {
+                        console.log('is it working');
+                        options[0].disabledobject = true; // Disable "Order Placed"
+                        options[2].disabled = true
+                        options[3].disabled = true; // Disable "Delivered"
+                    } else if (selectedStatus === 'PROCESSING') {
+                        options[0].disabled = true; // Disable "Order Placed"
+                        options[1].disabled = true; // Disable "Processing"
+                    } else if (selectedStatus === 'OUT FOR DELIVERY') {
+                        options[0].disabled = true; // Disable "Order Placed"
+                        options[1].disabled = true; // Disable "Processing"
+                        options[2].disabled = true; // Disable "Out for Delivery"
+                    } else if (selectedStatus === 'DELIVERED') {
+                        options[0].disabled = true; // Disable "Order Placed"
+                        options[1].disabled = true; // Disable "Processing"
+                        options[2].disabled = true; // Disable "Out for Delivery"
+                        options[3].disabled = true; // Disable "Delivered"
+
+                    }
+                });
+            });
+        </script>
 
         <script>
             async function updateStatus(button) {
                 const dropdown = button.previousElementSibling;
                 const selectedStatus = dropdown.value;
                 const productId = dropdown.getAttribute('data-product-id');
-
+                console.log(selectedStatus, 'showing');
                 // Logic to update the status in the backend can be added here
                 console.log(`Updating status for product ${productId} to ${selectedStatus}`);
                 const orderId = document.getElementById('orderId').innerHTML
-                console.log(orderId,'order id is showing');
-                await fetch(`/admin/order-details`,{
-                    method:'POST',
-                    headers:{
-                        'Content-Type':'application/json'
+                console.log(orderId, 'order id is showing');
+                await fetch(`/admin/order-details`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
                     },
-                    body:JSON.stringify({
-                        orderId:orderId,
-                        status:selectedStatus,
-                        productId:productId,
+                    body: JSON.stringify({
+                        orderId: orderId,
+                        status: selectedStatus,
+                        productId: productId,
 
                     })
                 })
-                // Example of how to disable irrelevant options based on the selected status
-                const options = dropdown.options; section
-                section
-                for (let i = 0; i < options.length; i++) {
-                    options[i].disabled = false;
-                }
-                if (selectedStatus === 'order-placed') {
-                    options[0].disabled = true; // Disable "Order Placed"
-                } else if (selectedStatus === 'PROCESSING') {
-                    options[0].disabled = true; // Disable "Order Placed"
-                    options[1].disabled = true; // Disable "Processing"
-                } else if (selectedStatus === 'OUT FOR DELIHVERY') {
-                    options[0].disabled = true; // Disable "Order Placed"
-                    options[1].disabled = true; // Disable "Processing"
-                    options[2].disabled = true; // Disable "Out for Delivery"
-                }
+                    .then(response => response.ok ? response.json() : console.log('Some network failure occured while fetching'))
+                    .then(data => {
+                        if (data.result) {
+                            console.log(data.result, 'data result is shwing');
+                            let selectedStatus = data.result
+                            // Example of how to disable irrelevant options based on the selected status
+                            const options = dropdown.options;
+
+                            console.log(options, 'options is shwoing');
+                            for (let i = 0; i < options.length; i++) {
+                                options[i].disabled = false;
+                            }
+                            if (selectedStatus === 'order-placed') {
+                                console.log('is it working');
+                                options[0].disabledobject = true; // Disable "Order Placed"
+                                options[2].disabled = true
+                                options[3].disabled = true; // Disable "Delivered"
+                            } else if (selectedStatus === 'PROCESSING') {
+                                options[0].disabled = true; // Disable "Order Placed"
+                                options[1].disabled = true; // Disable "Processing"
+                            } else if (selectedStatus === 'OUT FOR DELIVERY') {
+                                options[0].disabled = true; // Disable "Order Placed"
+                                options[1].disabled = true; // Disable "Processing"
+                                options[2].disabled = true; // Disable "Out for Delivery"
+                            } else if (selectedStatus === 'DELIVERED') {
+                                options[0].disabled = true; // Disable "Order Placed"
+                                options[1].disabled = true; // Disable "Processing"
+                                options[2].disabled = true; // Disable "Out for Delivery"
+                                options[3].disabled = true; // Disable "Delivered"
+
+                            }
+                            location.reload()
+                        } else {
+                            console.log('data fetching unsuccess');
+                        }
+                    }).catch(err => console.log(err, 'Some error occured in order detail page in admin'))
+
+
+
             }
         </script>
 
