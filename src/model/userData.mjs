@@ -45,6 +45,10 @@ const userSchema = mongoose.Schema({
     accountCreated: {
         type: String,
         default: moment().format('YYYY/MM/DD')
+    },
+    coupon:{
+        type:Array,
+        required:true
     }
 
 })

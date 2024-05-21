@@ -62,14 +62,6 @@ app.use('/admin', authRoute)
 app.use('/admin', adminHomeRoute)
 app.use('/', googleRoute)
 
-// app.use((req, res) => {
-//     console.log(req.session.userAllowed, 'working userallowed');
-//     if (req.session.userAllowed !== 'ACTIVE') {
-//         console.log('inside if ');
-//         req.session.isUserAuth = false
-//         res.redirect('/signin')
-//     }
-// })
 
 app.use((err, req, res, next) => {
 
