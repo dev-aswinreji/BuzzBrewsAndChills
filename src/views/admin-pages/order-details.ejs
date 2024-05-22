@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Order Details</title>
+<style>
+    .dropdown-and-button {
+        display: flex ;
+        flex-direction: column;
+        align-items: center;
+    }
+    td[colspan="5"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40%; /* Ensure the cell takes up full height */
+}
+
+</style>
 
 <body>
 
@@ -84,220 +98,225 @@
         <main class="main-wrap">
 
             <%- include('./partials/header/header.ejs') %>
-    <section class="content-main">
-        <% if (orderDetails) { %>
+                <section class="content-main">
+                    <% if (orderDetails) { %>
 
-        <div class="content-header">
-            <div>
-                <h2 class="content-title card-title">Order detail</h2>
-                <p>Details for Order ID: 3453012</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <header class="card-header">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
-                        <span>
-                            <i class="material-icons md-calendar_today"></i> <b><%= orderDetails.orderDate %> </b>
-                        </span> <br>
-                        <small class="text-muted">Order ID: <%= orderDetails.orderId %> </small>
-                    </div>
-                    <div class="col-lg-6 col-md-6 ms-auto text-md-end">
-                        <a class="btn btn-secondary print ms-2" href="#"><i class="icon material-icons md-print"></i></a>
-                    </div>
-                </div>
-            </header> <!-- card-header end// -->
-            <div class="card-body">
-                <div class="row mb-50 mt-20 order-info-wrap">
-                    <div class="col-md-4">
-                        <article class="icontext align-items-start">
-                            <span class="icon icon-sm rounded-circle bg-primary-light">
-                                <i class="text-primary material-icons md-person"></i>
-                            </span>
-                            <div class="text">
-                                <h6 class="mb-1">Customer</h6>
-                                <p class="mb-1">
-                                   <%= orderDetails.username %>  <br> <template><%= orderDetails.email %> </template> <br> <%= orderDetails.phoneNumber %> 
-                                </p>
-                                <a href="#">View profile</a>
+                        <div class="content-header">
+                            <div>
+                                <h2 class="content-title card-title">Order detail</h2>
+                                <p>Details for Order ID: 3453012</p>
                             </div>
-                        </article>
-                    </div> <!-- col// -->
-                    <div class="col-md-4">
-                        <article class="icontext align-items-start">
-                            <span class="icon icon-sm rounded-circle bg-primary-light">
-                                <i class="text-primary material-icons md-local_shipping"></i>
-                            </span>
-                            <div class="text">
-                                <h6 class="mb-1">Order info</h6>
-                                <p class="mb-1">
-                                    Shipping: Fargo express <br> Pay method: <%= orderDetails.paymentMethod %> <br> Status: new
-                                </p>
-                                <a href="#">Download info</a>
+                        </div>
+
+                        <div class="card">
+                            <header class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
+                                        <span>
+                                            <i class="material-icons md-calendar_today"></i> <b>
+                                                <%= orderDetails.orderDate %>
+                                            </b>
+                                        </span> <br>
+                                        <small class="text-muted">Order ID: <%= orderDetails.orderId %> </small>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 ms-auto text-md-end">
+                                        <a class="btn btn-secondary print ms-2" href="#"><i
+                                                class="icon material-icons md-print"></i></a>
+                                    </div>
+                                </div>
+                            </header> <!-- card-header end// -->
+                            <div class="card-body">
+                                <div class="row mb-50 mt-20 order-info-wrap">
+                                    <div class="col-md-4">
+                                        <article class="icontext align-items-start">
+                                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                                <i class="text-primary material-icons md-person"></i>
+                                            </span>
+                                            <div class="text">
+                                                <h6 class="mb-1">Customer</h6>
+                                                <p class="mb-1">
+                                                    <%= orderDetails.username %> <br> <template>
+                                                            <%= orderDetails.email %>
+                                                        </template> <br>
+                                                        <%= orderDetails.phoneNumber %>
+                                                </p>
+                                                <a href="#">View profile</a>
+                                            </div>
+                                        </article>
+                                    </div> <!-- col// -->
+                                    <div class="col-md-4">
+                                        <article class="icontext align-items-start">
+                                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                                <i class="text-primary material-icons md-local_shipping"></i>
+                                            </span>
+                                            <div class="text">
+                                                <h6 class="mb-1">Order info</h6>
+                                                <p class="mb-1">
+                                                    Shipping: Fargo express <br> Pay method: <%=
+                                                        orderDetails.paymentMethod %> <br> Status: new
+                                                </p>
+                                                <a href="#">Download info</a>
+                                            </div>
+                                        </article>
+                                    </div> <!-- col// -->
+                                    <div class="col-md-4">
+                                        <article class="icontext align-items-start">
+                                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                                <i class="text-primary material-icons md-place"></i>
+                                            </span>
+                                            <div class="text">
+                                                <h6 class="mb-1">Deliver to</h6>
+                                                <p class="mb-1">
+                                                    City: <%= orderDetails.address %> <br>Block A, House 123, Floor 2
+                                                        <br> Po Box 10000
+                                                </p>
+                                                <a href="#">View profile</a>
+                                            </div>
+                                        </article>
+                                    </div> <!-- col// -->
+                                </div> <!-- row // -->
+                                <div class="row">
+
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="40%">Product</th>
+                                                        <th width="20%">Unit Price</th>
+                                                        <th width="20%">Quantity</th>
+                                                        <th width="20%">Total</th>
+                                                        <th width="20%" class="text-end"> Order Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <% orderDetails.products.forEach(item=> { %>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <a class="itemside" href="#">
+                                                                    <div class="left">
+                                                                        <img src="assets/imgs/items/1.jpg" width="40"
+                                                                            height="40" class="img-xs" alt="Item">
+                                                                    </div>
+                                                                    <div class="info">
+                                                                        <%= item.name %>
+                                                                    </div>
+                                                                </a>
+                                                            </td>
+                                                            <td> Rs <%= item.price %>
+                                                            </td>
+                                                            <td>
+                                                                <%= item.quantity %>
+                                                            </td>
+                                                            <td class="text-end"> Rs <%= item.price * item.quantity %>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <article class="float-end">
+                                                                    <dl class="dlist">
+                                                                        <dt>Subtotal:</dt>
+                                                                        <dd>Rs <%= orderDetails.totalPrice %>
+                                                                        </dd>
+                                                                    </dl>
+                                                                    <dl class="dlist">
+                                                                        <dt>Shipping cost:</dt>
+                                                                        <dd>$10.00</dd>
+                                                                    </dl>
+                                                                    <dl class="dlist">
+                                                                        <dt>Grand total:</dt>
+                                                                        <dd> <b class="h5">Rs <%=
+                                                                                    orderDetails.totalPrice %> </b>
+                                                                        </dd>
+                                                                    </dl>
+                                                                    <dl class="dlist">
+                                                                        <dt class="text-muted">Status:</dt>
+                                                                        <% if
+                                                                            (orderDetails.paymentMethod==='Online Payment'
+                                                                            ) { %>
+                                                                            <dd>
+                                                                                <span
+                                                                                    class="badge rounded-pill alert-success text-success">Payment
+                                                                                    done</span>
+                                                                            </dd>
+
+                                                                            <% }else{%>
+                                                                                <dd>
+                                                                                    <span
+                                                                                        class="badge rounded-pill alert-success text-danger">Payment
+                                                                                        not done</span>
+                                                                                </dd>
+                                                                                <% } %>
+                                                                    </dl>
+
+                                                                </article>
+
+                                                            </td>
+                                                            <td>
+                                                                <div ="display: flex; flex-direction: column; align-items: center;">
+                                                                <select id="status-dropdown"
+                                                                    data-product-id="<%= item.productId %>">
+                                                                    <option value="ORDER PLACED" <% if
+                                                                        (item.status==='ORDER PLACED' ) { %> selected <%
+                                                                            } %>>Order
+                                                                            Placed</option>
+                                                                    <option value="PROCESSING" <% if
+                                                                        (item.status==='PROCESSING' ) { %> selected <% }
+                                                                            %>
+                                                                            >Processing
+                                                                    </option>
+                                                                    <option value="OUT FOR DELIVERY" <% if
+                                                                        (item.status==='OUT FOR DELIVERY' ) { %>
+                                                                        selected <% } %>
+                                                                            >Out for Delivery</option>
+                                                                    <option value="DELIVERED" <% if
+                                                                        (item.status==='DELIVERED' ) { %> selected <% }
+                                                                            %>
+                                                                            >Delivered
+                                                                    </option>
+                                                                </select>
+                                                                <% if (item.status==='DELIVERED' ) { %>
+                                                                    <button class="update-status-button" disabled>Update
+                                                                        Status</button>
+                                                                    <% }else{ %>
+                                                                        <button class="update-status-button"
+                                                                            onclick="updateStatus(this)">Update
+                                                                            Status</button>
+                                                                        <% } %>
+                                                                    </div>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                    <% }) %>
+                                            </table>
+                                        </div> <!-- table-responsive// -->
+                                    </div> <!-- col// -->
+
+                                    <div class="col-lg-1"></div>
+
+                                </div>
+                            </div> <!-- card-body end// -->
+                        </div> <!-- card end// -->
+                        <% } else { %>
+                            <div class="no-data">No data found. Some error occurred, kindly check the order.
                             </div>
-                        </article>
-                    </div> <!-- col// -->
-                    <div class="col-md-4">
-                        <article class="icontext align-items-start">
-                            <span class="icon icon-sm rounded-circle bg-primary-light">
-                                <i class="text-primary material-icons md-place"></i>
-                            </span>
-                            <div class="text">
-                                <h6 class="mb-1">Deliver to</h6>
-                                <p class="mb-1">
-                                    City: <%= orderDetails.address %> <br>Block A, House 123, Floor 2 <br> Po Box 10000
-                                </p>
-                                <a href="#">View profile</a>
-                            </div>
-                        </article>
-                    </div> <!-- col// -->
-                </div> <!-- row // -->
-                <div class="row">
-                    
-                    <div class="col-lg-12">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th width="40%">Product</th>
-                                        <th width="20%">Unit Price</th>
-                                        <th width="20%">Quantity</th>
-                                        <th width="20%" class="text-end">Total</th>
-                                    </tr>
-                                </thead>
-                                <% orderDetails.products.forEach(item=> { %>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <a class="itemside" href="#">
-                                                <div class="left">
-                                                    <img src="assets/imgs/items/1.jpg" width="40" height="40" class="img-xs" alt="Item">
-                                                </div>
-                                                <div class="info"> <%= item.name %>  </div>
-                                            </a>
-                                        </td>
-                                        <td> Rs <%= item.price %>  </td>
-                                        <td> <%= item.quantity %>  </td>
-                                        <td class="text-end"> Rs <%= item.price * item.quantity %>  </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4">
-                                            <article class="float-end">
-                                                <dl class="dlist">
-                                                    <dt>Subtotal:</dt>
-                                                    <dd>Rs <%= orderDetails.totalPrice %> </dd>
-                                                </dl>
-                                                <dl class="dlist">
-                                                    <dt>Shipping cost:</dt>
-                                                    <dd>$10.00</dd>
-                                                </dl>
-                                                <dl class="dlist">
-                                                    <dt>Grand total:</dt>
-                                                    <dd> <b class="h5">Rs <%= orderDetails.totalPrice %> </b> </dd>
-                                                </dl>
-                                                <dl class="dlist">
-                                                    <dt class="text-muted">Status:</dt>
-                                                    <% if (orderDetails.paymentMethod === 'Online Payment') { %>
-                                                        <dd>
-                                                            <span class="badge rounded-pill alert-success text-success">Payment done</span>
-                                                        </dd>
-                                                     
-                                                    <% }else{%>
-                                                        <dd>
-                                                            <span class="badge rounded-pill alert-success text-danger">Payment not done</span>
-                                                        </dd>
-                                                        <% } %> 
-                                                </dl>
-                                            </article>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <% }) %>
-                            </table>
-                        </div> <!-- table-responsive// -->
-                    </div> <!-- col// -->
-
-                    <div class="col-lg-1"></div>
-                   
-                </div>
-            </div> <!-- card-body end// -->
-        </div> <!-- card end// -->
-        <% } else { %>
-            <div class="no-data">No data found. Some error occurred, kindly check the order.
-            </div>
-            <% } %>
-    </section> <!-- content-main end// -->
-</main>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('select[id^="status-dropdown"]').forEach(dropdown => {
-            const selectedStatus = dropdown.value;
-            const options = dropdown.options
-            console.log(`Selected value for ${dropdown.id}: ${selectedStatus}`);
-            // You can now use this value in your script as needed
-            console.log(options, 'options is shwoing');
-            for (let i = 0; i < options.length; i++) {
-                options[i].disabled = false;
-            }
-            if (selectedStatus === 'ORDER PLACED') {
-                console.log('is it working');
-                options[0].disabledobject = true; // Disable "Order Placed"
-                options[2].disabled = true
-                options[3].disabled = true; // Disable "Delivered"
-            } else if (selectedStatus === 'PROCESSING') {
-                options[0].disabled = true; // Disable "Order Placed"
-                options[1].disabled = true; // Disable "Processing"
-            } else if (selectedStatus === 'OUT FOR DELIVERY') {
-                options[0].disabled = true; // Disable "Order Placed"
-                options[1].disabled = true; // Disable "Processing"
-                options[2].disabled = true; // Disable "Out for Delivery"
-            } else if (selectedStatus === 'DELIVERED') {
-                options[0].disabled = true; // Disable "Order Placed"
-                options[1].disabled = true; // Disable "Processing"
-                options[2].disabled = true; // Disable "Out for Delivery"
-                options[3].disabled = true; // Disable "Delivered"
-
-            }
-        });
-    });
-</script>
-
-<script>
-    async function updateStatus(button) {
-        const dropdown = button.previousElementSibling;
-        const selectedStatus = dropdown.value;
-        const productId = dropdown.getAttribute('data-product-id');
-        console.log(selectedStatus, 'showing');
-        // Logic to update the status in the backend can be added here
-        console.log(`Updating status for product ${productId} to ${selectedStatus}`);
-        const orderId = document.getElementById('orderId').innerHTML
-        console.log(orderId, 'order id is showing');
-        await fetch(`/admin/order-details`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                orderId: orderId,
-                status: selectedStatus,
-                productId: productId,
-
-            })
-        })
-            .then(response => response.ok ? response.json() : console.log('Some network failure occured while fetching'))
-            .then(data => {
-                if (data.result) {
-                    console.log(data.result, 'data result is shwing');
-                    let selectedStatus = data.result
-                    // Example of how to disable irrelevant options based on the selected status
-                    const options = dropdown.options;
-
+                            <% } %>
+                </section> <!-- content-main end// -->
+        </main>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('select[id^="status-dropdown"]').forEach(dropdown => {
+                    const selectedStatus = dropdown.value;
+                    const options = dropdown.options
+                    console.log(`Selected value for ${dropdown.id}: ${selectedStatus}`);
+                    // You can now use this value in your script as needed
                     console.log(options, 'options is shwoing');
                     for (let i = 0; i < options.length; i++) {
                         options[i].disabled = false;
                     }
-                    if (selectedStatus === 'order-placed') {
+                    if (selectedStatus === 'ORDER PLACED') {
                         console.log('is it working');
                         options[0].disabledobject = true; // Disable "Order Placed"
                         options[2].disabled = true
@@ -316,16 +335,73 @@
                         options[3].disabled = true; // Disable "Delivered"
 
                     }
-                    location.reload()
-                } else {
-                    console.log('data fetching unsuccess');
-                }
-            }).catch(err => console.log(err, 'Some error occured in order detail page in admin'))
+                });
+            });
+        </script>
+
+        <script>
+            async function updateStatus(button) {
+                const dropdown = button.previousElementSibling;
+                const selectedStatus = dropdown.value;
+                const productId = dropdown.getAttribute('data-product-id');
+                console.log(selectedStatus, 'showing');
+                // Logic to update the status in the backend can be added here
+                console.log(`Updating status for product ${productId} to ${selectedStatus}`);
+                const orderId = document.getElementById('orderId').innerHTML
+                console.log(orderId, 'order id is showing');
+                await fetch(`/admin/order-details`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        orderId: orderId,
+                        status: selectedStatus,
+                        productId: productId,
+
+                    })
+                })
+                    .then(response => response.ok ? response.json() : console.log('Some network failure occured while fetching'))
+                    .then(data => {
+                        if (data.result) {
+                            console.log(data.result, 'data result is shwing');
+                            let selectedStatus = data.result
+                            // Example of how to disable irrelevant options based on the selected status
+                            const options = dropdown.options;
+
+                            console.log(options, 'options is shwoing');
+                            for (let i = 0; i < options.length; i++) {
+                                options[i].disabled = false;
+                            }
+                            if (selectedStatus === 'order-placed') {
+                                console.log('is it working');
+                                options[0].disabledobject = true; // Disable "Order Placed"
+                                options[2].disabled = true
+                                options[3].disabled = true; // Disable "Delivered"
+                            } else if (selectedStatus === 'PROCESSING') {
+                                options[0].disabled = true; // Disable "Order Placed"
+                                options[1].disabled = true; // Disable "Processing"
+                            } else if (selectedStatus === 'OUT FOR DELIVERY') {
+                                options[0].disabled = true; // Disable "Order Placed"
+                                options[1].disabled = true; // Disable "Processing"
+                                options[2].disabled = true; // Disable "Out for Delivery"
+                            } else if (selectedStatus === 'DELIVERED') {
+                                options[0].disabled = true; // Disable "Order Placed"
+                                options[1].disabled = true; // Disable "Processing"
+                                options[2].disabled = true; // Disable "Out for Delivery"
+                                options[3].disabled = true; // Disable "Delivered"
+
+                            }
+                            location.reload()
+                        } else {
+                            console.log('data fetching unsuccess');
+                        }
+                    }).catch(err => console.log(err, 'Some error occured in order detail page in admin'))
 
 
 
-    }
-</script>
+            }
+        </script>
 
 </body>
 <%- include('./partials/footer/footer.ejs') %>
