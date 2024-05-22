@@ -43,6 +43,23 @@ export const admin_editProductsPost = async (req, res) => {
       imageUrlMultiple[count] = file.filename;
       count++;
     }
+
+
+    const categoryDiscount = category.discount
+    console.log(categoryDiscount,'category discount is showing ');
+    
+    const productDiscount = Number(req.body.discount)
+
+    const discount = categoryDiscount < productDiscount ? productDiscount : categoryDiscount
+    console.log(discount,'discount is showing');
+
+    const price = Number(req.body.price )
+    console.log(price,'price is showing');
+
+    const discount_price = price - (price * discount / 100)
+    console.log(discount_price)
+
+
     console.log(imageUrlMultiple,'image multiple is showing ');
     const updatedProductData = {
       name: req.body.name,
@@ -51,6 +68,7 @@ export const admin_editProductsPost = async (req, res) => {
       category: category,
       stock: req.body.stock,
       imageUrl: imageUrlMultiple,
+      discount_price:discount_price
     };
     console.log(updatedProductData);
     if (productData.name === productName || result === "NOT EXIST") {
