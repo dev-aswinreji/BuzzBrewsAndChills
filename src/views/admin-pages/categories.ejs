@@ -143,6 +143,7 @@
                                                     </th>
                                                     <th>Description</th>
                                                     <th>Status</th>
+                                                    <th>Discount</th>
                                                     <th class="text-end">Action</th>
                                                 </tr>
                                             </thead>
@@ -173,6 +174,9 @@
                                                                             <%= category[i].availability %>
                                                                         </span>
                                                                         <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <%= category[i].discount %> %
                                                             </td>
                                                             <td class="text-end">
                                                                 <a class="btn btn-primary"

@@ -146,6 +146,7 @@
                                                 <th scope="col">Price</th>
                                                 <th scope="col">Stock</th>
                                                 <th scope="col">Category</th>
+                                                <th scope="col">Discount</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Date</th>
                                                 <th scope="col">Action</th>
@@ -175,10 +176,13 @@
                                                         $<%= product[i].price %>
                                                     </td>
                                                     <td>
-                                                        <%= product[i].stock %>
+                                                        <h5><%= product[i].stock %></h5>
                                                     </td>
                                                     <td>
-                                                        <%= product[i].category.name %>
+                                                        <h5><%= product[i].category.name %></h5>
+                                                    </td>
+                                                    <td>
+                                                        <h5><%= product[i].discount %> %</h5> 
                                                     </td>
                                                     <td>
                                                         <% if (product[i].availability==='AVAILABLE' ) { %>
