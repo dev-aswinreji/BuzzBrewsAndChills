@@ -210,10 +210,10 @@
 
                         const quantity = document.getElementById('quantity').value
                         const stock = document.getElementById('stock').innerHTML.trim()
-                        console.log(stock,'stock is showing','quanity');
+                        console.log(stock, 'stock is showing', 'quanity');
                         const limit = 10
-                        console.log(quantity<stock,'q less than s');
-                        console.log(quantity> limit,'q g than limi');
+                        console.log(quantity < stock, 'q less than s');
+                        console.log(quantity > limit, 'q g than limi');
                         if (quantity > limit && quantity < stock) {
 
                             Swal.fire({
@@ -231,26 +231,30 @@
                                 headers: {
                                     'Content-Type': 'application/json'
                                 }
-                            }).then((respone) => {
-                                if (respone.redirected) {
+                            }).then((response) => {
+                                if (response.redirected) {
                                     Swal.fire({
-                                        title: "Warning!",
-                                        text: "Invalid Entry Try Signin To Continue!",
-                                        icon: "error"
-                                    }).then(result => {
-                                        result.isConfirmed ? window.location.href = '/signin' : null;
+                                        title: "Invalid Entry",
+                                        text: "Please sign in to continue.",
+                                        icon: "warning",
+                                        showCancelButton: true,
+                                        confirmButtonText: "Sign In",
+                                        cancelButtonText: "Cancel"
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = '/signin'
+                                        }
                                     })
+                                } else if (!response.ok) {
+                                    throw new Error('A network error occurred while fetching data.')
                                 }
-                                else if (!respone.ok) {
-                                    throw new Error('some network error occured while fetching data')
-                                }
-                                return respone.json()
+                                return response.json()
                             })
                                 .then(data => {
                                     console.log(data.result)
                                     console.log(data.stock);
                                     data.result === 'within limit' ?
-                                    
+
                                         Swal.fire({
                                             position: "center",
                                             icon: "success",
