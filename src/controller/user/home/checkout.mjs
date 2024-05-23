@@ -10,7 +10,7 @@ export const user_checkoutGet = async (req, res) => {
     try {
 
         const userId = req.session.USER_ID
-        const cartDatas = await findAllCartDatas()
+        const cartDatas = await findAllCartDatas(userId)
         console.log(cartDatas,'cart data is showing');
         const defaultAddress = await findDefaultUserAddressUsingPopulate(userId)
         console.log(defaultAddress)

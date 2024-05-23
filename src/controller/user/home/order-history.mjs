@@ -23,9 +23,10 @@ export const user_orderAddGet = async (req, res) => {
 export const user_orderListGet = async (req, res) => {
   try {
     const userId = req.session.USER_ID
+    console.log(userId,'userId is showing');
     const order = await findOrderData(userId);
     console.log(order,'order history of specific user');
-    console.log(order,'what is happeining here');
+    console.log(order[0].products,'what is happeining here');
     res.render("order-history", { order });
   } catch (error) {
     console.log(error, "USER ORDER GET");

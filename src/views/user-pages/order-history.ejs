@@ -6,12 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order List</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
         .container-order {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
         h1 {
@@ -32,6 +40,10 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            cursor: pointer;
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
         }
 
         .order-number {
@@ -41,26 +53,93 @@
 
         .order-status {
             font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .status-pending {
+            background-color: #f0ad4e;
+            color: #fff;
+        }
+
+        .status-completed {
+            background-color: #5cb85c;
+            color: #fff;
         }
 
         .order-details {
-            font-size: 14px;
-            color: #666;
+            display: none;
+            margin-top: 10px;
         }
 
-        .order .img-thumbnail {
+        .order-details.active {
+            display: block;
+        }
+
+        .product {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .product img {
             width: 100px;
-            /* Set the desired width */
             height: auto;
-            /* Maintain aspect ratio */
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+
+        .btn-container-order {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-container-order button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-shop {
+            background-color: #474f57;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .btn-cancel {
+            background-color: #d9534f;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .breadcrumb-section {
+            padding: 20px 0;
+            background-color: #f7f7f7;
+            text-align: center;
+        }
+
+        .breadcrumb-text {
+            display: inline-block;
+            text-align: left;
+        }
+
+        .breadcrumb-text p {
+            margin: 0;
         }
     </style>
 </head>
 
-<%- include ('partials/head/head.ejs' ) %>
+<%- include('partials/head/head.ejs') %>
 
     <body>
-
         <%- include('partials/header/header.ejs') %>
             <!-- breadcrumb-section -->
             <div class="breadcrumb-section breadcrumb-bg">
@@ -78,58 +157,85 @@
             <!-- end breadcrumb section -->
             <div class="container-order">
                 <h1>Order List</h1>
-                <% if (order) { %>
-                    
-                    <div class="order">
-
-                        <div class="order-header">
-                            <span class="order-number">Order ID : </span>
-                            <span class="order-status">
-                            </span>
+                <% if (order.length> 0) { %>
+                    <% order.forEach((data, orderIndex)=> { %>
+                        <div class="order">
+                            <div class="order-header" onclick="toggleOrderDetails('<%= orderIndex %>')">
+                                <span class="order-number">Order ID: <%= data.orderId %></span>
+                                <span
+                                    class="order-status <%= data.status === 'ORDER PLACED' ? 'status-completed' : 'status-pending' %>">
+                                    <%= data.status %>
+                                </span>
+                            </div>
+                            <div class="order-details" id="order-details-<%= orderIndex %>">
+                                <h5 class="order-date">Date: <%= new Date(data.orderDate).toLocaleDateString() %>
+                                </h5>
+                                <% data.products.forEach((item, index)=> { %>
+                                    <input type="hidden" value="<%= item.productId %>"
+                                        id="productId_<%= orderIndex %>_<%= index %>">
+                                    <input type="hidden" value="<%= item.quantity %>"
+                                        id="quantity_<%= orderIndex %>_<%= index %>">
+                                    <div class="product">
+                                        <img src="/product-images/<%= item.imageUrl %>" class="img-sm img-thumbnail"
+                                            alt="<%= item.name %>">
+                                        <div>
+                                            <h4>Product Name: <%= item.name %>
+                                            </h4>
+                                            <h5>Price: Rs <%= item.price %>
+                                            </h5>
+                                            <h5>Quantity: <%= item.quantity %>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                                        <h5>Payment Method: <%= data.paymentMethod %>
+                                        </h5>
+                                        <h4>Total Amount: Rs <%= data.totalPrice %>
+                                        </h4>
+                                        <div class="btn-container-order">
+                                            <button class="btn-cancel"
+                                                onclick="cancelOrder('<%= orderIndex %>', '<%= data.orderId %>')">Cancel
+                                                Order</button>
+                                        </div>
+                            </div>
                         </div>
-                        <input type="text" hidden value=" %>" name="" id="productId_<%=  %>">
-                        <input type="text" hidden value="name=""
-                                        id=" quantity_<%= %>">
-                        <p class="order-details">Date:
-                        </p>
-                        <p class="order-details"> price: Rs
-                        </p>
-
-                        </p>
-                        <p class="order-details">Items:
-                        </p>
-                        <p class="order-details">Payment Method:
-                        </p>
-                        <img src="/product-images/" class="img-sm img-thumbnail" alt="">
-                        <p class="order-details">Total Amount : Rs
-                        </p>
-
-                    </div>
-                    <% } %>
-
+                        <% }) %>
+                            <% } else { %>
+                                <h5>No order yet placed</h5>
+                                <h6>Go to shopping <a href="/shop">shop</a></h6>
+                                <% } %>
             </div>
-    </body>
-    <%- include('partials/footer/footer.ejs') %>
-        <script>
-            async function cancelOrder(index, orderId) {
-                const productId = document.getElementById('productId_' + index).value
-                const quantity = document.getElementById('quantity_' + index).value
-                console.log(productId, 'product id is ',);
-                console.log(quantity, 'quanity is ');
-                await fetch(`/cancel-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                    .then(response => response.ok ? response.json() : console.log('some network failure occured while fetching the data'))
-                    .then(data => {
-                        if (data.result === 'success') {
-                            location.reload()
-                            console.log('data fetched successfully');
+            <%- include('partials/footer/footer.ejs') %>
+                <script>
+                    function toggleOrderDetails(index) {
+                        const details = document.getElementById('order-details-' + index);
+                        if (details.classList.contains('active')) {
+                            details.classList.remove('active');
+                        } else {
+                            details.classList.add('active');
                         }
-                    }).catch(err => console.log(err, 'some error occured while using fetch in order page'))
-            }
-        </script>
+                    }
 
-</html>
+                    async function cancelOrder(orderIndex, orderId) {
+                        const productId = document.getElementById('productId_' + orderIndex + '_0').value;
+                        const quantity = document.getElementById('quantity_' + orderIndex + '_0').value;
+                        console.log(productId, 'product id is ');
+                        console.log(quantity, 'quantity is ');
+                        await fetch(`/cancel-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                            .then(response => response.ok ? response.json() : console.log('some network failure occurred while fetching the data'))
+                            .then(data => {
+                                if (data.result === 'success') {
+                                    location.reload();
+                                    console.log('data fetched successfully');
+                                }
+                            }).catch(err => console.log(err, 'some error occurred while using fetch in order page'))
+                    }
+                </script>
+    </body>
+
+</html> 
