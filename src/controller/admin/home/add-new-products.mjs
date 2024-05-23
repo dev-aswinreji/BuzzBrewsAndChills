@@ -54,6 +54,7 @@ export const admin_addNewProductsPost = async (req, res) => {
             category:category,
             stock:req.body.stock,
             imageUrl:imageUrl,
+            discount:req.body.discount,
             discount_price:discount_price
         }
 

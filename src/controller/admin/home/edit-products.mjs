@@ -68,7 +68,9 @@ export const admin_editProductsPost = async (req, res) => {
       category: category,
       stock: req.body.stock,
       imageUrl: imageUrlMultiple,
-      discount_price:discount_price
+      discount:req.body.discount,
+      discount_price:discount_price,
+
     };
     console.log(updatedProductData);
     if (productData.name === productName || result === "NOT EXIST") {

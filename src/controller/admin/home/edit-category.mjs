@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import { findUniqueCategory, findUniqueCategoryUsingId } from "../../../data/products/find.mjs"
 import { updateCategory } from "../../../data/products/update.mjs";
 import { checkDataDuplication } from "../../../validation/checking-duplicateData.mjs";
+import { updateProductOfferAccordingToCategoryUpdate } from "../../../data/offer/update-offer.mjs";
 
 
 export const admin_editCategoryGet = async (req,res)=>{
@@ -30,6 +31,7 @@ export const admin_editCategoryPost = async (req,res)=>{
     const result = await checkDataDuplication(isDuplicateCategory)
     if(category._id.equals(new ObjectId(categoryId).toString()) || result === 'NOT EXIST'){
         await updateCategory(categoryId,categoryData)
+        await updateProductOfferAccordingToCategoryUpdate(category._id)
         res.redirect('/admin/category')
     }else{
         req.session.editCategoryError = 'Category already exist'
