@@ -20,7 +20,7 @@ import {user_addressGet} from '../../../controller/user/home/address.mjs';
 import {user_addAddressGet, user_addAddressPost} from '../../../controller/user/home/add-address.mjs';
 import {user_addressDeleteDelete} from '../../../controller/user/home/delete-address.mjs';
 import { user_paymentGet } from '../../../controller/user/home/payment.mjs';
-import { user_orderAddGet, user_orderListGet } from '../../../controller/user/home/order.mjs';
+import { user_orderAddGet, user_orderListGet } from '../../../controller/user/home/order-history.mjs';
 import { user_updateDefaultAddressGet } from '../../../controller/user/home/update-default-address.mjs';
 import { user_cancelOrderGet } from '../../../controller/user/home/cancel-order.mjs';
 import { user_deleteCartProductDelete } from '../../../controller/user/home/delete-cart.mjs';
@@ -77,6 +77,6 @@ routeHome.get('/order-placed',user_authentication,user_orderPlacedGet)
 
 routeHome.get('/cancel-order',user_cancelOrderGet)
 
-routeHome.get('/order',user_orderListGet)
+routeHome.get('/order-history',user_orderListGet)
 
 export default routeHome

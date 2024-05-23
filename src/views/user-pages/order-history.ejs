@@ -78,57 +78,40 @@
             <!-- end breadcrumb section -->
             <div class="container-order">
                 <h1>Order List</h1>
-                <% console.log(order); %>
-                    <% if (order) { %>
+                <% if (order) { %>
+                    
+                    <div class="order">
 
-                        <% order.forEach((orderList,index)=> { %>
+                        <div class="order-header">
+                            <span class="order-number">Order ID : </span>
+                            <span class="order-status">
+                            </span>
+                        </div>
+                        <input type="text" hidden value=" %>" name="" id="productId_<%=  %>">
+                        <input type="text" hidden value="name=""
+                                        id=" quantity_<%= %>">
+                        <p class="order-details">Date:
+                        </p>
+                        <p class="order-details"> price: Rs
+                        </p>
 
+                        </p>
+                        <p class="order-details">Items:
+                        </p>
+                        <p class="order-details">Payment Method:
+                        </p>
+                        <img src="/product-images/" class="img-sm img-thumbnail" alt="">
+                        <p class="order-details">Total Amount : Rs
+                        </p>
 
-                            <%# orderList.products.forEach((item)=> { %>
-                                <div class="order">
+                    </div>
+                    <% } %>
 
-                                    <div class="order-header">
-                                        <span class="order-number">Order ID : <%= orderList.orderId %> </span>
-                                        <span class="order-status">
-                                            <%= orderList.status %>
-                                        </span>
-                                    </div>
-                                    <input type="text" hidden value="<%= products.productId._id %>" name=""
-                                        id="productId_<%= index %>">
-                                    <input type="text" hidden value="<%= products.quantity %>" name=""
-                                        id="quantity_<%= index %>">
-                                    <p class="order-details">Date: <%= orderList.createdAt %>
-                                    </p>
-                                    <p class="order-details"> price: Rs <%= products.productId.price %>
-                                    </p>
-
-                                    </p>
-                                    <p class="order-details">Items: <%= products.productId.name %>
-                                    </p>
-                                    <p class="order-details">Payment Method: <%= order.paymentMethod %>
-                                    </p>
-                                    <img src="/product-images/<%= products.productId.imageUrl[0] %>"
-                                        class="img-sm img-thumbnail" alt="">
-                                    <p class="order-details">Total Amount : Rs <%= orderList.totalPrice %>
-                                    </p>
-                                    <% if (orderList.productStatus==='CANCELLED' ) { %>
-                                        <h4 class="text-danger">Order is Cancelled</h4>
-
-                                        <% }else{ %>
-                                            <button class="text-danger" style="font-weight: bold;"
-                                                onclick="cancelOrder('<%= index %>','<%= orderList.orderId %>')">Cancel</button>
-                                            <% } %>
-                                </div>
-                                <% }) %>
-                                    <% }) %>
-                                        <% }else{ %>
-                                            No order yet place
-                                            <% } %>
             </div>
     </body>
     <%- include('partials/footer/footer.ejs') %>
         <script>
-            async function cancelOrder(index,orderId) {
+            async function cancelOrder(index, orderId) {
                 const productId = document.getElementById('productId_' + index).value
                 const quantity = document.getElementById('quantity_' + index).value
                 console.log(productId, 'product id is ',);

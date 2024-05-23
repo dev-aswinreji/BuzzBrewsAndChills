@@ -18,8 +18,8 @@ function getFormattedDate() {
   return `${day}${month}${year}${hours}${minutes}${seconds}`;
 }
 const orderSchema = mongoose.Schema({
-  username: {
-    type: String,
+  userId: {
+    type: Schema.Types.ObjectId,
     trim: true,
     required: true,
   },

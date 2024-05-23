@@ -24,7 +24,7 @@ export const user_cartGet = async (req, res) => {
     );
   }
 
-  const cart = await findAllCartDatas();
+  const cart = await findAllCartDatas(userId);
   console.log(cart, "cart data is shwoing");
   res.render("cart", { cart });
 };
