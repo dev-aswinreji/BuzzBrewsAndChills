@@ -190,7 +190,8 @@
                 <script>
                     document.getElementById('pay-button').addEventListener('click', async function (e) {
                         e.preventDefault();
-                        const amount = document.getElementById('totalPrice').value;
+                        const amount = document.getElementById('totalPrice').innerHTML;
+                        console.log(amount,'amount is showing');
                         const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
                         console.log(selectedAddress,'selectedAddress is showing')
                         try {
@@ -200,7 +201,7 @@
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
-                                body: JSON.stringify({ amount: amount})
+                                body: JSON.stringify({ amount: amount.trim()})
                             });
 
                             if (!response.ok) {
@@ -208,7 +209,7 @@
                             }
 
                             const order = await response.json();
-
+                            console.log(order,'order is showing');
                             const options = {
                                 key: 'rzp_test_e55Dk1oHQbvyBo',
                                 amount: order.amount,
