@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<%- include ('./partials/head/head.ejs' ) %>
+<%- include('./partials/head/head.ejs') %>
 
     <body>
-
         <%- include('./partials/header/header.ejs') %>
 
             <!-- breadcrumb-section -->
@@ -20,9 +19,9 @@
                     </div>
                 </div>
             </div>
-            <br><br><br><br>
             <!-- end breadcrumb section -->
-            <div class="container">
+
+            <div class="container mt-5">
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="checkout-accordion">
@@ -30,161 +29,254 @@
                                 <div class="card single-accordion">
                                     <div class="card-header" id="headingOne">
                                         <h5 class="mb-0">
-                                            <button>
-                                                <h6>My Address <a class="pl-4" href="/address">Change Address</a></h6>
-                                                <% if(defaultAddress){ %>
-                                                    <% console.log((defaultAddress,'inside checkout.ejs')) %>
-                                                        <form action="/change-address" method="post">
-                                                            <label>
-                                                                <input type="radio" name="selectedAddress"
-                                                                    value="<%= defaultAddress._id %>">
-                                                                <span class="p-2">Name:<%=
-                                                                        defaultAddress.name.toUpperCase() %></span>
-                                                                <span class="p-2">Phone No.<%=
-                                                                        defaultAddress.phoneNumber %></span>
-                                                                <span class="p-2">Home Address:<%=
-                                                                        defaultAddress.homeAddress %></span>
-                                                                <span class="p-2">State: <%= defaultAddress.state %>
-                                                                </span>
-                                                            </label><br>
-                                                        </form>
-                                                        <% }else{ %>
-                                                            <h4>No address Found</h4>
-                                                            <% } %>
+                                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                data-target="#collapseAddress" aria-expanded="true"
+                                                aria-controls="collapseAddress">
+                                                My Address
                                             </button>
+                                            <a class="pl-4" href="/address">Change Address</a>
                                         </h5>
+                                    </div>
+                                    <div id="collapseAddress" class="collapse show" aria-labelledby="headingOne"
+                                        data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <% if(defaultAddress){ %>
+                                                <form id="addressForm">
+                                                    <label>
+                                                        <input type="radio" name="selectedAddress"
+                                                            value="<%= defaultAddress._id %>" checked>
+                                                        <span class="p-2">Name: <%= defaultAddress.name.toUpperCase() %>
+                                                        </span><br>
+                                                        <span class="p-2">Phone No.: <%= defaultAddress.phoneNumber %>
+                                                        </span><br>
+                                                        <span class="p-2">Home Address: <%= defaultAddress.homeAddress
+                                                                %></span><br>
+                                                        <span class="p-2">State: <%= defaultAddress.state %></span>
+                                                    </label>
+                                                </form>
+                                                <% } else { %>
+                                                    <h4>No address Found</h4>
+                                                    <% } %>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                    </div>
-                </div>
-            </div>
-            <br><br>
 
-
-            <!-- check out section -->
-            <div class="checkout-section mt-150 mb-150">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="checkout-accordion-wrap">
-                                <div class="accordion" id="accordionExample">
-                                    <div class="card single-accordion">
-                                        <div class="card-header" id="headingOne">
-                                            <h5 class="mb-0">
-                                                <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                    data-target="#collapseOne" aria-expanded="true"
-                                                    aria-controls="collapseOne">
-                                                    Billing Address
-                                                </button>
-                                            </h5>
-                                        </div>
-
-                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                            data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                <div class="billing-address-form">
-                                                    <form action="/add-address" method="post">
-                                                        <input type="text" name="path" value="checkout" hidden id="">
-                                                        <p><input type="name" name="name" placeholder="Name"></p>
-                                                        <p><input type="tel" name="phoneNumber" placeholder="Phone"></p>
-                                                        <p><input type="text" name="homeAddress"
-                                                                placeholder="Home Address">
-                                                        </p>
-                                                        <p><input type="text" name="city" placeholder="City"></p>
-                                                        <p><input type="text" name="country" placeholder="Country"></p>
-
-                                                        <p>
-                                                            <textarea name="bill" id="bill" cols="30" rows="10"
-                                                                placeholder="Say Something"></textarea>
-                                                        </p>
-                                                        <button class="btn btn-dark" type="submit">ADD</button>
-                                                    </form>
-                                                </div>
+                        <div class="checkout-accordion-wrap mt-5">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card single-accordion">
+                                    <div class="card-header" id="headingTwo">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                data-target="#collapseBilling" aria-expanded="true"
+                                                aria-controls="collapseBilling">
+                                                Billing Address
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseBilling" class="collapse show" aria-labelledby="headingTwo"
+                                        data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="billing-address-form">
+                                                <form action="/add-address" method="post">
+                                                    <input type="text" name="path" value="checkout" hidden>
+                                                    <div class="form-group">
+                                                        <input type="text" name="name" class="form-control"
+                                                            placeholder="Name" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="tel" name="phoneNumber" class="form-control"
+                                                            placeholder="Phone" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" name="homeAddress" class="form-control"
+                                                            placeholder="Home Address" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" name="city" class="form-control"
+                                                            placeholder="City" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" name="country" class="form-control"
+                                                            placeholder="Country" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <textarea name="bill" id="bill" class="form-control" cols="30"
+                                                            rows="4" placeholder="Say Something"></textarea>
+                                                    </div>
+                                                    <button class="btn btn-dark" type="submit">ADD</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
+                    </div>
 
-                        <div class="col-lg-4">
-                            <div class="order-details-wrap">
-                                <table class="order-details">
-                                    <thead>
+                    <div class="col-lg-4">
+                        <div class="order-details-wrap">
+                            <table class="order-details">
+                                <thead>
+                                    <tr>
+                                        <th>Your order Details</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="order-details-body">
+                                    <tr>
+                                        <td>Product</td>
+                                        <td>Total</td>
+                                    </tr>
+                                    <% cartDatas.items.forEach(product=> { %>
                                         <tr>
-                                            <th>Your order Details</th>
-                                            <th>Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="order-details-body">
-                                        <tr>
-                                            <td>Product</td>
-                                            <td>Total</td>
-                                        </tr>
-                                        <% cartDatas.items.forEach(product=> { %>
-
-                                            <tr>
-                                                <td>
-                                                    <%= product.productId.name %>
-                                                </td>
-                                                <td>
-                                                    <%= product.productId.discount_price %>
-                                                </td>
-                                            </tr>
-                                            <% }) %>
-
-                                    </tbody>
-                                    <tbody class="checkout-details">
-                                        <tr>
-                                            <td>Subtotal</td>
                                             <td>
-                                                <%= cartDatas.totalPrice %>
+                                                <%= product.productId.name %>
+                                            </td>
+                                            <td>
+                                                <%= product.productId.discount_price %>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Shipping</td>
-                                            <td>$50</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Total</td>
-                                            <td id="totalPrice">
-                                                <%= cartDatas.totalPrice %>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <br>
-                                <% if (defaultAddress) { %>
-                                    <a href="/payment?addressId=<%= defaultAddress._id %>&totalPrice=<%= cartDatas.totalPrice %>" class="boxed-btn">Place Order</a>
-                                 
-                                <% } else{%>
-                                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                                    <script>
-                                        Swal.fire({
-                                            title:'Address Not Found!',
-                                            text:'Add address to continue'
-                                        }).then(()=>{
-                                            window.location.href = '/add-address'
-                                        })
-                                    </script>
-                                    
-                                    <% } %> 
+                                        <% }) %>
+                                </tbody>
+                                <tbody class="checkout-details">
+                                    <tr>
+                                        <td>Subtotal</td>
+                                        <td>
+                                            <%= cartDatas.totalPrice %>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shipping</td>
+                                        <td>$50</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td id="totalPrice">
+                                            <%= cartDatas.totalPrice %>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                            <div class="container mt-5 mb-5">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Select Payment Method</h3>
+                                        <div class="mt-4">
+                                            <button id="pay-button" class="btn btn-primary btn-block">Pay with
+                                                Razorpay</button>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button onclick="proceedToPayment()"
+                                                class="btn btn-secondary btn-block">Pay with Cash
+                                                on Delivery</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
 
 
-            <!-- end check out section -->
-
             <%- include('./partials/footer/footer.ejs') %>
 
-    </body>
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <script>
+                    document.getElementById('pay-button').addEventListener('click', async function (e) {
+                        e.preventDefault();
+                        const amount = document.getElementById('totalPrice').value;
+                        const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
+                        console.log(selectedAddress,'selectedAddress is showing')
+                        try {
+                            console.log('razorpay is working');
+                            const response = await fetch(`/razorpay-payment`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ amount: amount})
+                            });
 
+                            if (!response.ok) {
+                                throw new Error('Failed to create order');
+                            }
+
+                            const order = await response.json();
+
+                            const options = {
+                                key: 'rzp_test_e55Dk1oHQbvyBo',
+                                amount: order.amount,
+                                currency: order.currency,
+                                order_id: order.id,
+                                name: 'Your Company Name',
+                                description: 'Test Payment',
+                                image: 'https://via.placeholder.com/150',
+                                handler: function (response) {
+                                    Swal.fire({
+                                        text: 'Payment Successful! Payment ID: ' + response.razorpay_payment_id,
+                                        icon: 'success'
+                                    }).then(() => {
+                                        razorpaySuccess(response.razorpay_payment_id);
+                                    });
+                                },
+                                prefill: {
+                                    name: 'John Doe',
+                                    email: 'john.doe@example.com',
+                                    contact: '1234567890'
+                                },
+                                theme: {
+                                    color: '#528FF0'
+                                }
+                            };
+
+                            const razorpayInstance = new Razorpay(options);
+                            razorpayInstance.open();
+
+                            async function razorpaySuccess(paymentId) {
+                                const paymentMethod = 'Online Payment';
+                                await fetch(`/order-add/?paymentMethod=${paymentMethod}&paymentId=${paymentId}&address=${selectedAddress}`, {
+                                    method: 'GET',
+                                    headers: { 'Content-Type': 'application/json' }
+                                }).then(response => response.ok ? response.json() : console.log('Network error'))
+                                    .then((data) => {
+                                        if (data.result === 'success')
+                                            window.location.href = '/order-placed';
+                                    }).catch(err => {
+                                        console.log('Error:', err);
+                                    });
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                            alert('Failed to create order');
+                        }
+                    });
+
+                    function proceedToPayment() {
+                        orderPlace();
+                    }
+
+                    async function orderPlace() {
+                        const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
+
+                        const paymentMethod = 'cash on delivery'
+                        await fetch(`/order-add/?paymentMethod=${paymentMethod}&address=${selectedAddress}`, {
+                            method: 'GET',
+                            headers: { 'Content-Type': 'application/json' }
+                        }).then(response => response.ok ? response.json() : console.log('Network error'))
+                            .then((data) => {
+                                if (data.result === 'success')
+                                    window.location.href = '/order-placed';
+                            }).catch(err => {
+                                console.log('Error:', err);
+                            });
+                    }
+                </script>
+    </body>
 
 </html>
