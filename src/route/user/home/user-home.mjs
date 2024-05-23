@@ -37,6 +37,8 @@ routeHome.get('/shop', user_shopGet)
 
 routeHome.get('/contact', user_contactGet)
 
+routeHome.get('/product-view/:id', user_productView)
+
 routeHome.get('/edit-address', user_authentication, user_editAddressGet)
 routeHome.post('/edit-address', user_authentication, user_editAddressPost)
 
@@ -50,12 +52,12 @@ routeHome.get('/address', user_authentication, user_addressGet)
 routeHome.get('/add-address', user_authentication, user_addAddressGet)
 routeHome.post('/add-address', user_authentication, user_addAddressPost)
 
-routeHome.delete('/delete-address', user_addressDeleteDelete)
+routeHome.delete('/delete-address',user_authentication, user_addressDeleteDelete)
 
-routeHome.get('/update-default-address', user_updateDefaultAddressGet)
+routeHome.get('/update-default-address',user_authentication, user_updateDefaultAddressGet)
 
-routeHome.get('/checkout', user_checkoutGet)
-routeHome.post('/address', user_addAddressPost)
+routeHome.get('/checkout',user_authentication, user_checkoutGet)
+routeHome.post('/address',user_authentication, user_addAddressPost)
 
 routeHome.get('/cart', user_authentication, user_cartGet)
 routeHome.get('/add-to-cart', user_authentication, user_addToCartGet)
@@ -66,15 +68,14 @@ routeHome.delete('/delete-cart-product',user_deleteCartProductDelete)
 routeHome.get('/set-new-password', user_authentication, user_setNewPasswordGet)
 routeHome.post('/set-new-password', user_authentication, user_setNewPasswordPost)
 
-routeHome.get('/product-view/:id', user_productView)
 
-routeHome.post('/razorpay-payment',user_razorpay)
+routeHome.post('/razorpay-payment',user_authentication,user_razorpay)
 
-routeHome.get('/order-add',user_orderAddGet)
+routeHome.get('/order-add',user_authentication,user_orderAddGet)
 routeHome.get('/order-placed',user_authentication,user_orderPlacedGet)
 
-routeHome.get('/cancel-order',user_cancelOrderGet)
+routeHome.get('/cancel-order',user_authentication,user_cancelOrderGet)
 
-routeHome.get('/order-history',user_orderListGet)
+routeHome.get('/order-history',user_authentication,user_orderListGet)
 
 export default routeHome

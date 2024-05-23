@@ -30,7 +30,6 @@ export const user_orderListGet = async (req, res) => {
     console.log(userId,'userId is showing');
     const order = await findOrderData(userId);
     console.log(order,'order history of specific user');
-    console.log(order[0].products,'what is happeining here');
     res.render("order-history", { order });
   } catch (error) {
     console.log(error, "USER ORDER GET");
