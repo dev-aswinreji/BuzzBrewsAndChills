@@ -104,8 +104,6 @@
 										</tbody>
 									</table>
 									<div class="cart-buttons">
-
-										<button class="boxed-btn">Update Cart</button>
 										<a href="/checkout" class="boxed-btn black">Check Out</a>
 									</div>
 								</div>
@@ -113,10 +111,8 @@
 								<div class="coupon-section">
 									<h3>Apply Coupon</h3>
 									<div class="coupon-form-wrap">
-										<form action="index.html">
-											<p><input type="text" placeholder="Coupon"></p>
-											<p><input type="submit" value="Apply"></p>
-										</form>
+											<p><input type="text" placeholder="Coupon" id="couponCode"></p>
+											<p><input value="Apply" type="submit" onclick="applyCoupon()"></p>
 									</div>
 								</div>
 							</div>
@@ -163,6 +159,31 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<script>
+		async function applyCoupon(){
+			const couponCode = document.getElementById('couponCode').value
+			const totalCartPrice = document.getElementById('totalPrice').innerHTML
+			console.log(totalCartPrice,'totalcart price is showing');
+			const response = await fetch(`/apply-coupon/?couponCode=${couponCode}&totalCartPrice=${totalCartPrice}`,{
+				method:'GET',
+				headers:{
+					'Content-Type':'application/json'
+				}
+			})
+			.then(response=>{
+				if(!response.ok){
+					throw new Error('Some error occured while fetching')
+				}
+				return response.json()
+			})
+			.then(data=>{
+				if(data.result==='Invalid Coupon'){
+					Swal.fire('Invalid Coupon')
+				}
+			})
+		}
+	</script>
+
+	<script>
 		
 		async function addtoCartUsingFetch(index, productId) {
 
@@ -179,7 +200,7 @@
 			const stock = Number(stockTypeString)
 			console.log(stock,'stock is showing',quantity,'quanitity is showing'); 
 			console.log(typeof quantity,'what is heppeing');
-			console.log(typeof stock,'what the heck');
+			console.log(typeof stock,'what the h');
 			console.log(quantity<=stock,'what is happening');
 			console.log(2<=12,'what is the issue');
 			if(quantity<=stock){

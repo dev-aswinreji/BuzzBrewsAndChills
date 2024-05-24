@@ -31,6 +31,9 @@ const couponSchema = mongoose.Schema({
     type:String,
     enum:['USED','NOT USED'],
     default:'NOT USED'
+  },
+  description:{
+    type:String,
   }
 });
 

@@ -93,9 +93,9 @@
                 <section class="content-main">
                     <div class="content-header">
                         <div>
-                            <h2 class="content-title card-title">Categories
+                            <h2 class="content-title card-title">Coupon
                             </h2>
-                            <p>Add, edit or delete a category</p>
+                            <p>Add Coupon</p>
                         </div>
                         <div>
                             <input type="text" placeholder="Search Categories" class="form-control bg-white">
@@ -112,14 +112,19 @@
                                                 id="category" required>
                                         </div>
                                         <div class="mb-4">
+                                            <label class="form-label">Discount</label>
+                                            <input placeholder="Type here" type="number" name="discount" class="form-control"
+                                                id="discount">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label">Minimum Cart Price</label>
+                                            <input placeholder="Type here" type="number" name="minimum_cart_price" class="form-control"
+                                                id="discount">
+                                        </div>
+                                        <div class="mb-4">
                                             <label class="form-label">Description</label>
                                             <textarea placeholder="Type here" name="description" class="form-control"
                                                 id="description"></textarea>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label class="form-label">Discount</label>
-                                            <input placeholder="Type here" name="discount" class="form-control"
-                                                id="discount">
                                         </div>
                                         <div class="d-grid">
                                             <button type="submit" class="btn btn-primary">Create coupon</button>
@@ -141,10 +146,11 @@
                                                     <th>
                                                         Categories
                                                     </th>
+                                                    <th>Minimum Cart Price</th>
                                                     <th>Description</th>
-                                                    <th>Status</th>
+                                                    <!-- <th>Status</th> -->
                                                     <th>Discount</th>
-                                                    <th class="text-end">Action</th>
+                                                    <!-- <th class="text-end">Action</th> -->
                                                 </tr>
                                             </thead>
                                             <% if (coupon) { %>
@@ -161,40 +167,45 @@
 
                                                             </td>
                                                             <td>
-                                                                <%= coupon[i].description %>
+                                                                <b>
+                                                                    <%= coupon[i].minimum_cart_price %> Rs
+                                                                </b>
                                                             </td>
                                                             <td>
-                                                                <% if (coupon[i].availability==='ACTIVE' ) { %>
+                                                                <%= coupon[i].description %>
+                                                            </td>
+                                                            <!-- <td>
+                                                                <%# if (coupon[i].availability==='ACTIVE' ) { %>
 
                                                                     <span class="badge rounded-pill alert-success">
-                                                                        <%= coupon[i].availability %>
+                                                                        <%#= coupon[i].availability %>
                                                                     </span>
-                                                                    <% } else {%>
+                                                                    <%# } else {%>
                                                                         <span class="badge rounded-pill alert-danger">
-                                                                            <%= coupon[i].availability %>
+                                                                            <%#= coupon[i].availability %>
                                                                         </span>
-                                                                        <% } %>
-                                                            </td>
+                                                                        <%# } %>
+                                                            </td> -->
                                                             <td>
                                                                 <%= coupon[i].discount %> %
                                                             </td>
-                                                            <td class="text-end">
+                                                            <!-- <td class="text-end">
                                                                 <a class="btn btn-primary"
-                                                                    href="/admin/edit-coupn/<%= coupon[i]._id %> ">Edit</a>
+                                                                    href="/admin/edit-coupn/<%#= coupon[i]._id %> ">Edit</a>
 
                                                                 <button
-                                                                    onclick="HideAndUnhide(`<%= coupon[i]._id %>`,`<%= coupon[i].availability %>`)"
+                                                                    onclick="HideAndUnhide(`<%#= coupon[i]._id %>`,`<%#= coupon[i].availability %>`)"
                                                                     class="btn btn-sm font-sm btn-light rounded"
                                                                     style="width: 6rem;">
-                                                                    <% if(coupon[i].availability==='ACTIVE' ) {%>
+                                                                    <%# if(coupon[i].availability==='ACTIVE' ) {%>
                                                                         HIDE
-                                                                        <% } else { %>
+                                                                        <%# } else { %>
                                                                             SHOW
-                                                                            <% } %>
+                                                                            <%# } %>
                                                                                 <i
                                                                                     class="material-icons md-delete_forever"></i>
                                                                 </button>
-                                                            </td>
+                                                            </td> -->
                                                         </tr>
                                                     </tbody>
                                     </div>
@@ -205,8 +216,10 @@
                                     </tbody>
                                     <% } %>
 
-                                        <% } %>
-                                            </table>
+                                    <% }else{ %>
+                                        No Coupon Added yet
+                                        <% } %> 
+                                </table>
                                 </div>
                             </div>
                             <!-- .col// -->
@@ -277,9 +290,6 @@
             }
 
             // Check for special characters and numbers (excluding letters) (same as before)
-            if (!/^[a-zA-Z]+$/.test(categoryValue)) {
-                errorMessage = 'Category name can only contain letters.';
-            }
 
             // Check if description is empty
             if (!descriptionValue.trim()) {

@@ -12,6 +12,8 @@ import {admin_editCategoryGet, admin_editCategoryPost} from "../../../controller
 import {admin_manageCategory} from "../../../controller/admin/home/manage-category.mjs";
 import {admin_authentication} from "../../../middleware/admin-auth.mjs";
 import { admin_orderDetailsGet, admin_orderDetailsPost } from "../../../controller/admin/home/order-details.mjs";
+import { admin_couponGet, admin_couponPost } from "../../../controller/admin/home/coupon.mjs";
+import { admin_editCouponGet } from "../../../controller/admin/home/edit-coupon.mjs";
 
 const adminHomeRoute = express.Router()
 
@@ -43,5 +45,9 @@ adminHomeRoute.post('/order-details',admin_authentication,admin_orderDetailsPost
 adminHomeRoute.get('/products', admin_authentication, admin_productsGet)
 adminHomeRoute.delete('/delete-image',admin_authentication,admin_deleteProductImages)
 
+adminHomeRoute.get('/coupon',admin_couponGet)
+adminHomeRoute.post('/coupon',admin_couponPost)
+
+adminHomeRoute.get('/edit-coupon',admin_editCouponGet)
 
 export default adminHomeRoute
