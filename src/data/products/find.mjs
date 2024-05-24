@@ -44,3 +44,56 @@ export async function findTotalCountOfAllProducts (){
     const totalCount = products.filter(products=>products.category.availability === 'ACTIVE').length
     return totalCount
 }
+
+export async function findProductCategoryFiltering (categoryName){
+    try {
+        const products = await productCollection.aggregate([
+            {
+                $match: {
+                    availability: 'AVAILABLE'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'categories', // This should match the collection name for categories
+                    localField: 'category',
+                    foreignField: '_id',
+                    as: 'category'
+                }
+            },
+            {
+                $unwind: '$category'
+            },
+            {
+                $match: {
+                    'category.availability': 'ACTIVE',
+                    'category.name': categoryName
+                }
+            },
+            {
+                $project: {
+                    name: 1,
+                    description: 1,
+                    price: 1,
+                    availability: 1,
+                    stock: 1,
+                    imageUrl: 1,
+                    createdAt: 1,
+                    discount: 1,
+                    discount_price: 1,
+                    category: {
+                        name: 1,
+                        availability: 1
+                    }
+                }
+            }
+        ]);
+
+        console.log(products);
+        return products;
+        console.log(products,'category product is showing');
+        return products;
+    }catch(error){
+        console.log(error,'find category filtering product func');
+    }
+}

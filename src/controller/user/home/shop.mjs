@@ -1,11 +1,11 @@
-import { findAllProductsForUser, findAllProductsForUserSortingHighToLow, findAllProductsForUserSortingLowToHigh, findTotalCountOfAllProducts } from "../../../data/products/find.mjs";
+import { findAllProductsForUser, findAllProductsForUserSortingHighToLow, findAllProductsForUserSortingLowToHigh, findProductCategoryFiltering, findTotalCountOfAllProducts } from "../../../data/products/find.mjs";
 
 export const user_shopGet = async (req, res) => {
     try {
         const limit = 3; 
         let page = Number(req.query.page) || 1; 
         const sortOption = req.query.sortOption || 'default'; 
-        
+        const categoryName = req.query.categoryName
         const TOTAL_COUNT_OF_PRODUCTS = await findTotalCountOfAllProducts();
         const totalPages = Math.ceil(TOTAL_COUNT_OF_PRODUCTS / limit);
         
@@ -24,6 +24,11 @@ export const user_shopGet = async (req, res) => {
             default:
                 products = await findAllProductsForUser(skip, limit);
                 break;
+        }
+
+        if(categoryName){
+            console.log(categoryName,'categoryName is shwoing ==========');
+            products = await findProductCategoryFiltering(categoryName)
         }
 
         res.render('shop', { products, page, sortOption,totalPages, count: TOTAL_COUNT_OF_PRODUCTS });

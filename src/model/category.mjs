@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 
 const db = await import ("./database.mjs").then((instance) => instance.default)
 
-function productModel(collectionName, schema) {
+function categoryModel(collectionName, schema) {
     return db.model(collectionName, schema)
 }
 
@@ -35,4 +35,4 @@ const categorySchema = new mongoose.Schema({
 
 })
 
-export const categoryCollection = productModel('category', categorySchema)
+export const categoryCollection = categoryModel('categories', categorySchema)

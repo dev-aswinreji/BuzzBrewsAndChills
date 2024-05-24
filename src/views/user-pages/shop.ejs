@@ -118,10 +118,13 @@
                         <div class="col-md-12">
                             <div class="product-filters">
                                 <ul>
-                                    <li class="active" data-filter="*" onclick="filterProducts('*')">All</li>
-                                    <li data-filter=".energy" onclick="filterProducts('energy')">ENERGY DRINKS</li>
-                                    <li data-filter=".cool" onclick="filterProducts('cool')">COOL DRINKS</li>
-                                    <li data-filter=".coffee" onclick="filterProducts('coffee')">COLD COFFEE</li>
+                                    <% products.forEach(item => { %>
+                                        <%= item.category. %> 
+                                    <% }) %>
+                                    <li class="active" data-filter="*"><a href="/shop">All</a></li>
+                                    <li data-filter=".energy" ><a href="/shop/?categoryName=Apple">Apple</a></li>
+                                    <li data-filter=".cool" >COOL DRINKS</li>
+                                    <li data-filter=".coffee" >COLD COFFEE</li>
                                 </ul>
                             </div>
                         </div>
