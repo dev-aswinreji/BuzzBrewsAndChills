@@ -27,14 +27,20 @@ export async function findSingleProductWithSameName(productName){
     return await productCollection.findOne({name:{$regex: new RegExp(productName,'i')}})
  }
 
-export async function findAllProductsForUser (){
-    return (await productCollection.find({availability:'AVAILABLE'}).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
+export async function findAllProductsForUser (skip,limit){
+    return (await productCollection.find({availability:'AVAILABLE'}).skip(skip).limit(limit).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
 }
 
-export async function findAllProductsForUserSortingLowToHigh(){
-    return (await productCollection.find({availability:'AVAILABLE'}).sort({price:1}).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
+export async function findAllProductsForUserSortingLowToHigh(skip,limit){
+    return (await productCollection.find({availability:'AVAILABLE'}).sort({price:1}).skip(skip).limit(limit).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
 }
 
-export async function findAllProductsForUserSortingHighToLow(){
-    return (await productCollection.find({availability:'AVAILABLE'}).sort({price:-1}).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
+export async function findAllProductsForUserSortingHighToLow(skip,limit){
+    return (await productCollection.find({availability:'AVAILABLE'}).sort({price:-1}).skip(skip).limit(limit).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
+}
+
+export async function findTotalCountOfAllProducts (){
+    const products =  await productCollection.find({availability:'AVAILABLE'}).populate('category').exec()
+    const totalCount = products.filter(products=>products.category.availability === 'ACTIVE').length
+    return totalCount
 }
