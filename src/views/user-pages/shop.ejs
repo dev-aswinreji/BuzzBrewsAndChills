@@ -197,9 +197,7 @@
                                                                         Add to Cart</button>
                                                                     </button>
                                                                     <% } %>
-                                    </div>case 'topBrand':
-                                    productsArray.sort((a, b) => a.getAttribute('data-branch').localeCompare(b.getAttribute('data-branch')));
-                                    break;
+                                    </div>
                                 </div>
                                 <% }%>
                     </div>
@@ -272,24 +270,26 @@
         }
     
         async function sortProducts() {
-            const sortOption = document.getElementById('sortSelect').value;
-            
-            await fetch(`/shop/?sortOption=${sortOption}`,{
+          try {
+             const sortOption = document.getElementById('sortSelect').value;
+            console.log(sortOption,'sort option is showing');
+           const response = await fetch(`/shop/?sortOption=${sortOption}`,{
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json'
                 }
-            }).then((response)=>{
-                if(!response.ok){
-                    throw new Error('some error while fetching the data')
-                }
-            }).then((data)=>{
-                if(data.result=='success'){
-                    console.log('successfully fetched the data');
-                }
-            }).catch(err=>console.log('some error in the controller'))
-
-
+            })
+            if(!response.ok){
+                throw new Error('Some error occured while fetching the data')
+            }
+            
+            // const sortedProduct = await response.json()
+            // console.log(sortedProduct,'sorted product is showing');
+            window.location.reload()
+        }catch(err){
+            console.log(err,'some error occured');
+        }
+            
             const productContainer = document.getElementById('productContainer');
             console.log(productContainer,'what is this');
             const productsArray = Array.from(filteredProducts);

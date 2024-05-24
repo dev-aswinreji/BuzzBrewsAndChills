@@ -30,3 +30,7 @@ export async function findSingleProductWithSameName(productName){
 export async function findAllProductsForUser (){
     return (await productCollection.find({availability:'AVAILABLE'}).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
 }
+
+export async function findAllProductsForUserSortingLowToHigh(){
+    return (await productCollection.find({availability:'AVAILABLE'}).sort({price:1}).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
+}
