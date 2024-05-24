@@ -1,7 +1,6 @@
 import { googleCollection } from "../../model/signin-with-google.mjs";
 import { userAddressCollection } from "../../model/userAddress.mjs";
 import { userCollection } from "../../model/userData.mjs";
-import { checkDataDuplication } from "../../validation/checking-duplicateData.mjs";
 
 export async function findUser(data) {
   return await userCollection.findOne({ email: data });

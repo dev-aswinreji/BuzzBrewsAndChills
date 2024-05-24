@@ -161,7 +161,8 @@
 	<script>
 		async function applyCoupon(){
 			const couponCode = document.getElementById('couponCode').value
-			const totalCartPrice = document.getElementById('totalPrice').innerHTML
+			const totalCartPriceData = document.getElementById('totalPrice')
+			const totalCartPrice = Number(totalCartPriceData.innerHTML)
 			console.log(totalCartPrice,'totalcart price is showing');
 			const response = await fetch(`/apply-coupon/?couponCode=${couponCode}&totalCartPrice=${totalCartPrice}`,{
 				method:'GET',
@@ -178,6 +179,17 @@
 			.then(data=>{
 				if(data.result==='Invalid Coupon'){
 					Swal.fire('Invalid Coupon')
+				}
+				else if (data.result === 'Cart Limit Is Low'){
+					Swal.fire('Minimum cart price to apply coupon is 1000')
+				}else if (data.result === 'Coupon Applied'){
+					Swal.fire('Coupon Applied Successfully')
+					const discount = Number(data.discount)
+					console.log(discount,'discount is showing');
+					totalCartPriceData.innerHTML = totalCartPrice - (totalCartPrice * (discount/100))
+
+				}else if (data.result === 'Coupon Already Exist'){
+					Swal.fire('Coupon already used please apply another coupon')
 				}
 			})
 		}

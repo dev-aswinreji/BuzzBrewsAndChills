@@ -61,3 +61,7 @@ export async function updateMakeDefaultUserAddress(addressId) {
     { isDefault: "NO" }
   );
 }
+
+export async function updateCouponInUserData (userId,couponCode){
+  return await userCollection.findByIdAndUpdate(userId,{$push:{coupon:couponCode}})
+}
