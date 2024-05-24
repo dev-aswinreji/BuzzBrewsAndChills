@@ -34,3 +34,7 @@ export async function findAllProductsForUser (){
 export async function findAllProductsForUserSortingLowToHigh(){
     return (await productCollection.find({availability:'AVAILABLE'}).sort({price:1}).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
 }
+
+export async function findAllProductsForUserSortingHighToLow(){
+    return (await productCollection.find({availability:'AVAILABLE'}).sort({price:-1}).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
+}
