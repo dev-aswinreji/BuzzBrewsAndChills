@@ -105,9 +105,9 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <form action="/admin/category" method="post">
+                                    <form action="/admin/coupon" method="post">
                                         <div class="mb-4">
-                                            <label class="form-label">category</label>
+                                            <label class="form-label">Coupon Code</label>
                                             <input type="text" name="name" placeholder="Type here" class="form-control"
                                                 id="category" required>
                                         </div>
@@ -122,7 +122,7 @@
                                                 id="discount">
                                         </div>
                                         <div class="d-grid">
-                                            <button type="submit" class="btn btn-primary">Create category</button>
+                                            <button type="submit" class="btn btn-primary">Create coupon</button>
                                         </div>
                                     </form>
                                 </div>
@@ -147,8 +147,8 @@
                                                     <th class="text-end">Action</th>
                                                 </tr>
                                             </thead>
-                                            <% if (category) { %>
-                                                <% for( let i=0; i < category.length; i++ ) { %>
+                                            <% if (coupon) { %>
+                                                <% for( let i=0; i < coupon.length; i++ ) { %>
                                                     <tbody>
                                                         <tr>
                                                             <td>
@@ -156,37 +156,37 @@
                                                             </td>
                                                             <td>
                                                                 <b>
-                                                                    <%= category[i].name %>
+                                                                    <%= coupon[i].name %>
                                                                 </b>
 
                                                             </td>
                                                             <td>
-                                                                <%= category[i].description %>
+                                                                <%= coupon[i].description %>
                                                             </td>
                                                             <td>
-                                                                <% if (category[i].availability==='ACTIVE' ) { %>
+                                                                <% if (coupon[i].availability==='ACTIVE' ) { %>
 
                                                                     <span class="badge rounded-pill alert-success">
-                                                                        <%= category[i].availability %>
+                                                                        <%= coupon[i].availability %>
                                                                     </span>
                                                                     <% } else {%>
                                                                         <span class="badge rounded-pill alert-danger">
-                                                                            <%= category[i].availability %>
+                                                                            <%= coupon[i].availability %>
                                                                         </span>
                                                                         <% } %>
                                                             </td>
                                                             <td>
-                                                                <%= category[i].discount %> %
+                                                                <%= coupon[i].discount %> %
                                                             </td>
                                                             <td class="text-end">
                                                                 <a class="btn btn-primary"
-                                                                    href="/admin/edit-category/<%= category[i]._id %> ">Edit</a>
+                                                                    href="/admin/edit-coupn/<%= coupon[i]._id %> ">Edit</a>
 
                                                                 <button
-                                                                    onclick="HideAndUnhide(`<%= category[i]._id %>`,`<%= category[i].availability %>`)"
+                                                                    onclick="HideAndUnhide(`<%= coupon[i]._id %>`,`<%= coupon[i].availability %>`)"
                                                                     class="btn btn-sm font-sm btn-light rounded"
                                                                     style="width: 6rem;">
-                                                                    <% if(category[i].availability==='ACTIVE' ) {%>
+                                                                    <% if(coupon[i].availability==='ACTIVE' ) {%>
                                                                         HIDE
                                                                         <% } else { %>
                                                                             SHOW
