@@ -167,16 +167,21 @@
 		async function addtoCartUsingFetch(index, productId) {
 
 			console.log(index, 'index is not changing');
-			const quantity = document.getElementById('quantity_' + index).value
+			const quantityTypeString = document.getElementById('quantity_' + index)
+			const quantityValue = quantityTypeString.value
+			const quantity = Number(quantityValue)
 			console.log(quantity, 'quantity of each product is getting');
 			const priceText = document.getElementById('price_'+index).innerHTML 
 			const price = priceText.replace(/Rs/gi,'')
 			console.log(price,'price of each product is showing');
 
-			const stock = document.getElementById('stock_' + index).value 
-			console.log(8>=2);
-			console.log(stock,'stock is showing'); 
-			console.log(quantity,'quanitity is showing');
+			const stockTypeString = document.getElementById('stock_' + index).value 
+			const stock = Number(stockTypeString)
+			console.log(stock,'stock is showing',quantity,'quanitity is showing'); 
+			console.log(typeof quantity,'what is heppeing');
+			console.log(typeof stock,'what the heck');
+			console.log(quantity<=stock,'what is happening');
+			console.log(2<=12,'what is the issue');
 			if(quantity<=stock){
 				
 			
@@ -218,7 +223,14 @@
 					title: "Maximum product limit is exceeded",
 					showConfirmButton: false,
 					timer: 1500
-				}).then(() => location.reload())
+				}).then(()=>{
+					if(stock<=10){
+						quantityTypeString.value = stock
+					}else{
+						quantityTypeString.value = 10
+					}
+				})
+				
 			}else{
 				Swal.fire({
 					position: "center",
@@ -226,6 +238,8 @@
 					title: "Maximum stock limit of product exceeded",
 					showConfirmButton: false,
 					timer: 1500
+				}).then(()=>{
+					quantityTypeString.value = stock
 				})
 			}
 		}

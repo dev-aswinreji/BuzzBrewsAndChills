@@ -25,7 +25,7 @@ export const user_addToCartGet = async (req, res) => {
     if (result === "NOT EXIST") {
       await addToCartData(userId, product, quantityFromQuery);
 
-      return res.json({ result: "within limit" });
+      return res.json({ result: "within limit" ,stock:stockFromQuery,quantityFromQuery:quantityFromQuery});
 
     } else {
 
@@ -54,7 +54,7 @@ export const user_addToCartGet = async (req, res) => {
                 userId,
                 product,
                 quantityFromQuery
-              ).then(() => ({ result: "within limit", stock: stock }))
+              ).then(() => ({ result: "within limit", stock: stock ,quantityFromQuery:quantityFromQuery}))
             : { result: "limit exceeded" };
         console.log(response, "response is showing");
         return res.json(response);
