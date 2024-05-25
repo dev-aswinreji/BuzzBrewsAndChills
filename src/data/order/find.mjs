@@ -9,9 +9,9 @@ export async function findOrderData (userId){
     }
 }
 
-export async function findAllOrderDataForAdmin (){
+export async function findAllOrderDataForAdmin (skip,limit){
     try {
-        return await orderCollection.find().sort({timeStamp:-1})
+        return await orderCollection.find().sort({timeStamp:-1}).skip(skip).limit(limit)
     } catch (error) {
         console.log(error,'error occured in find all order data for admin func');
     }
@@ -24,4 +24,8 @@ export async function findUniqueOrderToChangeOrderStatus (orderId){
     } catch (error) {
         console.log(error,'error occured in find unique order to change order status func');
     }
+}
+
+export async function findTotalCountOfAllOrdersForAdmin (){
+    return await orderCollection.countDocuments()
 }
