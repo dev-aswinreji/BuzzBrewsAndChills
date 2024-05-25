@@ -6,7 +6,7 @@ import { cartCollection } from "../../../model/cart.mjs";
 export const user_cartGet = async (req, res) => {
   const userId = req.session.USER_ID;
   console.log(req.session.applyCoupon,'what is this');
-  if(req.session.applyCoupon === false){
+  if(req.session.applyCoupon === true){
     const totalPrice = await aggregationForTotalPrice(userId);
     console.log(totalPrice, "aggregation is working ====================");
     if (totalPrice.length > 0) {
