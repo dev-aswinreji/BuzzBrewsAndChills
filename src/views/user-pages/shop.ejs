@@ -238,9 +238,9 @@
             <%- include('./partials/footer/footer.ejs') %>
 
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    </body>
 
-    <script>
+     <script>
+        
         async function addToWishlist(index, productId){
 
             await fetch(`/add-to-wishlist?productId=${productId}`,{
@@ -248,15 +248,31 @@
                 headers:{
                     'Content-Type':'application/json'
                 }
-            }).then(response=>{
-                if(!response.ok){
-                    throw new Error('Some error occured while fetching the data')
-                }
-                return response.json()
-            }).then(data=>{
+            }).then((response) => {
+           if (response.redirected) {
+            Swal.fire({
+            title: "Invalid Entry",
+            text: "Please sign in to continue.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sign In",
+            cancelButtonText: "Cancel"
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/signin'
+               }
+            })
+          } else if (!response.ok) {
+                throw new Error('A network error occurred while fetching data.')
+              }
+               return response.json()
+           })
+             .then(data=>{
                 console.log(data,'data is showing');
                 if(data.result==='success'){
                     Swal.fire('product added to whishlist successfull')
+                }else if (data.result === 'product already exist'){
+                    Swal.fire('product already exist')
                 }
             })
             console.log('he button triggered');
@@ -313,5 +329,6 @@
                 })
         }
     </script>
+    </body>
 
 </html>
