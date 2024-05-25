@@ -127,12 +127,17 @@
                                 <tbody class="order-details-body">
                                     <tr>
                                         <td>Product</td>
+                                        <td>Quantity</td>
                                         <td>Total</td>
+                                        
                                     </tr>
                                     <% cartDatas.items.forEach(product=> { %>
                                         <tr>
                                             <td>
                                                 <%= product.productId.name %>
+                                            </td>
+                                            <td>
+                                                <%= product.quantity %> 
                                             </td>
                                             <td>
                                                 <%= product.productId.discount_price %>
@@ -141,18 +146,21 @@
                                         <% }) %>
                                 </tbody>
                                 <tbody class="checkout-details">
-                                    <tr>
+                                    <!-- <tr>
                                         <td>Subtotal</td>
                                         <td>
-                                            <%= cartDatas.totalPrice %>
+                                            <%#= cartDatas.totalPrice %>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
+                                        
                                         <td>Shipping</td>
+                                        <td></td>
                                         <td>$50</td>
                                     </tr>
                                     <tr>
                                         <td>Total</td>
+                                        <td></td>
                                         <td id="totalPrice">
                                             <%= cartDatas.totalPrice %>
                                         </td>
@@ -176,17 +184,61 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="coupon-section">
+                                <h3>Apply Coupon</h3>
+                                <div class="coupon-form-wrap">
+                                        <p><input type="text" placeholder="Coupon" id="couponCode"></p>
+                                        <p><input value="Apply" type="submit" onclick="applyCoupon()"></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+            <br><br>
 
             <%- include('./partials/footer/footer.ejs') %>
 
                 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+                <script>
+                    async function applyCoupon(){
+                        const couponCode = document.getElementById('couponCode').value
+                        const totalCartPriceData = document.getElementById('totalPrice')
+                        const totalCartPrice = Number(totalCartPriceData.innerHTML)
+                        console.log(totalCartPrice,'totalcart price is showing');
+                        const response = await fetch(`/apply-coupon/?couponCode=${couponCode}&totalCartPrice=${totalCartPrice}`,{
+                            method:'GET',
+                            headers:{
+                                'Content-Type':'application/json'
+                            }
+                        })
+                        .then(response=>{
+                            if(!response.ok){
+                                throw new Error('Some error occured while fetching')
+                            }
+                            return response.json()
+                        })
+                        .then(data=>{
+                            if(data.result==='Invalid Coupon'){
+                                Swal.fire('Invalid Coupon')
+                            }
+                            else if (data.result === 'Cart Limit Is Low'){
+                                Swal.fire('Minimum cart price to apply coupon is 1000')
+                            }else if (data.result === 'Coupon Applied'){
+                                Swal.fire('Coupon Applied Successfully')
+                                const discount = Number(data.discount)
+                                console.log(discount,'discount is showing');
+                                totalCartPriceData.innerHTML = totalCartPrice - (totalCartPrice * (discount/100))
+                                
+                            }else if (data.result === 'Coupon Already Exist'){
+                                Swal.fire('Coupon already used please apply another coupon')
+
+                            }
+                        })
+                    }
+                </script>
                 <script>
                     document.getElementById('pay-button').addEventListener('click', async function (e) {
                         e.preventDefault();

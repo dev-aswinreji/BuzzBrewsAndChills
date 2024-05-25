@@ -108,14 +108,6 @@
 										<a href="/checkout" class="boxed-btn black">Check Out</a>
 									</div>
 								</div>
-
-								<div class="coupon-section">
-									<h3>Apply Coupon</h3>
-									<div class="coupon-form-wrap">
-											<p><input type="text" placeholder="Coupon" id="couponCode"></p>
-											<p><input value="Apply" type="submit" onclick="applyCoupon()"></p>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -159,42 +151,6 @@
 	</body>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-	<script>
-		async function applyCoupon(){
-			const couponCode = document.getElementById('couponCode').value
-			const totalCartPriceData = document.getElementById('totalPrice')
-			const totalCartPrice = Number(totalCartPriceData.innerHTML)
-			console.log(totalCartPrice,'totalcart price is showing');
-			const response = await fetch(`/apply-coupon/?couponCode=${couponCode}&totalCartPrice=${totalCartPrice}`,{
-				method:'GET',
-				headers:{
-					'Content-Type':'application/json'
-				}
-			})
-			.then(response=>{
-				if(!response.ok){
-					throw new Error('Some error occured while fetching')
-				}
-				return response.json()
-			})
-			.then(data=>{
-				if(data.result==='Invalid Coupon'){
-					Swal.fire('Invalid Coupon')
-				}
-				else if (data.result === 'Cart Limit Is Low'){
-					Swal.fire('Minimum cart price to apply coupon is 1000')
-				}else if (data.result === 'Coupon Applied'){
-					Swal.fire('Coupon Applied Successfully')
-					const discount = Number(data.discount)
-					console.log(discount,'discount is showing');
-					// totalCartPriceData.innerHTML = totalCartPrice - (totalCartPrice * (discount/100))
-					
-				}else if (data.result === 'Coupon Already Exist'){
-					Swal.fire('Coupon already used please apply another coupon')
-				}
-			})
-		}
-	</script>
 
 	<script>
 		

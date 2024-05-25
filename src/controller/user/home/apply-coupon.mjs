@@ -72,7 +72,8 @@ export const user_applyCoupon = async (req, res) => {
             const data = await updateCouponInUserData(USER_ID,couponCode)
 
             console.log(data,'updated user data is showing'); 
-            const cartUpdated = await updateCartTotalPriceWhileApplyingCoupon(USER_ID,discountPrice)
+
+            const cartUpdated = await updateCartTotalPriceWhileApplyingCoupon(USER_ID,discountPrice,discount)
             console.log(cartUpdated,'cart updated or not');
             
             res.json({result:'Coupon Applied',discount:discount})
