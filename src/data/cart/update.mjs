@@ -45,3 +45,14 @@ export async function addToCartDataManageQuantity(userId, product, quantity,tota
     }
 
 }
+
+export async function updateCartTotalPriceWhileApplyingCoupon (userId,discountPrice){
+    try {
+        const updateTotalPrice =  await cartCollection.updateOne({userId:userId},{$set:{totalPrice:discountPrice}})
+        req.session.applyCoupon = true
+        return updateTotalPrice
+        
+    } catch (error) {
+        console.log(error,'USER UPDATE CART TOTAL PRICE WHILE APPLYING COUPON FUNC');
+    }
+}

@@ -187,7 +187,7 @@
 					const discount = Number(data.discount)
 					console.log(discount,'discount is showing');
 					totalCartPriceData.innerHTML = totalCartPrice - (totalCartPrice * (discount/100))
-
+					
 				}else if (data.result === 'Coupon Already Exist'){
 					Swal.fire('Coupon already used please apply another coupon')
 				}

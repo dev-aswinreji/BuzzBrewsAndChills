@@ -1,3 +1,4 @@
+import { updateCartTotalPriceWhileApplyingCoupon } from "../../../data/cart/update.mjs";
 import { findUniqueCouponForUser } from "../../../data/coupon/find.mjs";
 import { findUserUsingId } from "../../../data/users/find.mjs";
 import { updateCouponInUserData } from "../../../data/users/update.mjs";
@@ -38,6 +39,10 @@ export const user_applyCoupon = async (req, res) => {
     } else if (result === "EXIST") {
 
      const discount = coupon.discount
+     const discountPrice = totalCartPrice - (totalCartPrice * (discount/100))
+
+     console.log(discountPrice,'discount price is showing');
+     
      console.log(discount,'discount is showing');
 
       console.log(USER_ID, "user id is showing");
@@ -49,8 +54,11 @@ export const user_applyCoupon = async (req, res) => {
       if (userData.coupon.length == 0) {
 
         const data = await updateCouponInUserData(USER_ID,couponCode)
-
+        console.log('working in userdata coupon');
         console.log(data,'updated user data is showing');
+        const cartUpdated = await updateCartTotalPriceWhileApplyingCoupon(USER_ID,discountPrice)
+        console.log(cartUpdated,'cart updated or not');
+        
         res.json({result:'Coupon Applied',discount:discount})
         
     } else if (userData.coupon.length > 0) {
@@ -63,7 +71,10 @@ export const user_applyCoupon = async (req, res) => {
           }else{
             const data = await updateCouponInUserData(USER_ID,couponCode)
 
-            console.log(data,'updated user data is showing');
+            console.log(data,'updated user data is showing'); 
+            const cartUpdated = await updateCartTotalPriceWhileApplyingCoupon(USER_ID,discountPrice)
+            console.log(cartUpdated,'cart updated or not');
+            
             res.json({result:'Coupon Applied',discount:discount})
           }
           

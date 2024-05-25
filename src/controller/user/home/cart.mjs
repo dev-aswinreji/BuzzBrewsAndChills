@@ -5,24 +5,27 @@ import { cartCollection } from "../../../model/cart.mjs";
 
 export const user_cartGet = async (req, res) => {
   const userId = req.session.USER_ID;
-
-  const totalPrice = await aggregationForTotalPrice(userId);
-  console.log(totalPrice, "aggregation is working ====================");
-  if (totalPrice.length > 0) {
-    await cartCollection.updateOne(
-      {
-        userId: userId,
-      },
-      { totalPrice: totalPrice[0].totalPrice }
-    );
-  } else {
-    await cartCollection.updateOne(
-      {
-        userId: userId,
-      },
-      { totalPrice: 0 }
-    );
+  console.log(req.session.applyCoupon,'what is this');
+  if(req.session.applyCoupon === false){
+    const totalPrice = await aggregationForTotalPrice(userId);
+    console.log(totalPrice, "aggregation is working ====================");
+    if (totalPrice.length > 0) {
+      await cartCollection.updateOne(
+        {
+          userId: userId,
+        },
+        { totalPrice: totalPrice[0].totalPrice }
+      );
+    } else {
+      await cartCollection.updateOne(
+        {
+          userId: userId,
+        },
+        { totalPrice: 0 }
+      );
+    }
   }
+  
 
   const cart = await findAllCartDatas(userId);
   console.log(cart, "cart data is shwoing");
