@@ -4,6 +4,7 @@ import { updateProducts } from "../../../data/products/update.mjs";
 
 export const user_cancelOrderGet = async (req, res) => {
   try {
+    console.log(req.query,'query is showing');
     const productId = req.query.productId;
     const product = await findSingleProduct(productId);
     const quantity = req.query.quantity;
@@ -11,12 +12,12 @@ export const user_cancelOrderGet = async (req, res) => {
 
     let updateProductStock = Number(product.stock) + Number(quantity);
 
-    const result = await updateCancelProduct(orderId);
+    const result = await updateCancelProduct(orderId,productId);
 
     const response =
       result === "Success"
         ? await updateProducts(productId, { stock: updateProductStock }).then(
-            () => ({ result: "success" })
+            () => ({ result: "success" ,status:'CANCELLED' })
           )
         : { result: "fail" };
 

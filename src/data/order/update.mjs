@@ -24,11 +24,12 @@ export async function updateProductStockInOrder(order) {
   }
 }
 
-export async function updateCancelProduct(orderId) {
+export async function updateCancelProduct(orderId,productId) {
   try {
     return (await orderCollection.updateOne(
       { orderId: orderId },
-      { $set: { productStatus: "CANCELLED" } }
+      { $set: { "products.$[elem].status": 'CANCELLED' } },
+        { arrayFilters: [{ "elem.productId": productId }]}
     ))
       ? "Success"
       : "Fail";

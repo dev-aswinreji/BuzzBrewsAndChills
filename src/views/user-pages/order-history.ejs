@@ -14,7 +14,7 @@
         }
 
         .container-order {
-            max-width: 800px;
+            max-width: 900px;
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;
@@ -30,7 +30,7 @@
         .order {
             border: 1px solid #ccc;
             border-radius: 5px;
-            padding: 10px;
+            padding: 15px;
             margin-bottom: 20px;
             background-color: #f9f9f9;
         }
@@ -80,13 +80,27 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
 
         .product img {
-            width: 100px;
+            width: 80px;
             height: auto;
-            margin-right: 10px;
+            margin-right: 15px;
             border-radius: 4px;
+        }
+
+        .product-info {
+            flex-grow: 1;
+        }
+
+        .product-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
         }
 
         .btn-container-order {
@@ -94,25 +108,41 @@
             margin-top: 20px;
         }
 
-        .btn-container-order button {
+        .btn {
             padding: 10px 20px;
-            margin: 0 10px;
+            margin: 5px 0;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
-        }
-
-        .btn-shop {
-            background-color: #474f57;
-            color: #fff;
-            font-weight: bold;
+            font-size: 14px;
+            transition: background-color 0.3s;
         }
 
         .btn-cancel {
             background-color: #d9534f;
             color: #fff;
-            font-weight: bold;
+        }
+
+        .btn-cancel:hover {
+            background-color: #c9302c;
+        }
+
+        .btn-return {
+            background-color: #5bc0de;
+            color: #fff;
+        }
+
+        .btn-return:hover {
+            background-color: #31b0d5;
+        }
+
+        .btn-shop {
+            background-color: #474f57;
+            color: #fff;
+        }
+
+        .btn-shop:hover {
+            background-color: #373e46;
         }
 
         a {
@@ -163,7 +193,7 @@
                             <div class="order-header" onclick="toggleOrderDetails('<%= orderIndex %>')">
                                 <span class="order-number">Order ID: <%= data.orderId %></span>
                                 <span
-                                    class="order-status <%= data.status === 'ORDER PLACED' ? 'status-completed' : 'status-pending' %>">
+                                    class="order-status">
                                     <%= data.status %>
                                 </span>
                             </div>
@@ -178,13 +208,26 @@
                                     <div class="product">
                                         <img src="/product-images/<%= item.imageUrl %>" class="img-sm img-thumbnail"
                                             alt="<%= item.name %>">
-                                        <div>
+                                        <div class="product-info">
                                             <h4>Product Name: <%= item.name %>
                                             </h4>
                                             <h5>Price: Rs <%= item.price %>
                                             </h5>
                                             <h5>Quantity: <%= item.quantity %>
                                             </h5>
+                                            <h5>Status: <%= item.status %>
+                                            </h5>
+                                        </div>
+                                        <div class="product-actions">
+                                            <% if (item.status==='DELIVERED' ) { %>
+                                                <button class="btn btn-return"
+                                                    onclick="returnOrder('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>')">Return
+                                                    Order</button>
+                                                <% } else { %>
+                                                    <button class="btn btn-cancel"
+                                                        onclick="cancelProduct('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>')">Cancel
+                                                        Product</button>
+                                                    <% } %>
                                         </div>
                                     </div>
                                     <% }) %>
@@ -192,11 +235,6 @@
                                         </h5>
                                         <h4>Total Amount: Rs <%= data.totalPrice %>
                                         </h4>
-                                        <div class="btn-container-order">
-                                            <button class="btn-cancel"
-                                                onclick="cancelOrder('<%= orderIndex %>', '<%= data.orderId %>')">Cancel
-                                                Order</button>
-                                        </div>
                             </div>
                         </div>
                         <% }) %>
@@ -209,33 +247,46 @@
                 <script>
                     function toggleOrderDetails(index) {
                         const details = document.getElementById('order-details-' + index);
-                        if (details.classList.contains('active')) {
-                            details.classList.remove('active');
-                        } else {
-                            details.classList.add('active');
-                        }
+                        details.classList.toggle('active');
                     }
 
-                    async function cancelOrder(orderIndex, orderId) {
-                        const productId = document.getElementById('productId_' + orderIndex + '_0').value;
+                    async function cancelProduct(orderIndex, orderId, productId) {
                         const quantity = document.getElementById('quantity_' + orderIndex + '_0').value;
-                        console.log(productId, 'product id is ');
-                        console.log(quantity, 'quantity is ');
                         await fetch(`/cancel-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}`, {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json'
                             }
                         })
-                            .then(response => response.ok ? response.json() : console.log('some network failure occurred while fetching the data'))
+                            .then(response => response.ok ? response.json() : console.log('Network failure'))
+                            .then(data => {
+                                if (data.result === 'success') {
+                                    let status = data.status
+                                    console.log(status,'');
+                                    console.log('Product cancelled successfully');
+                                }
+                            })
+                            .catch(err => console.log('Error:', err));
+                    }
+
+                    async function returnOrder(orderIndex, orderId, productId) {
+                        const quantity = document.getElementById('quantity_' + orderIndex + '_0').value;
+                        await fetch(`/return-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                            .then(response => response.ok ? response.json() : console.log('Network failure'))
                             .then(data => {
                                 if (data.result === 'success') {
                                     location.reload();
-                                    console.log('data fetched successfully');
+                                    console.log('Order returned successfully');
                                 }
-                            }).catch(err => console.log(err, 'some error occurred while using fetch in order page'))
+                            })
+                            .catch(err => console.log('Error:', err));
                     }
                 </script>
     </body>
 
-</html> 
+</html>
