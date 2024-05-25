@@ -1,0 +1,38 @@
+<div class="transaction-history">
+    <h2>Transaction History</h2>
+    <% if (transactions.length> 0) { %>
+        <% transactions.forEach(transaction=> { %>
+            <div class="transaction">
+                <div class="transaction-details">
+                    <span class="transaction-type">
+                        <%= transaction.type %>
+                    </span>
+                    <span class="transaction-date">
+                        <%= new Date(transaction.date).toLocaleDateString() %>
+                    </span>
+                </div>
+                <div class="transaction-amount">Rs <%= transaction.amount %>
+                </div>
+            </div>
+            <% }) %>
+                <% } else { %>
+                    <p>No transactions found</p>
+                    <% } %>
+</div>
+
+<div class="wallet-actions">
+    <button class="btn btn-add-funds" onclick="addFunds()">Add Funds</button>
+    <button class="btn btn-withdraw-funds" onclick="withdrawFunds()">Withdraw Funds</button>
+</div>
+
+<script>
+    function addFunds() {
+        // Implement add funds functionality here
+        alert('Add funds functionality not implemented yet');
+    }
+
+    function withdrawFunds() {
+        // Implement withdraw funds functionality here
+        alert('Withdraw funds functionality not implemented yet');
+    }
+</script>
