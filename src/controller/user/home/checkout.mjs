@@ -1,7 +1,4 @@
-import Swal from "sweetalert2";
-import {findDefaultUserAddressUsingPopulate, findUser, findUserAddressUsingPopulate} from "../../../data/users/find.mjs";
-import {insertUserAddress} from "../../../data/users/insert.mjs";
-import {updateUser} from "../../../data/users/update.mjs";
+import {findDefaultUserAddressUsingPopulate} from "../../../data/users/find.mjs";
 import { findAllCartDatas } from "../../../data/cart/find.mjs";
 import { updateCartTotalPriceInCheckoutPage } from "../../../data/cart/update.mjs";
 
