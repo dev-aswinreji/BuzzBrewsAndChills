@@ -85,7 +85,7 @@ routeHome.get('/apply-coupon',user_applyCoupon)
 
 routeHome.get('/wallet',user_walletGet)
 
-routeHome.get('/wishlist',user_wishlistGet)
+routeHome.get('/wishlist',user_authentication,user_wishlistGet)
 routeHome.get('/add-to-wishlist',user_authentication,user_addToWishlistGet)
 routeHome.delete('/remove-wishlist',user_authentication,user_deleteProductFromWishlist)
 
