@@ -47,7 +47,8 @@
         }
 
         .order-number {
-            font-size: 18px;
+            font-weight: bolder;
+            font-size: large;
             color: #333;
         }
 
@@ -191,10 +192,10 @@
                     <% order.forEach((data, orderIndex)=> { %>
                         <div class="order">
                             <div class="order-header" onclick="toggleOrderDetails('<%= orderIndex %>')">
-                                <span class="order-number">Order ID: <%= data.orderId %></span>
+                                <span class="order-number fw-bolder">ORDER ID : <%= data.orderId %></span>
                                 <span
                                     class="order-status">
-                                    <%= data.status %>
+                                    <%= data.orderDate %>
                                 </span>
                             </div>
                             <div class="order-details" id="order-details-<%= orderIndex %>">
@@ -220,11 +221,13 @@
                                         </div>
                                         <div class="product-actions">
                                             <% if (item.status==='DELIVERED' ) { %>
-                                                <button class="btn btn-return"
+                                                <button class="btn btn-return btn-primary"
                                                     onclick="returnOrder('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>')">Return
                                                     Order</button>
-                                                <% } else { %>
-                                                    <button class="btn btn-cancel"
+                                                <% } else if(item.status === 'CANCELLED') { %>
+                                                    <h6 class="text-danger">Product cancelled Successfully</h6>
+                                                    <%} else { %> 
+                                                    <button class="btn btn-cancel btn-danger"
                                                         onclick="cancelProduct('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>')">Cancel
                                                         Product</button>
                                                     <% } %>
