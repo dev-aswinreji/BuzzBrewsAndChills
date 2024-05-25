@@ -27,6 +27,7 @@ import { user_razorpay } from '../../../controller/user/home/razorpay.mjs';
 import { user_orderPlacedGet } from '../../../controller/user/home/order-placed.mjs';
 import { user_applyCoupon } from '../../../controller/user/home/apply-coupon.mjs';
 import { user_walletGet } from '../../../controller/user/home/wallet.mjs';
+import { user_addToWishlistGet, user_deleteProductFromWishlist, user_wishlistGet } from '../../../controller/user/home/wishlist.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -83,5 +84,9 @@ routeHome.get('/order-history',user_authentication,user_orderListGet)
 routeHome.get('/apply-coupon',user_applyCoupon)
 
 routeHome.get('/wallet',user_walletGet)
+
+routeHome.get('/wishlist',user_wishlistGet)
+routeHome.get('/add-to-wishlist',user_addToWishlistGet)
+routeHome.delete('/remove-wishlist',user_deleteProductFromWishlist)
 
 export default routeHome

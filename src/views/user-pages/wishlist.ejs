@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container-wishlist {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .wishlist-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .wishlist-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-details {
+            display: flex;
+            align-items: center;
+        }
+
+        .product-details img {
+            width: 100px;
+            height: auto;
+            margin-right: 20px;
+            border-radius: 8px;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-info h4 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .product-info p {
+            margin: 5px 0;
+            color: #777;
+        }
+
+        .wishlist-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-view-details {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-view-details:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-add-to-cart {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .btn-add-to-cart:hover {
+            background-color: #218838;
+        }
+
+        .btn-remove {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .btn-remove:hover {
+            background-color: #c82333;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #777;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .breadcrumb-section {
+            padding: 20px 0;
+            background-color: #f7f7f7;
+            text-align: center;
+        }
+
+        .breadcrumb-text {
+            display: inline-block;
+            text-align: left;
+        }
+
+        .breadcrumb-text p {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<%- include('partials/head/head.ejs') %>
+
+    <body>
+        <%- include('partials/header/header.ejs') %>
+            <!-- breadcrumb-section -->
+            <div class="breadcrumb-section breadcrumb-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-2 text-center">
+                            <div class="breadcrumb-text">
+                                <p>Your favorite products</p>
+                                <h1>Wishlist</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end breadcrumb section -->
+            <div class="container-wishlist">
+                <h1>Wishlist</h1>
+                <% if (wishlist) { %>
+                    <% wishlist.products.forEach(item=> { %>
+                        <% console.log(item,'item is showing'); %> 
+                        <div class="wishlist-item">
+                            <div class="product-details">
+                                <img src="/product-images/<%= item.productId.imageUrl %>" alt="<%= item.productId.name %>">
+                                <div class="product-info">
+                                    <h4>
+                                        <%= item.productId.name %>
+                                    </h4>
+                                    <p>Price: Rs <%= item.productId.price %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="wishlist-actions">
+                                <button class="btn btn-view-details" href="/product-view"><a href="/product-view/<%= item.productId._id %>">View
+                                    Details</a></button>
+                                <button class="btn btn-add-to-cart" onclick="addToCart('<%= item.productId._id %>')">Add to
+                                    Cart</button>
+                                <button class="btn btn-remove"
+                                    onclick="removeFromWishlist('<%= item.productId._id %>')">Remove</button>
+                            </div>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <p class="empty-message">Your wishlist is empty. Start adding your favorite products!
+                                </p>
+                                <% } %>
+            </div>
+            <%- include('partials/footer/footer.ejs') %>
+                <script>
+                    function viewDetails(productId) {
+                        // Implement view details functionality here
+                        alert('View details functionality not implemented yet for product ID: ' + productId);
+                    }
+
+                    function addToCart(productId) {
+                        // Implement add to cart functionality here
+                        alert('Add to cart functionality not implemented yet for product ID: ' + productId);
+                    }
+
+                    async function removeFromWishlist(productId) {
+                        // Implement remove from wishlist functionality here
+                        await fetch(`/remove-wishlist/?productId=${productId}`,{
+                            method:'DELETE',
+                            headers:{
+                                'Content-Type':'application/json'
+                            }
+                        }).then(response=>{
+                            if(!response.ok){
+                                throw new Error('Some error occured while fetching')
+                            }
+                            return response.json()
+                        }).then(data=>{
+                            if(data.result==='success'){
+                                alert('successfull')
+                            }
+                        })
+                    }
+                </script>
+    </body>
+
+</html>

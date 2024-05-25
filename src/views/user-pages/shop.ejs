@@ -144,7 +144,7 @@
                             <% for(let i=0; i<products.length;i++){%>
                                 <div class="col-lg-4 col-md-6 text-center berry">
                                     <div class="single-product-item">
-                                        <a href="/product-view/<%= products[i]._id %> ">
+                                        <a href="/product-view/<%= products[i]._id %>">
                                             <div class="product-image">
                                                 <img src="/product-images/<%= products[i].imageUrl[0] %>"
                                                     alt="<%= products[i].name %>">
@@ -185,6 +185,10 @@
 
                                                             </p>
                                                             <% } %> 
+                                                                <a onclick="addToWishlist('<%= i %>',`<%= products[i]._id %>`)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16" style="margin-right: 3rem;">
+                                                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                                                                  </svg></a>
+                                                               
                                                             <% if (products[i].stock> 0){ %>
 
                                                                 <button
@@ -235,6 +239,29 @@
 
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
+
+    <script>
+        async function addToWishlist(index, productId){
+
+            await fetch(`/add-to-wishlist?productId=${productId}`,{
+                method:'GET',
+                headers:{
+                    'Content-Type':'application/json'
+                }
+            }).then(response=>{
+                if(!response.ok){
+                    throw new Error('Some error occured while fetching the data')
+                }
+                return response.json()
+            }).then(data=>{
+                console.log(data,'data is showing');
+                if(data.result==='success'){
+                    Swal.fire('product added to whishlist successfull')
+                }
+            })
+            console.log('he button triggered');
+        }
+    </script>
 
     <script>
         async function addToCartUsingFetch(index, productId) {

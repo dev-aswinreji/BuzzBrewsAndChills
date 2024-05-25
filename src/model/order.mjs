@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 
 const db = await import("./database.mjs").then((instance) => instance.default);
 
-function cartModel(collectionName, schema) {
+function orderModel(collectionName, schema) {
   return db.model(collectionName, schema);
 }
 
@@ -83,4 +83,4 @@ const orderSchema = mongoose.Schema({
   }
 });
 
-export const orderCollection = cartModel("order", orderSchema);
+export const orderCollection = orderModel("order", orderSchema);
