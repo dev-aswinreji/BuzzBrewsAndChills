@@ -212,19 +212,24 @@
                                                     <td><%= item.quantity %></td>
                                                     <td >Rs <%= item.price * item.quantity %></td>
                                                     <td>
+                                                        <% if (item.status === 'CANCELLED') { %>
+                                                            <h6>User Cancelled Order</h6>
+                                                        <% }else{ %>
                                                         <div class="dropdown-and-button">
-                                                            <select id="status-dropdown" data-product-id="<%= item.productId %>">
-                                                                <option value="ORDER PLACED" <% if (item.status === 'ORDER PLACED') { %> selected <% } %>>Order Placed</option>
-                                                                <option value="PROCESSING" <% if (item.status === 'PROCESSING') { %> selected <% } %>>Processing</option>
-                                                                <option value="OUT FOR DELIVERY" <% if (item.status === 'OUT FOR DELIVERY') { %> selected <% } %>>Out for Delivery</option>
-                                                                <option value="DELIVERED" <% if (item.status === 'DELIVERED') { %> selected <% } %>>Delivered</option>
-                                                            </select>
+                                                            
                                                             <% if (item.status === 'DELIVERED') { %>
-                                                                <button class="update-status-button btn-success fw-bolder" disabled>Delivered</button>
+                                                                <h6>Product has been successfully delivered</h6>
                                                             <% } else { %>
+                                                                <select id="status-dropdown" data-product-id="<%= item.productId %>">
+                                                                    <option value="ORDER PLACED" <% if (item.status === 'ORDER PLACED') { %> selected <% } %>>Order Placed</option>
+                                                                    <option value="PROCESSING" <% if (item.status === 'PROCESSING') { %> selected <% } %>>Processing</option>
+                                                                    <option value="OUT FOR DELIVERY" <% if (item.status === 'OUT FOR DELIVERY') { %> selected <% } %>>Out for Delivery</option>
+                                                                    <option value="DELIVERED" <% if (item.status === 'DELIVERED') { %> selected <% } %>>Delivered</option>
+                                                                </select>
                                                                 <button class="update-status-button btn-secondary fw-bolder" onclick="updateStatus(this)">Update Status</button>
                                                             <% } %>
                                                         </div>
+                                                        <% } %> 
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -243,6 +248,8 @@
             <% } %>
         </section>
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -294,6 +301,7 @@
                     if (data.result) {
                         const selectedStatus = data.result;
                         console.log(selectedStatus,'what is showing');
+
                         const options = dropdown.options;
                         for (let i = 0; i < options.length; i++) {
                             options[i].disabled = false;
@@ -315,7 +323,13 @@
                             options[2].disabled = true;
                             options[3].disabled = true;
                         }
-                        location.reload();
+                        Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: `Order updated to ${selectedStatus} successfully`,
+                                showConfirmButton: false,
+                                timer: 1500
+                                        }).then(()=>location.reload())
                     } else {
                         console.log('Data fetching unsuccessful');
                     }

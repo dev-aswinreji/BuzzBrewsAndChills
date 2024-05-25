@@ -3,7 +3,7 @@ import { orderCollection } from "../../model/order.mjs";
 
 export async function findOrderData (userId){
     try {
-        return await orderCollection.find({userId:userId}).sort({createdAt:-1})
+        return await orderCollection.find({userId:userId}).sort({timeStamp:-1})
     } catch (error) {
         console.log(error,'error occured in find order data func');
     }
