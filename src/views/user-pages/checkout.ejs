@@ -1,6 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 
+     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #dddddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .order-details-body td {
+            text-align: center;
+        }
+        .checkout-details td {
+            text-align: right;
+        }
+        .checkout-details tr:first-child td {
+            border-top: 2px solid #000;
+        }
+        .total-row td {
+            font-weight: bold;
+        }
+        h6 {
+            margin: 0;
+        }
+        @media screen and (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            tr {
+                margin-bottom: 15px;
+            }
+            td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                padding-left: 10px;
+                text-align: left;
+                font-weight: bold;
+            }
+        }
+    </style>
+
 <%- include('./partials/head/head.ejs') %>
 
     <body>
@@ -120,50 +176,43 @@
                             <table class="order-details">
                                 <thead>
                                     <tr>
-                                        <th>Your order Details</th>
-                                        <th>Price</th>
+                                        <th colspan="3">Your Order Details</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody class="order-details-body">
+                                    <% cartDatas.items.forEach(product => { %>
                                     <tr>
-                                        <td>Product</td>
-                                        <td>Quantity</td>
-                                        <td>Total</td>
-                                        
+                                        <td data-label="Product"><%= product.productId.name %></td>
+                                        <td data-label="Quantity"><%= product.quantity %></td>
+                                        <td data-label="Total">₹<%= product.productId.discount_price.toFixed(2) %></td>
                                     </tr>
-                                    <% cartDatas.items.forEach(product=> { %>
-                                        <tr>
-                                            <td>
-                                                <%= product.productId.name %>
-                                            </td>
-                                            <td>
-                                                <%= product.quantity %> 
-                                            </td>
-                                            <td>
-                                                <%= product.productId.discount_price %>
-                                            </td>
-                                        </tr>
-                                        <% }) %>
+                                    <% }) %>
                                 </tbody>
                                 <tbody class="checkout-details">
-                                    <!-- <tr>
-                                        <td>Subtotal</td>
-                                        <td>
-                                            <%#= cartDatas.totalPrice %>
-                                        </td>
-                                    </tr> -->
                                     <tr>
-                                        
-                                        <td>Shipping</td>
-                                        <td></td>
-                                        <td>$50</td>
+                                        <td colspan="2">Shipping</td>
+                                        <td>₹50.00</td>
                                     </tr>
-                                    <tr>
-                                        <td>Total</td>
-                                        <td></td>
-                                        <td id="totalPrice">
-                                            <%= cartDatas.totalPrice %>
+                                    <tr class="total-row">
+                                        <td colspan="2">Coupon Discount</td>
+                                        <td><%= cartDatas.coupon_discount %>%</td>
+                                    </tr>
+                                    <tr class="total-row">
+                                        <td colspan="2">Total</td>
+                                        <% if (cartDatas.coupon_discount) { %>
+                                        <td>
+                                            <h6>Coupon Applied</h6>
+                                            <del>₹<%= totalPrice.toFixed(2) %></del>
+                                            ₹ <span id="totalPrice"><%= cartDatas.totalPrice.toFixed(2) %></span>
                                         </td>
+                                        <% } else { %>
+                                        <td>₹<span id="totalPrice"><%= cartDatas.totalPrice.toFixed(2) %></span></td>
+                                        <% } %>
                                     </tr>
                                 </tbody>
                             </table>
@@ -248,7 +297,7 @@
                         console.log(selectedAddress,'selectedAddress is showing')
                         try {
                             console.log('razorpay is working');
-                            const response = await fetch(`/razorpay-payment`, {
+                            const response = await fetch(`http://localhost:3000/razorpay-payment`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
