@@ -6,8 +6,11 @@ export async function findAdmin(data) {
 }
 
 
-export async function findAllUser() {
-    return await userCollection.find({ role: "USER"})
+export async function findAllUser(skip,limit) {
+    return await userCollection.find({ role: "USER"}).skip(skip).limit(limit)
 }
 
 
+export async function findTotalCountOfAllUsersForAdmin (){
+    return await userCollection.countDocuments()
+}
