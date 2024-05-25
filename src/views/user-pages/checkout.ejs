@@ -297,7 +297,7 @@
                         console.log(selectedAddress,'selectedAddress is showing')
                         try {
                             console.log('razorpay is working');
-                            const response = await fetch(`http://localhost:3000/razorpay-payment`, {
+                            const response = await fetch(`/razorpay-payment`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
