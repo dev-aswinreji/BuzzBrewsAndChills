@@ -19,7 +19,7 @@ import {user_addToCartManageGet} from '../../../controller/user/home/add-to-cart
 import {user_addressGet} from '../../../controller/user/home/address.mjs';
 import {user_addAddressGet, user_addAddressPost} from '../../../controller/user/home/add-address.mjs';
 import {user_addressDeleteDelete} from '../../../controller/user/home/delete-address.mjs';
-import { user_orderAddGet, user_orderListGet } from '../../../controller/user/home/order-history.mjs';
+import { user_orderListGet } from '../../../controller/user/home/order-history.mjs';
 import { user_updateDefaultAddressGet } from '../../../controller/user/home/update-default-address.mjs';
 import { user_cancelOrderGet } from '../../../controller/user/home/cancel-order.mjs';
 import { user_deleteCartProductDelete } from '../../../controller/user/home/delete-cart.mjs';
@@ -28,6 +28,7 @@ import { user_orderPlacedGet } from '../../../controller/user/home/order-placed.
 import { user_applyCoupon } from '../../../controller/user/home/apply-coupon.mjs';
 import { user_walletGet } from '../../../controller/user/home/wallet.mjs';
 import { user_addToWishlistGet, user_deleteProductFromWishlist, user_wishlistGet } from '../../../controller/user/home/wishlist.mjs';
+import { user_orderAddGet } from '../../../controller/user/home/add-order.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
