@@ -80,6 +80,9 @@ const orderSchema = mongoose.Schema({
   timeStamp:{
     type:String,
     default:getFormattedDate,
+  },
+  couponDiscount:{
+    type:Number,
   }
 });
 

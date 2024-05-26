@@ -222,7 +222,7 @@
                                         <div class="product-actions">
                                             <% if (item.status==='DELIVERED' ) { %>
                                                 <button class="btn btn-return btn-primary"
-                                                    onclick="returnOrder('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>')">Return
+                                                    onclick="returnOrder('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>','<%= data.couponDiscount %>')">Return
                                                     Order</button>
                                                 <% } else if(item.status === 'CANCELLED') { %>
                                                     <h6 class="text-danger">Product cancelled Successfully</h6>
@@ -247,6 +247,7 @@
                                 <% } %>
             </div>
             <%- include('partials/footer/footer.ejs') %>
+            
                 <script>
                     function toggleOrderDetails(index) {
                         const details = document.getElementById('order-details-' + index);
@@ -274,7 +275,7 @@
 
                     async function returnOrder(orderIndex, orderId, productId) {
                         const quantity = document.getElementById('quantity_' + orderIndex + '_0').value;
-                        await fetch(`/return-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}`, {
+                        await fetch(`/return-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}&couponDiscount=${couponDiscount}`, {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json'

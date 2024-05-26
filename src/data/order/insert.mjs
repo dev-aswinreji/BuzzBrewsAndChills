@@ -5,7 +5,7 @@ import { findCartDataUsingUserId } from "../cart/find.mjs";
 import { findUserAddressUsingId } from "../users/find.mjs";
 import { updateProductStockInOrder } from "./update.mjs";
 
-export async function insertOrder(userId, userAddressId, paymentMethod,paymentId) {
+export async function insertOrder(userId, userAddressId, paymentMethod,paymentId,couponDiscount) {
   try {
 
     const address = await findUserAddressUsingId(userAddressId);
@@ -30,7 +30,8 @@ export async function insertOrder(userId, userAddressId, paymentMethod,paymentId
         totalPrice: cart.totalPrice,
         address: address.homeAddress,
         paymentMethod: paymentMethod,
-        paymentId:paymentId
+        paymentId:paymentId,
+        couponDiscount:couponDiscount
       },
     ]);
     console.log(order,'order is showing success or not ================================================================================================');

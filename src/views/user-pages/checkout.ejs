@@ -198,10 +198,13 @@
                                         <td colspan="2">Shipping</td>
                                         <td>₹50.00</td>
                                     </tr>
-                                    <tr class="total-row">
-                                        <td colspan="2">Coupon Discount</td>
-                                        <td><%= cartDatas.coupon_discount %>%</td>
-                                    </tr>
+                                    <% if (cartDatas.coupon_discount) { %>
+                                        <tr class="total-row">
+                                            <td colspan="2">Coupon Discount</td>
+                                            <td><span id="couponDiscount"><%= cartDatas.coupon_discount %></span> %</td>
+                                        </tr>
+                                    <% } %>
+                                    
                                     <tr class="total-row">
                                         <td colspan="2">Total</td>
                                         <% if (cartDatas.coupon_discount) { %>
@@ -216,7 +219,13 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <br>
+                            <div class="coupon-section">
+                                <h4>Apply Coupon</h4>
+                                <div class="coupon-form-wrap">
+                                    <p><input type="text" placeholder="Coupon" id="couponCode" required>
+                                        <input value="Apply" type="submit" onclick="applyCoupon()"></p>
+                                </div>
+                            </div>
                             <div class="container mt-5 mb-5">
                                 <div class="card">
                                     <div class="card-body">
@@ -233,13 +242,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="coupon-section">
-                                <h3>Apply Coupon</h3>
-                                <div class="coupon-form-wrap">
-                                        <p><input type="text" placeholder="Coupon" id="couponCode"></p>
-                                        <p><input value="Apply" type="submit" onclick="applyCoupon()"></p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -254,7 +256,9 @@
                 <script>
                     async function applyCoupon(){
                         const couponCode = document.getElementById('couponCode').value
-                        const totalCartPriceData = document.getElementById('totalPrice')
+                        console.log(couponCode,'coupon code is showing');
+                        if(couponCode){
+                            const totalCartPriceData = document.getElementById('totalPrice')
                         const totalCartPrice = Number(totalCartPriceData.innerHTML)
                         console.log(totalCartPrice,'totalcart price is showing');
                         const response = await fetch(`/apply-coupon/?couponCode=${couponCode}&totalCartPrice=${totalCartPrice}`,{
@@ -276,16 +280,23 @@
                             else if (data.result === 'Cart Limit Is Low'){
                                 Swal.fire('Minimum cart price to apply coupon is 1000')
                             }else if (data.result === 'Coupon Applied'){
-                                Swal.fire('Coupon Applied Successfully')
+                                Swal.fire('Coupon Applied Successfully').then(()=>{
+                                    location.reload()
+                                })
                                 const discount = Number(data.discount)
                                 console.log(discount,'discount is showing');
                                 totalCartPriceData.innerHTML = totalCartPrice - (totalCartPrice * (discount/100))
+
                                 
                             }else if (data.result === 'Coupon Already Exist'){
                                 Swal.fire('Coupon already used please apply another coupon')
 
                             }
-                        })
+                        })                    
+                        }else{
+                            Swal.fire('Enter a coupon code')
+                        }
+                       
                     }
                 </script>
                 <script>
@@ -294,6 +305,8 @@
                         const amount = document.getElementById('totalPrice').innerHTML;
                         console.log(amount,'amount is showing');
                         const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
+                        const couponDiscount = document.getElementById('couponDiscount').innerHTML
+                        console.log(couponDiscount,'coupon discount is showing');
                         console.log(selectedAddress,'selectedAddress is showing')
                         try {
                             console.log('razorpay is working');
@@ -342,7 +355,7 @@
 
                             async function razorpaySuccess(paymentId) {
                                 const paymentMethod = 'Online Payment';
-                                await fetch(`/order-add/?paymentMethod=${paymentMethod}&paymentId=${paymentId}&address=${selectedAddress}`, {
+                                await fetch(`/order-add/?paymentMethod=${paymentMethod}&paymentId=${paymentId}&address=${selectedAddress}&couponDiscount=${couponDiscount}`, {
                                     method: 'GET',
                                     headers: { 'Content-Type': 'application/json' }
                                 }).then(response => response.ok ? response.json() : console.log('Network error'))
@@ -365,9 +378,10 @@
 
                     async function orderPlace() {
                         const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
+                        const couponDiscount = document.getElementById('couponDiscount').innerHTML
 
                         const paymentMethod = 'cash on delivery'
-                        await fetch(`/order-add/?paymentMethod=${paymentMethod}&address=${selectedAddress}`, {
+                        await fetch(`/order-add/?paymentMethod=${paymentMethod}&address=${selectedAddress}&couponDiscount=${couponDiscount}`, {
                             method: 'GET',
                             headers: { 'Content-Type': 'application/json' }
                         }).then(response => response.ok ? response.json() : console.log('Network error'))
