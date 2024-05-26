@@ -203,7 +203,9 @@
                                             <td colspan="2">Coupon Discount</td>
                                             <td><span id="couponDiscount"><%= cartDatas.coupon_discount %></span> %</td>
                                         </tr>
-                                    <% } %>
+                                    <% }else {%>
+                                    <span id="couponDiscount" hidden></span>
+                                    <% } %> 
                                     
                                     <tr class="total-row">
                                         <td colspan="2">Total</td>
@@ -256,8 +258,10 @@
                 <script>
                     async function applyCoupon(){
                         const couponCode = document.getElementById('couponCode').value
+                        const couponDiscount = document.getElementById('couponDiscount').innerHTML
                         console.log(couponCode,'coupon code is showing');
-                        if(couponCode){
+                        console.log(couponDiscount,'coupon discount is showing');
+                        if(couponCode && !couponDiscount){
                         const totalCartPriceData = document.getElementById('totalPrice')
                         const totalCartPrice = Number(totalCartPriceData.innerHTML)
                         console.log(totalCartPrice,'totalcart price is showing');
@@ -293,8 +297,10 @@
 
                             }
                         })                    
+                        } else if(couponDiscount){
+                            Swal.fire('Coupon is already applied')
                         }else{
-                            Swal.fire('Enter a coupon code')
+                            Swal.fire('Enter a coupon')
                         }
                        
                     }
