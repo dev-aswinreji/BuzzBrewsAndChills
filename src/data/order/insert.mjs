@@ -3,6 +3,7 @@ import { orderCollection } from "../../model/order.mjs";
 import { otpGenForForgotPassword } from "../../utils/otp-generator.mjs";
 import { findCartDataUsingUserId } from "../cart/find.mjs";
 import { findUserAddressUsingId } from "../users/find.mjs";
+import { updateCouponInUserData } from "../users/update.mjs";
 import { updateProductStockInOrder } from "./update.mjs";
 
 export async function insertOrder(userId, userAddressId, paymentMethod,paymentId,couponDiscount) {
@@ -13,6 +14,8 @@ export async function insertOrder(userId, userAddressId, paymentMethod,paymentId
   const cart = await findCartDataUsingUserId(userId);
   const orderId = await otpGenForForgotPassword();
   const cartItems = cart.items.filter(item=>item.productId.stock.toString() <= item.quantity.toString() )
+  const couponCode = cart.couponCode
+  console.log(couponCode,'coupon code is showing rn adsfkkldjflkjdalsjf');
   console.log(cartItems,'cartItems is working');
   console.log(cart, "cart data is ");
   console.log(orderId, "order id is working");
@@ -31,7 +34,7 @@ export async function insertOrder(userId, userAddressId, paymentMethod,paymentId
         address: address.homeAddress,
         paymentMethod: paymentMethod,
         paymentId:paymentId,
-        couponDiscount:couponDiscount
+        couponDiscount:couponDiscount,
       },
     ]);
     console.log(order,'order is showing success or not ================================================================================================');
@@ -39,6 +42,8 @@ export async function insertOrder(userId, userAddressId, paymentMethod,paymentId
     await cartCollection.deleteOne({ _id: cart._id });
 
     await updateProductStockInOrder(order);
+    const userDataUpdated = await updateCouponInUserData(userId,couponCode)
+    console.log(userDataUpdated,'update coupon to user Data');
     return order
   }
   console.log(cart, "what is cart");

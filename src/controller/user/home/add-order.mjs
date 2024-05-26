@@ -16,6 +16,7 @@ export const user_orderAddGet = async (req, res) => {
 
     const order = await insertOrder(userId, address, paymentMethod,paymentId,couponDiscount);
 
+    
 
     req.session.ORDER_PLACED = order
     console.log(order,'order of that product is showing ');

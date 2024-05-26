@@ -53,10 +53,7 @@ export const user_applyCoupon = async (req, res) => {
 
       if (userData.coupon.length == 0) {
 
-        const data = await updateCouponInUserData(USER_ID,couponCode)
-        console.log('working in userdata coupon');
-        console.log(data,'updated user data is showing');
-        const cartUpdated = await updateCartTotalPriceWhileApplyingCoupon(USER_ID,discountPrice)
+        const cartUpdated = await updateCartTotalPriceWhileApplyingCoupon(USER_ID,discountPrice,discount,couponCode)
         console.log(cartUpdated,'cart updated or not');
         
         res.json({result:'Coupon Applied',discount:discount})
@@ -69,11 +66,8 @@ export const user_applyCoupon = async (req, res) => {
           if(exists){
             res.json({result:'Coupon Already Exist'})
           }else{
-            const data = await updateCouponInUserData(USER_ID,couponCode)
 
-            console.log(data,'updated user data is showing'); 
-
-            const cartUpdated = await updateCartTotalPriceWhileApplyingCoupon(USER_ID,discountPrice,discount)
+            const cartUpdated = await updateCartTotalPriceWhileApplyingCoupon(USER_ID,discountPrice,discount,couponCode)
             console.log(cartUpdated,'cart updated or not');
             
             res.json({result:'Coupon Applied',discount:discount})
