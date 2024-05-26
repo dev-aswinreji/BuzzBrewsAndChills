@@ -258,7 +258,7 @@
                         const couponCode = document.getElementById('couponCode').value
                         console.log(couponCode,'coupon code is showing');
                         if(couponCode){
-                            const totalCartPriceData = document.getElementById('totalPrice')
+                        const totalCartPriceData = document.getElementById('totalPrice')
                         const totalCartPrice = Number(totalCartPriceData.innerHTML)
                         console.log(totalCartPrice,'totalcart price is showing');
                         const response = await fetch(`/apply-coupon/?couponCode=${couponCode}&totalCartPrice=${totalCartPrice}`,{

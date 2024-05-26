@@ -18,7 +18,8 @@ export const user_checkoutGet = async (req, res) => {
         console.log(totalPrice,'what is happening');
         console.log(updatedTotalPrice,'update total price is showing');
         if(cartDatas.coupon_discount && updatedTotalPrice !== cartDatas.totalPrice){
-            const totalPrice = cartDatas.totalPrice - (cartDatas.totalPrice * (cartDatas.coupon_discount/100))
+            const total = cartDatas.totalPrice - (cartDatas.totalPrice * (cartDatas.coupon_discount/100))
+            const totalPrice = total.toFixed(2)
             await updateCartTotalPriceInCheckoutPage(userId,totalPrice)
             console.log(cartDatas,'cart data is updated');
             cartDatas = await findAllCartDatas(userId)  
