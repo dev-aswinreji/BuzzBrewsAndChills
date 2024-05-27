@@ -152,10 +152,19 @@
                         <div class="col-md-12">
                             <div class="product-filters">
                                 <ul>
+                                    
                                     <li class="active" data-filter="*"><a href="/shop">All</a></li>
-                                    <li data-filter=".energy"><a href="/shop/?categoryName=Apple">Apple</a></li>
-                                    <li data-filter=".cool">COOL DRINKS</li>
-                                    <li data-filter=".coffee">COLD COFFEE</li>
+                                    <% for( let i = 0; i < products.length; i++ ) { %>
+                                        <% let cate = new Set(products[i].category.name) %> 
+                                        <% console.log(cate); %> 
+                                        <li data-filter=".energy"><a href="/shop/?categoryName=<%= cate %> ">Apple</a></li>
+
+                                        <% console.log(cate); %> 
+                                    <% } %>
+                                   <% products.forEach(element => { %>
+                                    <% console.log(element) %> 
+                                   <% }) %>
+                                   >
                                 </ul>
                             </div>
                         </div>
