@@ -65,3 +65,8 @@ export async function updateMakeDefaultUserAddress(addressId) {
 export async function updateCouponInUserData (userId,couponCode){
   return await userCollection.findByIdAndUpdate(userId,{$push:{coupon:couponCode}})
 }
+
+
+export async function updateCouponInUserDataReturnAndCancel(userId,couponCode){
+  return await userCollection.findByIdAndUpdate(userId,{$pull:{coupon:couponCode}})
+}

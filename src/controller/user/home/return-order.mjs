@@ -3,7 +3,7 @@ import { findOrderData, findSingleOrder, findUniqueOrderToChangeOrderStatus } fr
 import {  updateReturnedProduct } from "../../../data/order/update.mjs";
 import { findSingleProduct } from "../../../data/products/find.mjs";
 import { updateProducts } from "../../../data/products/update.mjs";
-import { updateCouponInUserData } from "../../../data/users/update.mjs";
+import { updateCouponInUserData, updateCouponInUserDataReturnAndCancel } from "../../../data/users/update.mjs";
 import { updateUserWallet } from "../../../data/wallet/update.mjs";
 
 export const user_returnOrderGet = async (req,res)=>{
@@ -14,13 +14,13 @@ export const user_returnOrderGet = async (req,res)=>{
         console.log(req.query,'query is showing');
         const productId = req.query.productId;
         const userId = req.session.USER_ID
-        const couponCode = req.query.couponCode
         const product = await findSingleProduct(productId);
         const quantity = req.query.quantity;
         const orderId = req.query.orderId;
         const orderDetail = await findSingleOrder(orderId)
         console.log(orderDetail,'order detail is showing');
-
+        const couponCode = orderDetail.couponCode
+        console.log(couponCode,'coupon code is showing');
         const totalPrice = orderDetail.totalPrice
         console.log(totalPrice,'total price is showing');
         console.log(userId,'');
@@ -34,7 +34,7 @@ export const user_returnOrderGet = async (req,res)=>{
         let updateProductStock = Number(product.stock) + Number(quantity);
         
         const result = await updateReturnedProduct(orderId,productId);
-        const userCouponRemove = await updateCouponInUserData(userId,couponCode)
+        const userCouponRemove = await updateCouponInUserDataReturnAndCancel(userId,couponCode)
         console.log(userCouponRemove,'coupon remove form user data is success');
         const response =
           result === "Success"
