@@ -1,93 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-    <style>
-        .sort-options {
-            display: flex;
-            align-items: center;
-            font-size: 1.1em;
-        }
+<style>
+    .sort-options {
+        display: flex;
+        align-items: center;
+        font-size: 1.1em;
+    }
 
-        .sort-options label {
-            margin-right: 10px;
-        }
+    .sort-options label {
+        margin-right: 10px;
+    }
 
-        .custom-select {
-            padding: 5px 10px;
-            font-size: 1em;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
+    .custom-select {
+        padding: 5px 10px;
+        font-size: 1em;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
 
-        .single-product-item {
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 10px;
-            background-color: #fff;
-            transition: box-shadow 0.3s;
-        }
+    .single-product-item {
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: #fff;
+        transition: box-shadow 0.3s;
+    }
 
-        .single-product-item:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+    .single-product-item:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        .product-image img {
-            max-width: 100%;
-            border-radius: 10px;
-        }
+    .product-image img {
+        max-width: 100%;
+        border-radius: 10px;
+    }
 
-        .product-price del {
-            color: #999;
-            margin-right: 5px;
-        }
+    .product-price del {
+        color: #999;
+        margin-right: 5px;
+    }
 
-        .cart-btn {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+    .cart-btn {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
 
-        .cart-btn:hover {
-            background-color: #218838;
-        }
+    .cart-btn:hover {
+        background-color: #218838;
+    }
 
-        .cart-btn[disabled] {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
+    .cart-btn[disabled] {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
 
-        .pagination-wrap {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    list-style-type: none;
-    padding: 0;
-}
+    .pagination-wrap {
+        display: flex;
+        justify-content: center;
+        /* Center horizontally */
+        align-items: center;
+        /* Center vertically */
+        list-style-type: none;
+        padding: 0;
+    }
 
-.pagination-wrap ul {
-    display: inline-flex; /* Use inline-flex to keep the list in a single line */
-    gap: 5px; /* Adjust the gap between pagination links */
-}
+    .pagination-wrap ul {
+        display: inline-flex;
+        /* Use inline-flex to keep the list in a single line */
+        gap: 5px;
+        /* Adjust the gap between pagination links */
+    }
 
-.pagination-wrap ul li a {
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #333;
-    transition: background-color 0.3s, color 0.3s;
-}
+    .pagination-wrap ul li a {
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #333;
+        transition: background-color 0.3s, color 0.3s;
+    }
 
-.pagination-wrap ul li a:hover,
-.pagination-wrap ul li a.active {
-    background-color: #28a745;
-    color: #fff;
-}
-
-    </style>
+    .pagination-wrap ul li a:hover,
+    .pagination-wrap ul li a.active {
+        background-color: #28a745;
+        color: #fff;
+    }
+</style>
 
 <%- include ('./partials/head/head.ejs' ) %>
 
@@ -119,118 +122,172 @@
                             <div class="product-filters">
                                 <ul>
                                     <li class="active" data-filter="*"><a href="/shop">All</a></li>
-                                    <li data-filter=".energy" ><a href="/shop/?categoryName=Apple">Apple</a></li>
-                                    <li data-filter=".cool" >COOL DRINKS</li>
-                                    <li data-filter=".coffee" >COLD COFFEE</li>
+                                    <li data-filter=".energy"><a href="/shop/?categoryName=Apple">Apple</a></li>
+                                    <li data-filter=".cool">COOL DRINKS</li>
+                                    <li data-filter=".coffee">COLD COFFEE</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
                     <div class="sort-options-wrapper">
-                        <label for="sortSelect" class="mr-2"><h3>Sort by:</h3></label>
+                        <label for="sortSelect" class="mr-2">
+                            <h3>Sort by:</h3>
+                        </label>
                         <div class="sort-buttons">
-                        <a class="btn btn-primary fw-bold fs-4" href="/shop?sortOption=priceLowHigh">Low To High</a>
-                        <a class="btn btn-primary" href="/shop?sortOption=priceHighLow">High To Low</a>
-                        <!-- <a class="btn btn-primary" href="/shop?sortOption=popularity">Popularity</a> -->
-                        <a class="btn btn-primary" href="/shop?sortOption=default">Default</a>
+                            <a class="btn btn-primary fw-bold fs-4" href="/shop?sortOption=priceLowHigh">Low To High</a>
+                            <a class="btn btn-primary" href="/shop?sortOption=priceHighLow">High To Low</a>
+                            <!-- <a class="btn btn-primary" href="/shop?sortOption=popularity">Popularity</a> -->
+                            <a class="btn btn-primary" href="/shop?sortOption=default">Default</a>
                         </div>
                     </div>
                     <br><br>
 
                     <div class="row product-lists">
-                        <% console.log(products.length); %> 
-                        <% if(products){console.log(products.length)} %>
-                            <% for(let i=0; i<products.length;i++){%>
-                                <div class="col-lg-4 col-md-6 text-center berry">
-                                    <div class="single-product-item">
-                                        <a href="/product-view/<%= products[i]._id %>">
-                                            <div class="product-image">
-                                                <img src="/product-images/<%= products[i].imageUrl[0] %>"
-                                                    alt="<%= products[i].name %>">
-                                            </div>
-                                        </a>
-                                        <h3>
-                                            <%= products[i].name %>
-                                        </h3>
-                                        <% if (products[i].stock <40) { %>
-                                            <% if (products[i].stock===0) { %>
-                                                <p style="font-weight: bold;font-size: medium;" class="text-danger">
-                                                    Product is currently <br>
-                                                    out of stock!!!</p>
-                                                <% }else{ %>
-                                                    <p class="product-stock">
-                                                        <span class="text-danger"
-                                                            style="font-weight: bolder;font-size: medium;">Hot
-                                                            Deal!</span><br>
-                                                        <span class="text-success"
-                                                            style="font-size: medium;font-weight: bold;">In
-                                                            Stock </span>,only <span id="stock_<%= i %>">
-                                                            <%= products[i].stock %>
-                                                        </span> left
-                                                    </p>
-                                                    <% } %>
-                                                        <% } %>
-                                                        <% console.log(products[i].discount_price,'what is showing here'); %> 
-                                                        <% if (products[i].discount_price === products[i].price) { %>
-                                                            <p class="product-price">
-                                                                <span>Per Kg</span>Rs
-                                                                <%= products[i].price %>
-                                                            </p>
+                        <% console.log(products.length); %>
+                            <% if(products){console.log(products.length)} %>
+                                <% for(let i=0; i<products.length;i++){%>
+                                    <div class="col-lg-4 col-md-6 text-center berry">
+                                        <div class="single-product-item">
+                                            <a href="/product-view/<%= products[i]._id %>">
+                                                <div class="product-image">
+                                                    <img src="/product-images/<%= products[i].imageUrl[0] %>"
+                                                        alt="<%= products[i].name %>">
+                                                </div>
+                                            </a>
+                                            <h3>
+                                                <%= products[i].name %>
+                                            </h3>
+                                            <% if (products[i].stock <40) { %>
+                                                <% if (products[i].stock===0) { %>
+                                                    <p style="font-weight: bold;font-size: large;" class="text-danger md-2">
+                                                        Product is currently <br>
+                                                        out of stock!!!</p>
+                                                        <p class="product-stock">
+                                                            <span class="text-danger"
+                                                                style="font-weight: bolder;font-size: medium;"></span><br>
+                                                            <span class="text-success"
+                                                                style="font-size: medium;font-weight: bold;">
                                                             
-                                                        <% }else{ %>
-                                                            <p class="product-price">
-                                                                <span>Per Kg</span>Rs
-                                                                <del><%= products[i].price %></del> <%= products[i].discount_price %> 
+                                                            </span> 
+                                                        </p>
+                                                        <br>
+                                                    <% }else{ %>
+                                                        <p class="product-stock">
+                                                            <span class="text-danger"
+                                                                style="font-weight: bolder;font-size: medium;">Hot
+                                                                Deal!</span><br>
+                                                            <span class="text-success"
+                                                                style="font-size: medium;font-weight: bold;">In
+                                                                Stock </span>,only <span id="stock_<%= i %>">
+                                                                <%= products[i].stock %>
+                                                            </span> left
+                                                        </p>
+                                                        <p class="product-price">
+                                                            <span>Per Kg</span>Rs
+                                                            <del>
+                                                                <%= products[i].price %>
+                                                            </del>
+                                                            <%= products[i].discount_price %>
 
-                                                            </p>
-                                                            <% } %> 
-                                                                <a onclick="addToWishlist('<%= i %>',`<%= products[i]._id %>`)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16" style="margin-right: 3rem;">
-                                                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
-                                                                  </svg></a>
-                                                               
-                                                            <% if (products[i].stock> 0){ %>
-
-                                                                <button
-                                                                    onclick="addToCartUsingFetch('<%= i %>',`<%= products[i]._id %>`)"
-                                                                    class="cart-btn"><i
-                                                                        class="fas fa-shopping-cart"></i> Add to
-                                                                    Cart</button>
+                                                        </p>
+                                                        <% } %>
+                                                            <% } else if (products[i].discount_price===products[i].price) { %>
+                                                                <p class="product-stock">
+                                                                    <span class="text-danger"
+                                                                        style="font-weight: bolder;font-size: medium;"></span><br>
+                                                                    <span class="text-success"
+                                                                        style="font-size: medium;font-weight: bold;">In
+                                                                        Stock </span>,only <span id="stock_<%= i %>">
+                                                                        <%= products[i].stock %>
+                                                                    </span> left
+                                                                </p>
+                                                                <p class="product-price">
+                                                                    <span>Per Kg</span>Rs
+                                                                    <del>
+                                                                        <%= products[i].price %>
+                                                                    </del>
+                                                                    <%= products[i].discount_price %>
+        
+                                                                </p>
                                                                 <% }else{ %>
-                                                                    <button class="cart-btn" disabled>
-                                                                        <i class="fas fa-shopping-cart"></i>
-                                                                        Add to Cart</button>
-                                                                    </button>
+                                                                    <p class="product-stock">
+                                                                        <span class="text-danger"
+                                                                            style="font-weight: bolder;font-size: medium;"></span><br>
+                                                                        <span class="text-success"
+                                                                            style="font-size: medium;font-weight: bold;">In
+                                                                            Stock </span>,only <span id="stock_<%= i %>">
+                                                                            <%= products[i].stock %>
+                                                                        </span> left
+                                                                    </p>
+                                                                    <p class="product-price">
+                                                                        <span>Per Kg</span>Rs
+                                                                        <del>
+                                                                            <%= products[i].price %>
+                                                                        </del>
+                                                                        <%= products[i].discount_price %>
+            
+                                                                    </p>
                                                                     <% } %>
+                                                                        <a
+                                                                            onclick="addToWishlist('<%= i %>',`<%= products[i]._id %>`)"><svg
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                width="24" height="24"
+                                                                                fill="currentColor" class="bi bi-heart"
+                                                                                viewBox="0 0 16 16"
+                                                                                style="margin-right: 3rem;">
+                                                                                <path
+                                                                                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                                                                            </svg></a>
+
+                                                                        <% if (products[i].stock> 0){ %>
+
+                                                                            <button
+                                                                                onclick="addToCartUsingFetch('<%= i %>',`<%= products[i]._id %>`)"
+                                                                                class="cart-btn"><i
+                                                                                    class="fas fa-shopping-cart"></i>
+                                                                                Add to
+                                                                                Cart</button>
+                                                                            <% }else{ %>
+                                                                                <button class="cart-btn" disabled>
+                                                                                    <i class="fas fa-shopping-cart"></i>
+                                                                                    Add to Cart</button>
+                                                                                </button>
+                                                                                <% } %>
+                                        </div>
                                     </div>
-                                </div>
-                                <% }%>
+                                    <% }%>
                     </div>
                     <div class="row">
                         <div class="col-lg-12 text-center">
                             <div class="pagination-wrap">
                                 <ul class="pagination float-right">
-                                    <% if (page > 1) { %>
+                                    <% if (page> 1) { %>
                                         <li class="page-item">
-                                            <a class="page-link" href="/shop/?page=<%= page - 1 %>&sortOption=<%= sortOption %>">Prev</a>
+                                            <a class="page-link"
+                                                href="/shop/?page=<%= page - 1 %>&sortOption=<%= sortOption %>">Prev</a>
                                         </li>
-                                    <% } %>
-                                    <% for (let i = 1; i <= totalPages; i++) { %>
-                                        <li class="page-item <%= page === i ? 'active' : '' %>">
-                                            <a class="page-link" href="/shop/?page=<%= i %>&sortOption=<%= sortOption %>"><%= i %></a>
-                                        </li>
-                                    <% } %>
-                                    <% if (page < totalPages) { %>
-                                        <li class="page-item">
-                                            <a class="page-link" href="/shop/?page=<%= page + 1 %>&sortOption=<%= sortOption %>">Next</a>
-                                        </li>
-                                    <% } %>
+                                        <% } %>
+                                            <% for (let i=1; i <=totalPages; i++) { %>
+                                                <li class="page-item <%= page === i ? 'active' : '' %>">
+                                                    <a class="page-link"
+                                                        href="/shop/?page=<%= i %>&sortOption=<%= sortOption %>">
+                                                        <%= i %>
+                                                    </a>
+                                                </li>
+                                                <% } %>
+                                                    <% if (page < totalPages) { %>
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                                href="/shop/?page=<%= page + 1 %>&sortOption=<%= sortOption %>">Next</a>
+                                                        </li>
+                                                        <% } %>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
             <!-- end products -->
@@ -239,96 +296,96 @@
 
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-     <script>
-        
-        async function addToWishlist(index, productId){
+                <script>
 
-            await fetch(`/add-to-wishlist?productId=${productId}`,{
-                method:'GET',
-                headers:{
-                    'Content-Type':'application/json'
-                }
-            }).then((response) => {
-           if (response.redirected) {
-            Swal.fire({
-            title: "Invalid Entry",
-            text: "Please sign in to continue.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Sign In",
-            cancelButtonText: "Cancel"
-            }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = '/signin'
-               }
-            })
-          } else if (!response.ok) {
-                throw new Error('A network error occurred while fetching data.')
-              }
-               return response.json()
-           })
-             .then(data=>{
-                console.log(data,'data is showing');
-                if(data.result==='success'){
-                    Swal.fire('product added to whishlist successfull')
-                }else if (data.result === 'product already exist'){
-                    Swal.fire('product already exist')
-                }
-            })
-            console.log('he button triggered');
-        }
-    </script>
+                    async function addToWishlist(index, productId) {
 
-    <script>
-        async function addToCartUsingFetch(index, productId) {
-            const productStock = document.getElementById('stock_' + index).innerHTML
-            console.log(productStock, 'productstock is showing');
-            await fetch(`/add-to-cart/?productId=${productId}&stock=${productStock}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'applicaton/json'
-                }
-            }) .then((response) => {
-           if (response.redirected) {
-            Swal.fire({
-            title: "Invalid Entry",
-            text: "Please sign in to continue.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Sign In",
-            cancelButtonText: "Cancel"
-            }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = '/signin'
-               }
-            })
-          } else if (!response.ok) {
-                throw new Error('A network error occurred while fetching data.')
-              }
-               return response.json()
-           })
-
-                .then(data => {
-                    console.log(data.result)
-                    data.result === 'within limit' ?
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: "Successfully product added to cart",
-                            showConfirmButton: false,
-                            timer: 1500
-                        }) : Swal.fire({
-                            position: "center",
-                            icon: "error",
-                            title: "Maximum product limit is exceeded",
-                            showConfirmButton: false,
-                            timer: 1500
+                        await fetch(`/add-to-wishlist?productId=${productId}`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        }).then((response) => {
+                            if (response.redirected) {
+                                Swal.fire({
+                                    title: "Invalid Entry",
+                                    text: "Please sign in to continue.",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonText: "Sign In",
+                                    cancelButtonText: "Cancel"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = '/signin'
+                                    }
+                                })
+                            } else if (!response.ok) {
+                                throw new Error('A network error occurred while fetching data.')
+                            }
+                            return response.json()
                         })
-                }).catch(err => {
-                    console.log(err, 'Some error occured in fetch method in shop page');
-                })
-        }
-    </script>
+                            .then(data => {
+                                console.log(data, 'data is showing');
+                                if (data.result === 'success') {
+                                    Swal.fire('product added to whishlist successfull')
+                                } else if (data.result === 'product already exist') {
+                                    Swal.fire('product already exist')
+                                }
+                            })
+                        console.log('he button triggered');
+                    }
+                </script>
+
+                <script>
+                    async function addToCartUsingFetch(index, productId) {
+                        const productStock = document.getElementById('stock_' + index).innerHTML
+                        console.log(productStock, 'productstock is showing');
+                        await fetch(`/add-to-cart/?productId=${productId}&stock=${productStock}`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'applicaton/json'
+                            }
+                        }).then((response) => {
+                            if (response.redirected) {
+                                Swal.fire({
+                                    title: "Invalid Entry",
+                                    text: "Please sign in to continue.",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonText: "Sign In",
+                                    cancelButtonText: "Cancel"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = '/signin'
+                                    }
+                                })
+                            } else if (!response.ok) {
+                                throw new Error('A network error occurred while fetching data.')
+                            }
+                            return response.json()
+                        })
+
+                            .then(data => {
+                                console.log(data.result)
+                                data.result === 'within limit' ?
+                                    Swal.fire({
+                                        position: "center",
+                                        icon: "success",
+                                        title: "Successfully product added to cart",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }) : Swal.fire({
+                                        position: "center",
+                                        icon: "error",
+                                        title: "Maximum product limit is exceeded",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                            }).catch(err => {
+                                console.log(err, 'Some error occured in fetch method in shop page');
+                            })
+                    }
+                </script>
     </body>
 
 </html>
