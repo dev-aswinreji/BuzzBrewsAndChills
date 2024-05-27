@@ -256,6 +256,7 @@
 
                     async function cancelProduct(orderIndex, orderId, productId) {
                         const quantity = document.getElementById('quantity_' + orderIndex + '_0').value;
+                        console.log(quantity,'quantity is showing');
                         await fetch(`/cancel-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}`, {
                             method: 'GET',
                             headers: {
@@ -268,6 +269,7 @@
                                     let status = data.status
                                     console.log(status,'');
                                     console.log('Product cancelled successfully');
+                                    location.reload()
                                 }
                             })
                             .catch(err => console.log('Error:', err));

@@ -136,37 +136,65 @@
 
 <%- include('partials/head/head.ejs') %>
 
-    <body>
-        <%- include('partials/header/header.ejs') %>
-            <!-- breadcrumb-section -->
-            <div class="breadcrumb-section breadcrumb-bg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8 offset-lg-2 text-center">
-                            <div class="breadcrumb-text">
-                                <p>Manage your funds</p>
-                                <h1>Wallet</h1>
-                            </div>
-                        </div>
+<body>
+    <%- include('partials/header/header.ejs') %>
+    <% if (wallet) { %>
+     
+    <!-- breadcrumb-section -->
+    <div class="breadcrumb-section breadcrumb-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="breadcrumb-text">
+                        <p>Manage your funds</p>
+                        <h1>Wallet</h1>
                     </div>
                 </div>
             </div>
-            <!-- end breadcrumb section -->
-            <div class="container-wallet">
-                <h1>Wallet</h1>
-                <div class="wallet-summary">
-                    <% if (wallet) { %>                    
-                    <div class="wallet-balance">Balance: Rs <%= wallet.walletAmount %>
-                    </div>
-                    <% }else {%>
-                        <div class="wallet-balance">Balance: Rs 0
-                        </div>
-                        <% } %> 
-                </div>
-               
+        </div>
+    </div>
+    <!-- end breadcrumb section -->
+    <div class="container-wallet">
+        <h1>Wallet</h1>
+        <div class="wallet-summary">
+            <div class="wallet-balance">Balance: Rs <%= wallet.walletAmount %></div>
+            <div class="wallet-actions">
+                <button class="btn btn-add-funds" onclick="addFunds()">Add Funds</button>
+                <button class="btn btn-withdraw-funds" onclick="withdrawFunds()">Withdraw Funds</button>
             </div>
-            <%- include('partials/footer/footer.ejs') %>
-           
-    </body>
+        </div>
+        <div class="transaction-history">
+            <h2>Transaction History</h2>
+            <% if (wallet.walletTransactions.length > 0) { %>
+                <% wallet.walletTransactions.reverse().forEach(transaction => { %>
+                    <div class="transaction">
+                        <div class="transaction-details">
+                            <span class="transaction-type"><%= transaction.type %></span>
+                            <span class="transaction-date"><%= new Date(transaction.date).toLocaleDateString() %></span>
+                        </div>
+                        <div class="transaction-amount">Rs <%= transaction.amount %></div>
+                    </div>
+                <% }) %>
+                <% } %>
+
+            <% } else { %>
+                <p>No transactions found</p>
+            <% } %>
+        </div>
+        
+    </div>
+    <%- include('partials/footer/footer.ejs') %>
+    <script>
+        function addFunds() {
+            // Implement add funds functionality here
+            alert('Add funds functionality not implemented yet');
+        }
+
+        function withdrawFunds() {
+            // Implement withdraw funds functionality here
+            alert('Withdraw funds functionality not implemented yet');
+        }
+    </script>
+</body>
 
 </html>

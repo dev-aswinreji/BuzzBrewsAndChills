@@ -20,7 +20,13 @@ export const user_cancelOrderGet = async (req, res) => {
     console.log(paymentMethod);
     console.log(userId,'');
     if(paymentMethod === 'Online Payment' || 'Wallet'){
-     await updateUserWallet(userId,totalPrice)
+      const walletTransactions = {
+        date:new Date(),
+        type:'DEBIT',
+        amount:totalPrice,
+      }
+     const updateWallet = await updateUserWallet(userId,totalPrice,walletTransactions)
+     console.log(updateWallet,'wallet updated successfulyyyyyy');
     }
     let updateProductStock = Number(product.stock) + Number(quantity);
 

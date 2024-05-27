@@ -19,10 +19,18 @@ const walletSchema = new mongoose.Schema({
     walletTransactions: [
       {
         date: { type: Date },
-        type: { type: String },
+        type: {
+          type:String,
+          enum:['CREDIT','DEBIT'],
+        },
         amount: { type: Number },
       },
     ],
+    createdAt:{
+      type:Date,
+      default:Date.now()
+    }
   });
+  
   
   export const walletCollection = walletModel('wallet',walletSchema)  
