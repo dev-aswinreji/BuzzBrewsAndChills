@@ -218,6 +218,10 @@
                                             </h5>
                                             <h5>Status: <%= item.status %>
                                             </h5>
+                                            <% if (data.couponDiscount) { %>
+                                                <h5>Coupon Applied : <span id="couponDiscount"><%= data.couponDiscount %></span>  % </h5> 
+                                             
+                                            <% } %>
                                         </div>
                                         <div class="product-actions">
                                             <% if (item.status==='DELIVERED' ) { %>
@@ -226,9 +230,12 @@
                                                     Order</button>
                                                 <% } else if(item.status === 'CANCELLED') { %>
                                                     <h6 class="text-danger">Product cancelled Successfully</h6>
+                                                    <% } else if (item.status === 'RETURNED') { %>
+                                                        <h6 class="text-danger">Product has been returned Successfully</h6>
+
                                                     <%} else { %> 
                                                     <button class="btn btn-cancel btn-danger"
-                                                        onclick="cancelProduct('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>')">Cancel
+                                                        onclick="cancelProduct('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>','<%= item.productId %>')">Cancel
                                                         Product</button>
                                                     <% } %>
                                         </div>
@@ -275,7 +282,7 @@
                             .catch(err => console.log('Error:', err));
                     }
 
-                    async function returnOrder(orderIndex, orderId, productId) {
+                    async function returnOrder(orderIndex, orderId, productId,couponDiscount) {
                         const quantity = document.getElementById('quantity_' + orderIndex + '_0').value;
                         await fetch(`/return-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}&couponDiscount=${couponDiscount}`, {
                             method: 'GET',

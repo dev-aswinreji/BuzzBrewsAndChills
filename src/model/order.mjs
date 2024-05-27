@@ -83,6 +83,9 @@ const orderSchema = mongoose.Schema({
   },
   couponDiscount:{
     type:Number,
+  },
+  couponCode :{
+    type:String
   }
 });
 

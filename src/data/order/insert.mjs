@@ -15,6 +15,7 @@ export async function insertOrder(userId, userAddressId, paymentMethod,paymentId
   const orderId = await otpGenForForgotPassword();
   const cartItems = cart.items.filter(item=>item.productId.stock.toString() <= item.quantity.toString() )
   const couponCode = cart.couponCode
+
   console.log(couponCode,'coupon code is showing rn adsfkkldjflkjdalsjf');
   console.log(cartItems,'cartItems is working');
   console.log(cart, "cart data is ");
@@ -35,6 +36,7 @@ export async function insertOrder(userId, userAddressId, paymentMethod,paymentId
         paymentMethod: paymentMethod,
         paymentId:paymentId,
         couponDiscount:couponDiscount,
+        couponCode:couponCode,
       },
     ]);
     console.log(order,'order is showing success or not ================================================================================================');

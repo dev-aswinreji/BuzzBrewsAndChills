@@ -38,6 +38,20 @@ export async function updateCancelProduct(orderId,productId) {
   }
 }
 
+export async function updateReturnedProduct(orderId,productId) {
+  try {
+    return (await orderCollection.updateOne(
+      { orderId: orderId },
+      { $set: { "products.$[elem].status": 'RETURNED' } },
+        { arrayFilters: [{ "elem.productId": productId }]}
+    ))
+      ? "Success"
+      : "Fail";
+  } catch (error) {
+    console.log(error, "update cancel product func error");
+  }
+}
+
 export async function updateOrderedProduct(orderId, productId, status) {
   try {
     console.log(status, "status is showing");

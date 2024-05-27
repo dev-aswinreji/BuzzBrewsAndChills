@@ -196,7 +196,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-4">
                         <div class="order-details-wrap">
                             <table class="order-details">
@@ -245,13 +244,23 @@
                                             <% } %>
 
                                                 <tr class="total-row">
-                                                    <td colspan="2">Total</td>
+                                                    <td colspan="2" class="mt-3"> Total
+                                                        <br><br><br>
+                                                        Coupon Code :
+                                                    </td>
+                                                    
                                                     <% if (cartDatas.couponDiscount) { %>
                                                         <td>
-                                                            <h6>Coupon Applied</h6>
                                                             <del>₹<%= totalPrice.toFixed(2) %></del>
+
                                                             ₹ <span id="totalPrice">
                                                                 <%= cartDatas.totalPrice.toFixed(2) %>
+                                                            </span>
+                                                            <h6>Coupon Applied</h6>
+                                                           
+                                                            
+                                                            <span id="couponCode">
+                                                                <%= cartDatas.couponCode %> 
                                                             </span>
 
                                                         </td>
@@ -309,6 +318,7 @@
 
                 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                
 
                 <script>
                     async function paymentUsingWallet() {
@@ -395,7 +405,7 @@
                                     }
                                     else if (data.result === 'Cart Limit Is Low') {
                                         Swal.fire('Minimum cart price to apply coupon is 1000')
-                                    } else if (data.resuproceedToPaymentt === 'Coupon Applied') {
+                                    } else if (data.result === 'Coupon Applied') {
                                         Swal.fire('Coupon Applied Successfully').then(() => {
                                             location.reload()
                                         })
@@ -424,6 +434,8 @@
                         console.log(amount, 'amount is showing');
                         const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
                         const couponDiscount = document.getElementById('couponDiscount').innerHTML
+                        const couponCode = document.getElementById('couponCode').innerHTML
+                        console.log(couponCode,'coupon Code is showing');
                         console.log(couponDiscount, 'coupon discount is showing');
                         console.log(selectedAddress, 'selectedAddress is showing')
                         try {
@@ -473,7 +485,7 @@
 
                             async function razorpaySuccess(paymentId) {
                                 const paymentMethod = 'Online Payment';
-                                await fetch(`/order-add/?paymentMethod=${paymentMethod}&paymentId=${paymentId}&address=${selectedAddress}&couponDiscount=${couponDiscount}`, {
+                                await fetch(`/order-add/?paymentMethod=${paymentMethod}&paymentId=${paymentId}&address=${selectedAddress}&couponDiscount=${couponDiscount}&couponCode=${couponCode}`, {
                                     method: 'GET',
                                     headers: { 'Content-Type': 'application/json' }
                                 }).then(response => response.ok ? response.json() : console.log('Network error'))
