@@ -90,6 +90,35 @@
         background-color: #28a745;
         color: #fff;
     }
+    .search-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 50%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .search-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .search-btn:hover {
+            background-color: #218838;
+        }
+
 </style>
 
 <%- include ('./partials/head/head.ejs' ) %>
@@ -112,6 +141,8 @@
                 </div>
             </div>
             <!-- end breadcrumb section -->
+
+           
 
             <!-- products -->
             <div class="product-section mt-150 mb-150">
@@ -137,15 +168,29 @@
                         <div class="sort-buttons">
                             <a class="btn btn-primary fw-bold fs-4" href="/shop?sortOption=priceLowHigh">Low To High</a>
                             <a class="btn btn-primary" href="/shop?sortOption=priceHighLow">High To Low</a>
+                            <a class="btn btn-primary" href="/shop?sortOption=A-Z">A - Z</a>
+                            <a class="btn btn-primary" href="/shop?sortOption=Z-A">Z - A</a>
+
                             <!-- <a class="btn btn-primary" href="/shop?sortOption=popularity">Popularity</a> -->
                             <a class="btn btn-primary" href="/shop?sortOption=default">Default</a>
                         </div>
+                        <div class="search-wrapper">
+                            <form action="/shop" method="GET">
+                            <input type="text" name="search" class="search-input" placeholder="Search for products...">
+                            <button type="submit" class="search-btn">Search</button>
+                           </form>
+                        </div>
                     </div>
+                   
+        
                     <br><br>
+                     <!-- Search Bar -->
+           
 
+                     <% if (products.length > 0) { %> 
                     <div class="row product-lists">
+                         
                         <% console.log(products.length); %>
-                            <% if(products){console.log(products.length)} %>
                                 <% for(let i=0; i<products.length;i++){%>
                                     <div class="col-lg-4 col-md-6 text-center berry">
                                         <div class="single-product-item">
@@ -256,8 +301,12 @@
                                                                                 <% } %>
                                         </div>
                                     </div>
-                                    <% }%>
+                                    <% } %> 
                     </div>
+                    <% }else {%>
+                        <h3 class="text-center">Product Unavailable</h3>
+                        <% } %> 
+
                     <div class="row">
                         <div class="col-lg-12 text-center">
                             <div class="pagination-wrap">

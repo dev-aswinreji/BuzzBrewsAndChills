@@ -1,3 +1,4 @@
+import { skip } from "node:test";
 import { categoryCollection } from "../../model/category.mjs";
 import { productCollection } from "../../model/product.mjs";
 
@@ -39,6 +40,15 @@ export async function findAllProductsForUserSortingLowToHigh(skip,limit){
 export async function findAllProductsForUserSortingHighToLow(skip,limit){
     return (await productCollection.find({availability:'AVAILABLE'}).sort({price:-1}).skip(skip).limit(limit).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
 }
+
+export async function findAllProductsForUserSortingAtoZ(skip,limit){
+    return (await productCollection.find({availability:'AVAILABLE'}).sort({name:1}).skip(skip).limit(limit).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
+}
+
+export async function findAllProductsForUserSortingZtoA(skip,limit){
+    return (await productCollection.find({availability:'AVAILABLE'}).sort({name:-1}).skip(skip).limit(limit).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
+}
+
 export async function findTotalCountOfAllProductsForAdmin (){
     return await productCollection.countDocuments()
 }
@@ -92,11 +102,14 @@ export async function findProductCategoryFiltering (categoryName){
             }
         ]);
 
-        console.log(products);
-        return products;
         console.log(products,'category product is showing');
         return products;
     }catch(error){
         console.log(error,'find category filtering product func');
     }
+}
+
+
+export async function findSearchedProductForUserUsingRegex (name,skip,limit){
+    return await productCollection.find(name).skip(skip).limit(limit)
 }
