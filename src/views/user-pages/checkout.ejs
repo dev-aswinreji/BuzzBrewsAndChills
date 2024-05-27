@@ -273,8 +273,14 @@
                                 </tbody>
                             </table>
                             <div class="coupon-form-wrap">
-                                <h6>Wallet Balance : Rs <span id="wallet">
-                                        <%= walletAmount %>
+                                
+                                <% if (wallet) { %>
+                                    
+                                    <h6>Wallet Balance : Rs <span id="wallet">
+                                        <%= wallet.walletAmount %>
+                                        <% }else {%>
+                                            Wallet balance is Empty
+                                            <% } %> 
                                     </span> </h6>
 
                             </div>
@@ -333,7 +339,20 @@
                         console.log(wallet, 'wallet');
                         if (totalPrice <= walletAmount) {
                             const paymentMethod = 'Wallet'
-                            await fetch(`/order-add/?paymentMethod=${paymentMethod}&address=${selectedAddress}&couponDiscount=${couponDiscount}`, {
+                            await fetch(`/wallet-payment/?totalPrice=${totalPrice}`,{
+                                method:'GET',
+                                headers:{
+                                    'Content-Type':'application/json'
+                                }
+                            }).then(response => response.ok ? response.json() : console.log('Network error'))
+                                .then((data) => {
+                                    if (data.result === 'success')
+                                     walletPayment()
+                                }).catch(err => {
+                                    console.log('Error:', err);
+                                });
+                  async function walletPayment (){
+                       await fetch(`/order-add/?paymentMethod=${paymentMethod}&address=${selectedAddress}&couponDiscount=${couponDiscount}`, {
                                 method: 'GET',
                                 headers: { 'Content-Type': 'application/json' }
                             }).then(response => response.ok ? response.json() : console.log('Network error'))
@@ -343,6 +362,8 @@
                                 }).catch(err => {
                                     console.log('Error:', err);
                                 });
+                                }
+                           
                         } else {
                             Swal.fire('Insufficient fund kindly update amount in wallet')
                         }

@@ -1,14 +1,15 @@
 import {findAllUserAddresses, findDefaultUserAddressUsingPopulate} from "../../../data/users/find.mjs";
 import { findAllCartDatas } from "../../../data/cart/find.mjs";
 import { updateCartTotalPriceInCheckoutPage } from "../../../data/cart/update.mjs";
+import { findWalletAmount } from "../../../data/wallet/find.mjs";
 
 
 export const user_checkoutGet = async (req, res) => {
 
     try {
-        const walletAmount = 10
         const userId = req.session.USER_ID
         let cartDatas = await findAllCartDatas(userId)
+        const wallet = await findWalletAmount(userId)
         console.log(cartDatas.couponDiscount,'coupon discount is showing');
         console.log(cartDatas,'cart data is showing');
         let totalPrice = Number(req.query.totalPrice)
@@ -28,7 +29,7 @@ export const user_checkoutGet = async (req, res) => {
             console.log(cartDatas,'is it working or not ');
         }
         
-        res.render('checkout', {addresses,cartDatas,totalPrice,userDatas,walletAmount})
+        res.render('checkout', {addresses,cartDatas,totalPrice,userDatas,wallet})
 
     } catch (error) {
         console.error(error, 'USER CHECKOUT GET')
