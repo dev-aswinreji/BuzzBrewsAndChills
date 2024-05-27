@@ -48,7 +48,7 @@ export async function addToCartDataManageQuantity(userId, product, quantity,tota
 
 export async function updateCartTotalPriceWhileApplyingCoupon (userId,discountPrice,discount,couponCode){
     try {
-        return await cartCollection.updateOne({userId:userId},{$set:{totalPrice:discountPrice,coupon_discount:discount,couponCode:couponCode}})
+        return await cartCollection.updateOne({userId:userId},{$set:{totalPrice:discountPrice,couponDiscount:discount,couponCode:couponCode}})
         
         
     } catch (error) {

@@ -29,6 +29,7 @@ import { user_applyCoupon } from '../../../controller/user/home/apply-coupon.mjs
 import { user_walletGet } from '../../../controller/user/home/wallet.mjs';
 import { user_addToWishlistGet, user_deleteProductFromWishlist, user_wishlistGet } from '../../../controller/user/home/wishlist.mjs';
 import { user_orderAddGet } from '../../../controller/user/home/add-order.mjs';
+import { user_removeCouponGet } from '../../../controller/user/home/remove-coupon.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -83,6 +84,7 @@ routeHome.get('/cancel-order',user_authentication,user_cancelOrderGet)
 routeHome.get('/order-history',user_authentication,user_orderListGet)
 
 routeHome.get('/apply-coupon',user_applyCoupon)
+routeHome.delete('/remove-coupon',user_removeCouponGet)
 
 routeHome.get('/wallet',user_walletGet)
 

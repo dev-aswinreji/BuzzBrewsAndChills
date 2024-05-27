@@ -43,3 +43,7 @@ console.log(userData.addresses.length);
     return undefined;
   }
 }
+
+export async function findAllUserAddresses (userId){
+  return await userCollection.findById(userId).populate('addresses')
+}

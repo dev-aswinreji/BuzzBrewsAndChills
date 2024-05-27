@@ -34,7 +34,7 @@ const cartSchema = mongoose.Schema({
         min:0,
         required:true,
     },
-    coupon_discount:{
+    couponDiscount:{
         type:Number,
     },
     couponCode:{
