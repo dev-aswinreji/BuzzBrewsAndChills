@@ -13,9 +13,9 @@ export const user_checkoutGet = async (req, res) => {
         console.log(cartDatas,'cart data is showing');
         let totalPrice = Number(req.query.totalPrice)
         let updatedTotalPrice = totalPrice - (totalPrice * cartDatas.couponDiscount/100)
-        const defaultAddress = await findDefaultUserAddressUsingPopulate(userId)
         const userDatas = await findAllUserAddresses(userId)
-        console.log(userDatas,'addreses is showing')
+        console.log(userDatas.addresses,'addreses is showing')
+        let addresses = userDatas.addresses
         console.log(totalPrice,'what is happening');
         console.log(updatedTotalPrice,'update total price is showing');
         if(cartDatas.couponDiscount && updatedTotalPrice !== cartDatas.totalPrice){
@@ -28,7 +28,7 @@ export const user_checkoutGet = async (req, res) => {
             console.log(cartDatas,'is it working or not ');
         }
         
-        res.render('checkout', {defaultAddress,cartDatas,totalPrice,userDatas,walletAmount})
+        res.render('checkout', {addresses,cartDatas,totalPrice,userDatas,walletAmount})
 
     } catch (error) {
         console.error(error, 'USER CHECKOUT GET')
