@@ -222,12 +222,14 @@
                                         <td colspan="2">Shipping</td>
                                         <td>₹50.00</td>
                                     </tr>
-                                    <% if (cartDatas.coupon_discount) { %>
+                                    <% if (cartDatas.couponDiscount) { %>
                                         <tr class="total-row">
                                             <td colspan="2">Coupon Discount</td>
                                             <td><span id="couponDiscount">
                                                     <%= cartDatas.couponDiscount %>
-                                                </span> %</td>
+                                                </span> %
+                                                <button name="" style="width: 6rem;height: auto;font-weight: bolder;"
+                                                onclick="removeCoupon()" id="" class="btn btn-danger">Remove</button></td>                                                
                                         </tr>
                                         <% }else {%>
                                             <span id="couponDiscount" hidden></span>
@@ -242,8 +244,7 @@
                                                             ₹ <span id="totalPrice">
                                                                 <%= cartDatas.totalPrice.toFixed(2) %>
                                                             </span>
-                                                            <input type="submit" value="Remove" name=""
-                                                                onclick="removeCoupon()" id="">
+                                                           
                                                         </td>
                                                         <% } else { %>
                                                             <td>₹<span id="totalPrice">
@@ -292,7 +293,9 @@
 
                 <script>
                     async function removeCoupon() {
-                        await fetch(`/remove-coupon`, {
+                        const totalPrice = document.getElementById('totalPrice').innerHTML
+                        const couponDiscount = document.getElementById('couponDiscount').innerHTML
+                        await fetch(`/remove-coupon/?totalPrice=${totalPrice}&couponDiscount=${couponDiscount}`, {
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -304,7 +307,9 @@
                             return response.json()
                         }).then(data => {
                             if (data.result === 'success') {
-                                Swal.fire('coupon removed successfully')
+                                Swal.fire('coupon removed successfully').then(()=>{
+                                    location.reload()
+                                })
                             } else {
                                 Swal.fire('Some issue encountered')
                             }

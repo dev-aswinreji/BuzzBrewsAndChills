@@ -9,17 +9,18 @@ export const user_checkoutGet = async (req, res) => {
         const walletAmount = 1000
         const userId = req.session.USER_ID
         let cartDatas = await findAllCartDatas(userId)
-        console.log(cartDatas.coupon_discount,'coupon discount is showing');
+        console.log(cartDatas.couponDiscount,'coupon discount is showing');
         console.log(cartDatas,'cart data is showing');
         let totalPrice = Number(req.query.totalPrice)
-        let updatedTotalPrice = totalPrice - (totalPrice * cartDatas.coupon_discount/100)
+        let updatedTotalPrice = totalPrice - (totalPrice * cartDatas.couponDiscount/100)
         const defaultAddress = await findDefaultUserAddressUsingPopulate(userId)
         const userDatas = await findAllUserAddresses(userId)
         console.log(userDatas,'addreses is showing')
         console.log(totalPrice,'what is happening');
         console.log(updatedTotalPrice,'update total price is showing');
-        if(cartDatas.coupon_discount && updatedTotalPrice !== cartDatas.totalPrice){
-            const total = cartDatas.totalPrice - (cartDatas.totalPrice * (cartDatas.coupon_discount/100))
+        if(cartDatas.couponDiscount && updatedTotalPrice !== cartDatas.totalPrice){
+            console.log('what i happened why it not entered inside if statement');
+            const total = cartDatas.totalPrice - (cartDatas.totalPrice * (cartDatas.couponDiscount/100))
             const totalPrice = total.toFixed(2)
             await updateCartTotalPriceInCheckoutPage(userId,totalPrice)
             console.log(cartDatas,'cart data is updated');
