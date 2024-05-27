@@ -6,7 +6,7 @@ import { updateCartTotalPriceInCheckoutPage } from "../../../data/cart/update.mj
 export const user_checkoutGet = async (req, res) => {
 
     try {
-        const walletAmount = 1000
+        const walletAmount = 10
         const userId = req.session.USER_ID
         let cartDatas = await findAllCartDatas(userId)
         console.log(cartDatas.couponDiscount,'coupon discount is showing');

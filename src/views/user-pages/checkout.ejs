@@ -254,6 +254,10 @@
                                                 </tr>
                                 </tbody>
                             </table>
+                            <div class="coupon-form-wrap">
+                                <h6>Wallet Balance : Rs <span id="wallet"><%= walletAmount %></span> </h6>
+                              
+                            </div>
                             <% if (!cartDatas.couponDiscount) { %>
                                 <div class="coupon-section">
                                     <h4>Apply Coupon</h4>
@@ -277,6 +281,10 @@
                                                         class="btn btn-secondary btn-block">Pay with Cash
                                                         on Delivery</button>
                                                 </div>
+                                                <div class="mt-3">
+                                                    <button onclick="paymentUsingWallet()"
+                                                    class="btn btn-dark btn-block">Pay with Wallet</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -290,6 +298,36 @@
 
                 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+                <script>
+                     async function paymentUsingWallet() {
+                        const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
+                        const couponDiscount = document.getElementById('couponDiscount').innerHTML
+                        const wallet = document.getElementById('wallet').innerHTML
+                        const total = document.getElementById('totalPrice').innerHTML
+                        const walletAmount = Number(wallet)
+                        const totalPrice = Number(total)
+
+                        console.log(totalPrice);
+                        console.log(wallet,'wallet');
+                        if(totalPrice <= walletAmount){
+                            const paymentMethod = 'Wallet'
+                        await fetch(`/order-add/?paymentMethod=${paymentMethod}&address=${selectedAddress}&couponDiscount=${couponDiscount}`, {
+                            method: 'GET',
+                            headers: { 'Content-Type': 'application/json' }
+                        }).then(response => response.ok ? response.json() : console.log('Network error'))
+                            .then((data) => {
+                                if (data.result === 'success')
+                                    window.location.href = '/order-placed';
+                            }).catch(err => {
+                                console.log('Error:', err);
+                            });
+                        }else{
+                            Swal.fire('Insufficient fund kindly update amount in wallet')
+                        }
+                       
+                    }
+                </script>
 
                 <script>
                     async function removeCoupon() {
@@ -346,7 +384,7 @@
                                     }
                                     else if (data.result === 'Cart Limit Is Low') {
                                         Swal.fire('Minimum cart price to apply coupon is 1000')
-                                    } else if (data.result === 'Coupon Applied') {
+                                    } else if (data.resuproceedToPaymentt === 'Coupon Applied') {
                                         Swal.fire('Coupon Applied Successfully').then(() => {
                                             location.reload()
                                         })

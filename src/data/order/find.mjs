@@ -29,3 +29,7 @@ export async function findUniqueOrderToChangeOrderStatus (orderId){
 export async function findTotalCountOfAllOrdersForAdmin (){
     return await orderCollection.countDocuments()
 }
+
+export async function findSingleOrder (orderId){
+    return await orderCollection.findOne({orderId:orderId})
+}
