@@ -129,7 +129,7 @@
                                                 <% if (category) { %>
 
                                                     <select name="category" id="" required>
-                                                        <option value="<%= product.category.name %>"  >
+                                                        <option value="<%= product.category.name %>">
                                                             <%= product.category.name %>
                                                         </option>
                                                         <% for( cate of category ) { %>
@@ -189,8 +189,8 @@
                                             </div>
                                             <div class="mb-4">
                                                 <label for="product_discount" class="form-label">Offer</label>
-                                                <input type="number" placeholder="Type here" name="discount" inputmode="tel"
-                                                    class="form-control" id="product_discount"> 
+                                                <input type="number" placeholder="Type here" name="discount"
+                                                    inputmode="tel" class="form-control" id="product_discount">
                                             </div>
                                         </div>
                                     </div>
@@ -211,7 +211,10 @@
                                                 <input type="text" name="old_imageUrl"
                                                     value="<%= product.imageUrl[i] %>" hidden>
                                                 <% } %>
-                                                    <input type="file" name="imageUrl" class="form-control" accept="image/jpg, image/jpeg, image/png" multiple>
+                                                    <input type="file" name="imageUrl" class="form-control" id="imageInput"
+                                                        accept="image/jpg, image/jpeg,  image/png" multiple>
+
+                                                        <div id="imagePreview"></div>
                                         </div>
 
 
@@ -228,6 +231,30 @@
                 <%- include('./partials/footer/footer.ejs') %>
                     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
+    <script>
+      script>
+  document.getElementById('imageInput').addEventListener('change', function(event) {
+    const files = event.target.files;
+    const imagePreview = document.getElementById('imagePreview');
+    imagePreview.innerHTML = ''; // Clear previous previews
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.style.width = '200px'; // Adjust the width as needed
+          img.style.marginRight = '10px'; // Add some margin between images
+          imagePreview.appendChild(img);
+        }
+        reader.readAsDataURL(file);
+      }
+    } else {
+      imagePreview.innerHTML = 'No images selected';
+    }
+  });
+    </script>
     <script>
         async function deleteImage(button) {
             const container = button.parentNode;

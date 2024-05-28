@@ -37,13 +37,26 @@ export const admin_editProductsPost = async (req, res) => {
     const isDuplicateProduct = await findSingleProductWithSameName(productName);
     const result = await checkDataDuplication(isDuplicateProduct);
     console.log(req.files, "req.files is showing below");
+    console.log(req.body.imageUrl);
     let count = 0;
     const imageUrlMultiple = [];
-    for (const file of req.files) {
-      imageUrlMultiple[count] = file.filename;
-      count++;
+    if(req.files.length > 0){
+      for (const file of req.files) {
+        imageUrlMultiple[count] = file.filename;
+        count++;
+      }
     }
-
+    // else{
+    //   for (const imageUrl of req.body.old_imageUrl) {
+    //     console.log(imageUrl,'image url ');
+    //     imageUrlMultiple[count] = imageUrl
+    //     count++;
+    //   }
+    // }
+    const imageUrl = productData.imageUrl.push(...imageUrlMultiple)
+    console.log(productData.imageUrl,'updated or not');
+  console.log(imageUrl,'updated image url ');
+    
 
     const categoryDiscount = category.discount
     console.log(categoryDiscount,'category discount is showing ');
@@ -67,7 +80,7 @@ export const admin_editProductsPost = async (req, res) => {
       price: req.body.price,
       category: category,
       stock: req.body.stock,
-      imageUrl: imageUrlMultiple,
+      imageUrl: productData.imageUrl,
       discount:req.body.discount,
       discount_price:discount_price,
 
