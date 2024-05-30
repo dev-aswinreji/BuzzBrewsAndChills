@@ -3,7 +3,7 @@ import { findAllProducts, findTotalCountOfAllProductsForAdmin } from "../../../d
 export const admin_productsGet = async (req, res) => {
 
     try {
-        const limit = 3; 
+        const limit = 8; 
         let page = Number(req.query.page) || 1; 
         
         const TOTAL_COUNT_OF_PRODUCTS = await findTotalCountOfAllProductsForAdmin();

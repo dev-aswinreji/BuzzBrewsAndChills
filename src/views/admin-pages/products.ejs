@@ -176,13 +176,23 @@
                                                         $<%= product[i].price %>
                                                     </td>
                                                     <td>
-                                                        <h5><%= product[i].stock %></h5>
+                                                        <h5><% if ( product[i].stock === 0 ) { %>
+                                                            <%= product[i].stock %>
+                                                        <% }else {%>
+                                                            
+                                                            <% } %> 
+                                                        </h5>
                                                     </td>
                                                     <td>
                                                         <h5><%= product[i].category.name %></h5>
                                                     </td>
-                                                    <td>
-                                                        <h5><%= product[i].discount %> %</h5> 
+                                                    <td><h5>
+                                                        <% if (product[i].discount) { %>
+                                                            <%= product[i].discount %>%
+                                                        <% }else {%>
+                                                            No discount applied yet
+                                                            <% } %> 
+                                                        </h5> 
                                                     </td>
                                                     <td>
                                                         <% if (product[i].availability==='AVAILABLE' ) { %>
