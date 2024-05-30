@@ -277,7 +277,7 @@
                                 <% if (wallet) { %>
                                     
                                     <h6>Wallet Balance : Rs <span id="wallet">
-                                        <%= wallet.walletAmount %>
+                                        <%= wallet.walletAmount.toFixed(2) %>
                                         <% }else {%>
                                             Wallet balance is Empty
                                             <% } %> 

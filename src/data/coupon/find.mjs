@@ -2,7 +2,7 @@ import { couponCollection } from "../../model/coupon.mjs";
 
 export async function findAllCouponForAdmin (){
     try {
-        return await couponCollection.find()
+        return (await couponCollection.find()).reverse()
 
     } catch (error) {
         console.log(error,'find all coupon for admin func error');

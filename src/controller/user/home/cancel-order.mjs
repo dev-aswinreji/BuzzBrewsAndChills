@@ -26,7 +26,7 @@ export const user_cancelOrderGet = async (req, res) => {
       const walletTransactions = {
         date:new Date(),
         type:'DEBIT',
-        amount:totalPrice,
+        amount:totalPrice.toFixed(2),
       }
      const updateWallet = await updateUserWallet(userId,totalPrice,walletTransactions)
      console.log(updateWallet,'wallet updated successfulyyyyyy');

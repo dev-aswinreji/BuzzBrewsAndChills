@@ -9,7 +9,7 @@ export const user_walletPaymentGet = async (req,res)=>{
     const walletTransactions = {
         date:new Date(),
         type:'DEBIT',
-        amount:totalPrice,
+        amount:totalPrice.toFixed(2),
       }
      const updateWallet = await updateUserWalletPurchaseProduct(userId,totalPrice,walletTransactions)
      console.log(updateWallet,'wallet updated success');

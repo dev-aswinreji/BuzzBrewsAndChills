@@ -27,7 +27,7 @@ export const user_returnOrderGet = async (req,res)=>{
           const walletTransactions = {
             date:new Date(),
             type:'CREDIT',
-            amount:totalPrice,
+            amount:totalPrice.toFixed(2),
           }
          const updateWallet = await updateUserWallet(userId,totalPrice,walletTransactions)
          console.log(updateWallet,'wallet updated successfulyyyyyy');
