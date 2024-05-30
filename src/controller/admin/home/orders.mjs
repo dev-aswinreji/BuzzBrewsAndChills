@@ -3,7 +3,7 @@ import { findAllOrderDataForAdmin, findTotalCountOfAllOrdersForAdmin } from "../
 export const admin_ordersGet = async (req, res) => {
   try {
 
-    const limit = 3; 
+    const limit = 6; 
     let page = Number(req.query.page) || 1; 
         
     const TOTAL_COUNT_OF_ORDERS = await findTotalCountOfAllOrdersForAdmin();
