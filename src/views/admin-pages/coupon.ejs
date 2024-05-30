@@ -113,13 +113,13 @@
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">Discount</label>
-                                            <input placeholder="Type here" type="number" name="discount" class="form-control"
-                                                id="discount">
+                                            <input placeholder="Type here" type="number" name="discount"
+                                                class="form-control" id="discount">
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">Minimum Cart Price</label>
-                                            <input placeholder="Type here" type="number" name="minimum_cart_price" class="form-control"
-                                                id="discount">
+                                            <input placeholder="Type here" type="number" name="minimum_cart_price"
+                                                class="form-control" id="discount">
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">Description</label>
@@ -132,9 +132,7 @@
                                     </form>
                                 </div>
                                 <div class="col-md-9">
-                                    <span id="error" class="text-danger fs-5 fw-bold">
-                                        <%= message %>
-                                    </span>
+                                 
                                     <div class="table-responsive">
 
                                         <table class="table table-hover">
@@ -148,9 +146,9 @@
                                                     </th>
                                                     <th>Minimum Cart Price</th>
                                                     <th>Description</th>
-                                                    <!-- <th>Status</th> -->
+                                                    <th>Status</th>
                                                     <th>Discount</th>
-                                                    <!-- <th class="text-end">Action</th> -->
+                                                    <th class="text-end">Action</th>
                                                 </tr>
                                             </thead>
                                             <% if (coupon) { %>
@@ -174,7 +172,7 @@
                                                             <td>
                                                                 <%= coupon[i].description %>
                                                             </td>
-                                                            <!-- <td>
+                                                            <td>
                                                                 <%# if (coupon[i].availability==='ACTIVE' ) { %>
 
                                                                     <span class="badge rounded-pill alert-success">
@@ -185,27 +183,25 @@
                                                                             <%#= coupon[i].availability %>
                                                                         </span>
                                                                         <%# } %>
-                                                            </td> -->
+                                                            </td>
                                                             <td>
                                                                 <%= coupon[i].discount %> %
                                                             </td>
-                                                            <!-- <td class="text-end">
-                                                                <a class="btn btn-primary"
+                                                            <td class="text-end">
+                                                                <a class="btn "
                                                                     href="/admin/edit-coupn/<%#= coupon[i]._id %> ">Edit</a>
 
                                                                 <button
                                                                     onclick="HideAndUnhide(`<%#= coupon[i]._id %>`,`<%#= coupon[i].availability %>`)"
-                                                                    class="btn btn-sm font-sm btn-light rounded"
+                                                                    class=""
                                                                     style="width: 6rem;">
                                                                     <%# if(coupon[i].availability==='ACTIVE' ) {%>
                                                                         HIDE
                                                                         <%# } else { %>
                                                                             SHOW
                                                                             <%# } %>
-                                                                                <i
-                                                                                    class="material-icons md-delete_forever"></i>
                                                                 </button>
-                                                            </td> -->
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                     </div>
@@ -216,16 +212,41 @@
                                     </tbody>
                                     <% } %>
 
-                                    <% }else{ %>
-                                        No Coupon Added yet
-                                        <% } %> 
-                                </table>
+                                        <% }else{ %>
+                                            No Coupon Added yet
+                                            <% } %>
+                                                </table>
                                 </div>
                             </div>
+                            <div class="pagination-area mt-30 mb-50">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-start">
+                                        <% if (page> 1) { %>
+                                            <li class="page-item">
+                                                <a class="page-link" href="/admin/coupon/?page=<%= page - 1 %>">Prev</a>
+                                            </li>
+                                            <% } %>
+                                                <% for (let i=1; i <=totalPages; i++) { %>
+                                                    <li class="page-item <%= page === i ? 'active' : '' %>">
+                                                        <a class="page-link" href="/admin/coupon/?page=<%= i %>">
+                                                            <%= i %>
+                                                        </a>
+                                                    </li>
+                                                    <% } %>
+                                                        <% if (page < totalPages) { %>
+                                                            <li class="page-item">
+                                                                <a class="page-link"
+                                                                    href="/admin/coupon/?page=<%= page + 1 %>">Next</a>
+                                                            </li>
+                                                            <% } %>
+                                    </ul>
+                                </nav>
+                            </div>
+    
                             <!-- .col// -->
                         </div>
                         <!-- .row // -->
-
+                      
 
 </html>
 </div><!-- card body .// --></div><!-- card .// --></section><!-- content-main end// -->

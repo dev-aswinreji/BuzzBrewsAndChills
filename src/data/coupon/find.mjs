@@ -1,8 +1,8 @@
 import { couponCollection } from "../../model/coupon.mjs";
 
-export async function findAllCouponForAdmin (){
+export async function findAllCouponForAdmin (skip,limit){
     try {
-        return (await couponCollection.find()).reverse()
+        return (await couponCollection.find().skip(skip).limit(limit)).reverse()
 
     } catch (error) {
         console.log(error,'find all coupon for admin func error');
@@ -14,5 +14,14 @@ export async function findUniqueCouponForUser (couponCode){
         return await couponCollection.findOne({name:couponCode})
     } catch (error) {
         console.log(error,'find unique coupon for user func error');
+    }
+}
+
+
+export async function findTotalNumberOfCouponCountForAdmin (){
+    try {
+        return await couponCollection.countDocuments()
+    } catch (error) {
+        console.log(error,'find total number of coupon count for admin func');
     }
 }

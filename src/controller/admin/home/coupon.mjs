@@ -1,24 +1,21 @@
-import { findAllCouponForAdmin } from "../../../data/coupon/find.mjs"
+import { findAllCouponForAdmin, findTotalNumberOfCouponCountForAdmin } from "../../../data/coupon/find.mjs"
 import { insertCouponAdmin } from "../../../data/coupon/insert.mjs"
 
 
 export const admin_couponGet = async (req,res)=>{
     try {
-        const limit = 6; 
+        const limit = 7; 
         let page = Number(req.query.page) || 1; 
             
-        const TOTAL_COUNT_OF_USERS = await findTotalCountOfAllUsersForAdmin();
-        const totalPages = Math.ceil(TOTAL_COUNT_OF_USERS / limit);
-        console.log(TOTAL_COUNT_OF_USERS,'total count is showing');
+        const TOTAL_COUNT_OF_COUPON = await findTotalNumberOfCouponCountForAdmin();
+        const totalPages = Math.ceil(TOTAL_COUNT_OF_COUPON / limit);
+        console.log(TOTAL_COUNT_OF_COUPON,'total count is showing');
         page = Math.max(1, Math.min(page, totalPages));
     
         const skip = (page - 1) * limit;
-
-        const userList = await findAllUser(skip,limit)
-        console.log(userList)
-        res.render('usersList', {userList, page,totalPages, count: TOTAL_COUNT_OF_USERS})
-        const coupon = await findAllCouponForAdmin()
-        res.render('coupon',{coupon,message:'some error occured'})
+  
+        const coupon = await findAllCouponForAdmin(skip,limit)
+        res.render('coupon',{coupon,totalPages,page,count:TOTAL_COUNT_OF_COUPON})
     } catch (error) {
         console.log(error,'admin coupon get error ');
     }
