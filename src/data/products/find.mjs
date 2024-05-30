@@ -7,6 +7,10 @@ export async function findCategory() {
     return await categoryCollection.find()
 }
 
+export async function findAllActiveCategory(){
+    return await categoryCollection.find({availability:'ACTIVE'})
+}
+
 export async function findUniqueCategoryUsingId(id){
     return await categoryCollection.findById(id)
 }
@@ -34,11 +38,11 @@ export async function findAllProductsForUser (skip,limit){
 }
 
 export async function findAllProductsForUserSortingLowToHigh(skip,limit){
-    return (await productCollection.find({availability:'AVAILABLE'}).sort({price:1}).skip(skip).limit(limit).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
+    return (await productCollection.find({availability:'AVAILABLE'}).sort({discount_price:1}).skip(skip).limit(limit).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
 }
 
 export async function findAllProductsForUserSortingHighToLow(skip,limit){
-    return (await productCollection.find({availability:'AVAILABLE'}).sort({price:-1}).skip(skip).limit(limit).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
+    return (await productCollection.find({availability:'AVAILABLE'}).sort({discount_price:-1}).skip(skip).limit(limit).populate('category')).filter(products=>products.category.availability === 'ACTIVE')
 }
 
 export async function findAllProductsForUserSortingAtoZ(skip,limit){

@@ -84,7 +84,12 @@
                                     <h3>Green apples have polyphenols</h3>
                                     <p class="single-product-pricing">
                                         <span>Per Kg</span>
+                                        <% if (product.discount_price) { %>
+                                         <del><%= product.price %> </del>
+                                         Rs <%= product.discount_price %> 
+                                        <% }else {%>
                                         Rs <%= product.price %>
+                                        <% } %> 
                                     </p>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta sint dignissimos,
                                         rem

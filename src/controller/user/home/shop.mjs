@@ -1,7 +1,8 @@
-import { findAllProductsForUser, findAllProductsForUserSortingAtoZ, findAllProductsForUserSortingHighToLow, findAllProductsForUserSortingLowToHigh, findAllProductsForUserSortingZtoA, findProductCategoryFiltering, findSearchedProductForUserUsingRegex, findTotalCountOfAllProducts } from "../../../data/products/find.mjs";
+import { findAllActiveCategory, findAllProductsForUser, findAllProductsForUserSortingAtoZ, findAllProductsForUserSortingHighToLow, findAllProductsForUserSortingLowToHigh, findAllProductsForUserSortingZtoA, findProductCategoryFiltering, findSearchedProductForUserUsingRegex, findTotalCountOfAllProducts } from "../../../data/products/find.mjs";
 
 export const user_shopGet = async (req, res) => {
     try {
+        const category = await findAllActiveCategory()
         const limit = 3; 
         let page = Number(req.query.page) || 1; 
         const sortOption = req.query.sortOption || 'default'; 
@@ -45,7 +46,7 @@ export const user_shopGet = async (req, res) => {
             console.log(products,'products is showing');
         }
 
-        res.render('shop', { products, page, sortOption,totalPages, count: TOTAL_COUNT_OF_PRODUCTS });
+        res.render('shop', { products, page, sortOption,totalPages, count: TOTAL_COUNT_OF_PRODUCTS ,category});
     } catch (error) {
         console.error(error, 'USER SHOP GET');
         res.status(500).send('Internal Server Error');

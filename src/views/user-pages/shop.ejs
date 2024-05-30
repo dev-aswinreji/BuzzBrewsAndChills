@@ -154,17 +154,13 @@
                                 <ul>
                                     
                                     <li class="active" data-filter="*"><a href="/shop">All</a></li>
-                                    <% for( let i = 0; i < products.length; i++ ) { %>
-                                        <% let cate = new Set(products[i].category.name) %> 
-                                        <% console.log(cate); %> 
-                                        <li data-filter=".energy"><a href="/shop/?categoryName=<%= cate %> ">Apple</a></li>
-
-                                        <% console.log(cate); %> 
-                                    <% } %>
-                                   <% products.forEach(element => { %>
-                                    <% console.log(element) %> 
-                                   <% }) %>
-                                   >
+                                    <% category.forEach(category => { %>
+                                        <% console.log(category,'what is this'); %> 
+                                        <li data-filter=".energy"><a href="/shop/?categoryName=<%= category.name %> "><%= category.name %> </a></li>
+                                        
+                                        <% }) %>
+                                  
+                                   
                                 </ul>
                             </div>
                         </div>
@@ -173,16 +169,19 @@
                     <div class="sort-options-wrapper">
                         <label for="sortSelect" class="mr-2">
                             <h3>Sort by:</h3>
-                        </label>
-                        <div class="sort-buttons">
-                            <a class="btn btn-primary fw-bold fs-4" href="/shop?sortOption=priceLowHigh">Low To High</a>
-                            <a class="btn btn-primary" href="/shop?sortOption=priceHighLow">High To Low</a>
-                            <a class="btn btn-primary" href="/shop?sortOption=A-Z">A - Z</a>
-                            <a class="btn btn-primary" href="/shop?sortOption=Z-A">Z - A</a>
-
-                            <!-- <a class="btn btn-primary" href="/shop?sortOption=popularity">Popularity</a> -->
-                            <a class="btn btn-primary" href="/shop?sortOption=default">Default</a>
-                        </div>
+                        <!-- Sort and Search Section -->
+    <div class="sort-options-wrapper">
+        <ul>
+            <li><a href="/shop?sortOption=priceLowHigh" class="<%= sortOption === 'priceLowHigh' ? 'active' : '' %>">Low
+                    To High</a></li>
+            <li><a href="/shop?sortOption=priceHighLow"
+                    class="<%= sortOption === 'priceHighLow' ? 'active' : '' %>">High To Low</a></li>
+            <li><a href="/shop?sortOption=A-Z" class="<%= sortOption === 'A-Z' ? 'active' : '' %>">A - Z</a></li>
+            <li><a href="/shop?sortOption=Z-A" class="<%= sortOption === 'Z-A' ? 'active' : '' %>">Z - A</a></li>
+            <li><a href="/shop?sortOption=default" class="<%= sortOption === 'default' ? 'active' : '' %>">Default</a>
+            </li>
+        </ul>
+    </div>
                         <div class="search-wrapper">
                             <form action="/shop" method="GET">
                             <input type="text" name="search" class="search-input" placeholder="Search for products...">

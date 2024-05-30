@@ -1,0 +1,27 @@
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <ul>
+            <li><a href="/shop" class="<%= !category.name ? 'active' : '' %>">All</a></li>
+            <% category.forEach(cat=> { %>
+                <li><a href="/shop/?categoryName=<%= cat.name %>"
+                        class="<%= category.name === cat.name ? 'active' : '' %>">
+                        <%= cat.name %>
+                    </a></li>
+                <% }) %>
+        </ul>
+    </div>
+
+    <!-- Sort and Search Section -->
+    <div class="sort-options-wrapper">
+        <ul>
+            <li><a href="/shop?sortOption=priceLowHigh" class="<%= sortOption === 'priceLowHigh' ? 'active' : '' %>">Low
+                    To High</a></li>
+            <li><a href="/shop?sortOption=priceHighLow"
+                    class="<%= sortOption === 'priceHighLow' ? 'active' : '' %>">High To Low</a></li>
+            <li><a href="/shop?sortOption=A-Z" class="<%= sortOption === 'A-Z' ? 'active' : '' %>">A - Z</a></li>
+            <li><a href="/shop?sortOption=Z-A" class="<%= sortOption === 'Z-A' ? 'active' : '' %>">Z - A</a></li>
+            <li><a href="/shop?sortOption=default" class="<%= sortOption === 'default' ? 'active' : '' %>">Default</a>
+            </li>
+        </ul>
+    </div>
