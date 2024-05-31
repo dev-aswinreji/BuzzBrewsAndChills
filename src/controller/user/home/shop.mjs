@@ -46,7 +46,7 @@ export const user_shopGet = async (req, res) => {
             console.log(products,'products is showing');
         }
 
-        res.render('shop', { products, page, sortOption,totalPages, count: TOTAL_COUNT_OF_PRODUCTS ,category});
+        res.render('shop', { products, page, sortOption,totalPages, count: TOTAL_COUNT_OF_PRODUCTS ,category,search});
     } catch (error) {
         console.error(error, 'USER SHOP GET');
         res.status(500).send('Internal Server Error');
