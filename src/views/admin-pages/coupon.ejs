@@ -113,13 +113,23 @@
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">Discount</label>
-                                            <input placeholder="Type here" type="number" name="discount"
+                                            <input placeholder="Type here" type="number" max="100" name="discount"
                                                 class="form-control" id="discount">
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">Minimum Cart Price</label>
-                                            <input placeholder="Type here" type="number" name="minimum_cart_price"
-                                                class="form-control" id="discount">
+                                            <input placeholder="Type here" type="number" max="500"
+                                                name="minimum_cart_price" class="form-control" id="discount">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label">Maximum Redeem Price</label>
+                                            <input placeholder="Type here" type="number" max="2000"
+                                                name="minimum_cart_price" class="form-control" id="discount">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label">Expiry Date</label>
+                                            <input type="date" name="expiry" class="form-control" id="inputdate"
+                                                required>
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">Description</label>
@@ -132,7 +142,7 @@
                                     </form>
                                 </div>
                                 <div class="col-md-9">
-                                 
+
                                     <div class="table-responsive">
 
                                         <table class="table table-hover">
@@ -189,12 +199,11 @@
                                                             </td>
                                                             <td class="text-end">
                                                                 <a class="btn "
-                                                                    href="/admin/edit-coupn/<%#= coupon[i]._id %> ">Edit</a>
+                                                                    href="/admin/edit-coupon/<%#= coupon[i]._id %> ">Edit</a>
 
                                                                 <button
                                                                     onclick="HideAndUnhide(`<%#= coupon[i]._id %>`,`<%#= coupon[i].availability %>`)"
-                                                                    class=""
-                                                                    style="width: 6rem;">
+                                                                    class="" style="width: 6rem;">
                                                                     <%# if(coupon[i].availability==='ACTIVE' ) {%>
                                                                         HIDE
                                                                         <%# } else { %>
@@ -242,16 +251,31 @@
                                     </ul>
                                 </nav>
                             </div>
-    
+
                             <!-- .col// -->
                         </div>
                         <!-- .row // -->
-                      
+
 
 </html>
 </div><!-- card body .// --></div><!-- card .// --></section><!-- content-main end// -->
 <%- include('./partials/footer/footer.ejs') %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var dtToday = new Date();
 
+            var month = dtToday.getMonth() + 1; inputdate
+            var day = dtToday.getDate();
+            var year = dtToday.getFullYear();
+            if (month < 10)
+                month = '0' + month.toString();
+            if (day < 10)
+                day = '0' + day.toString();
+            var maxDate = year + '-' + month + '-' + day;
+            $('#inputdate').attr('min', maxDate);
+        });
+    </script>
     <script>
         async function HideAndUnhide(id, availability) {
             const response = await fetch(`/admin/manage-category/${id}?availability=${availability}`, {
