@@ -1,0 +1,51 @@
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#couponModal">
+    Add Coupon
+</button>
+
+<!-- The Modal -->
+<div class="modal fade" id="couponModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Coupon</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/admin/coupon" method="post" id="coupon-form">
+                    <div class="mb-4">
+                        <label class="form-label">Coupon Code</label>
+                        <input type="text" name="name" placeholder="Type here" class="form-control" id="coupon-code" required>
+                        <div id="coupon-error" class="error"></div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Discount</label>
+                        <input placeholder="Type here" type="number" max="100" name="discount" class="form-control" id="discount" required>
+                        <div id="discount-error" class="error"></div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Minimum Cart Price</label>
+                        <input placeholder="Type here" type="number" max="500" name="minimum_cart_price" class="form-control" id="min-cart-price">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Maximum Redeem Price</label>
+                        <input placeholder="Type here" type="number" max="2000" name="max-redeem-price" class="form-control" id="max-redeem-price">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Expiry Date</label>
+                        <input type="date" name="expiry" class="form-control" id="inputdate" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Description</label>
+                        <textarea placeholder="Type here" name="description" class="form-control" id="description"></textarea>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary" id="submit-btn" disabled>Create coupon</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

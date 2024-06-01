@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 <html lang="en">
-
 <%- include('./partials/head/head.ejs') %>
 
     <body>
@@ -19,7 +18,6 @@
             </div>
             <nav>
                 <div class="menu-aside">
-
                     <a class="menu-link" href="/admin/dashboard">
                         <i class="icon material-icons md-home"></i>
                         <span class="text">Dashboard</span>
@@ -85,46 +83,55 @@
             </nav>
         </aside>
 
-
         <main class="main-wrap">
-
             <%- include('./partials/header/header.ejs') %>
 
                 <section class="content-main">
-                    <div class="content-header">
+                    <!-- <div class="content-header">
                         <div>
-                            <h2 class="content-title card-title">Coupon
-                            </h2>
+                            <h2 class="content-title card-title">Coupon</h2>
                             <p>Add Coupon</p>
                         </div>
                         <div>
                             <input type="text" placeholder="Search Categories" class="form-control bg-white">
                         </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <form action="/admin/coupon" method="post">
+                    </div> -->
+
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#couponModal">
+                        Add Coupon
+                    </button>
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="couponModal">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add Coupon</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/admin/coupon" method="post" id="coupon-form">
                                         <div class="mb-4">
                                             <label class="form-label">Coupon Code</label>
                                             <input type="text" name="name" placeholder="Type here" class="form-control"
-                                                id="category" required>
+                                                id="coupon-code" required>
+                                            <div id="coupon-error" class="error"></div>
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">Discount</label>
                                             <input placeholder="Type here" type="number" max="100" name="discount"
-                                                class="form-control" id="discount">
+                                                class="form-control" id="discount" required>
+                                            <div id="discount-error" class="error"></div>
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">Minimum Cart Price</label>
                                             <input placeholder="Type here" type="number" max="500"
-                                                name="minimum_cart_price" class="form-control" id="discount">
+                                                name="minimum_cart_price" class="form-control" id="min-cart-price">
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">Maximum Redeem Price</label>
                                             <input placeholder="Type here" type="number" max="2000"
-                                                name="minimum_cart_price" class="form-control" id="discount">
+                                                name="max-redeem-price" class="form-control" id="max-redeem-price">
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">Expiry Date</label>
@@ -137,23 +144,28 @@
                                                 id="description"></textarea>
                                         </div>
                                         <div class="d-grid">
-                                            <button type="submit" class="btn btn-primary">Create coupon</button>
+                                            <button type="submit" class="btn btn-primary" id="submit-btn"
+                                                disabled>Create coupon</button>
                                         </div>
                                     </form>
                                 </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
                                 <div class="col-md-9">
-
                                     <div class="table-responsive">
-
                                         <table class="table table-hover">
-
-
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
-                                                    <th>
-                                                        Categories
-                                                    </th>
+                                                    <th>Categories</th>
                                                     <th>Minimum Cart Price</th>
                                                     <th>Description</th>
                                                     <th>Status</th>
@@ -162,189 +174,157 @@
                                                 </tr>
                                             </thead>
                                             <% if (coupon) { %>
-                                                <% for( let i=0; i < coupon.length; i++ ) { %>
+                                                <% for (let i=0; i < coupon.length; i++) { %>
                                                     <tbody>
                                                         <tr>
                                                             <td>
-                                                                <%= (1+i) %>
+                                                                <%= (1 + i) %>
                                                             </td>
-                                                            <td>
-                                                                <b>
+                                                            <td><b>
                                                                     <%= coupon[i].name %>
-                                                                </b>
-
-                                                            </td>
-                                                            <td>
-                                                                <b>
+                                                                </b></td>
+                                                            <td><b>
                                                                     <%= coupon[i].minimum_cart_price %> Rs
-                                                                </b>
-                                                            </td>
+                                                                </b></td>
                                                             <td>
                                                                 <%= coupon[i].description %>
                                                             </td>
                                                             <td>
-                                                                <%# if (coupon[i].availability==='ACTIVE' ) { %>
-
+                                                                <% if (coupon[i].availability==='ACTIVE' ) { %>
                                                                     <span class="badge rounded-pill alert-success">
-                                                                        <%#= coupon[i].availability %>
+                                                                        <%= coupon[i].availability %>
                                                                     </span>
-                                                                    <%# } else {%>
+                                                                    <% } else { %>
                                                                         <span class="badge rounded-pill alert-danger">
-                                                                            <%#= coupon[i].availability %>
+                                                                            <%= coupon[i].availability %>
                                                                         </span>
-                                                                        <%# } %>
+                                                                        <% } %>
                                                             </td>
                                                             <td>
                                                                 <%= coupon[i].discount %> %
                                                             </td>
                                                             <td class="text-end">
-                                                                <a class="btn "
-                                                                    href="/admin/edit-coupon/<%#= coupon[i]._id %> ">Edit</a>
-
+                                                                <a class="btn"
+                                                                    href="/admin/edit-coupon/<%= coupon[i]._id %>">Edit</a>
                                                                 <button
-                                                                    onclick="HideAndUnhide(`<%#= coupon[i]._id %>`,`<%#= coupon[i].availability %>`)"
+                                                                    onclick="HideAndUnhide('<%= coupon[i]._id %>', '<%= coupon[i].availability %>')"
                                                                     class="" style="width: 6rem;">
-                                                                    <%# if(coupon[i].availability==='ACTIVE' ) {%>
+                                                                    <% if (coupon[i].availability==='ACTIVE' ) { %>
                                                                         HIDE
-                                                                        <%# } else { %>
+                                                                        <% } else { %>
                                                                             SHOW
-                                                                            <%# } %>
+                                                                            <% } %>
                                                                 </button>
                                                             </td>
                                                         </tr>
                                                     </tbody>
+                                                    <% } %>
+                                                        <% } else { %>
+                                                            <p>No Coupon Added yet</p>
+                                                            <% } %>
+                                        </table>
                                     </div>
-                                    <!-- dropdown //end -->
-                                    </td>
-                                    </tr>
-
-                                    </tbody>
-                                    <% } %>
-
-                                        <% }else{ %>
-                                            No Coupon Added yet
-                                            <% } %>
-                                                </table>
                                 </div>
+
                             </div>
-                            <div class="pagination-area mt-30 mb-50">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination justify-content-start">
-                                        <% if (page> 1) { %>
-                                            <li class="page-item">
-                                                <a class="page-link" href="/admin/coupon/?page=<%= page - 1 %>">Prev</a>
+                        </div>
+                    </div>
+                    <div class="pagination-area mt-30 mb-50">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-start">
+                                <% if (page> 1) { %>
+                                    <li class="page-item">
+                                        <a class="page-link" href="/admin/coupon/?page=<%= page - 1 %>">Prev</a>
+                                    </li>
+                                    <% } %>
+                                        <% for (let i=1; i <=totalPages; i++) { %>
+                                            <li class="page-item <%= page === i ? 'active' : '' %>">
+                                                <a class="page-link" href="/admin/coupon/?page=<%= i %>">
+                                                    <%= i %>
+                                                </a>
                                             </li>
                                             <% } %>
-                                                <% for (let i=1; i <=totalPages; i++) { %>
-                                                    <li class="page-item <%= page === i ? 'active' : '' %>">
-                                                        <a class="page-link" href="/admin/coupon/?page=<%= i %>">
-                                                            <%= i %>
-                                                        </a>
+                                                <% if (page < totalPages) { %>
+                                                    <li class="page-item">
+                                                        <a class="page-link btn btn-primary"
+                                                            href="/admin/coupon/?page=<%= page + 1 %>">Next</a>
                                                     </li>
                                                     <% } %>
-                                                        <% if (page < totalPages) { %>
-                                                            <li class="page-item">
-                                                                <a class="page-link"
-                                                                    href="/admin/coupon/?page=<%= page + 1 %>">Next</a>
-                                                            </li>
-                                                            <% } %>
-                                    </ul>
-                                </nav>
-                            </div>
+                            </ul>
+                        </nav>
+                    </div>
+                </section>
+                <%- include('./partials/footer/footer.ejs') %>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+                    <script>
+                        $(function () {
+                            var dtToday = new Date();
+                            var month = dtToday.getMonth() + 1;
+                            var day = dtToday.getDate();
+                            var year = dtToday.getFullYear();
+                            if (month < 10) month = '0' + month.toString();
+                            if (day < 10) day = '0' + day.toString();
+                            var maxDate = year + '-' + month + '-' + day;
+                            $('#inputdate').attr('min', maxDate);
+                        });
 
-                            <!-- .col// -->
-                        </div>
-                        <!-- .row // -->
+                        async function HideAndUnhide(id, availability) {
+                            const response = await fetch(`/admin/manage-category/${id}?availability=${availability}`, {
+                                method: 'GET',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            });
+                            if (!response.ok) {
+                                console.log('Some network error occurred');
+                            } else {
+                                const data = await response.json();
+                                if (data.id) {
+                                    window.location.reload();
+                                } else {
+                                    console.log('Fetched data is unsuccessful');
+                                }
+                            }
+                        }
 
+                        const couponForm = document.getElementById('coupon-form');
+                        const couponCodeInput = document.getElementById('coupon-code');
+                        const discountInput = document.getElementById('discount');
+                        const couponError = document.getElementById('coupon-error');
+                        const discountError = document.getElementById('discount-error');
+                        const submitBtn = document.getElementById('submit-btn');
 
-</html>
-</div><!-- card body .// --></div><!-- card .// --></section><!-- content-main end// -->
-<%- include('./partials/footer/footer.ejs') %>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        $(function () {
-            var dtToday = new Date();
+                        const validateForm = () => {
+                            let valid = true;
 
-            var month = dtToday.getMonth() + 1; inputdate
-            var day = dtToday.getDate();
-            var year = dtToday.getFullYear();
-            if (month < 10)
-                month = '0' + month.toString();
-            if (day < 10)
-                day = '0' + day.toString();
-            var maxDate = year + '-' + month + '-' + day;
-            $('#inputdate').attr('min', maxDate);
-        });
-    </script>
-    <script>
-        async function HideAndUnhide(id, availability) {
-            const response = await fetch(`/admin/manage-category/${id}?availability=${availability}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    console.log(response);
-                    if (!response.ok) {
-                        console.log('some Network error occured')
-                    }
-                    return response.json()
-                })
-                .then(data => {
-                    if (data.id) {
-                        window.location.reload()
-                        console.log('data fetched successfully');
-                    } else {
-                        console.log('fetched data is unsuccessfull');
-                    }
-                })
+                            couponError.textContent = '';
+                            discountError.textContent = '';
 
-        }
-    </script>
-    <script>
-        reload()
-        let errorMsg = document.getElementById('error')
+                            if (!/^[A-Z0-9]{6}$/.test(couponCodeInput.value)) {
+                                couponError.textContent = 'Coupon code must be exactly 6 capital letters or numbers.';
+                                valid = false;
+                            }
 
-        function reload() {
-            setTimeout(() => {
-                errorMsg.innerHTML = ''
-            }, 4000)
-        }</script>
+                            const discountValue = parseInt(discountInput.value, 10);
+                            if (isNaN(discountValue) || discountValue < 1 || discountValue > 100) {
+                                discountError.textContent = 'Discount must be a number between 1 and 100.';
+                                valid = false;
+                            }
 
+                            submitBtn.disabled = !valid;
+                        }
 
-    </html>
+                        couponCodeInput.addEventListener('input', validateForm);
+                        discountInput.addEventListener('input', validateForm);
+                        couponForm.addEventListener('submit', function (event) {
+                            validateForm();
+                            if (submitBtn.disabled) {
+                                event.preventDefault();
+                            }
+                        });
+                    </script>
+        </main>
+    </body>
 
-    <script>
-        const categoryInput = document.getElementById('category');
-        const descriptionInput = document.getElementById('description');
-        const submitButton = document.querySelector('form button[type="submit"]'); // Select the submit button
-        const error = document.getElementById('error');
-
-        categoryInput.addEventListener('keyup', validateAndEnableSubmit);
-        descriptionInput.addEventListener('keyup', validateAndEnableSubmit);
-
-        function validateAndEnableSubmit() {
-            const categoryValue = categoryInput.value;
-            const descriptionValue = descriptionInput.value;
-            let errorMessage = '';
-
-            // Check for minimum 3 letters (same as before)
-            if (categoryValue.length < 3) {
-                errorMessage = 'Category name must be at least 3 letters long.';
-            }
-
-            // Check for special characters and numbers (excluding letters) (same as before)
-
-            // Check if description is empty
-            if (!descriptionValue.trim()) {
-                errorMessage += '\nDescription cannot be empty.';
-            }
-
-            // Update error message
-            error.innerHTML = errorMessage;
-
-            // Enable/disable submit button based on validation
-            submitButton.disabled = errorMessage !== ''; // Disable if there's an error message
-        }
-    </script>
+</html
