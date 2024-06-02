@@ -6,7 +6,7 @@ export const admin_signinGet = async (req, res) => {
     try {
 
         if (req.session.isAdminAuthenticated) {
-            res.redirect('/dashboard')
+            res.redirect('/admin/dashboard')
         } else {
             const messageAdmin = req.session.adminMessage 
             res.render('adminSignin',{messageAdmin})
@@ -45,7 +45,7 @@ export const admin_signinPost = async (req, res) => {
         console.log(isPass, 'compared password ')
         if (isPass === true) {
             req.session.isAdminAuthenticated = true
-            res.render('dashboard')
+            res.redirect('/admin/dashboard')
         } else {
             res.redirect('/admin')
         }

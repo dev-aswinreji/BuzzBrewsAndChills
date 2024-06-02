@@ -7,6 +7,10 @@ export async function findCategory() {
     return await categoryCollection.find()
 }
 
+export async function findCountOfCategoryForAdmin (){
+    return await categoryCollection.countDocuments()
+}
+
 export async function findAllActiveCategory(){
     return await categoryCollection.find({availability:'ACTIVE'})
 }
