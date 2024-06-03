@@ -25,18 +25,18 @@ const orderSchema = mongoose.Schema({
   },
   orderId: {
     type: String,
-    trim:true,
+    trim: true,
     required: true,
   },
   products: [
     {
-      productId:{
-        type:String,
-        required:true
+      productId: {
+        type: String,
+        required: true
       },
       status: {
         type: String,
-        enum: ["ORDER PLACED","PROCESSING", "OUT FOR DELIVERY", "DELIVERED", "CANCELLED"],
+        enum: ["ORDER PLACED", "PROCESSING", "OUT FOR DELIVERY", "DELIVERED", "CANCELLED"],
         default: "ORDER PLACED",
         required: true,
       },
@@ -52,14 +52,18 @@ const orderSchema = mongoose.Schema({
         type: Number,
         required: true,
       },
-      discount_price:{
-        type:Number
+      discount_price: {
+        type: Number
       }
     },
   ],
   address: {
     type: Object,
     required: true,
+  },
+  originalPrice: {
+    type: Number,
+    min: 0,
   },
   totalPrice: {
     type: Number,
@@ -77,15 +81,15 @@ const orderSchema = mongoose.Schema({
   onlinePaymentId: {
     type: String,
   },
-  timeStamp:{
-    type:String,
-    default:getFormattedDate,
+  timeStamp: {
+    type: String,
+    default: getFormattedDate,
   },
-  couponDiscount:{
-    type:Number,
+  couponDiscount: {
+    type: Number,
   },
-  couponCode :{
-    type:String
+  couponCode: {
+    type: String
   }
 });
 

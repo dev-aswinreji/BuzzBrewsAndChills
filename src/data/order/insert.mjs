@@ -6,52 +6,57 @@ import { findUserAddressUsingId } from "../users/find.mjs";
 import { updateCouponInUserData } from "../users/update.mjs";
 import { updateProductStockInOrder } from "./update.mjs";
 
-export async function   insertOrder(userId, userAddressId, paymentMethod,paymentId,couponDiscount) {
+export async function insertOrder(userId, userAddressId, paymentMethod, paymentId, couponDiscount) {
   try {
 
     const address = await findUserAddressUsingId(userAddressId);
-  console.log(address,'address is showing ');
-  const cart = await findCartDataUsingUserId(userId);
-  const orderId = await otpGenForForgotPassword();
-  const cartItems = cart.items.filter(item=>item.productId.stock.toString() <= item.quantity.toString() )
-  const couponCode = cart.couponCode
+    console.log(address, 'address is showing ');
+    const cart = await findCartDataUsingUserId(userId);
+    const orderId = await otpGenForForgotPassword();
+    const cartItems = cart.items.filter(item => item.productId.stock.toString() <= item.quantity.toString())
+    const couponCode = cart.couponCode
 
-  console.log(couponCode,'coupon code is showing rn adsfkkldjflkjdalsjf');
-  console.log(cartItems,'cartItems is working');
-  console.log(cart, "cart data is ");
-  console.log(orderId, "order id is working");
-  if (cart.items.length > 0) {
-    const order = await orderCollection.create([
-      {
-        userId: userId,
-        orderId: orderId,
-        products: cart.items.map((item) => ({
-          productId: item.productId._id,
-          name:item.productId.name,
-          quantity: item.quantity,
-          price: item.productId.discount_price,
-        })),
-        totalPrice: cart.totalPrice,
-        address: address,
-        paymentMethod: paymentMethod,
-        paymentId:paymentId,
-        couponDiscount:couponDiscount,
-        couponCode:couponCode,
-      },
-    ]);
-    console.log(order,'order is showing success or not ================================================================================================');
+    console.log(couponCode, 'coupon code is showing rn');
+    console.log(cartItems, 'cartItems is working');
+    console.log(cart, "cart data is ");
+    console.log(orderId, "order id is working");
+    const originalPrice = cart.items.reduce((total, item) => {
+      return total + (item.productId.discount_price * item.quantity);
+    }, 0);
+    console.log(originalPrice, 'original price is showing');
+    if (cart.items.length > 0) {
+      const order = await orderCollection.create([
+        {
+          userId: userId,
+          orderId: orderId,
+          products: cart.items.map((item) => ({
+            productId: item.productId._id,
+            name: item.productId.name,
+            quantity: item.quantity,
+            price: item.productId.discount_price,
+          })),
+          totalPrice: cart.totalPrice,
+          originalPrice:originalPrice,
+          address: address,
+          paymentMethod: paymentMethod,
+          paymentId: paymentId,
+          couponDiscount: couponDiscount,
+          couponCode: couponCode,
+        },
+      ]);
+      console.log(order, 'order is showing success or not ================================================================================================');
 
-    await cartCollection.deleteOne({ _id: cart._id });
+      await cartCollection.deleteOne({ _id: cart._id });
 
-    await updateProductStockInOrder(order);
-    const userDataUpdated = await updateCouponInUserData(userId,couponCode)
-    console.log(userDataUpdated,'update coupon to user Data');
-    return order
-  }
-  console.log(cart, "what is cart");
-    
+      await updateProductStockInOrder(order);
+      const userDataUpdated = await updateCouponInUserData(userId, couponCode)
+      console.log(userDataUpdated, 'update coupon to user Data');
+      return order
+    }
+    console.log(cart, "what is cart");
+
   } catch (error) {
-    console.log(error,'Insert order func ');
+    console.log(error, 'Insert order func ');
   }
-  
+
 }

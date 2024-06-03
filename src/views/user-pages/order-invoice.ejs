@@ -130,7 +130,7 @@
             <div class="info-details">
                 <%= orderData.address.name %><br>
                     <%= orderData.address.homeAddress %><br>
-                        <%= orderData.address.street %><br>
+                        <%#= orderData.address.street %><br>
                             <%= orderData.address.city %>, <%= orderData.address.state %><br>
                                     <%= orderData.address.country %>, <%= orderData.address.pincode %><br>
                                             Phone: <%= orderData.address.phoneNumber %><br>
@@ -148,6 +148,7 @@
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -166,30 +167,39 @@
                             </td>
                             <td>$<%= product.price * product.quantity %>
                             </td>
+                            <td>
+                                <%= product.status %>
+                            </td>
                         </tr>
                         <% }) %>
                             <tr>
-                                <td colspan="4" class="text-right">Sub Total</td>
+                                <td colspan="5" class="text-right">Original Amount</td>
+                                <td>$<%= orderData.originalPrice %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="text-right">Sub Total</td>
                                 <td>$<%= orderData.totalPrice %>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="4" class="text-right">Discount</td>
-                                <td>$<%= orderData.couponDiscount %>
+                                <td colspan="5" class="text-right">Discount</td>
+                                <td>
+                                    <%= orderData.couponDiscount %> %
                                 </td>
                             </tr>
                             <!-- <tr>
-                                <td colspan="4" class="text-right">Shipping Charge</td>
+                                <td colspan="5" class="text-right">Shipping Charge</td>
                                 <td>$<%#= orderData.status %>
                                 </td>
                             </tr> -->
                             <!-- <tr>
-                                <td colspan="4" class="text-right">Tax</td>
+                                <td colspan="5" class="text-right">Tax</td>
                                 <td>$<%#= orderData.vat %>
                                 </td>
                             </tr> -->
                             <tr>
-                                <td colspan="4" class="text-right">Total</td>
+                                <td colspan="5" class="text-right">Total</td>
                                 <td><strong>$<%= orderData.totalPrice %></strong></td>
                             </tr>
                 </tbody>
@@ -227,21 +237,22 @@
             doc.text("Billed To", 20, 70);
             doc.setTextColor(119, 119, 119);
             doc.setFontSize(14);
-            doc.text(`${orderData.address.name}\n${orderData.address.homeAddress}\n${orderData.address.street}\n${orderData.address.city}, ${orderData.address.state}\n${orderData.address.country}, ${orderData.address.pincode}\nPhone: ${orderData.address.phoneNumber}\nEmail: ${orderData.address.email}`, 20, 80);
+            doc.text(`${orderData.address.name}\n${orderData.address.homeAddress}\n${orderData.address.city}, ${orderData.address.state}\n${orderData.address.country}, ${orderData.address.pincode}\nPhone: ${orderData.address.phoneNumber}\n`, 20, 80);
 
             // Order Summary
             doc.setTextColor(34, 34, 34);
             doc.text("Order Summary", 20, 130);
             doc.autoTable({
                 startY: 140,
-                head: [['No.', 'Item', 'Price', 'Quantity', 'Total']],
+                head: [['No.', 'Item', 'Price', 'Quantity', 'Total', 'Status']],
                 body: orderData.products.map((product, index) => {
                     return [
                         index + 1,
                         product.name,
                         `$${product.price}`,
                         product.quantity,
-                        `$${product.price * product.quantity}`
+                        `$${product.price * product.quantity}`,
+                        `${product.status}`
                     ];
                 }),
                 theme: 'grid',
@@ -261,10 +272,10 @@
             // Total
             const totalY = doc.previousAutoTable.finalY + 10;
             doc.setFontSize(14);
-            doc.text(`Sub Total: $${orderData.totalPrice}`, 20, totalY);
-            doc.text(`Discount: $${orderData.couponDiscount}`, 20, totalY + 10);
+            doc.text(`Original Amount: $${orderData.originalPrice}`, 20, totalY);
+            doc.text(`Discount: ${orderData.couponDiscount} %`, 20, totalY + 10);
+            doc.text(`Sub Total: $${orderData.totalPrice}`, 20, totalY + 30);
             // doc.text(`Shipping Charge: $${orderData.status}`, 20, totalY + 20);
-            // doc.text(`Tax: $${orderData.vat}`, 20, totalY + 30);
             doc.text(`Total: $${orderData.totalPrice}`, 20, totalY + 40);
 
             doc.save('invoice.pdf');
