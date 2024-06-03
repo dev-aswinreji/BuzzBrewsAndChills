@@ -21,24 +21,24 @@ export const admin_dashboardGet = async (req,res) =>{
         const totalRevenue = total.toFixed(2)
         console.log(total,'total is showing');
         console.log(totalRevenue,'total price is showing heh  ');
-        const monthly = await getMonthlySalesReport()
-        console.log(monthly,'monthly report');
+        const monthlyData = await getMonthlySalesReport()
+        console.log(monthlyData,'monthly report');
 
         
         // order.reduce((acc,curr)=>acc+curr)
         // console.log(order.length);
         // console.log(orderCount,'order count is showing');
-        const yearly = await getYearlySalesReport()
-        console.log(yearly,'yearl data is showing');
+        const yearlyData = await getYearlySalesReport()
+        console.log(yearlyData,'yearl data is showing');
 
-        const weekly = await getWeeklySalesReport()
-        console.log(weekly,'weekly report is showing');
+        const weeklyData = await getWeeklySalesReport()
+        console.log(weeklyData,'weekly report is showing');
 
-        const daily = await getDailySalesReport()
-        console.log(daily,'dailt report is showing');
+        const dailyData = await getDailySalesReport()
+        console.log(dailyData,'dailt report is showing');
 
 
-        res.render('dashboard',{orderCount:totalDeliveredOrders,totalRevenue:totalDeliveredCost,productCount,categoryCount})
+        res.render('dashboard',{orderCount:totalDeliveredOrders,totalRevenue:totalDeliveredCost,productCount,categoryCount,yearlyData,monthlyData,weeklyData,dailyData})
     } catch (error) {
         console.log(error,'ADMIN SALES REPORT PAGE GET')
     }

@@ -14,7 +14,7 @@ import {admin_authentication} from "../../../middleware/admin-auth.mjs";
 import { admin_orderDetailsGet, admin_orderDetailsPost } from "../../../controller/admin/home/order-details.mjs";
 import { admin_couponGet, admin_couponPost } from "../../../controller/admin/home/coupon.mjs";
 import { admin_editCouponGet } from "../../../controller/admin/home/edit-coupon.mjs";
-import { admin_salesReportGet } from "../../../controller/admin/home/sales-report.mjs";
+import { admin_salesReportDownloadGet, admin_salesReportGet } from "../../../controller/admin/home/sales-report.mjs";
 
 const adminHomeRoute = express.Router()
 
@@ -52,5 +52,6 @@ adminHomeRoute.post('/coupon',admin_couponPost)
 adminHomeRoute.get('/edit-coupon',admin_editCouponGet)
 
 adminHomeRoute.get('/sales-report',admin_salesReportGet)
+adminHomeRoute.get('/report/download/:period',admin_salesReportDownloadGet)
 
 export default adminHomeRoute

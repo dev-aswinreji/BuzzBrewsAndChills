@@ -125,7 +125,9 @@
                                 <span class="icon icon-sm rounded-circle bg-success-light"><i
                                         class="text-success material-icons md-local_shipping"></i></span>
                                 <div class="text">
-                                    <h6 class="mb-1 card-title">Orders</h6> <span><%= orderCount %> </span>
+                                    <h6 class="mb-1 card-title">Orders</h6> <span>
+                                        <%= orderCount %>
+                                    </span>
                                     <span class="text-sm">
                                         Excluding orders in transit
                                     </span>
@@ -139,9 +141,11 @@
                                 <span class="icon icon-sm rounded-circle bg-warning-light"><i
                                         class="text-warning material-icons md-qr_code"></i></span>
                                 <div class="text">
-                                    <h6 class="mb-1 card-title">Products</h6> <span><%= productCount %> </span>
+                                    <h6 class="mb-1 card-title">Products</h6> <span>
+                                        <%= productCount %>
+                                    </span>
                                     <span class="text-sm">
-                                        In <%= categoryCount %>  Categories
+                                        In <%= categoryCount %> Categories
                                     </span>
                                 </div>
                             </article>
@@ -162,7 +166,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="chart-container">
+                    <h2>Daily Report</h2>
+                    <canvas id="dailyChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2>Weekly Report</h2>
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2>Monthly Report</h2>
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2>Yearly Report</h2>
+                    <canvas id="yearlyChart"></canvas>
+                </div>
+                <!-- <div class="row">
                     <div class="col-xl-8 col-lg-12">
                         <div class="card mb-4">
                             <article class="card-body">
@@ -181,9 +201,9 @@
                         <div class="card mb-4">
                             <article class="card-body">
                                 <h5 class="card-title">Marketing Channel</h5>
-                                <span class="text-muted font-xs">Facebook</span>
+                                <span class="text-muted font-xs" id="dailyChart">Facebook</span>
                                 <div class="progress mb-3">
-                                    <div class="progress-bar" role="progressbar" style="width: 15%">15%</div>
+                                    <div class="progress-bar" role="progressbar" id="dailyChart" style="width: 15%">15%</div>
                                 </div>
                                 <span class="text-muted font-xs">Instagram</span>
                                 <div class="progress mb-3">
@@ -204,7 +224,7 @@
                             </article>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="pagination-area mt-30 mb-50">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-start">
@@ -221,6 +241,63 @@
             </section> <!-- content-main end// -->
 
             <%- include('./partials/footer/footer.ejs') %>
+                <script>
+                    const monthly = `<%- JSON.stringify(monthlyData) %>`;
+                    const monthlyData = JSON.parse(monthly)
+                    const yearly = `<%- JSON.stringify(yearlyData) %>`
+                    const yearlyData = JSON.parse(yearly)
+                    const weekly = `<%- JSON.stringify(weeklyData) %>`;
+                    const weeklyData = JSON.parse(weekly)
+                    const daily = `<%- JSON.stringify(dailyData) %>`
+                    const dailyData = JSON.parse(daily)
+
+                    const renderChart = (ctx, labels, data, label) => {
+                        new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: label,
+                                    data: data,
+                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    };
+
+                    // Monthly chart
+                    const monthlyLabels = monthlyData.map(data => `${data.year}-${data.month}`);
+                    const monthlyCosts = monthlyData.map(data => data.totalDeliveredCost);
+                    const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+                    renderChart(monthlyCtx, monthlyLabels, monthlyCosts, 'Total Delivered Cost');
+
+                    // Yearly chart
+                    const yearlyLabels = yearlyData.map(data => data.year);
+                    const yearlyCosts = yearlyData.map(data => data.totalDeliveredCost);
+                    const yearlyCtx = document.getElementById('yearlyChart').getContext('2d');
+                    renderChart(yearlyCtx, yearlyLabels, yearlyCosts, 'Total Delivered Cost');
+
+                    // Weekly chart
+                    const weeklyLabels = weeklyData.map(data => `Year ${data.year} - Week ${data.week}`);
+                    const weeklyCosts = weeklyData.map(data => data.totalDeliveredCost);
+                    const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
+                    renderChart(weeklyCtx, weeklyLabels, weeklyCosts, 'Total Delivered Cost');
+
+                    // Daily chart
+                    const dailyLabels = dailyData.map(data => `${data.year}-${data.month}-${data.day}`);
+                    const dailyCosts = dailyData.map(data => data.totalDeliveredCost);
+                    const dailyCtx = document.getElementById('dailyChart').getContext('2d');
+                    renderChart(dailyCtx, dailyLabels, dailyCosts, 'Total Delivered Cost');
+                </script>
                 <!-- <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         (function ($) {
