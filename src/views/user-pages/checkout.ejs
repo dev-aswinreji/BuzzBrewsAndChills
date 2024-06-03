@@ -115,22 +115,20 @@
                                     <div id="collapseAddress" class="collapse show" aria-labelledby="headingOne"
                                         data-parent="#accordionExample">
                                         <div class="card-body">
-                                            <% if(addresses){ %>
+                                            <% if(addresses.length> 0){ %>
                                                 <% addresses.forEach(address=> { %>
 
-                                                        <label>
-                                                            <input type="radio" name="selectedAddress"
-                                                                value="<%= address._id %>" checked>
-                                                            <span class="p-2">Name: <%=
-                                                                    address.name.toUpperCase() %>
-                                                            </span><br>
-                                                            <span class="p-2">Phone No.: <%= address.phoneNumber
-                                                                    %>
-                                                            </span><br>
-                                                            <span class="p-2">Home Address: <%=
-                                                                    address.homeAddress %></span><br>
-                                                            <span class="p-2">State: <%= address.state %></span>
-                                                        </label>
+                                                    <label>
+                                                        <input type="radio" name="selectedAddress"
+                                                            value="<%= address._id %>" checked>
+                                                        <span class="p-2">Name: <%= address.name.toUpperCase() %>
+                                                        </span><br>
+                                                        <span class="p-2">Phone No.: <%= address.phoneNumber %>
+                                                        </span><br>
+                                                        <span class="p-2">Home Address: <%= address.homeAddress %>
+                                                        </span><br>
+                                                        <span class="p-2">State: <%= address.state %></span>
+                                                    </label>
                                                     <% })} else { %>
 
                                                         <h4>No address Found</h4>
@@ -157,31 +155,52 @@
                                         data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="billing-address-form">
-                                                <form action="/add-address" method="post">
+                                                <form id="addressForm" action="/add-address?path=checkout" method="post"
+                                                    novalidate>
                                                     <input type="text" name="path" value="checkout" hidden>
                                                     <div class="form-group">
                                                         <input type="text" name="name" class="form-control"
-                                                            placeholder="Name" required>
+                                                            placeholder="Name" required pattern="[A-Za-z\s]+"
+                                                            title="Name should contain only letters and spaces">
+                                                        <div class="error-message" id="name-error"></div>
                                                     </div>
                                                     <div class="form-group">
                                                         <input type="tel" name="phoneNumber" class="form-control"
-                                                            placeholder="Phone" required>
+                                                            placeholder="Phone" required pattern="\d{10}"
+                                                            title="Phone number should be 10 digits long">
+                                                        <div class="error-message" id="phone-error"></div>
                                                     </div>
                                                     <div class="form-group">
                                                         <input type="text" name="homeAddress" class="form-control"
                                                             placeholder="Home Address" required>
+                                                        <div class="error-message" id="address-error"></div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <input type="text" name="city" class="form-control"
-                                                            placeholder="City" required>
+                                                        <select name="country" id="country" class="form-control"
+                                                            required>
+                                                            <option value="">Select Country</option>
+                                                            <option value="India">India</option>
+                                                            <option value="USA">USA</option>
+                                                        </select>
+                                                        <div class="error-message" id="country-error"></div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <select name="city" id="city" class="form-control" required>
+                                                            <option value="">Select City</option>
+                                                        </select>
+                                                        <div class="error-message" id="city-error"></div>
                                                     </div>
                                                     <div class="form-group">
                                                         <input type="text" name="state" class="form-control"
-                                                            placeholder="State" required>
+                                                            placeholder="State" required pattern="[A-Za-z\s]+"
+                                                            title="State should contain only letters and spaces">
+                                                        <div class="error-message" id="state-error"></div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <input type="text" name="country" class="form-control"
-                                                            placeholder="Country" required>
+                                                        <input type="number" name="pincode" class="form-control"
+                                                            placeholder="Pincode" required pattern="\d{6}"
+                                                            title="Pincode should be 6 digits long">
+                                                        <div class="error-message" id="pincode-error"></div>
                                                     </div>
                                                     <div class="form-group">
                                                         <textarea name="bill" id="bill" class="form-control" cols="30"
@@ -248,7 +267,7 @@
                                                         <br><br><br>
                                                         Coupon Code :
                                                     </td>
-                                                    
+
                                                     <% if (cartDatas.couponDiscount) { %>
                                                         <td>
                                                             <del>₹<%= totalPrice.toFixed(2) %></del>
@@ -257,10 +276,10 @@
                                                                 <%= cartDatas.totalPrice.toFixed(2) %>
                                                             </span>
                                                             <h6>Coupon Applied</h6>
-                                                           
-                                                            
+
+
                                                             <span id="couponCode">
-                                                                <%= cartDatas.couponCode %> 
+                                                                <%= cartDatas.couponCode %>
                                                             </span>
 
                                                         </td>
@@ -273,15 +292,15 @@
                                 </tbody>
                             </table>
                             <div class="coupon-form-wrap">
-                                
+
                                 <% if (wallet) { %>
-                                    
+
                                     <h6>Wallet Balance : Rs <span id="wallet">
-                                        <%= wallet.walletAmount.toFixed(2) %>
-                                        <% }else {%>
-                                            Wallet balance is Empty
-                                            <% } %> 
-                                    </span> </h6>
+                                            <%= wallet.walletAmount.toFixed(2) %>
+                                                <% }else {%>
+                                                    Wallet balance is Empty
+                                                    <% } %>
+                                        </span> </h6>
 
                             </div>
                             <% if (!cartDatas.couponDiscount) { %>
@@ -322,57 +341,194 @@
 
             <%- include('./partials/footer/footer.ejs') %>
 
+
+
                 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                
 
                 <script>
-                    async function paymentUsingWallet() {
-                        const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
-                        const couponDiscount = document.getElementById('couponDiscount').innerHTML
-                        const wallet = document.getElementById('wallet').innerHTML
-                        const total = document.getElementById('totalPrice').innerHTML
-                        const walletAmount = Number(wallet)
-                        const totalPrice = Number(total)
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const form = document.getElementById('addressForm');
+                        const nameInput = document.querySelector('input[name="name"]');
+                        const phoneInput = document.querySelector('input[name="phoneNumber"]');
+                        const addressInput = document.querySelector('input[name="homeAddress"]');
+                        const countrySelect = document.getElementById('country');
+                        const citySelect = document.getElementById('city');
+                        const stateInput = document.querySelector('input[name="state"]');
+                        const pincodeInput = document.querySelector('input[name="pincode"]');
 
-                        console.log(totalPrice);
-                        console.log(wallet, 'wallet');
-                        if (totalPrice <= walletAmount) {
-                            const paymentMethod = 'Wallet'
-                            await fetch(`/wallet-payment/?totalPrice=${totalPrice}`,{
-                                method:'GET',
-                                headers:{
-                                    'Content-Type':'application/json'
+                        form.addEventListener('submit', function (event) {
+                            const errors = {};
+
+                            if (!nameInput.validity.valid) {
+                                errors.name = 'Name should contain only letters and spaces.';
+                            }
+
+                            if (!phoneInput.validity.valid) {
+                                errors.phone = 'Phone number should be 10 digits long.';
+                            }
+
+                            if (!addressInput.validity.valid) {
+                                errors.address = 'Please provide a valid home address.';
+                            }
+
+                            if (!countrySelect.validity.valid) {
+                                errors.country = 'Please select a country.';
+                            }
+
+                            if (!citySelect.validity.valid) {
+                                errors.city = 'Please select a city.';
+                            }
+
+                            if (!stateInput.validity.valid) {
+                                errors.state = 'State should contain only letters and spaces.';
+                            }
+
+                            if (!pincodeInput.validity.valid) {
+                                errors.pincode = 'Pincode should be 6 digits long.';
+                            }
+
+                            showErrors(errors);
+                            if (Object.keys(errors).length > 0) {
+                                event.preventDefault();
+                            }
+                        });
+
+                        function showErrors(errors) {
+                            const errorElements = {
+                                name: document.getElementById('name-error'),
+                                phone: document.getElementById('phone-error'),
+                                address: document.getElementById('address-error'),
+                                country: document.getElementById('country-error'),
+                                city: document.getElementById('city-error'),
+                                state: document.getElementById('state-error'),
+                                pincode: document.getElementById('pincode-error')
+                            };
+
+                            Object.keys(errors).forEach(field => {
+                                const errorElement = errorElements[field];
+                                if (errorElement) {
+                                    errorElement.textContent = errors[field];
                                 }
-                            }).then(response => response.ok ? response.json() : console.log('Network error'))
-                                .then((data) => {
-                                    if (data.result === 'success')
-                                     walletPayment()
-                                }).catch(err => {
-                                    console.log('Error:', err);
-                                });
-                  async function walletPayment (){
-                       await fetch(`/order-add/?paymentMethod=${paymentMethod}&address=${selectedAddress}&couponDiscount=${couponDiscount}`, {
-                                method: 'GET',
-                                headers: { 'Content-Type': 'application/json' }
-                            }).then(response => response.ok ? response.json() : console.log('Network error'))
-                                .then((data) => {
-                                    if (data.result === 'success')
-                                        window.location.href = '/order-placed';
-                                }).catch(err => {
-                                    console.log('Error:', err);
-                                });
+                            });
+
+                            // Clear previous error messages
+                            Object.keys(errorElements).forEach(field => {
+                                const errorElement = errorElements[field];
+                                if (!errors[field] && errorElement) {
+                                    errorElement.textContent = '';
                                 }
-                           
-                        } else {
-                            Swal.fire('Insufficient fund kindly update amount in wallet')
+                            });
                         }
+                        const citiesByCountry = {
+                            India: ["Delhi", "Mumbai", "Bangalore", "Chennai"],
+                            USA: ["New York", "Los Angeles", "Chicago", "Houston"]
+                        };
 
+                        countrySelect.addEventListener('change', function () {
+                            const selectedCountry = this.value;
+                            citySelect.innerHTML = '<option value="">Select City</option>';
+                            if (selectedCountry && citiesByCountry[selectedCountry]) {
+                                citiesByCountry[selectedCountry].forEach(city => {
+                                    const option = document.createElement('option');
+                                    option.value = city;
+                                    option.textContent = city;
+                                    citySelect.appendChild(option);
+                                });
+                            }
+                        });
+
+                        pincodeInput.addEventListener('input', function () {
+                            const pincode = this.value;
+                            const pincodeError = document.getElementById('pincode-error');
+                            if (pincode.length !== 6) {
+                                pincodeError.textContent = 'Pincode should be 6 digits long.';
+                            } else {
+                                pincodeError.textContent = '';
+                            }
+
+                            // Example of auto-filling based on pincode. Replace with actual API call if necessary.
+                            if (pincode.length === 6) {
+                                if (pincode === '110001') {
+                                    stateInput.value = 'Delhi';
+                                    citySelect.innerHTML = '<option value="Delhi">Delhi</option>';
+                                    homeAddressInput.value = 'Connaught Place';
+                                } else if (pincode === '400001') {
+                                    stateInput.value = 'Maharashtra';
+                                    citySelect.innerHTML = '<option value="Mumbai">Mumbai</option>';
+                                    homeAddressInput.value = 'Fort';
+                                }
+                            }
+                        });
+
+
+                        document.getElementById('addressForm').addEventListener('submit', function (event) {
+                            const form = event.target;
+                            if (!form.checkValidity()) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                                Swal.fire('Please fill out the form correctly.');
+                            }
+                            form.classList.add('was-validated');
+                        });
+                    })
+                </script>
+                <script>
+                    const address = `<%- JSON.stringify(addresses)  %>`
+
+
+
+                    async function paymentUsingWallet() {
+                        if (address.length > 0) {
+                            Swal.fire('Address not found kindly add to continue')
+                        } else {
+                            const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
+                            const couponDiscount = document.getElementById('couponDiscount').innerHTML
+                            const wallet = document.getElementById('wallet').innerHTML
+                            const total = document.getElementById('totalPrice').innerHTML
+                            const walletAmount = Number(wallet)
+                            const totalPrice = Number(total)
+
+                            console.log(totalPrice);
+                            console.log(wallet, 'wallet');
+                            if (totalPrice <= walletAmount) {
+                                const paymentMethod = 'Wallet'
+                                await fetch(`/wallet-payment/?totalPrice=${totalPrice}`, {
+                                    method: 'GET',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    }
+                                }).then(response => response.ok ? response.json() : console.log('Network error'))
+                                    .then((data) => {
+                                        if (data.result === 'success')
+                                            walletPayment()
+                                    }).catch(err => {
+                                        console.log('Error:', err);
+                                    });
+                                async function walletPayment() {
+                                    await fetch(`/order-add/?paymentMethod=${paymentMethod}&address=${selectedAddress}&couponDiscount=${couponDiscount}`, {
+                                        method: 'GET',
+                                        headers: { 'Content-Type': 'application/json' }
+                                    }).then(response => response.ok ? response.json() : console.log('Network error'))
+                                        .then((data) => {
+                                            if (data.result === 'success')
+                                                window.location.href = '/order-placed';
+                                        }).catch(err => {
+                                            console.log('Error:', err);
+                                        });
+                                }
+
+                            } else {
+                                Swal.fire('Insufficient fund kindly update amount in wallet')
+                            }
+                        }
                     }
+
                 </script>
 
                 <script>
                     async function removeCoupon() {
+
                         const totalPrice = document.getElementById('totalPrice').innerHTML
                         const couponDiscount = document.getElementById('couponDiscount').innerHTML
                         await fetch(`/remove-coupon/?totalPrice=${totalPrice}&couponDiscount=${couponDiscount}`, {
@@ -449,82 +605,92 @@
                     }
                 </script>
                 <script>
+
                     document.getElementById('pay-button').addEventListener('click', async function (e) {
                         e.preventDefault();
-                        const amount = document.getElementById('totalPrice').innerHTML;
-                        console.log(amount, 'amount is showing');
-                        const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
-                        const couponDiscount = document.getElementById('couponDiscount').innerHTML
-                        const couponCode = document.getElementById('couponCode').innerHTML
-                        console.log(couponCode,'coupon Code is showing');
-                        console.log(couponDiscount, 'coupon discount is showing');
-                        console.log(selectedAddress, 'selectedAddress is showing')
-                        try {
-                            console.log('razorpay is working');
-                            const response = await fetch(`/razorpay-payment`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({ amount: amount.trim() })
-                            });
+                        if (address.length > 0) {
+                            Swal.fire('Address not found kindly add to continue')
+                        } else {
+                            const amount = document.getElementById('totalPrice').innerHTML;
+                            console.log(amount, 'amount is showing');
+                            const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
+                            const couponDiscount = document.getElementById('couponDiscount').innerHTML
+                            const couponCode = document.getElementById('couponCode').innerHTML
+                            console.log(couponCode, 'coupon Code is showing');
+                            console.log(couponDiscount, 'coupon discount is showing');
+                            console.log(selectedAddress, 'selectedAddress is showing')
+                            try {
+                                console.log('razorpay is working');
+                                const response = await fetch(`/razorpay-payment`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ amount: amount.trim() })
+                                });
 
-                            if (!response.ok) {
-                                throw new Error('Failed to create order');
-                            }
-
-                            const order = await response.json();
-                            console.log(order, 'order is showing');
-                            const options = {
-                                key: 'rzp_test_e55Dk1oHQbvyBo',
-                                amount: order.amount,
-                                currency: order.currency,
-                                order_id: order.id,
-                                name: 'Your Company Name',
-                                description: 'Test Payment',
-                                image: 'https://via.placeholder.com/150',
-                                handler: function (response) {
-                                    Swal.fire({
-                                        text: 'Payment Successful! Payment ID: ' + response.razorpay_payment_id,
-                                        icon: 'success'
-                                    }).then(() => {
-                                        razorpaySuccess(response.razorpay_payment_id);
-                                    });
-                                },
-                                prefill: {
-                                    name: 'John Doe',
-                                    email: 'john.doe@example.com',
-                                    contact: '1234567890'
-                                },
-                                theme: {
-                                    color: '#528FF0'
+                                if (!response.ok) {
+                                    throw new Error('Failed to create order');
                                 }
-                            };
 
-                            const razorpayInstance = new Razorpay(options);
-                            razorpayInstance.open();
+                                const order = await response.json();
+                                console.log(order, 'order is showing');
+                                const options = {
+                                    key: 'rzp_test_e55Dk1oHQbvyBo',
+                                    amount: order.amount,
+                                    currency: order.currency,
+                                    order_id: order.id,
+                                    name: 'Your Company Name',
+                                    description: 'Test Payment',
+                                    image: 'https://via.placeholder.com/150',
+                                    handler: function (response) {
+                                        Swal.fire({
+                                            text: 'Payment Successful! Payment ID: ' + response.razorpay_payment_id,
+                                            icon: 'success'
+                                        }).then(() => {
+                                            razorpaySuccess(response.razorpay_payment_id);
+                                        });
+                                    },
+                                    prefill: {
+                                        name: 'John Doe',
+                                        email: 'john.doe@example.com',
+                                        contact: '1234567890'
+                                    },
+                                    theme: {
+                                        color: '#528FF0'
+                                    }
+                                };
 
-                            async function razorpaySuccess(paymentId) {
-                                const paymentMethod = 'Online Payment';
-                                await fetch(`/order-add/?paymentMethod=${paymentMethod}&paymentId=${paymentId}&address=${selectedAddress}&couponDiscount=${couponDiscount}&couponCode=${couponCode}`, {
-                                    method: 'GET',
-                                    headers: { 'Content-Type': 'application/json' }
-                                }).then(response => response.ok ? response.json() : console.log('Network error'))
-                                    .then((data) => {
-                                        if (data.result === 'success')
-                                            window.location.href = '/order-placed';
-                                    }).catch(err => {
-                                        console.log('Error:', err);
-                                    });
+                                const razorpayInstance = new Razorpay(options);
+                                razorpayInstance.open();
+
+                                async function razorpaySuccess(paymentId) {
+                                    const paymentMethod = 'Online Payment';
+                                    await fetch(`/order-add/?paymentMethod=${paymentMethod}&paymentId=${paymentId}&address=${selectedAddress}&couponDiscount=${couponDiscount}&couponCode=${couponCode}`, {
+                                        method: 'GET',
+                                        headers: { 'Content-Type': 'application/json' }
+                                    }).then(response => response.ok ? response.json() : console.log('Network error'))
+                                        .then((data) => {
+                                            if (data.result === 'success')
+                                                window.location.href = '/order-placed';
+                                        }).catch(err => {
+                                            console.log('Error:', err);
+                                        });
+                                }
+                            } catch (error) {
+                                console.error('Error:', error);
+                                alert('Failed to create order');
                             }
-                        } catch (error) {
-                            console.error('Error:', error);
-                            alert('Failed to create order');
                         }
                     });
 
+
                     function proceedToPayment() {
-                        orderPlace();
+                        if (address.length > 0) {
+                            Swal.fire('Address not found kindly add to continue')
+                        } else {
+                            orderPlace();
+                        }
                     }
 
                     async function orderPlace() {

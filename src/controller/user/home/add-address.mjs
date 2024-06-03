@@ -25,7 +25,8 @@ export const user_addAddressPost = async (req, res) => {
         city: req.body.city,
         state:req.body.state,
         country: req.body.country,
-        isDefault:isFirstAddress?'YES':'NO'
+        pincode:req.body.pincode,
+        // isDefault:isFirstAddress?'YES':'NO'
     }
     console.log(userAddress,'user addres haha');
     console.log(userAddress.isDefault,'is default is');

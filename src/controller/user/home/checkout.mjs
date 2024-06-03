@@ -15,8 +15,9 @@ export const user_checkoutGet = async (req, res) => {
         let totalPrice = Number(req.query.totalPrice)
         let updatedTotalPrice = totalPrice - (totalPrice * cartDatas.couponDiscount/100)
         const userDatas = await findAllUserAddresses(userId)
-        console.log(userDatas.addresses,'addreses is showing')
+        // console.log(userDatas.addresses,'addreses is showing')
         let addresses = userDatas.addresses
+        console.log(addresses,'address is showing ===========================================');
         console.log(totalPrice,'what is happening');
         console.log(updatedTotalPrice,'update total price is showing');
         if(cartDatas.couponDiscount && updatedTotalPrice !== cartDatas.totalPrice){
