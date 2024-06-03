@@ -197,7 +197,11 @@
 
             <div id="address-container">
                 <div class="address-title">
-                    <h4>Delivery Address: <%= order[0].address %></h4>
+                    <% order.forEach(address => { %>
+                     
+                    
+                    <h4>Delivery Address: <%= order[0].address.homeAddress %></h4>
+                    <% }) %>
                 </div>
             </div>
         </div>

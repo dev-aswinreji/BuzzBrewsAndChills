@@ -6,7 +6,7 @@ import { findUserAddressUsingId } from "../users/find.mjs";
 import { updateCouponInUserData } from "../users/update.mjs";
 import { updateProductStockInOrder } from "./update.mjs";
 
-export async function insertOrder(userId, userAddressId, paymentMethod,paymentId,couponDiscount) {
+export async function   insertOrder(userId, userAddressId, paymentMethod,paymentId,couponDiscount) {
   try {
 
     const address = await findUserAddressUsingId(userAddressId);

@@ -440,6 +440,7 @@
 
                         pincodeInput.addEventListener('input', function () {
                             const pincode = this.value;
+                            console.log(pincode,'hello');
                             const pincodeError = document.getElementById('pincode-error');
                             if (pincode.length !== 6) {
                                 pincodeError.textContent = 'Pincode should be 6 digits long.';
@@ -474,14 +475,13 @@
                     })
                 </script>
                 <script>
-                    const address = `<%- JSON.stringify(addresses)  %>`
-
-
-
+                    const addressStr = `<%- JSON.stringify(addresses)  %>`
+                    const address = JSON.parse(addressStr)
+                    console.log(address,'address is showing');
+                    console.log(address.length,'length is showing');
                     async function paymentUsingWallet() {
+                        console.log(address.length > 0);
                         if (address.length > 0) {
-                            Swal.fire('Address not found kindly add to continue')
-                        } else {
                             const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
                             const couponDiscount = document.getElementById('couponDiscount').innerHTML
                             const wallet = document.getElementById('wallet').innerHTML
@@ -520,7 +520,10 @@
 
                             } else {
                                 Swal.fire('Insufficient fund kindly update amount in wallet')
-                            }
+                            }                                                                                                                                                                                                                                                                                                                                                                                                                         
+                        } else {
+                            Swal.fire('Address not found kindly add to continue')
+                          
                         }
                     }
 
@@ -608,7 +611,7 @@
 
                     document.getElementById('pay-button').addEventListener('click', async function (e) {
                         e.preventDefault();
-                        if (address.length > 0) {
+                        if (address.length == 0) {
                             Swal.fire('Address not found kindly add to continue')
                         } else {
                             const amount = document.getElementById('totalPrice').innerHTML;
