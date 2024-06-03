@@ -25,7 +25,7 @@ export const user_cancelOrderGet = async (req, res) => {
     if(paymentMethod === 'Online Payment' || 'Wallet'){
       const walletTransactions = {
         date:new Date(),
-        type:'DEBIT',
+        type:'CREDIT',
         amount:totalPrice.toFixed(2),
       }
      const updateWallet = await updateUserWallet(userId,totalPrice,walletTransactions)

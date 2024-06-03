@@ -8,7 +8,7 @@ export const user_addToCartManageGet = async (req,res) => {
     const userId = req.session.USER_ID
     const productId = req.query.productId
     const quantity = req.query.quantity
-
+    console.log(quantity,'quanitity from query is showing');
     console.log(userId,'user id');
     console.log(productId,'productId');
 
@@ -16,11 +16,12 @@ export const user_addToCartManageGet = async (req,res) => {
 
     await addToCartDataManageQuantity(userId,product,quantity)
 
-    const uniqueProduct = await cartCollection.findOne({
+    const uniqueProduct = await cartCollection.findOne({userId:userId,
         "items.productId": new ObjectId(product._id)
     })
 
     console.log(uniqueProduct,'uniqueProduct');
+    console.log(uniqueProduct.items,'unique product items');
 
     const quantityFromUpdatedData = uniqueProduct.items.filter(item =>item.productId.toString()=== product._id.toString())
 

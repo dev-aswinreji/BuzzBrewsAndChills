@@ -44,7 +44,8 @@
 										<tbody>
 
 											<% for( let i=0; i < cart.items.length; i++ ) { %>
-												<input type="text" name="" value="<%= cart.items[i].productId.stock %>" hidden id="stock_<%= i %>">
+												<input type="text" name="" value="<%= cart.items[i].productId.stock %>"
+													hidden id="stock_<%= i %>">
 												<tr class="table-body-row">
 													<td class="product-remove"><button
 															onclick="deleteCartProduct(`<%= cart.items[i].productId._id %>`)">
@@ -86,7 +87,6 @@
 												<th>Price</th>
 											</tr>
 										</thead>
-										<% console.log(cart.totalPrice ,'================adfdsa=========================================adfd======================'); %> 
 										<tbody>
 											<tr class="total-data">
 												<td><strong>Subtotal: </strong></td>
@@ -161,74 +161,79 @@
 			const quantityValue = quantityTypeString.value
 			const quantity = Number(quantityValue)
 			console.log(quantity, 'quantity of each product is getting');
-			const priceText = document.getElementById('price_'+index).innerHTML 
-			const price = priceText.replace(/Rs/gi,'')
-			console.log(price,'price of each product is showing');
+			const priceText = document.getElementById('price_' + index).innerHTML
+			const price = priceText.replace(/Rs/gi, '')
+			console.log(price, 'price of each product is showing');
 
-			const stockTypeString = document.getElementById('stock_' + index).value 
+			const stockTypeString = document.getElementById('stock_' + index).value
 			const stock = Number(stockTypeString)
-			console.log(stock,'stock is showing',quantity,'quanitity is showing'); 
-			console.log(typeof quantity,'what is heppeing');
-			console.log(typeof stock,'what the h');
-			console.log(quantity<=stock,'what is happening');
-			console.log(2<=12,'what is the issue');
-			if(quantity<=stock){
-				
-			
-			 quantity <= 10 ? await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}).then(response =>response.ok ? response.json() : console.log('Some network error occured while fetching'))
-				.then(
-					data => {
-						console.log(data)
-						console.log(data.totalPrice[0].totalPrice,'total price is showing ');
-						console.log(data.quantityFromUpdatedData[0].quantity,'quantity of product is showing ');
-						data.result === 'within limit' ?
-							Swal.fire({
-								position: "center",
-								icon: "success",
-								title: "Successfully product added to cart",
-								showConfirmButton: false,
-								timer: 1500
-							}).then(() => {
-								document.getElementById('totalPrice').innerHTML = data.totalPrice[0].totalPrice
-								document.getElementById('productTotal_'+ index).innerHTML = data.quantityFromUpdatedData[0].quantity * price
-								// location.reload()
-							}) : Swal.fire({
-								position: "center",
-								icon: "error",
-								title: "Maximum product limit is exceeded",
-								showConfirmButton: false,
-								timer: 1500
-							})
-					})
-				.catch(err => {
-					console.log(err, 'Some error occured while fetching in cart page');
-				}) : Swal.fire({
-					position: "center",
-					icon: "error",
-					title: "Maximum product limit is exceeded",
-					showConfirmButton: false,
-					timer: 1500
-				}).then(()=>{
-					if(stock<=10){
-						quantityTypeString.value = stock
-					}else{
-						quantityTypeString.value = 10
+			console.log(stock, 'stock is showing', quantity, 'quanitity is showing');
+			console.log(typeof quantity, 'what is heppeing');
+			console.log(typeof stock, 'what the h');
+			console.log(quantity <= stock, 'what is happening');
+			console.log(2 <= 12, 'what is the issue');
+			if (quantity <= stock) {
+
+
+				quantity <= 10 ? await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json'
 					}
-				})
-				
-			}else{
+				}).then(response => response.ok ? response.json() : console.log('Some network error occured while fetching'))
+					.then(
+						data => {
+							console.log(data)
+							console.log(data.totalPrice[0].totalPrice, 'total price is showing ');
+							console.log(data.quantityFromUpdatedData[0].quantity, 'quantity of product is showing ');
+
+							if (data.result === 'within limit') {
+
+								document.getElementById('totalPrice').innerHTML = data.totalPrice[0].totalPrice
+								document.getElementById('productTotal_' + index).innerHTML = data.quantityFromUpdatedData[0].quantity * price
+								// Show success message
+								// Swal.fire({
+								// 	position: "center",
+								// 	icon: "success",
+								// 	title: "Successfully product added to cart",
+								// 	showConfirmButton: false,
+								// 	timer: 1500
+								// });
+							} else {
+								// Show error message
+								Swal.fire({
+									position: "center",
+									icon: "error",
+									title: "Maximum product limit is exceeded",
+									showConfirmButton: false,
+									timer: 1500
+								});
+							}
+						})
+					.catch(err => {
+						console.log(err, 'Some error occured while fetching in cart page');
+					}) : Swal.fire({
+						position: "center",
+						icon: "error",
+						title: "Maximum product limit is exceeded",
+						showConfirmButton: false,
+						timer: 1500
+					}).then(() => {
+						if (stock <= 10) {
+							quantityTypeString.value = stock
+						} else {
+							quantityTypeString.value = 10
+						}
+					})
+
+			} else {
 				Swal.fire({
 					position: "center",
 					icon: "error",
 					title: "Maximum stock limit of product exceeded",
 					showConfirmButton: false,
 					timer: 1500
-				}).then(()=>{
+				}).then(() => {
 					quantityTypeString.value = stock
 				})
 			}
@@ -272,7 +277,7 @@
 						icon: "success"
 					}) : 'some error occured').then(() => {
 						location.reload()
-					}).catch(err => console.log('some error occured while try to delte using fetch',err))
+					}).catch(err => console.log('some error occured while try to delte using fetch', err))
 		}
 	</script>
 

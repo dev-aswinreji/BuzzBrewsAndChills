@@ -225,7 +225,7 @@
                                     <tr>
                                         <th>Product</th>
                                         <th>Quantity</th>
-                                        <th>Total</th>
+                                        <th>Price</th>
                                     </tr>
                                 </thead>
                                 <tbody class="order-details-body">
@@ -237,6 +237,7 @@
                                             <td data-label="Quantity">
                                                 <%= product.quantity %>
                                             </td>
+                                            <% console.log(product.productId,'================================================================444===================='); %> 
                                             <td data-label="Total">₹<%= product.productId.discount_price.toFixed(2) %>
                                             </td>
                                         </tr>
@@ -344,382 +345,393 @@
 
 
 
-                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                                                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+                                                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        const form = document.getElementById('addressForm');
-                        const nameInput = document.querySelector('input[name="name"]');
-                        const phoneInput = document.querySelector('input[name="phoneNumber"]');
-                        const addressInput = document.querySelector('input[name="homeAddress"]');
-                        const countrySelect = document.getElementById('country');
-                        const citySelect = document.getElementById('city');
-                        const stateInput = document.querySelector('input[name="state"]');
-                        const pincodeInput = document.querySelector('input[name="pincode"]');
+                                                <script>
 
-                        form.addEventListener('submit', function (event) {
-                            const errors = {};
+                                                    document.addEventListener('DOMContentLoaded', function () {
+                                                        const form = document.getElementById('addressForm');
+                                                        const nameInput = document.querySelector('input[name="name"]');
+                                                        const phoneInput = document.querySelector('input[name="phoneNumber"]');
+                                                        const addressInput = document.querySelector('input[name="homeAddress"]');
+                                                        const countrySelect = document.getElementById('country');
+                                                        const citySelect = document.getElementById('city');
+                                                        const stateInput = document.querySelector('input[name="state"]');
+                                                        const pincodeInput = document.querySelector('input[name="pincode"]');
 
-                            if (!nameInput.validity.valid) {
-                                errors.name = 'Name should contain only letters and spaces.';
-                            }
+                                                        form.addEventListener('submit', function (event) {
+                                                            const errors = {};
 
-                            if (!phoneInput.validity.valid) {
-                                errors.phone = 'Phone number should be 10 digits long.';
-                            }
+                                                            if (!nameInput.validity.valid) {
+                                                                errors.name = 'Name should contain only letters and spaces.';
+                                                            }
 
-                            if (!addressInput.validity.valid) {
-                                errors.address = 'Please provide a valid home address.';
-                            }
+                                                            if (!phoneInput.validity.valid) {
+                                                                errors.phone = 'Phone number should be 10 digits long.';
+                                                            }
 
-                            if (!countrySelect.validity.valid) {
-                                errors.country = 'Please select a country.';
-                            }
+                                                            if (!addressInput.validity.valid) {
+                                                                errors.address = 'Please provide a valid home address.';
+                                                            }
 
-                            if (!citySelect.validity.valid) {
-                                errors.city = 'Please select a city.';
-                            }
+                                                            if (!countrySelect.validity.valid) {
+                                                                errors.country = 'Please select a country.';
+                                                            }
 
-                            if (!stateInput.validity.valid) {
-                                errors.state = 'State should contain only letters and spaces.';
-                            }
+                                                            if (!citySelect.validity.valid) {
+                                                                errors.city = 'Please select a city.';
+                                                            }
 
-                            if (!pincodeInput.validity.valid) {
-                                errors.pincode = 'Pincode should be 6 digits long.';
-                            }
+                                                            if (!stateInput.validity.valid) {
+                                                                errors.state = 'State should contain only letters and spaces.';
+                                                            }
 
-                            showErrors(errors);
-                            if (Object.keys(errors).length > 0) {
-                                event.preventDefault();
-                            }
-                        });
+                                                            if (!pincodeInput.validity.valid) {
+                                                                errors.pincode = 'Pincode should be 6 digits long.';
+                                                            }
 
-                        function showErrors(errors) {
-                            const errorElements = {
-                                name: document.getElementById('name-error'),
-                                phone: document.getElementById('phone-error'),
-                                address: document.getElementById('address-error'),
-                                country: document.getElementById('country-error'),
-                                city: document.getElementById('city-error'),
-                                state: document.getElementById('state-error'),
-                                pincode: document.getElementById('pincode-error')
-                            };
+                                                            showErrors(errors);
+                                                            if (Object.keys(errors).length > 0) {
+                                                                event.preventDefault();
+                                                            }
+                                                        });
 
-                            Object.keys(errors).forEach(field => {
-                                const errorElement = errorElements[field];
-                                if (errorElement) {
-                                    errorElement.textContent = errors[field];
-                                }
-                            });
+                                                        function showErrors(errors) {
+                                                            const errorElements = {
+                                                                name: document.getElementById('name-error'),
+                                                                phone: document.getElementById('phone-error'),
+                                                                address: document.getElementById('address-error'),
+                                                                country: document.getElementById('country-error'),
+                                                                city: document.getElementById('city-error'),
+                                                                state: document.getElementById('state-error'),
+                                                                pincode: document.getElementById('pincode-error')
+                                                            };
 
-                            // Clear previous error messages
-                            Object.keys(errorElements).forEach(field => {
-                                const errorElement = errorElements[field];
-                                if (!errors[field] && errorElement) {
-                                    errorElement.textContent = '';
-                                }
-                            });
-                        }
-                        const citiesByCountry = {
-                            India: ["Delhi", "Mumbai", "Bangalore", "Chennai"],
-                            USA: ["New York", "Los Angeles", "Chicago", "Houston"]
-                        };
+                                                            Object.keys(errors).forEach(field => {
+                                                                const errorElement = errorElements[field];
+                                                                if (errorElement) {
+                                                                    errorElement.textContent = errors[field];
+                                                                }
+                                                            });
 
-                        countrySelect.addEventListener('change', function () {
-                            const selectedCountry = this.value;
-                            citySelect.innerHTML = '<option value="">Select City</option>';
-                            if (selectedCountry && citiesByCountry[selectedCountry]) {
-                                citiesByCountry[selectedCountry].forEach(city => {
-                                    const option = document.createElement('option');
-                                    option.value = city;
-                                    option.textContent = city;
-                                    citySelect.appendChild(option);
-                                });
-                            }
-                        });
+                                                            // Clear previous error messages
+                                                            Object.keys(errorElements).forEach(field => {
+                                                                const errorElement = errorElements[field];
+                                                                if (!errors[field] && errorElement) {
+                                                                    errorElement.textContent = '';
+                                                                }
+                                                            });
+                                                        }
+                                                        const citiesByCountry = {
+                                                            India: ["Delhi", "Mumbai", "Bangalore", "Chennai"],
+                                                            USA: ["New York", "Los Angeles", "Chicago", "Houston"]
+                                                        };
 
-                        pincodeInput.addEventListener('input', function () {
-                            const pincode = this.value;
-                            console.log(pincode, 'hello');
-                            const pincodeError = document.getElementById('pincode-error');
-                            if (pincode.length !== 6) {
-                                pincodeError.textContent = 'Pincode should be 6 digits long.';
-                            } else {
-                                pincodeError.textContent = '';
-                            }
+                                                        countrySelect.addEventListener('change', function () {
+                                                            const selectedCountry = this.value;
+                                                            citySelect.innerHTML = '<option value="">Select City</option>';
+                                                            if (selectedCountry && citiesByCountry[selectedCountry]) {
+                                                                citiesByCountry[selectedCountry].forEach(city => {
+                                                                    const option = document.createElement('option');
+                                                                    option.value = city;
+                                                                    option.textContent = city;
+                                                                    citySelect.appendChild(option);
+                                                                });
+                                                            }
+                                                        });
 
-                            // Example of auto-filling based on pincode. Replace with actual API call if necessary.
-                            if (pincode.length === 6) {
-                                if (pincode === '110001') {
-                                    stateInput.value = 'Delhi';
-                                    citySelect.innerHTML = '<option value="Delhi">Delhi</option>';
-                                    homeAddressInput.value = 'Connaught Place';
-                                } else if (pincode === '400001') {
-                                    stateInput.value = 'Maharashtra';
-                                    citySelect.innerHTML = '<option value="Mumbai">Mumbai</option>';
-                                    homeAddressInput.value = 'Fort';
-                                }
-                            }
-                        });
+                                                        pincodeInput.addEventListener('input', function () {
+                                                            const pincode = this.value;
+                                                            console.log(pincode, 'hello');
+                                                            const pincodeError = document.getElementById('pincode-error');
+                                                            if (pincode.length !== 6) {
+                                                                pincodeError.textContent = 'Pincode should be 6 digits long.';
+                                                            } else {
+                                                                pincodeError.textContent = '';
+                                                            }
 
-
-                        document.getElementById('addressForm').addEventListener('submit', function (event) {
-                            const form = event.target;
-                            if (!form.checkValidity()) {
-                                event.preventDefault();
-                                event.stopPropagation();
-                                Swal.fire('Please fill out the form correctly.');
-                            }
-                            form.classList.add('was-validated');
-                        });
-                    })
-                </script>
-                <script>
-                    const addressStr = `<%- JSON.stringify(addresses)  %>`
-                    const address = JSON.parse(addressStr)
-                    console.log(address, 'address is showing');
-                    console.log(typeof address.length, 'length is showing');
-                    console.log(address.length > 0, 'hjehe');
-                    async function paymentUsingWallet() {
-                        console.log(address.length > 0);
-                        if (address.length > 0) {
-                            const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
-                            console.log(selectedAddress, 'ehehe');
-                            const couponDiscount = document.getElementById('couponDiscount').innerHTML
-                            console.log(couponDiscount, 'which one');
-                            const wallet = document.getElementById('wallet').innerHTML
-                            console.log(wallet, 'wallet is shwoing');
-                            const total = document.getElementById('totalPrice').innerHTML
-                            console.log(total, 'total is shwoing');
-                            const walletAmount = Number(wallet)
-                            const totalPrice = Number(total)
-
-                            console.log(totalPrice);
-                            console.log(wallet, 'wallet');
-                            if (totalPrice <= walletAmount) {
-                                const paymentMethod = 'Wallet'
-                                await fetch(`/wallet-payment/?totalPrice=${totalPrice}`, {
-                                    method: 'GET',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    }
-                                }).then(response => response.ok ? response.json() : console.log('Network error'))
-                                    .then((data) => {
-                                        if (data.result === 'success')
-                                            walletPayment()
-                                    }).catch(err => {
-                                        console.log('Error:', err);
-                                    });
-                                async function walletPayment() {
-                                    await fetch(`/order-add/?paymentMethod=${paymentMethod}&address=${selectedAddress}&couponDiscount=${couponDiscount}`, {
-                                        method: 'GET',
-                                        headers: { 'Content-Type': 'application/json' }
-                                    }).then(response => response.ok ? response.json() : console.log('Network error'))
-                                        .then((data) => {
-                                            if (data.result === 'success')
-                                                window.location.href = '/order-placed';
-                                        }).catch(err => {
-                                            console.log('Error:', err);
-                                        });
-                                }
-
-                            } else {
-                                Swal.fire('Insufficient fund kindly update amount in wallet')
-                            }
-                        } else {
-                            Swal.fire('Address not found kindly add to continue')
-
-                        }
-                    }
-
-                </script>
-
-                <script>
-                    async function removeCoupon() {
-
-                        const totalPrice = document.getElementById('totalPrice').innerHTML
-                        const couponDiscount = document.getElementById('couponDiscount').innerHTML
-                        await fetch(`/remove-coupon/?totalPrice=${totalPrice}&couponDiscount=${couponDiscount}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        }).then(response => {
-                            if (!response.ok) {
-                                throw new Error('Some error occured while removing the coupon using fetch')
-                            }
-                            return response.json()
-                        }).then(data => {
-                            if (data.result === 'success') {
-                                Swal.fire('coupon removed successfully').then(() => {
-                                    location.reload()
-                                })
-                            } else {
-                                Swal.fire('Some issue encountered')
-                            }
-                        }).catch(err => {
-                            console.log(err, 'Some error occured while try to remove coupon in checkout page');
-                        })
-                    }
-                </script>
-                <script>
-                    async function applyCoupon() {
-                        const couponCode = document.getElementById('couponCode').value
-                        const couponDiscount = document.getElementById('couponDiscount').innerHTML
-                        console.log(couponCode, 'coupon code is showing');
-                        console.log(couponDiscount, 'coupon discount is showing');
-                        if (couponCode && !couponDiscount) {
-                            const totalCartPriceData = document.getElementById('totalPrice')
-                            const totalCartPrice = Number(totalCartPriceData.innerHTML)
-                            console.log(totalCartPrice, 'totalcart price is showing');
-                            const response = await fetch(`/apply-coupon/?couponCode=${couponCode}&totalCartPrice=${totalCartPrice}`, {
-                                method: 'GET',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                }
-                            })
-                                .then(response => {
-                                    if (!response.ok) {
-                                        throw new Error('Some error occured while fetching')
-                                    }
-                                    return response.json()
-                                })
-                                .then(data => {
-                                    if (data.result === 'Invalid Coupon') {
-                                        Swal.fire('Invalid Coupon')
-                                    }
-                                    else if (data.result === 'Cart Limit Is Low') {
-                                        Swal.fire('Minimum cart price to apply coupon is 1000')
-                                    } else if (data.result === 'Coupon Applied') {
-                                        Swal.fire('Coupon Applied Successfully').then(() => {
-                                            location.reload()
-                                        })
-                                        const discount = Number(data.discount)
-                                        console.log(discount, 'discount is showing');
-                                        totalCartPriceData.innerHTML = totalCartPrice - (totalCartPrice * (discount / 100))
+                                                            // Example of auto-filling based on pincode. Replace with actual API call if necessary.
+                                                            if (pincode.length === 6) {
+                                                                if (pincode === '110001') {
+                                                                    stateInput.value = 'Delhi';
+                                                                    citySelect.innerHTML = '<option value="Delhi">Delhi</option>';
+                                                                    homeAddressInput.value = 'Connaught Place';
+                                                                } else if (pincode === '400001') {
+                                                                    stateInput.value = 'Maharashtra';
+                                                                    citySelect.innerHTML = '<option value="Mumbai">Mumbai</option>';
+                                                                    homeAddressInput.value = 'Fort';
+                                                                }
+                                                            }
+                                                        });
 
 
-                                    } else if (data.result === 'Coupon Already Exist') {
-                                        Swal.fire('Coupon already used please apply another coupon')
+                                                        document.getElementById('addressForm').addEventListener('submit', function (event) {
+                                                            const form = event.target;
+                                                            if (!form.checkValidity()) {
+                                                                event.preventDefault();
+                                                                event.stopPropagation();
+                                                                Swal.fire('Please fill out the form correctly.');
+                                                            }
+                                                            form.classList.add('was-validated');
+                                                        });
+                                                    })
+                                                </script>
+                                                <script>
 
-                                    }
-                                })
-                        } else if (couponDiscount) {
-                            Swal.fire('Coupon is already applied')
-                        } else {
-                            Swal.fire('Enter a coupon')
-                        }
+                                                    const addressStr = `<%- JSON.stringify(addresses)  %>`
+                                                    const address = JSON.parse(addressStr)
+                                                    console.log(address, 'address is showing');
+                                                    console.log(typeof address.length, 'length is showing');
+                                                    console.log(address.length > 0, 'hjehe');
+                                                    async function paymentUsingWallet() {
+                                                        console.log(address.length > 0);
+                                                        if (address.length > 0) {
+                                                            const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
+                                                            console.log(selectedAddress, 'ehehe');
+                                                            const couponDiscount = document.getElementById('couponDiscount').innerHTML
+                                                            console.log(couponDiscount, 'which one');
+                                                            const wallet = document.getElementById('wallet').innerHTML
+                                                            console.log(wallet, 'wallet is shwoing');
+                                                            const total = document.getElementById('totalPrice').innerHTML
+                                                            console.log(total, 'total is shwoing');
+                                                            const walletAmount = Number(wallet)
+                                                            const totalPrice = Number(total)
 
-                    }
-                </script>
-                <script>
+                                                            console.log(totalPrice);
+                                                            console.log(wallet, 'wallet');
+                                                            if (totalPrice <= walletAmount) {
+                                                                const paymentMethod = 'Wallet'
+                                                                await fetch(`/wallet-payment/?totalPrice=${totalPrice}`, {
+                                                                    method: 'GET',
+                                                                    headers: {
+                                                                        'Content-Type': 'application/json'
+                                                                    }
+                                                                }).then(response => response.ok ? response.json() : console.log('Network error'))
+                                                                    .then((data) => {
+                                                                        if (data.result === 'success')
+                                                                            walletPayment()
+                                                                    }).catch(err => {
+                                                                        console.log('Error:', err);
+                                                                    });
+                                                                async function walletPayment() {
+                                                                    await fetch(`/order-add/?paymentMethod=${paymentMethod}&address=${selectedAddress}&couponDiscount=${couponDiscount}`, {
+                                                                        method: 'GET',
+                                                                        headers: { 'Content-Type': 'application/json' }
+                                                                    }).then(response => response.ok ? response.json() : console.log('Network error'))
+                                                                        .then((data) => {
+                                                                            if (data.result === 'success')
+                                                                                window.location.href = '/order-placed';
+                                                                        }).catch(err => {
+                                                                            console.log('Error:', err);
+                                                                        });
+                                                                }
 
-                    document.getElementById('pay-button').addEventListener('click', async function (e) {
-                        e.preventDefault();
-                        if (address.length > 0) {
-                            const amount = document.getElementById('totalPrice').innerHTML;
-                            console.log(amount, 'amount is showing');
-                            const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
-                            const couponDiscount = document.getElementById('couponDiscount').innerHTML
-                            const couponCode = document.getElementById('couponCode').innerHTML
-                            console.log(couponCode, 'coupon Code is showing');
-                            console.log(couponDiscount, 'coupon discount is showing');
-                            console.log(selectedAddress, 'selectedAddress is showing')
-                            try {
-                                console.log('razorpay is working');
-                                const response = await fetch(`/razorpay-payment`, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({ amount: amount.trim() })
-                                });
+                                                            } else {
+                                                                Swal.fire('Insufficient fund kindly update amount in wallet')
+                                                            }
+                                                        } else {
+                                                            Swal.fire('Address not found kindly add to continue')
 
-                                if (!response.ok) {
-                                    throw new Error('Failed to create order');
-                                }
+                                                        }
+                                                    }
 
-                                const order = await response.json();
-                                console.log(order, 'order is showing');
-                                const options = {
-                                    key: 'rzp_test_e55Dk1oHQbvyBo',
-                                    amount: order.amount,
-                                    currency: order.currency,
-                                    order_id: order.id,
-                                    name: 'Your Company Name',
-                                    description: 'Test Payment',
-                                    image: 'https://via.placeholder.com/150',
-                                    handler: function (response) {
-                                        Swal.fire({
-                                            text: 'Payment Successful! Payment ID: ' + response.razorpay_payment_id,
-                                            icon: 'success'
-                                        }).then(() => {
-                                            razorpaySuccess(response.razorpay_payment_id);
-                                        });
-                                    },
-                                    prefill: {
-                                        name: 'John Doe',
-                                        email: 'john.doe@example.com',
-                                        contact: '1234567890'
-                                    },
-                                    theme: {
-                                        color: '#528FF0'
-                                    }
-                                };
+                                                </script>
 
-                                const razorpayInstance = new Razorpay(options);
-                                razorpayInstance.open();
+                                                <script>
+                                                    async function removeCoupon() {
 
-                                async function razorpaySuccess(paymentId) {
-                                    const paymentMethod = 'Online Payment';
-                                    await fetch(`/order-add/?paymentMethod=${paymentMethod}&paymentId=${paymentId}&address=${selectedAddress}&couponDiscount=${couponDiscount}&couponCode=${couponCode}`, {
-                                        method: 'GET',
-                                        headers: { 'Content-Type': 'application/json' }
-                                    }).then(response => response.ok ? response.json() : console.log('Network error'))
-                                        .then((data) => {
-                                            if (data.result === 'success')
-                                                window.location.href = '/order-placed';
-                                        }).catch(err => {
-                                            console.log('Error:', err);
-                                        });
-                                }
-                            } catch (error) {
-                                console.error('Error:', error);
-                                alert('Failed to create order');
-                            }
-                        } else {
-                            Swal.fire('Address not found kindly add to continue')
-
-                        }
-                    });
+                                                        const totalPrice = document.getElementById('totalPrice').innerHTML
+                                                        const couponDiscount = document.getElementById('couponDiscount').innerHTML
+                                                        await fetch(`/remove-coupon/?totalPrice=${totalPrice}&couponDiscount=${couponDiscount}`, {
+                                                            method: 'DELETE',
+                                                            headers: {
+                                                                'Content-Type': 'application/json'
+                                                            }
+                                                        }).then(response => {
+                                                            if (!response.ok) {
+                                                                throw new Error('Some error occured while removing the coupon using fetch')
+                                                            }
+                                                            return response.json()
+                                                        }).then(data => {
+                                                            if (data.result === 'success') {
+                                                                Swal.fire('coupon removed successfully').then(() => {
+                                                                    location.reload()
+                                                                })
+                                                            } else {
+                                                                Swal.fire('Some issue encountered')
+                                                            }
+                                                        }).catch(err => {
+                                                            console.log(err, 'Some error occured while try to remove coupon in checkout page');
+                                                        })
+                                                    }
+                                                </script>
+                                                <script>
+                                                    async function applyCoupon() {
+                                                        const couponCode = document.getElementById('couponCode').value
+                                                        const couponDiscount = document.getElementById('couponDiscount').innerHTML
+                                                        console.log(couponCode, 'coupon code is showing');
+                                                        console.log(couponDiscount, 'coupon discount is showing');
+                                                        if (couponCode && !couponDiscount) {
+                                                            const totalCartPriceData = document.getElementById('totalPrice')
+                                                            const totalCartPrice = Number(totalCartPriceData.innerHTML)
+                                                            console.log(totalCartPrice, 'totalcart price is showing');
+                                                            const response = await fetch(`/apply-coupon/?couponCode=${couponCode}&totalCartPrice=${totalCartPrice}`, {
+                                                                method: 'GET',
+                                                                headers: {
+                                                                    'Content-Type': 'application/json'
+                                                                }
+                                                            })
+                                                                .then(response => {
+                                                                    if (!response.ok) {
+                                                                        throw new Error('Some error occured while fetching')
+                                                                    }
+                                                                    return response.json()
+                                                                })
+                                                                .then(data => {
+                                                                    if (data.result === 'Invalid Coupon') {
+                                                                        Swal.fire('Invalid Coupon')
+                                                                    }
+                                                                    else if (data.result === 'Cart Limit Is Low') {
+                                                                        Swal.fire('Minimum cart price to apply coupon is 1000')
+                                                                    } else if (data.result === 'Coupon Applied') {
+                                                                        Swal.fire('Coupon Applied Successfully').then(() => {
+                                                                            location.reload()
+                                                                        })
+                                                                        const discount = Number(data.discount)
+                                                                        console.log(discount, 'discount is showing');
+                                                                        totalCartPriceData.innerHTML = totalCartPrice - (totalCartPrice * (discount / 100))
 
 
-                    function proceedToPayment() {
-                        if (address.length > 0) {
-                            orderPlace();
-                        } else {
-                            Swal.fire('Address not found kindly add to continue')
-                        }
-                    }
+                                                                    } else if (data.result === 'Coupon Already Exist') {
+                                                                        Swal.fire('Coupon already used please apply another coupon')
 
-                    async function orderPlace() {
-                        const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
-                        const couponDiscount = document.getElementById('couponDiscount').innerHTML
+                                                                    }
+                                                                })
+                                                        } else if (couponDiscount) {
+                                                            Swal.fire('Coupon is already applied')
+                                                        } else {
+                                                            Swal.fire('Enter a coupon')
+                                                        }
 
-                        const paymentMethod = 'cash on delivery'
-                        await fetch(`/order-add/?paymentMethod=${paymentMethod}&address=${selectedAddress}&couponDiscount=${couponDiscount}`, {
-                            method: 'GET',
-                            headers: { 'Content-Type': 'application/json' }
-                        }).then(response => response.ok ? response.json() : console.log('Network error'))
-                            .then((data) => {
-                                if (data.result === 'success')
-                                    window.location.href = '/order-placed';
-                            }).catch(err => {
-                                console.log('Error:', err);
-                            });
-                    }
-                </script>
+                                                    }
+                                                </script>
+                                                <script>
+
+                                                    document.getElementById('pay-button').addEventListener('click', async function (e) {
+                                                        e.preventDefault();
+                                                        if (address.length > 0) {
+                                                            const amount = document.getElementById('totalPrice').innerHTML;
+                                                            console.log(amount, 'amount is showing');
+                                                            const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
+                                                            const couponDiscount = document.getElementById('couponDiscount').innerHTML
+                                                            const couponCode = document.getElementById('couponCode').innerHTML
+                                                            console.log(couponCode, 'coupon Code is showing');
+                                                            console.log(couponDiscount, 'coupon discount is showing');
+                                                            console.log(selectedAddress, 'selectedAddress is showing')
+                                                            try {
+                                                                console.log('razorpay is working');
+                                                                const response = await fetch(`/razorpay-payment`, {
+                                                                    method: 'POST',
+                                                                    headers: {
+                                                                        'Content-Type': 'application/json'
+                                                                    },
+                                                                    body: JSON.stringify({ amount: amount.trim() })
+                                                                });
+
+                                                                if (!response.ok) {
+                                                                    throw new Error('Failed to create order');
+                                                                }
+
+                                                                const order = await response.json();
+                                                                console.log(order, 'order is showing');
+                                                                const options = {
+                                                                    key: 'rzp_test_e55Dk1oHQbvyBo',
+                                                                    amount: order.amount,
+                                                                    currency: order.currency,
+                                                                    order_id: order.id,
+                                                                    name: 'Your Company Name',
+                                                                    description: 'Test Payment',
+                                                                    image: 'https://via.placeholder.com/150',
+                                                                    handler: function (response) {
+                                                                        Swal.fire({
+                                                                            text: 'Payment Successful! Payment ID: ' + response.razorpay_payment_id,
+                                                                            icon: 'success'
+                                                                        }).then(() => {
+                                                                            razorpaySuccess(response.razorpay_payment_id);
+                                                                        });
+                                                                    },
+                                                                    prefill: {
+                                                                        name: 'John Doe',
+                                                                        email: 'john.doe@example.com',
+                                                                        contact: '1234567890'
+                                                                    },
+                                                                    theme: {
+                                                                        color: '#528FF0'
+                                                                    }
+                                                                };
+
+                                                                const razorpayInstance = new Razorpay(options);
+                                                                razorpayInstance.open();
+
+                                                                async function razorpaySuccess(paymentId) {
+                                                                    const paymentMethod = 'Online Payment';
+                                                                    await fetch(`/order-add/?paymentMethod=${paymentMethod}&paymentId=${paymentId}&address=${selectedAddress}&couponDiscount=${couponDiscount}&couponCode=${couponCode}`, {
+                                                                        method: 'GET',
+                                                                        headers: { 'Content-Type': 'application/json' }
+                                                                    }).then(response => response.ok ? response.json() : console.log('Network error'))
+                                                                        .then((data) => {
+                                                                            if (data.result === 'success')
+                                                                                window.location.href = '/order-placed';
+                                                                        }).catch(err => {
+                                                                            console.log('Error:', err);
+                                                                        });
+                                                                }
+                                                            } catch (error) {
+                                                                console.error('Error:', error);
+                                                                alert('Failed to create order');
+                                                            }
+                                                        } else {
+                                                            Swal.fire('Address not found kindly add to continue')
+
+                                                        }
+                                                    });
+
+
+                                                    function proceedToPayment() {
+                                                        const totalPriceStr = document.getElementById('totalPrice').innerHTML
+                                                        const totalPrice = Number(totalPriceStr)
+                                                        console.log(totalPrice);
+
+                                                        if (address.length > 0) {
+                                                            if (totalPrice <= 1000) {
+
+                                                                orderPlace();
+                                                            }else{
+                                                                Swal.fire('Cash on Delivery is avalable only under 1000 Rs')
+                                                            }
+                                                        } else {
+                                                            Swal.fire('Address not found kindly add to continue')
+                                                        }
+                                                    }
+
+                                                    async function orderPlace() {
+                                                        const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
+                                                        const couponDiscount = document.getElementById('couponDiscount').innerHTML
+
+                                                        const paymentMethod = 'cash on delivery'
+                                                        await fetch(`/order-add/?paymentMethod=${paymentMethod}&address=${selectedAddress}&couponDiscount=${couponDiscount}`, {
+                                                            method: 'GET',
+                                                            headers: { 'Content-Type': 'application/json' }
+                                                        }).then(response => response.ok ? response.json() : console.log('Network error'))
+                                                            .then((data) => {
+                                                                if (data.result === 'success')
+                                                                    window.location.href = '/order-placed';
+                                                            }).catch(err => {
+                                                                console.log('Error:', err);
+                                                            });
+                                                    }
+                                                </script>
     </body>
 
 </html>
