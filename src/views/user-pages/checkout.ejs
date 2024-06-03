@@ -299,6 +299,7 @@
                                             <%= wallet.walletAmount.toFixed(2) %>
                                                 <% }else {%>
                                                     Wallet balance is Empty
+                                                    <span id="wallet" hidden></span>
                                                     <% } %>
                                         </span> </h6>
 
@@ -440,7 +441,7 @@
 
                         pincodeInput.addEventListener('input', function () {
                             const pincode = this.value;
-                            console.log(pincode,'hello');
+                            console.log(pincode, 'hello');
                             const pincodeError = document.getElementById('pincode-error');
                             if (pincode.length !== 6) {
                                 pincodeError.textContent = 'Pincode should be 6 digits long.';
@@ -477,15 +478,20 @@
                 <script>
                     const addressStr = `<%- JSON.stringify(addresses)  %>`
                     const address = JSON.parse(addressStr)
-                    console.log(address,'address is showing');
-                    console.log(address.length,'length is showing');
+                    console.log(address, 'address is showing');
+                    console.log(typeof address.length, 'length is showing');
+                    console.log(address.length > 0, 'hjehe');
                     async function paymentUsingWallet() {
                         console.log(address.length > 0);
                         if (address.length > 0) {
                             const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
+                            console.log(selectedAddress, 'ehehe');
                             const couponDiscount = document.getElementById('couponDiscount').innerHTML
+                            console.log(couponDiscount, 'which one');
                             const wallet = document.getElementById('wallet').innerHTML
+                            console.log(wallet, 'wallet is shwoing');
                             const total = document.getElementById('totalPrice').innerHTML
+                            console.log(total, 'total is shwoing');
                             const walletAmount = Number(wallet)
                             const totalPrice = Number(total)
 
@@ -520,10 +526,10 @@
 
                             } else {
                                 Swal.fire('Insufficient fund kindly update amount in wallet')
-                            }                                                                                                                                                                                                                                                                                                                                                                                                                         
+                            }
                         } else {
                             Swal.fire('Address not found kindly add to continue')
-                          
+
                         }
                     }
 
@@ -611,9 +617,7 @@
 
                     document.getElementById('pay-button').addEventListener('click', async function (e) {
                         e.preventDefault();
-                        if (address.length == 0) {
-                            Swal.fire('Address not found kindly add to continue')
-                        } else {
+                        if (address.length > 0) {
                             const amount = document.getElementById('totalPrice').innerHTML;
                             console.log(amount, 'amount is showing');
                             const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
@@ -684,15 +688,18 @@
                                 console.error('Error:', error);
                                 alert('Failed to create order');
                             }
+                        } else {
+                            Swal.fire('Address not found kindly add to continue')
+
                         }
                     });
 
 
                     function proceedToPayment() {
                         if (address.length > 0) {
-                            Swal.fire('Address not found kindly add to continue')
-                        } else {
                             orderPlace();
+                        } else {
+                            Swal.fire('Address not found kindly add to continue')
                         }
                     }
 

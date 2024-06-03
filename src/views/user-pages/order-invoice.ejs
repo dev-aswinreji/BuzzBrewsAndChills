@@ -2,286 +2,277 @@
 <html lang="en">
 
 <head>
-    <%- include ('./partials/head/head.ejs') %>
+    <%- include('./partials/head/head.ejs') %>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
             integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
 
         <style>
             body {
-                background-color: #eee;
+                background-color: #f8f9fa;
+                font-family: 'Roboto', sans-serif;
+                line-height: 1.6;
+                color: #333;
             }
 
-            .card {
-                box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
-                border-radius: 1rem;
+            .invoice-container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 30px;
+                background-color: #fff;
+                border-radius: 15px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             }
 
-            .breadcrumb-section {
-                background: #f8f9fa;
-                padding: 30px 0;
-                margin-bottom: 30px;
-            }
-
-            .breadcrumb-bg h1,
-            .breadcrumb-bg p {
-                margin: 0;
-                color: #343a40;
-            }
-
-            .invoice-title {
+            .invoice-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 20px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #ddd;
             }
 
-            .invoice-details h5 {
+            .invoice-header h2 {
+                font-size: 28px;
+                font-weight: 700;
+                color: #333;
+                margin: 0;
+            }
+
+            .btn-download {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            .btn-download:hover {
+                background-color: #0056b3;
+            }
+
+            .info-title {
+                font-size: 20px;
+                font-weight: 600;
+                color: #555;
                 margin-bottom: 10px;
             }
 
-            .table-responsive {
-                margin-top: 20px;
+            .info-details {
+                color: #777;
+                margin-bottom: 20px;
+                line-height: 1.4;
             }
 
-            .float-end button,
-            .float-end a {
-                margin-left: 10px;
+            .summary-title {
+                font-size: 24px;
+                font-weight: 700;
+                color: #333;
+                margin-bottom: 20px;
+            }
+
+            .summary-table {
+                width: 100%;
+                border-collapse: collapse;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .summary-table th,
+            .summary-table td {
+                padding: 15px;
+                border-bottom: 1px solid #ddd;
+                text-align: left;
+            }
+
+            .summary-table th {
+                background-color: #f5f5f5;
+                font-weight: 500;
+            }
+
+            .summary-table td {
+                font-weight: 400;
+            }
+
+            .text-right {
+                text-align: right;
             }
         </style>
 </head>
 
 <body>
-    <%- include('./partials/header/header.ejs') %>
-
-        <!-- breadcrumb-section -->
-        <div class="breadcrumb-section breadcrumb-bg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2 text-center">
-                        <div class="breadcrumb-text">
-                            <p>We sale fresh fruits</p>
-                            <h1>About Us</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <h2>Invoice</h2>
+            <button onclick="downloadInvoice()" class="btn-download"><i class="fas fa-download"></i> Download
+                Invoice</button>
         </div>
-        <!-- end breadcrumb section -->
 
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card" style="margin-top: 10rem; margin-bottom: 2rem;">
-                        <div class="card-body" id="invoice">
-                            <div class="invoice-title">
-                                <div>
-                                    <h2 class="text-muted">BuzzBrewsAndChills</h2>
-                                    <p>Bangalore, Karnataka, India</p>
-                                    <p><i class="uil uil-envelope-alt me-1"></i>info.flourish@gmail.com</p>
-                                    <p><i class="uil uil-phone me-1"></i>+0123-456789</p>
-                                </div>
-                                <div>
-                                    <h4>Invoice #<%= orderData.orderId %>
-                                    </h4>
-                                    <span
-                                        class="badge <%= orderData.paymentMethod === 'Wallet' ? 'bg-success' : 'bg-danger' %>">
-                                        <%= orderData.products[0].status %>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <hr class="my-4">
-
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="text-muted">
-                                        <h5>Billed To:</h5>
-                                        <p><strong>
-                                                <%= orderData.address %>
-                                            </strong></p>
-                                        <p>
-                                            <%= orderData.address %>, <%= orderData.address %>, <%=
-                                                        orderData.address.city %>, <%= orderData.address.state %>, <%=
-                                                                orderData.address.country %>, <%=
-                                                                    orderData.address.pincode %>
-                                        </p>
-                                        <p>
-                                            <%= orderData.address.phoneNumber %>
-                                        </p>
-                                        <p>
-                                            <%= orderData.address.email %>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 text-end">
-                                    <div class="text-muted">
-                                        <h5>Invoice No:</h5>
-                                        <p>#<%= orderData.orderId %>
-                                        </p>
-                                        <h5>Invoice Date:</h5>
-                                        <p>
-                                            <%= orderData.orderDate %>
-                                        </p>
-                                        <h5>Order No:</h5>
-                                        <p>#<%= orderData.orderId %>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="py-2">
-                                <h5>Order Summary</h5>
-                                <div class="table-responsive">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>No.</th>
-                                                <th>Item</th>
-                                                <th>Price</th>
-                                                <th>Quantity</th>
-                                                <th class="text-end">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <% orderData.products.forEach((product, index)=> { %>
-                                                <tr>
-                                                    <td>
-                                                        <%= 1 %>
-                                                    </td>
-                                                    <td>
-                                                        <%= product.name %> <br> <small class="text-muted">
-                                                                <%= product.category %>
-                                                            </small>
-                                                    </td>
-                                                    <td>$<%= product.price %>
-                                                    </td>
-                                                    <td>
-                                                        <%= product.quantity %>
-                                                    </td>
-                                                    <td class="text-end">$<%= product.price * product.quantity %>
-                                                    </td>
-                                                </tr>
-                                                <% }) %>
-                                                    <tr>
-                                                        <th colspan="4" class="text-end">Sub Total</th>
-                                                        <td class="text-end">$<%= orderData.totalPrice %>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th colspan="4" class="text-end">Discount</th>
-                                                        <td class="text-end">- $<%= orderData.discount %>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th colspan="4" class="text-end">Shipping Charge</th>
-                                                        <td class="text-end">$<%= orderData.shipping %>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th colspan="4" class="text-end">Tax</th>
-                                                        <td class="text-end">$<%= orderData.vat %>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th colspan="4" class="text-end">Total</th>
-                                                        <td class="text-end">
-                                                            <h4>$<%= orderData.totalPrice %>
-                                                            </h4>
-                                                        </td>
-                                                    </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="d-print-none mt-4">
-                                    <div class="float-end">
-                                        <button onclick="downloadInvoice()" class="theme-btn-1 btn btn-effect-1"><i
-                                                class="fa fa-download"></i> Download Invoice</button>
-                                        <a href="/orders/<%= orderData.id %>"
-                                            class="theme-btn-2 btn btn-effect-2">Back</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- end col -->
+        <div class="company-info">
+            <div class="info-title">Company Information</div>
+            <div class="info-details">
+                BuzzBrewsAndChills<br>
+                Bangalore, Karnataka, India<br>
+                Email: info.flourish@gmail.com<br>
+                Phone: +0123-456789
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"></script>
+        <div class="customer-info">
+            <div class="info-title">Billed To</div>
+            <div class="info-details">
+                <%= orderData.address.name %><br>
+                    <%= orderData.address.homeAddress %><br>
+                        <%= orderData.address.street %><br>
+                            <%= orderData.address.city %>, <%= orderData.address.state %><br>
+                                    <%= orderData.address.country %>, <%= orderData.address.pincode %><br>
+                                            Phone: <%= orderData.address.phoneNumber %><br>
+                                                Email: <%= orderData.address.email %>
+            </div>
+        </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <div class="order-summary">
+            <div class="summary-title">Order Summary</div>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orderData.products.forEach((product, index)=> { %>
+                        <tr>
+                            <td>
+                                <%= index + 1 %>
+                            </td>
+                            <td>
+                                <%= product.name %>
+                            </td>
+                            <td>$<%= product.price %>
+                            </td>
+                            <td>
+                                <%= product.quantity %>
+                            </td>
+                            <td>$<%= product.price * product.quantity %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                            <tr>
+                                <td colspan="4" class="text-right">Sub Total</td>
+                                <td>$<%= orderData.totalPrice %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="text-right">Discount</td>
+                                <td>-$<%= orderData.discount %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="text-right">Shipping Charge</td>
+                                <td>$<%= orderData.shipping %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="text-right">Tax</td>
+                                <td>$<%= orderData.vat %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="text-right">Total</td>
+                                <td><strong>$<%= orderData.totalPrice %></strong></td>
+                            </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 
-        <script>
-            console.log('hehehehe');
-            const orderData = `<%- JSON.stringify(orderData) %>`
-            console.table(orderData,'what is happening');
-            console.log(orderData.orderId,'order id is showing')
-            function downloadInvoice() {
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-                console.log(orderData,'order data is not showing');
-                const companyDetails = `
-                    BuzzBrewsAndChills
-                    Bangalore, Karnataka, India
-                    info.flourish@gmail.com
-                    +0123-456789
-                `;
-                const invoiceDetails = `
-                    Invoice #${orderData.orderId}
-                    ${orderData.paymentMethod === 'COD' ? 'Status: ' + orderData.status : 'Status: ' + orderData.status}
-                `;
-                const billedTo = `
-                    Billed To:
-                    ${orderData.address.name}
-                    ${orderData.address.homeAddress}
-                    ${orderData.address.street}
-                    ${orderData.address.city}, ${orderData.address.state}
-                    ${orderData.address.country}, ${orderData.address.pincode}
-                    ${orderData.address.phoneNumber}
-                    ${orderData.address.email}
-                `;
-                const invoiceInfo = `
-                    Invoice No: #${orderData.orderId}
-                    Invoice Date: ${orderData.orderDate}
-                    Order No: #${orderData.orderId}
-                `;
+    <!-- Ensure correct inclusion of jsPDF and AutoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 
-                doc.setFontSize(12);
-                doc.text(companyDetails, 10, 10);
-                doc.text(invoiceDetails, 10, 40);
-                doc.text(billedTo, 10, 70);
-                doc.text(invoiceInfo, 150, 10);
+    <script>
+        function downloadInvoice() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const order = `<%- JSON.stringify(orderData) %>`;
+            const orderData = JSON.parse(order);
 
-                const tableColumn = ["No.", "Item", "Price", "Quantity", "Total"];
+            // Company Details
+            doc.setFontSize(16);
+            doc.setTextColor(34, 34, 34);
+            doc.text("Company Information", 20, 30);
+            doc.setTextColor(119, 119, 119);
+            doc.setFontSize(14);
+            doc.text("BuzzBrewsAndChills\nBangalore, Karnataka, India\ninfo.flourish@gmail.com\n+0123-456789", 20, 40);
 
-                const tableRows = JSON.parse(`<%- JSON.stringify(orderData.products.map((product, i) => ([
-                    i + 1,
-                    product.name + " <br> <small class='text-muted'>" + product.category + "</small>",
-                    "$" + product.price,
-                    product.quantity,
-                    "$" + (product.price * product.quantity)
-                ]))) %>`);
+            // Customer Details
+            doc.setTextColor(34, 34, 34);
+            doc.text("Billed To", 20, 70);
+            doc.setTextColor(119, 119, 119);
+            doc.setFontSize(14);
+            doc.text(`${orderData.address.name}\n${orderData.address.homeAddress}\n${orderData.address.street}\n${orderData.address.city}, ${orderData.address.state}\n${orderData.address.country}, ${orderData.address.pincode}\nPhone: ${orderData.address.phoneNumber}\nEmail: ${orderData.address.email}`, 20, 80);
 
-                tableRows.push(["", "", "", "Sub Total", "$<%= orderData.totalPrice %>"]);
-                tableRows.push(["", "", "", "Discount", "- $<%= orderData.discount %>"]);
-                tableRows.push(["", "", "", "Shipping Charge", "$<%= orderData.shipping %>"]);
-                tableRows.push(["", "", "", "Tax", "$<%= orderData.vat %>"]);
-                tableRows.push(["", "", "", "Total", "$<%= orderData.totalPrice %>"]);
+            // Order Summary
+            doc.setTextColor(34, 34, 34);
+            doc.text("Order Summary", 20, 130);
+            doc.autoTable({
+                startY: 140,
+                head: [['No.', 'Item', 'Price', 'Quantity', 'Total']],
+                body: orderData.products.map((product, index) => {
+                    return [
+                        index + 1,
+                        product.name,
+                        `$${product.price}`,
+                        product.quantity,
+                        `$${product.price * product.quantity}`
+                    ];
+                }),
+                theme: 'grid',
+                styles: {
+                    font: 'Arial',
+                    fontSize: 10,
+                    textColor: [34, 34, 34],
+                    fontStyle: 'normal',
+                    overflow: 'linebreak'
+                },
+                headStyles: { fillColor: [224, 224, 224] },
+                columnStyles: {
+                    1: { cellWidth: 'auto' },
+                }
+            });
 
-                doc.autoTable(tableColumn, tableRows, { startY: 90 });
-                doc.save("invoice.pdf");
-            }
-        </script>
+            // Total
+            const totalY = doc.previousAutoTable.finalY + 10;
+            doc.setFontSize(14);
+            doc.text(`Sub Total: $${orderData.totalPrice}`, 20, totalY);
+            doc.text(`Discount: $${orderData.discount}`, 20, totalY + 10);
+            doc.text(`Shipping Charge: $${orderData.shipping}`, 20, totalY + 20);
+            doc.text(`Tax: $${orderData.vat}`, 20, totalY + 30);
+            doc.text(`Total: $${orderData.totalPrice}`, 20, totalY + 40);
 
+            doc.save('invoice.pdf');
+        }
+    </script>
 
-        <%- include('partials/footer/footer.ejs') %>
+    <%- include('partials/footer/footer.ejs') %>
+
 </body>
 
 </html>
