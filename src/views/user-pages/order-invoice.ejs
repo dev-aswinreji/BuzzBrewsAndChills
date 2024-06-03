@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include ('./partials/head/head.ejs') %>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+            integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+        <style>
+            body {
+                background-color: #eee;
+            }
+
+            .card {
+                box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+                border-radius: 1rem;
+            }
+
+            .breadcrumb-section {
+                background: #f8f9fa;
+                padding: 30px 0;
+                margin-bottom: 30px;
+            }
+
+            .breadcrumb-bg h1,
+            .breadcrumb-bg p {
+                margin: 0;
+                color: #343a40;
+            }
+
+            .invoice-title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .invoice-details h5 {
+                margin-bottom: 10px;
+            }
+
+            .table-responsive {
+                margin-top: 20px;
+            }
+
+            .float-end button,
+            .float-end a {
+                margin-left: 10px;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include('./partials/header/header.ejs') %>
+
+        <!-- breadcrumb-section -->
+        <div class="breadcrumb-section breadcrumb-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 text-center">
+                        <div class="breadcrumb-text">
+                            <p>We sale fresh fruits</p>
+                            <h1>About Us</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end breadcrumb section -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card" style="margin-top: 10rem; margin-bottom: 2rem;">
+                        <div class="card-body" id="invoice">
+                            <div class="invoice-title">
+                                <div>
+                                    <h2 class="text-muted">BuzzBrewsAndChills</h2>
+                                    <p>Bangalore, Karnataka, India</p>
+                                    <p><i class="uil uil-envelope-alt me-1"></i>info.flourish@gmail.com</p>
+                                    <p><i class="uil uil-phone me-1"></i>+0123-456789</p>
+                                </div>
+                                <div>
+                                    <h4>Invoice #<%= orderData.orderId %>
+                                    </h4>
+                                    <span
+                                        class="badge <%= orderData.paymentMethod === 'Wallet' ? 'bg-success' : 'bg-danger' %>">
+                                        <%= orderData.products[0].status %>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="text-muted">
+                                        <h5>Billed To:</h5>
+                                        <p><strong>
+                                                <%= orderData.address %>
+                                            </strong></p>
+                                        <p>
+                                            <%= orderData.address %>, <%= orderData.address %>, <%=
+                                                        orderData.address.city %>, <%= orderData.address.state %>, <%=
+                                                                orderData.address.country %>, <%=
+                                                                    orderData.address.pincode %>
+                                        </p>
+                                        <p>
+                                            <%= orderData.address.phoneNumber %>
+                                        </p>
+                                        <p>
+                                            <%= orderData.address.email %>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 text-end">
+                                    <div class="text-muted">
+                                        <h5>Invoice No:</h5>
+                                        <p>#<%= orderData.orderId %>
+                                        </p>
+                                        <h5>Invoice Date:</h5>
+                                        <p>
+                                            <%= orderData.orderDate %>
+                                        </p>
+                                        <h5>Order No:</h5>
+                                        <p>#<%= orderData.orderId %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="py-2">
+                                <h5>Order Summary</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Item</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th class="text-end">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% orderData.products.forEach((product, index)=> { %>
+                                                <tr>
+                                                    <td>
+                                                        <%= 1 %>
+                                                    </td>
+                                                    <td>
+                                                        <%= product.name %> <br> <small class="text-muted">
+                                                                <%= product.category %>
+                                                            </small>
+                                                    </td>
+                                                    <td>$<%= product.price %>
+                                                    </td>
+                                                    <td>
+                                                        <%= product.quantity %>
+                                                    </td>
+                                                    <td class="text-end">$<%= product.price * product.quantity %>
+                                                    </td>
+                                                </tr>
+                                                <% }) %>
+                                                    <tr>
+                                                        <th colspan="4" class="text-end">Sub Total</th>
+                                                        <td class="text-end">$<%= orderData.totalPrice %>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="4" class="text-end">Discount</th>
+                                                        <td class="text-end">- $<%= orderData.discount %>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="4" class="text-end">Shipping Charge</th>
+                                                        <td class="text-end">$<%= orderData.shipping %>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="4" class="text-end">Tax</th>
+                                                        <td class="text-end">$<%= orderData.vat %>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="4" class="text-end">Total</th>
+                                                        <td class="text-end">
+                                                            <h4>$<%= orderData.totalPrice %>
+                                                            </h4>
+                                                        </td>
+                                                    </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="d-print-none mt-4">
+                                    <div class="float-end">
+                                        <button onclick="downloadInvoice()" class="theme-btn-1 btn btn-effect-1"><i
+                                                class="fa fa-download"></i> Download Invoice</button>
+                                        <a href="/orders/<%= orderData.id %>"
+                                            class="theme-btn-2 btn btn-effect-2">Back</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end col -->
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+        <script>
+            console.log('hehehehe');
+            const orderData = `<%- JSON.stringify(orderData) %>`
+            console.table(orderData,'what is happening');
+            console.log(orderData.orderId,'order id is showing')
+            function downloadInvoice() {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                console.log(orderData,'order data is not showing');
+                const companyDetails = `
+                    BuzzBrewsAndChills
+                    Bangalore, Karnataka, India
+                    info.flourish@gmail.com
+                    +0123-456789
+                `;
+                const invoiceDetails = `
+                    Invoice #${orderData.orderId}
+                    ${orderData.paymentMethod === 'COD' ? 'Status: ' + orderData.status : 'Status: ' + orderData.status}
+                `;
+                const billedTo = `
+                    Billed To:
+                    ${orderData.address.name}
+                    ${orderData.address.homeAddress}
+                    ${orderData.address.street}
+                    ${orderData.address.city}, ${orderData.address.state}
+                    ${orderData.address.country}, ${orderData.address.pincode}
+                    ${orderData.address.phoneNumber}
+                    ${orderData.address.email}
+                `;
+                const invoiceInfo = `
+                    Invoice No: #${orderData.orderId}
+                    Invoice Date: ${orderData.orderDate}
+                    Order No: #${orderData.orderId}
+                `;
+
+                doc.setFontSize(12);
+                doc.text(companyDetails, 10, 10);
+                doc.text(invoiceDetails, 10, 40);
+                doc.text(billedTo, 10, 70);
+                doc.text(invoiceInfo, 150, 10);
+
+                const tableColumn = ["No.", "Item", "Price", "Quantity", "Total"];
+
+                const tableRows = JSON.parse(`<%- JSON.stringify(orderData.products.map((product, i) => ([
+                    i + 1,
+                    product.name + " <br> <small class='text-muted'>" + product.category + "</small>",
+                    "$" + product.price,
+                    product.quantity,
+                    "$" + (product.price * product.quantity)
+                ]))) %>`);
+
+                tableRows.push(["", "", "", "Sub Total", "$<%= orderData.totalPrice %>"]);
+                tableRows.push(["", "", "", "Discount", "- $<%= orderData.discount %>"]);
+                tableRows.push(["", "", "", "Shipping Charge", "$<%= orderData.shipping %>"]);
+                tableRows.push(["", "", "", "Tax", "$<%= orderData.vat %>"]);
+                tableRows.push(["", "", "", "Total", "$<%= orderData.totalPrice %>"]);
+
+                doc.autoTable(tableColumn, tableRows, { startY: 90 });
+                doc.save("invoice.pdf");
+            }
+        </script>
+
+
+        <%- include('partials/footer/footer.ejs') %>
+</body>
+
+</html>

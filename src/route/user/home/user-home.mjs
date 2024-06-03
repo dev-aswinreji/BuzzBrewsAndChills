@@ -32,6 +32,7 @@ import { user_orderAddGet } from '../../../controller/user/home/add-order.mjs';
 import { user_removeCouponGet } from '../../../controller/user/home/remove-coupon.mjs';
 import { user_returnOrderGet } from '../../../controller/user/home/return-order.mjs';
 import { user_walletPaymentGet } from '../../../controller/user/home/wallet-payment.mjs';
+import { user_orderInvoiceGet } from '../../../controller/user/home/order-invoice.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -95,5 +96,7 @@ routeHome.get('/wallet-payment',user_authentication,user_walletPaymentGet)
 routeHome.get('/wishlist',user_authentication,user_wishlistGet)
 routeHome.get('/add-to-wishlist',user_authentication,user_addToWishlistGet)
 routeHome.delete('/remove-wishlist',user_authentication,user_deleteProductFromWishlist)
+
+routeHome.get('/order-invoice',user_orderInvoiceGet)
 
 export default routeHome

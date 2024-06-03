@@ -221,6 +221,8 @@
         <div class="btn-container-order">
             <button class="btn-shop"><a href="/shop">Return to Shop</a></button>
             <button class="btn-history"><a href="/order-history">Order History</a></button>
+            <button class="btn-history"><a href="/order-invoice?orderId=<%= order[0].orderId %>">Invoice</a></button>
+
         </div>
         <% } else { %>
         <h5>No order yet placed</h5>
