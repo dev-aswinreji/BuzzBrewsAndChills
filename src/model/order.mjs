@@ -75,8 +75,8 @@ const orderSchema = mongoose.Schema({
     required: true,
   },
   orderDate: {
-    type: String,
-    default: moment().format("YYYY/MM/DD"),
+    type: Date,
+    default: new Date(),
   },
   onlinePaymentId: {
     type: String,

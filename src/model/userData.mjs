@@ -53,7 +53,7 @@ const userSchema = mongoose.Schema({
 
 })
 
-export const userCollection = userModel('userData', userSchema)
+export const userCollection = userModel('userDatas', userSchema)
 
 
 

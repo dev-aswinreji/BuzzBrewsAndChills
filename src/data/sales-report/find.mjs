@@ -29,44 +29,44 @@ export async function getDeliveredProductStatsUsingAggregation() {
 }
 
 export async function getDailySalesReport() {
-    const result = await orderCollection
-      .aggregate([
-        { $unwind: "$products" },
-        { $match: { "products.status": "DELIVERED" } },
-        {
-          $group: {
-            _id: {
-              year: { $year: { $dateFromString: { dateString: "$orderDate" } } },
-              month: {
-                $month: { $dateFromString: { dateString: "$orderDate" } },
-              },
-              day: {
-                $dayOfMonth: { $dateFromString: { dateString: "$orderDate" } },
-              },
+  const result = await orderCollection
+    .aggregate([
+      { $unwind: "$products" },
+      { $match: { "products.status": "DELIVERED" } },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$orderDate" },
+            month: {
+              $month: "$orderDate"
             },
-            totalDeliveredOrders: { $sum: 1 },
-            totalDeliveredCost: {
-              $sum: { $multiply: ["$products.price", "$products.quantity"] },
+            day: {
+              $dayOfMonth: "$orderDate"
             },
           },
-        },
-        {
-          $project: {
-            _id: 0,
-            year: "$_id.year",
-            month: "$_id.month",
-            day: "$_id.day",
-            totalDeliveredOrders: 1,
-            totalDeliveredCost: 1,
+          totalDeliveredOrders: { $sum: 1 },
+          totalDeliveredCost: {
+            $sum: { $multiply: ["$products.price", "$products.quantity"] },
           },
         },
-        { $sort: { year: 1, month: 1 , day: 1} }, // Sort by year and month
-      ])
-      .exec();
-  
-    return result;
-  }
-  
+      },
+      {
+        $project: {
+          _id: 0,
+          year: "$_id.year",
+          month: "$_id.month",
+          day: "$_id.day",
+          totalDeliveredOrders: 1,
+          totalDeliveredCost: 1,
+        },
+      },
+      { $sort: { year: 1, month: 1, day: 1 } }, // Sort by year and month
+    ])
+    .exec();
+
+  return result;
+}
+
 
 export async function getWeeklySalesReport() {
   const result = await orderCollection
@@ -76,10 +76,10 @@ export async function getWeeklySalesReport() {
       {
         $group: {
           _id: {
-            year: { $year: { $dateFromString: { dateString: "$orderDate" } } },
+            year: { $year: "$orderDate" },
 
             week: {
-              $week: { $dateFromString: { dateString: "$orderDate" } },
+              $week: "$orderDate"
             },
           },
           totalDeliveredOrders: { $sum: 1 },
@@ -97,7 +97,7 @@ export async function getWeeklySalesReport() {
           totalDeliveredCost: 1,
         },
       },
-      { $sort: { year: 1, week: 1} }, // Sort by year and week
+      { $sort: { year: 1, week: 1 } }, // Sort by year and week
     ])
     .exec();
 
@@ -112,9 +112,9 @@ export async function getMonthlySalesReport() {
       {
         $group: {
           _id: {
-            year: { $year: { $dateFromString: { dateString: "$orderDate" } } },
+            year: { $year: "$orderDate" },
             month: {
-              $month: { $dateFromString: { dateString: "$orderDate" } },
+              $month: "$orderDate"
             },
           },
           totalDeliveredOrders: { $sum: 1 },
@@ -147,7 +147,7 @@ export async function getYearlySalesReport() {
       {
         $group: {
           _id: {
-            year: { $year: { $dateFromString: { dateString: "$orderDate" } } },
+            year: { $year: "$orderDate" },
           },
           totalDeliveredOrders: { $sum: 1 },
           totalDeliveredCost: {

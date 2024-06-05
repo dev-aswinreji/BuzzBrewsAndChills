@@ -34,16 +34,18 @@ export const admin_salesReportGet = async (req, res) => {
 export const admin_salesReportDownloadGet = async (req, res) => {
     const period = req.params.period
     try {
+        console.log(period,'period is showing');
         const reportData = await generateReport(period);
+        console.log(reportData,'reported data is success');
         const formattedData = formatReportData(reportData);
-
+        console.log(formattedData,'formatted data is success');
         if (req.query.format === 'csv') {
             const csv = generateCSVReport(formattedData);
             res.header('Content-Type', 'text/csv');
             res.attachment(`${period}-report-${moment().format('YYYY-MM-DD')}.csv`);
             return res.send(csv);
         } else if (req.query.format === 'pdf') {
-            const pdfBuffer = await generatePDFReport(formattedData);
+            const pdfBuffer = await generatePDFReport(formattedData,period);
             res.header('Content-Type', 'application/pdf');
             res.attachment(`${period}-report-${moment().format('YYYY-MM-DD')}.pdf`);
             return res.send(pdfBuffer);

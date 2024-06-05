@@ -2,6 +2,7 @@
 import {findAllOrderSuccessFullOrderAmount} from "../../../data/order/find.mjs"
 import { findCountOfCategoryForAdmin, findTotalCountOfAllProductsForAdmin } from "../../../data/products/find.mjs";
 import { getMonthlySalesReport,getDeliveredProductStatsUsingAggregation, getYearlySalesReport, getWeeklySalesReport, getDailySalesReport } from "../../../data/sales-report/find.mjs";
+import { findAllUserListForAdmin } from "../../../data/users/find.mjs";
 
 export const admin_dashboardGet = async (req,res) =>{
 
@@ -13,6 +14,7 @@ export const admin_dashboardGet = async (req,res) =>{
         for (const price of order) {
             total += price.totalPrice
         }
+        const totalUserCount = await findAllUserListForAdmin()
         const result = await getDeliveredProductStatsUsingAggregation()
         const {totalDeliveredOrders,totalDeliveredCost} = result
         console.log(result,'result is shwoing');
@@ -21,13 +23,17 @@ export const admin_dashboardGet = async (req,res) =>{
         const totalRevenue = total.toFixed(2)
         console.log(total,'total is showing');
         console.log(totalRevenue,'total price is showing heh  ');
-        const monthlyData = await getMonthlySalesReport()
-        console.log(monthlyData,'monthly report');
 
+
+
+       
         
         // order.reduce((acc,curr)=>acc+curr)
         // console.log(order.length);
         // console.log(orderCount,'order count is showing');
+        const monthlyData = await getMonthlySalesReport()
+        console.log(monthlyData,'monthly report');
+
         const yearlyData = await getYearlySalesReport()
         console.log(yearlyData,'yearl data is showing');
 
@@ -38,7 +44,7 @@ export const admin_dashboardGet = async (req,res) =>{
         console.log(dailyData,'dailt report is showing');
 
 
-        res.render('dashboard',{orderCount:totalDeliveredOrders,totalRevenue:totalDeliveredCost,productCount,categoryCount,yearlyData,monthlyData,weeklyData,dailyData})
+        res.render('dashboard',{orderCount:totalDeliveredOrders,totalRevenue:totalDeliveredCost,totalUserCount,productCount,categoryCount,yearlyData,monthlyData,weeklyData,dailyData})
     } catch (error) {
         console.log(error,'ADMIN SALES REPORT PAGE GET')
     }

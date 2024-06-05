@@ -1,10 +1,20 @@
 <!DOCTYPE HTML>
 <html lang="en">
 
-<head>
     <%- include('./partials/head/head.ejs') %>
+    <style>
+        .chart-container {
+            width: 100%;
+            max-width: 600px; /* Adjust as needed */
+            margin: 0 auto;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 300px !important; /* Adjust as needed */
+        }
+    </style>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Ensure Chart.js is included -->
-</head>
 
 <body>
 
@@ -99,7 +109,7 @@
                         <p>Whole data about your business here</p>
                     </div>
                     <div>
-                        <a href="#" class="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>Create
+                        <a href="/admin/sales-report" class="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>Create
                             report</a>
                     </div>
                 </div>
@@ -158,6 +168,20 @@
                                         class="text-info material-icons md-shopping_basket"></i></span>
                                 <div class="text">
                                     <h6 class="mb-1 card-title">Monthly Earning</h6> <span>$6,982</span>
+                                    <span class="text-sm">
+                                        Based on your local time.
+                                    </span>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card card-body mb-4">
+                            <article class="icontext">
+                                <span class="icon icon-sm rounded-circle bg-info-light"><i
+                                        class="text-info material-icons md-person"></i></span>
+                                <div class="text">
+                                    <h6 class="mb-1 card-title">Customer Count</h6> <span><%= totalUserCount %> </span>
                                     <span class="text-sm">
                                         Based on your local time.
                                     </span>

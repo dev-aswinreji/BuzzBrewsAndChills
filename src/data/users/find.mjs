@@ -47,3 +47,7 @@ console.log(userData.addresses.length);
 export async function findAllUserAddresses (userId){
   return await userCollection.findById(userId).populate('addresses')
 }
+
+export async function findAllUserListForAdmin (){
+  return await userCollection.countDocuments({role:'USER'})
+}
