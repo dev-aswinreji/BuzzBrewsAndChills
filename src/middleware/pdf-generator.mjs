@@ -20,48 +20,53 @@ export function generatePDFReport(data, period) {
 
     // Table Header
     const tableTop = doc.y;
-    const columnWidths = [80, 120, 120, 80, 80, 80, 120, 120];
+    const itemWidths = [60, 100, 100, 60, 60, 60, 80, 80];
 
-    doc.fontSize(10).fillColor('white');
-    doc.rect(30, tableTop, 570, 20).fill('black');
+    doc.fontSize(10)
+      .fillColor('white')
+      .rect(30, tableTop - 2, 540, 20)
+      .fill('black');
 
-    const headerLabels = ['Date', 'Username', 'Product', 'Quantity', 'Price', 'Discount', 'Original Amount', 'Total Revenue'];
-    let xPosition = 30;
+    doc.fillColor('white')
+      .text('Date', 35, tableTop, { width: itemWidths[0], align: 'left' })
+      .text('Username', 95, tableTop, { width: itemWidths[1], align: 'left' })
+      .text('Product', 195, tableTop, { width: itemWidths[2], align: 'left' })
+      .text('Quantity', 295, tableTop, { width: itemWidths[3], align: 'right' })
+      .text('Price', 355, tableTop, { width: itemWidths[4], align: 'right' })
+      .text('Discount', 415, tableTop, { width: itemWidths[5], align: 'right' })
+      .text('Original Amount', 475, tableTop, { width: itemWidths[6], align: 'right' })
+      .text('Total Revenue', 555, tableTop, { width: itemWidths[7], align: 'right' });
 
-    headerLabels.forEach((label, index) => {
-      doc.fillColor('white').text(label, xPosition, tableTop, { width: columnWidths[index], align: 'left' });
-      xPosition += columnWidths[index];
-    });
-
-    doc.moveTo(30, tableTop + 20).lineTo(600, tableTop + 20).stroke();
+    doc.moveTo(30, doc.y + 5).lineTo(570, doc.y + 5).stroke().moveDown(0.5);
 
     // Table Rows
     let totalRevenue = 0;
     data.forEach((item, index) => {
-      const rowTop = tableTop + 20 + (index * 20);
+      const rowTop = tableTop + 25 + (index * 20);
       const bgColor = index % 2 === 0 ? '#F9F9F9' : 'white';
+      doc.fillColor(bgColor)
+        .rect(30, rowTop - 2, 540, 20)
+        .fill();
 
-      doc.fillColor(bgColor).rect(30, rowTop, 570, 20).fill();
+      doc.fillColor('black')
+        .text(moment(item.date).format('YYYY/MM/DD'), 35, rowTop, { width: itemWidths[0], align: 'left' })
+        .text(item.username || '', 95, rowTop, { width: itemWidths[1], align: 'left' })
+        .text(item.productName || '', 195, rowTop, { width: itemWidths[2], align: 'left' })
+        .text(item.quantity !== undefined ? item.quantity : 0, 295, rowTop, { width: itemWidths[3], align: 'right' })
+        .text((item.price !== undefined ? item.price : 0).toFixed(2), 355, rowTop, { width: itemWidths[4], align: 'right' })
+        .text((item.discount !== undefined ? item.discount : 0).toFixed(2), 415, rowTop, { width: itemWidths[5], align: 'right' })
+        .text((item.originalAmount !== undefined ? item.originalAmount : 0).toFixed(2), 475, rowTop, { width: itemWidths[6], align: 'right' })
+        .text((item.totalRevenue !== undefined ? item.totalRevenue : 0).toFixed(2), 555, rowTop, { width: itemWidths[7], align: 'right' });
 
-      let xPosition = 30;
-
-      Object.values(item).forEach((value, index) => {
-        const text = index === 0 ? moment(value).format('YYYY/MM/DD') : value.toString();
-        doc.fillColor('black').text(text, xPosition, rowTop, { width: columnWidths[index], align: 'left', lineBreak: false });
-        xPosition += columnWidths[index];
-      });
-
-      totalRevenue += (item.price - item.discount) * item.quantity || 0; // Adjusted calculation for total revenue after discount
+      totalRevenue += item.totalRevenue !== undefined ? item.totalRevenue : 0;
     });
 
-    // Total Revenue
-    const totalRevenueText = `Total Revenue for the ${period.toUpperCase()}: $${totalRevenue.toFixed(2)}`;
-    const totalRevenueWidth = doc.widthOfString(totalRevenueText);
-    const totalRevenueX = (doc.page.width - totalRevenueWidth) / 2;
+    // Summary
+    doc.moveDown(2);
+    doc.fontSize(12)
+      .fillColor('black')
+      .text(`Total Revenue for the ${period.toUpperCase()}: $${totalRevenue.toFixed(2)}`, { align: 'center', underline: true });
 
-    doc.moveDown().fontSize(12).text(totalRevenueText, totalRevenueX, doc.y, { align: 'center' });
-
-    // Footer
     doc.moveDown(2);
     doc.fontSize(10).text('End of Report', { align: 'center', underline: true });
 
