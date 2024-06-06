@@ -1,7 +1,7 @@
 import moment from "moment";
 import { orderCollection } from "../../model/order.mjs";
 
-export async function generateReport(period) {
+export async function generateReport(period, customStartDate, customEndDate) {
     const now = moment.utc();
     let matchStage = { "products.status": "DELIVERED" };
 
@@ -14,6 +14,9 @@ export async function generateReport(period) {
             break;
         case 'monthly':
             matchStage.orderDate = { $gte: new Date(now.startOf('month').toISOString()) };
+            break;
+        case 'custom':
+            matchStage.orderDate = { $gte: new Date(customStartDate), $lte: new Date(customEndDate) };
             break;
         default:
             throw new Error("Invalid period specified");
@@ -55,11 +58,11 @@ export async function generateReport(period) {
                 username: { $first: "$user.fullName" },
                 productName: { $first: "$products.name" },
                 quantity: { $sum: "$products.quantity" },
-                price: { $sum: "$products.price" },
+                price: { $sum: "$products.price" }, // Calculate total price for the quantity of products
                 couponDiscount: { $sum: "$products.discount_price" },
-                originalAmount: { $sum: "$originalPrice" },
-                totalRevenue: { $sum: "$totalPrice" },
-                totalDiscountPercentage: { $sum: "$couponDiscount" }
+                originalAmount: { $sum: { $multiply: ["$products.quantity", "$products.price"] } }, // Calculate original amount for the quantity of products
+                totalRevenue: { $sum: { $multiply: ["$products.quantity", { $subtract: ["$products.price", "$products.discount_price"] }] } }, // Calculate total revenue for the quantity of products
+                totalDiscountPercentage: { $sum: "$products.discount_percentage" }
             }
         },
         {
@@ -84,25 +87,12 @@ export async function generateReport(period) {
         { $sort: { date: 1 } }
     ];
 
-    // console.log(pipeline,'pipeline');
-    // const agg = await orderCollection.aggregate([{ $match: matchStage },{ $unwind: "$products" }, {
-    //     $lookup: {
-    //         from: "userdatas", // Ensure this is the correct collection name
-    //         localField: "userId",
-    //         foreignField: "_id",
-    //         as: "users"
-    //     }
-    // }, { $unwind: "$users" }])
-    // console.log("Pipeline:", JSON.stringify(pipeline, null, 2));
-    // console.log(agg, 'agg is showing');
-
     try {
         const report = await orderCollection.aggregate(pipeline).exec();
-        console.log("Generated Report:", report);
+        console.log("Generated Report:=======================================================================================================================", report);
         return report;
     } catch (error) {
         console.error("Error generating report:", error);
         return null;
     }
-
 }

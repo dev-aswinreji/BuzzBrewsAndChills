@@ -1,7 +1,7 @@
 import PDFDocument from 'pdfkit';
 import moment from 'moment';
 
-export function generatePDFReport(data, period) {
+export function generatePDFReport(data, period, customStartDate, customEndDate) {
   return new Promise((resolve, reject) => {
     const doc = new PDFDocument({ margin: 30, size: 'A4' });
     let buffers = [];
@@ -12,63 +12,98 @@ export function generatePDFReport(data, period) {
       resolve(pdfData);
     });
 
+    // Calculate date range based on period
+    let startDate, endDate;
+
+    switch (period.toLowerCase()) {
+      case 'daily':
+        startDate = moment().startOf('day');
+        endDate = moment().endOf('day');
+        break;
+      case 'weekly':
+        startDate = moment().startOf('isoWeek');
+        endDate = moment().endOf('isoWeek');
+        break;
+      case 'monthly':
+        startDate = moment().startOf('month');
+        endDate = moment().endOf('month');
+        break;
+      case 'custom':
+        startDate = moment(customStartDate);
+        endDate = moment(customEndDate);
+        break;
+      default:
+        startDate = moment(data[0]?.date);
+        endDate = moment();
+    }
+
+    const startDateString = startDate.format('YYYY/MM/DD');
+    const endDateString = endDate.format('YYYY/MM/DD');
+
     // Header
     doc.fontSize(20).text('Sales Report', { align: 'center', underline: true });
     doc.moveDown(0.5);
     doc.fontSize(14).text(`${period.toUpperCase()} REPORT`, { align: 'center' });
+    doc.fontSize(12).text(`From: ${startDateString} To: ${endDateString}`, { align: 'center' });
     doc.moveDown(1.5);
 
     // Table Header
     const tableTop = doc.y;
-    const itemWidths = [60, 100, 100, 60, 60, 60, 80, 80];
+    const columnWidths = [60, 60, 70, 50, 50, 60, 70, 120];
 
-    doc.fontSize(10)
-      .fillColor('white')
-      .rect(30, tableTop - 2, 540, 20)
-      .fill('black');
+    doc.fontSize(10).fillColor('white');
+    doc.rect(30, tableTop, 540, 20).fill('black');
 
-    doc.fillColor('white')
-      .text('Date', 35, tableTop, { width: itemWidths[0], align: 'left' })
-      .text('Username', 95, tableTop, { width: itemWidths[1], align: 'left' })
-      .text('Product', 195, tableTop, { width: itemWidths[2], align: 'left' })
-      .text('Quantity', 295, tableTop, { width: itemWidths[3], align: 'right' })
-      .text('Price', 355, tableTop, { width: itemWidths[4], align: 'right' })
-      .text('Discount', 415, tableTop, { width: itemWidths[5], align: 'right' })
-      .text('Original Amount', 475, tableTop, { width: itemWidths[6], align: 'right' })
-      .text('Total Revenue', 555, tableTop, { width: itemWidths[7], align: 'right' });
+    const headerLabels = ['Date', 'Username', 'Product', 'Quantity', 'Price', 'Discount', 'Original Amount', 'Total Revenue'];
+    let xPosition = 30;
 
-    doc.moveTo(30, doc.y + 5).lineTo(570, doc.y + 5).stroke().moveDown(0.5);
+    headerLabels.forEach((label, index) => {
+      doc.fillColor('white').text(label, xPosition, tableTop, { width: columnWidths[index], align: 'center' });
+      xPosition += columnWidths[index];
+    });
+
+    doc.moveTo(30, tableTop + 20).lineTo(570, tableTop + 20).stroke();
 
     // Table Rows
     let totalRevenue = 0;
     data.forEach((item, index) => {
-      const rowTop = tableTop + 25 + (index * 20);
+      const rowTop = tableTop + 20 + (index * 20);
       const bgColor = index % 2 === 0 ? '#F9F9F9' : 'white';
-      doc.fillColor(bgColor)
-        .rect(30, rowTop - 2, 540, 20)
-        .fill();
 
-      doc.fillColor('black')
-        .text(moment(item.date).format('YYYY/MM/DD'), 35, rowTop, { width: itemWidths[0], align: 'left' })
-        .text(item.username || '', 95, rowTop, { width: itemWidths[1], align: 'left' })
-        .text(item.productName || '', 195, rowTop, { width: itemWidths[2], align: 'left' })
-        .text(item.quantity !== undefined ? item.quantity : 0, 295, rowTop, { width: itemWidths[3], align: 'right' })
-        .text((item.price !== undefined ? item.price : 0).toFixed(2), 355, rowTop, { width: itemWidths[4], align: 'right' })
-        .text((item.discount !== undefined ? item.discount : 0).toFixed(2), 415, rowTop, { width: itemWidths[5], align: 'right' })
-        .text((item.originalAmount !== undefined ? item.originalAmount : 0).toFixed(2), 475, rowTop, { width: itemWidths[6], align: 'right' })
-        .text((item.totalRevenue !== undefined ? item.totalRevenue : 0).toFixed(2), 555, rowTop, { width: itemWidths[7], align: 'right' });
+      doc.fillColor(bgColor).rect(30, rowTop, 540, 20).fill();
+
+      let xPosition = 30;
+
+      const values = [
+        moment(item.date).format('YYYY/MM/DD'),
+        item.username || '',
+        item.productName || '',
+        item.quantity !== undefined ? item.quantity : 0,
+        (item.price !== undefined ? item.price : 0).toFixed(2),
+        (item.discount !== undefined ? item.discount : 0).toFixed(2),
+        (item.originalAmount !== undefined ? item.originalAmount : 0).toFixed(2),
+        (item.totalRevenue !== undefined ? item.totalRevenue : 0).toFixed(2),
+      ];
+
+      values.forEach((value, index) => {
+        doc.fillColor('black').text(value, xPosition, rowTop, { width: columnWidths[index], align: 'center', lineBreak: false });
+        xPosition += columnWidths[index];
+      });
 
       totalRevenue += item.totalRevenue !== undefined ? item.totalRevenue : 0;
     });
 
-    // Summary
+    // Total Revenue
     doc.moveDown(2);
-    doc.fontSize(12)
-      .fillColor('black')
-      .text(`Total Revenue for the ${period.toUpperCase()}: $${totalRevenue.toFixed(2)}`, { align: 'center', underline: true });
+    const totalRevenueText = `Overall Revenue for the ${period.toUpperCase()}: $${totalRevenue.toFixed(2)}`;
+    const totalRevenueX = (doc.page.width - doc.widthOfString(totalRevenueText)) / 2;
+    doc.fontSize(12).fillColor('black').text(totalRevenueText, totalRevenueX, doc.y, { underline: true });
 
+    // Footer
     doc.moveDown(2);
-    doc.fontSize(10).text('End of Report', { align: 'center', underline: true });
+    const footerText = 'End of Report';
+    const footerX = (doc.page.width - doc.widthOfString(footerText)) / 2;
+    doc.fontSize(10).text(footerText, footerX, doc.y, { underline: true });
 
     doc.end();
   });
