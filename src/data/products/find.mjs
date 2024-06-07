@@ -4,7 +4,7 @@ import { productCollection } from "../../model/product.mjs";
 
 
 export async function findCategory() {
-    return await categoryCollection.find()
+    return await categoryCollection.find().sort({_id:-1 })
 }
 
 export async function findCountOfCategoryForAdmin (){
@@ -24,7 +24,7 @@ export async function findUniqueCategory (categoryName){
 }
 
 export async function findAllProducts(skip,limit) {
-    return  await productCollection.find().skip(skip).limit(limit).populate('category')
+    return  await productCollection.find().skip(skip).limit(limit).sort({_id:-1}).populate('category')
 }
 
 

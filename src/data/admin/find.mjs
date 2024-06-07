@@ -7,7 +7,7 @@ export async function findAdmin(data) {
 
 
 export async function findAllUser(skip,limit) {
-    return await userCollection.find({ role: "USER"}).skip(skip).limit(limit)
+    return await userCollection.find({ role: "USER"}).skip(skip).limit(limit).sort({_id:-1})
 }
 
 

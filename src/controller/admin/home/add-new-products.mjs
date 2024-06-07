@@ -37,7 +37,7 @@ export const admin_addNewProductsPost = async (req, res) => {
         }
         const categoryDiscount = category.discount
         console.log(categoryDiscount,'category discount is showing ');
-        const productDiscount = Number(req.body.discount)
+        const productDiscount = Number(req.body.discount) || 0
         const discount = categoryDiscount < productDiscount ? productDiscount : categoryDiscount
         console.log(discount,'discount is showing');
         const price = Number(req.body.price )
@@ -54,7 +54,7 @@ export const admin_addNewProductsPost = async (req, res) => {
             category:category,
             stock:req.body.stock,
             imageUrl:imageUrl,
-            discount:req.body.discount,
+            discount:productDiscount,
             discount_price:discount_price
         }
 
