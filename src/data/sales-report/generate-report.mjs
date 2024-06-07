@@ -2,6 +2,10 @@ import moment from "moment";
 import { orderCollection } from "../../model/order.mjs";
 
 export async function generateReport(period, customStartDate, customEndDate) {
+
+    const data = await orderCollection.find({"products.status":'DELIVERED'})
+    console.log(data,'data is showing=======================================[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]=====================================');
+    console.log(data[0].products,'hhhhhhhhhhhhhhhhhhheeeeeeeeeeeeeeeeeeeehhhhhhhhhhhhhhhhhhhhhhhhheeeeeeeeeeeeeeeeeeeeeeeeee');
     let matchStage = { "products.status": "DELIVERED" };
 
     switch (period) {
@@ -25,8 +29,8 @@ export async function generateReport(period, customStartDate, customEndDate) {
     }
 
     const pipeline = [
-        { $match: matchStage },
         { $unwind: "$products" },
+        { $match: matchStage },
         {
             $lookup: {
                 from: "userdatas",
@@ -51,7 +55,7 @@ export async function generateReport(period, customStartDate, customEndDate) {
                 price: { $sum: "$products.price" },
                 couponDiscount: { $sum: "$couponDiscount" },
                 originalAmount: { $sum: { $multiply: ["$products.quantity", "$products.price"] } },
-                totalRevenue: { $sum:"$totalPrice"  }
+                totalRevenue: { $sum:{ $multiply: ["$products.quantity", "$products.price"] }  }
             }
         },
         {

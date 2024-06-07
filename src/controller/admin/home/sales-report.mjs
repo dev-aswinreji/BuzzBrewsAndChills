@@ -5,18 +5,14 @@ import { formatReportData } from "../../../middleware/format-report-data.mjs";
 import { generatePDFReport } from "../../../middleware/pdf-generator.mjs";
 import { generateReport } from "../../../data/sales-report/generate-report.mjs";
 import { orderCollection } from "../../../model/order.mjs";
+import { getDeliveredProductStatsUsingAggregation } from "../../../data/sales-report/find.mjs";
 
 
 export const admin_salesReportGet = async (req, res) => {
     try {
-        const order = await findAllOrderSuccessFullOrderAmount()
-        console.log(order, 'order is showing');
-        const orderCount = order.length
-        let total = 0;
-        for (const price of order) {
-            total += price.totalPrice
-        }
-        const totalPrice = total.toFixed(2)
+        const result = await getDeliveredProductStatsUsingAggregation()
+        const {totalDeliveredOrders,totalDeliveredCost} = result
+ 
         const {startDate,endDate } = req.query
         console.log(req.query, 'req query is showuing');
         let period;
@@ -34,7 +30,7 @@ export const admin_salesReportGet = async (req, res) => {
         // console.log(orderCount,'order count is showing');
         // const or = await orderCollection.deleteMany({})
         // console.log(or,'oru dinam');
-        res.render('sales-report', { orderCount, totalPrice, reportData, period })
+        res.render('sales-report', { orderCount:totalDeliveredOrders, totalRevenue:totalDeliveredCost, reportData, period })
     } catch (error) {
         console.log(error, 'ADMIN SALES REPORT PAGE GET')
     }
