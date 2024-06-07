@@ -17,10 +17,12 @@ export const admin_salesReportGet = async (req, res) => {
             total += price.totalPrice
         }
         const totalPrice = total.toFixed(2)
-        const { period, startDate,endDate } = req.query
+        const {startDate,endDate } = req.query
         console.log(req.query, 'req query is showuing');
-        console.log(period, 'period is showing');
+        let period;
+        period = req.query.period || 'daily'
         let reportData;
+        console.log(period, 'period is showing');
         if (period) {
             reportData = await generateReport(period,startDate,endDate)
         } else {

@@ -51,7 +51,7 @@ export async function generateReport(period, customStartDate, customEndDate) {
                 price: { $sum: "$products.price" },
                 couponDiscount: { $sum: "$couponDiscount" },
                 originalAmount: { $sum: { $multiply: ["$products.quantity", "$products.price"] } },
-                totalRevenue: { $sum:"$products.totalPrice"  }
+                totalRevenue: { $sum:"$totalPrice"  }
             }
         },
         {
