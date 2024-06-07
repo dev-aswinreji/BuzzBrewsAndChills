@@ -46,7 +46,7 @@ export const user_signinPost = async (req, res) => {
                 expiresIn: '1h',
             })
             res.status(200)
-            res.render('home')
+            res.redirect('/home')
         } else {
             req.session.message = 'Invalid Entry or Account is Blocked'
             res.redirect('/signin')
