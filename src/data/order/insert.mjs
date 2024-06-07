@@ -23,6 +23,11 @@ export async function insertOrder(userId, userAddressId, paymentMethod, paymentI
     const originalPrice = cart.items.reduce((total, item) => {
       return total + (item.productId.discount_price * item.quantity);
     }, 0);
+    const price = cart.items.map(data=>{
+       return data.productId.discount_price = data.productId.discount_price - (data.productId.discount_price * couponDiscount/100)
+       console.log(data.productId.price,'wowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww');
+    })
+    console.log(price,'price is showing','[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[-------------------------------');
     console.log(originalPrice, 'original price is showing');
     if (cart.items.length > 0) {
       const order = await orderCollection.create([
@@ -33,7 +38,8 @@ export async function insertOrder(userId, userAddressId, paymentMethod, paymentI
             productId: item.productId._id,
             name: item.productId.name,
             quantity: item.quantity,
-            price: item.productId.discount_price,
+            orginalProductPrice:item.productId.discount_price,
+            price: item.productId.discount_price = item.productId.discount_price - (item.productId.discount_price * couponDiscount/100),
           })),
           totalPrice: cart.totalPrice,
           originalPrice:originalPrice,

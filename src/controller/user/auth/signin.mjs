@@ -27,20 +27,20 @@ export const user_signinPost = async (req, res) => {
             password: req.body.password
         }
         const userAuth = await findUser(data.email)
-        req.session.USER_ID = userAuth._id
         const userData = await checkDataDuplication(userAuth)
-
+        
         if (userData === 'NOT EXIST') {
             req.session.message = 'Invalid User Entry Please Try to Signin'
             return res.redirect('/signin')
         }
-
+        
         req.session.userEmailForAddUserAddress = userAuth.email
-
+        
         const pass = await compareHashPassword(data.password, userAuth.password)
         console.log(pass)
-
+        
         if (data.email === userAuth.email && pass === true && userAuth.accountStatus === 'ACTIVE') {
+            req.session.USER_ID = userAuth._id
             req.session.isUserAuth = true
             const token = jwt.sign({ userId: userAuth._id }, process.env.JWT_SECRET_KEY, {
                 expiresIn: '1h',
