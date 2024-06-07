@@ -13,11 +13,7 @@ export const user_addAddressPost = async (req, res) => {
   
     const path = req.body.path
     const userId = req.session.USER_ID
-    const userDataWithAddress = await findUserAddressUsingIdAndPopulate(userId)
 
-    console.log(userDataWithAddress.addresses.length,'user data is showing');
-    let isFirstAddress = userDataWithAddress.addresses.length === 0  
-        
     const userAddress = {
         name: req.body.name,
         phoneNumber: req.body.phoneNumber,
@@ -26,10 +22,9 @@ export const user_addAddressPost = async (req, res) => {
         state:req.body.state,
         country: req.body.country,
         pincode:req.body.pincode,
-        // isDefault:isFirstAddress?'YES':'NO'
+       
     }
     console.log(userAddress,'user addres haha');
-    console.log(userAddress.isDefault,'is default is');
     const newAddress = await insertUserAddress(userAddress)
     await updateUserUsingIdForAddress(userId, newAddress)
 
