@@ -28,7 +28,22 @@ export const user_addToCartManageGet = async (req,res) => {
     console.log(quantityFromUpdatedData,'quantitiy of unique product is shwoing');
 
     const totalPrice = await aggregationForTotalPrice(userId);
-
+    console.log(totalPrice, "aggregation is working ====================");
+    if (totalPrice.length > 0) {
+      await cartCollection.updateOne(
+        {
+          userId: userId,
+        },
+        { totalPrice: totalPrice[0].totalPrice }
+      );
+    } else {
+      await cartCollection.updateOne(
+        {
+          userId: userId,
+        },
+        { totalPrice: 0 }
+      );
+    }
     console.log(totalPrice,'total price is showing ');
     
     res.json({result:'within limit',totalPrice:totalPrice,quantityFromUpdatedData:quantityFromUpdatedData})
