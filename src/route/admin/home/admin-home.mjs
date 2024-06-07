@@ -15,6 +15,7 @@ import { admin_orderDetailsGet, admin_orderDetailsPost } from "../../../controll
 import { admin_couponGet, admin_couponPost } from "../../../controller/admin/home/coupon.mjs";
 import { admin_editCouponGet } from "../../../controller/admin/home/edit-coupon.mjs";
 import { admin_salesReportDownloadGet, admin_salesReportGet } from "../../../controller/admin/home/sales-report.mjs";
+import { admin_pdfFormat } from "../../../controller/admin/home/pdf-format.mjs";
 
 const adminHomeRoute = express.Router()
 
@@ -53,5 +54,6 @@ adminHomeRoute.get('/edit-coupon',admin_editCouponGet)
 
 adminHomeRoute.get('/sales-report',admin_salesReportGet)
 adminHomeRoute.get('/report/download/:period',admin_salesReportDownloadGet)
+adminHomeRoute.get('/download-report',admin_pdfFormat)
 
 export default adminHomeRoute
