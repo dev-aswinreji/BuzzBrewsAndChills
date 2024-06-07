@@ -81,15 +81,20 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="single-product-content">
-                                    <h3>Green apples have polyphenols</h3>
+                                    <h3>
+                                        <%= product.name %>
+                                    </h3>
                                     <p class="single-product-pricing">
                                         <span>Per Kg</span>
-                                        <% if (product.discount_price) { %>
-                                         <del><%= product.price %> </del>
-                                         Rs <%= product.discount_price %> 
-                                        <% }else {%>
-                                        Rs <%= product.price %>
-                                        <% } %> 
+                                        <% if (product.discount_price===product.price) { %>
+                                            Rs <%= product.price %>
+
+                                                <% }else {%>
+                                                    <del>
+                                                        <%= product.price %>
+                                                    </del>
+                                                    Rs <%= product.discount_price %>
+                                                        <% } %>
                                     </p>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta sint dignissimos,
                                         rem
@@ -111,7 +116,7 @@
 
                                                     <% if (product.stock> 0) { %>
                                                         <button onclick="addToCartUsingFetch(`<%= product._id %>`)"
-                                                            class="cart-btn">
+                                                            class="cart-btn btn-success rounded-pill">
                                                             <i class="fas fa-shopping-cart"></i>
                                                             Add to Cart
                                                         </button>
@@ -182,27 +187,31 @@
                             </div>
                         </div>
                     </div>
-                    <% for (let i=0; i < relatedProduct.length; i++) { %>
-                        <div class="row">
-                            <% if (relatedProduct[i]._id !==product._id) { %>
+                    <div class="row">
+                            <% for (let i=0; i < relatedProduct.length; i++) { %>
+                                <% console.log(relatedProduct[i]._id,'realaet',product._id); %> 
+                                <% console.log(relatedProduct); %> 
+                                <% console.log(relatedProduct[i]._id.equals(product._id),'ehat is showing hererererere'); %> 
+                            <% if (!relatedProduct[i]._id.equals(product._id)) { %>
                                 <div class="col-lg-4 col-md-6 text-center">
                                     <div class="single-product-item">
                                         <div class="product-image">
-                                            <a href="single-product.html">
-                                                <img src="/product-images/<%= relatedProduct[i].imageUrl %>" alt="">
+                                            <a href="/product-view/<%= relatedProduct[i]._id %>">
+                                                <img src="/product-images/<%= relatedProduct[i].imageUrl[0] %>" alt="">
                                             </a>
                                         </div>
-                                        <h3>Strawberry</h3>
-                                        <p class="product-price"><span>Per Kg</span> 85$</p>
-                                        <a class="cart-btn" id="cart-button">
+                                        <h3><%= relatedProduct[i].name %> </h3>
+                                        <input type="number" name="" value="<%= relatedProduct[i].stock%>" id="stock_<%= i %>" hidden>
+                                        <p class="product-price"><span>Per Kg</span> <%= relatedProduct[i].discount_price %> </p>
+                                        <button type="button" onclick="addToCartRelatedProductUsingFetch('<%= i %>','<%= relatedProduct[i]._id %>')" class="cart-btn btn-success rounded-pill" id="cart-button">
                                             <i class="fas fa-shopping-cart"></i>
                                             Add to Cart
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                                 <% } %>
+                                <% } %>
                         </div>
-                        <% } %>
                 </div>
             </div>
             <!-- end more products -->
@@ -211,6 +220,57 @@
                 <script src="/javascripts/zoomslider.mjs"></script>
 
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+                <script>
+                     async function addToCartRelatedProductUsingFetch(index, productId) {
+                    const productStock = document.getElementById('stock_' + index).value;
+                    await fetch(`/add-to-cart/?productId=${productId}&stock=${productStock}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((response) => {
+                        if (response.redirected) {
+                            Swal.fire({
+                                title: "Invalid Entry",
+                                text: "Please sign in to continue.",
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonText: "Sign In",
+                                cancelButtonText: "Cancel"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = '/signin'
+                                }
+                            })
+                        } else if (!response.ok) {
+                            throw new Error('A network error occurred while fetching data.')
+                        }
+                        return response.json()
+                    })
+                        .then(data => {
+                            if (data.result === 'within limit') {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: "Product added to cart successfully",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            } else {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "error",
+                                    title: "Maximum product limit exceeded",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                        }).catch(err => {
+                            console.error(err, 'Some error occurred while adding to cart');
+                        });
+                }
+                </script>
 
                 <script>
 
@@ -320,6 +380,7 @@
 
                     }
                 </script>
+                
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
                         var magnifiers = document.querySelectorAll(".image-magnifier");

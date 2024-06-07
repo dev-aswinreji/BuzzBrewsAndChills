@@ -199,6 +199,31 @@
             background-color: #28a745;
             color: #fff;
         }
+
+        /* Style for the select element */
+        .box {
+            appearance: none;
+            /* Remove default arrow */
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        /* Style for the options */
+        .box option {
+            background-color: #fff;
+            color: #333;
+        }
+
+        /* Style for the selected option */
+        .box option:checked {
+            background-color: #007bff;
+            color: #fff;
+        }
     </style>
     <%- include('./partials/head/head.ejs') %>
 </head>
@@ -238,32 +263,36 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="sort-options-wrapper">
-                    <ul>
-                        <li><a href="/shop?sortOption=priceLowHigh"
-                                class="<%= sortOption === 'priceLowHigh' ? 'active' : '' %>">Low To High</a></li>
-                        <li><a href="/shop?sortOption=priceHighLow"
-                                class="<%= sortOption === 'priceHighLow' ? 'active' : '' %>">High To Low</a></li>
-                        <li><a href="/shop?sortOption=A-Z" class="<%= sortOption === 'A-Z' ? 'active' : '' %>">A - Z</a>
-                        </li>
-                        <li><a href="/shop?sortOption=Z-A" class="<%= sortOption === 'Z-A' ? 'active' : '' %>">Z - A</a>
-                        </li>
-                        <li><a href="/shop?sortOption=default"
-                                class="<%= sortOption === 'default' ? 'active' : '' %>">Default</a></li>
-                    </ul>
-                </div>
                 <div class="search-wrapper">
-                    <form action="/shop" method="GET">
-                        <input type="hidden" name="sortOption" value="<%= sortOption %>">
-                        <input type="text" name="search" class="search-input" placeholder="Search for products..."
-                            value="<%= search %>">
-                        <button type="submit" class="search-btn">Search</button>
-                    </form>
+                    <div class="p-5">
+                        <form action="/shop" method="GET">
+                            <input type="hidden" name="sortOption" value="<%= sortOption %>">
+                            <input type="text" name="search" class="search-input" placeholder="Search for products..."
+                                value="<%= search %>">
+                            <button type="submit" class="search-btn">Search</button>
+                        </form>
+                    </div>
+                    <h4>
+                        Filter By :
+
+                        <select name="sortOption" id="sort" class="box">
+
+                            <option value="priceLowHigh" <%=sortOption==='priceLowHigh' ? 'selected' : '' %>>Low To High
+                            </option>
+                            <option value="priceHighLow" <%=sortOption==='priceHighLow' ? 'selected' : '' %>>High To Low
+                            </option>
+                            <option value="A-Z" <%=sortOption==='A-Z' ? 'selected' : '' %>>Aa - Zz
+                            </option>
+                            <option value="Z-A" <%=sortOption==='Z-A' ? 'selected' : '' %>>Zz - Aa
+                            </option>
+                            <option value="default" <%=sortOption==='default' ? 'selected' : '' %>> Default
+                            </option>
+                        </select>
+                    </h4>
                 </div>
 
                 <% if (products.length> 0) { %>
-                    <div class="row product-lists">
+                    <div class="row product-lists" id="product-lists">
                         <% products.forEach((product, index)=> { %>
                             <div class="col-lg-4 col-md-6 text-center berry">
                                 <div class="single-product-item">
@@ -278,63 +307,78 @@
                                     </h3>
                                     <% if (product.stock < 40) { %>
                                         <% if (product.stock===0) { %>
+                                            <br>
                                             <p style="font-weight: bold; font-size: large;" class="text-danger md-2">
-                                                Product is currently out of stock!!!
+                                                Product is <br>currently out <br>of stock!!!
                                             </p>
+                                            <br><br>
                                             <% } else { %>
-                                                <p class="product-stock">
-                                                    <span class="text-danger"
-                                                        style="font-weight: bolder; font-size: medium;">Hot
-                                                        Deal!</span><br>
-                                                    <span class="text-success"
-                                                        style="font-size: medium; font-weight: bold;">In Stock</span>
-                                                    <span id="stock_<%= index %>">
-                                                        <%= product.stock %>
-                                                    </span>
-                                                </p>
-                                                <p class="product-price">
-                                                    <span>Per Kg</span>Rs <del>
-                                                        <%= product.price %>
-                                                    </del>
-                                                    <%= product.discount_price %>
-                                                </p>
-                                                <% } %>
-                                                    <% } else { %>
-                                                        <p class="product-stock">
-                                                            <span class="text-success"
-                                                                style="font-size: medium; font-weight: bold;">In
-                                                                Stock</span>
-                                                            <span id="stock_<%= index %>">
-                                                                <%= product.stock %>
-                                                            </span>
-                                                        </p>
-                                                        <p class="product-price">
-                                                            <span>Per Kg</span>Rs <del>
-                                                                <%= product.price %>
-                                                            </del>
+                                                <%= "hello" %>
+                                                    <p class="product-stock">
+                                                        <span class="text-danger"
+                                                            style="font-weight: bolder; font-size: medium;">Hot
+                                                            Deal!</span><br>
+                                                        <span class="text-success"
+                                                            style="font-size: medium; font-weight: bold;">In
+                                                            Stock</span>
+                                                        <span id="stock_<%= index %>">
+                                                            <%= product.stock %>
+                                                        </span>
+                                                    </p>
+                                                    <p class="product-price">
+                                                        <span>Per Kg</span>Rs
+                                                        <% if (product.price===product.discount_price) { %>
+                                                            
                                                             <%= product.discount_price %>
-                                                        </p>
-                                                        <% } %>
-                                                            <a
-                                                                onclick="addToWishlist('<%= index %>', '<%= product._id %>')">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                    height="24" fill="currentColor" class="bi bi-heart"
-                                                                    viewBox="0 0 16 16" style="margin-right: 3rem;">
-                                                                    <path
-                                                                        d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                                                                </svg>
-                                                            </a>
-                                                            <% if (product.stock> 0) { %>
-                                                                <button
-                                                                    onclick="addToCartUsingFetch('<%= index %>', '<%= product._id %>')"
-                                                                    class="cart-btn">
-                                                                    <i class="fas fa-shopping-cart"></i> Add to Cart
-                                                                </button>
-                                                                <% } else { %>
-                                                                    <button class="cart-btn" disabled>
-                                                                        <i class="fas fa-shopping-cart"></i> Add to Cart
-                                                                    </button>
-                                                                    <% } %>
+
+                                                            <% }else {%>
+                                                                <del>
+                                                                    <%= product.price %>
+                                                                </del>
+                                                                <%= product.discount_price %>
+                                                                <% } %> 
+                                                    </p>
+                                                    <% } %>
+                                                        <% } else { %>
+                                                            <%= "hello" %>
+                                                                <p class="product-stock">
+                                                                    <span class="text-success"
+                                                                        style="font-size: medium; font-weight: bold;">In
+                                                                        Stock</span>
+                                                                    <span id="stock_<%= index %>">
+                                                                        <%= product.stock %>
+                                                                    </span>
+                                                                </p>
+                                                                <p class="product-price">
+                                                                    <span>Per Kg</span>Rs <del>
+                                                                        <%= product.price %>
+                                                                    </del>
+                                                                    <%= product.discount_price %>
+                                                                </p>
+                                                                <% } %>
+                                                                    <a
+                                                                        onclick="addToWishlist('<%= index %>', '<%= product._id %>')">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="24" height="24" fill="currentColor"
+                                                                            class="bi bi-heart" viewBox="0 0 16 16"
+                                                                            style="margin-right: 3rem;">
+                                                                            <path
+                                                                                d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                                                                        </svg>
+                                                                    </a>
+                                                                    <% if (product.stock> 0) { %>
+                                                                        <button
+                                                                            onclick="addToCartUsingFetch('<%= index %>', '<%= product._id %>')"
+                                                                            class="cart-btn">
+                                                                            <i class="fas fa-shopping-cart"></i> Add to
+                                                                            Cart
+                                                                        </button>
+                                                                        <% } else { %>
+                                                                            <button class="cart-btn" disabled>
+                                                                                <i class="fas fa-shopping-cart"></i> Add
+                                                                                to Cart
+                                                                            </button>
+                                                                            <% } %>
                                 </div>
                             </div>
                             <% }) %>
@@ -378,6 +422,25 @@
         <%- include('./partials/footer/footer.ejs') %>
 
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const sortSelect = document.getElementById('sort');
+
+                    sortSelect.addEventListener('change', function () {
+                        const selectedSortOption = this.value;
+                        const urlParams = new URLSearchParams(window.location.search);
+
+                        // Set or update the sortOption query parameter
+                        urlParams.set('sortOption', selectedSortOption);
+
+                        // Redirect to the updated URL
+                        window.location.search = urlParams.toString();
+                    });
+                });
+            </script>
 
             <script>
                 async function addToWishlist(index, productId) {
