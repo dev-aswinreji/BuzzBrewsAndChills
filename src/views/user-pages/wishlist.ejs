@@ -158,7 +158,7 @@
                         <% console.log(item,'item is showing'); %>
                             <div class="wishlist-item">
                                 <div class="product-details">
-                                    <img src="/product-images/<%= item.productId.imageUrl %>"
+                                    <img src="/product-images/<%= item.productId.imageUrl[0] %>"
                                         alt="<%= item.productId.name %>">
                                     <div class="product-info">
 
@@ -169,17 +169,24 @@
                                         </p>
 
                                     </div>
-                                    
+
                                 </div>
-                                <h6>Stock left: <span id="stock_<%= index %>"><%= item.productId.stock %></span></h6>
+                                <h6><span id="stock_<%= index %>">
+                                        <% if (item.productId.stock <=0) { %>
+                                            <h6 class="text-danger">product is out of stock</h6>
+                                            <% }else {%>
+                                                Stock left:
+                                                <%= item.productId.stock %>
+                                                    <% } %>
+                                    </span></h6>
 
                                 <div class="wishlist-actions">
                                     <button class="btn btn-view-details" href="/product-view"><a
                                             href="/product-view/<%= item.productId._id %>">View
                                             Details</a></button>
-                                    <button class="btn btn-add-to-cart"
+                                    <button class="btn btn-add-to-cart" <%=item.productId.stock <=0 ? 'disabled' : '' %>
                                         onclick="addToCartUsingFetch('<%= item.productId._id %>','<%= index %>')">Add to
-                                        Cart</button>
+                                                Cart</button>
                                     <button class="btn btn-remove"
                                         onclick="confirmRemoving('<%= item.productId._id %>')">Remove</button>
                                 </div>
@@ -192,7 +199,7 @@
                                     <% } %>
             </div>
             <%- include('partials/footer/footer.ejs') %>
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
                 <script>
 
@@ -233,70 +240,81 @@
                         }).then(data => {
                             if (data.result === 'success') {
                                 Swal.fire({
-                                title: "Removed!",
-                                text: "Your product has been removed from wishlist.",
-                                icon: "success"
-                            
-                             }).then(()=>{
-                                location.reload()
-                             })
+                                    title: "Removed!",
+                                    text: "Your product has been removed from wishlist.",
+                                    icon: "success"
+
+                                }).then(() => {
+                                    location.reload()
+                                })
                             }
                         })
                     }
                 </script>
 
 
-    <script>
-        async function addToCartUsingFetch( productId,index) {
-            console.log(index,'index');
-            const productStock = document.getElementById('stock_' + index).innerHTML
-            console.log(productStock, 'productstock is showing');
-            await fetch(`/add-to-cart/?productId=${productId}&stock=${productStock}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'applicaton/json'
-                }
-            }) .then((response) => {
-           if (response.redirected) {
-            Swal.fire({
-            title: "Invalid Entry",
-            text: "Please sign in to continue.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Sign In",
-            cancelButtonText: "Cancel"
-            }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = '/signin'
-               }
-            })
-          } else if (!response.ok) {
-                throw new Error('A network error occurred while fetching data.')
-              }
-               return response.json()
-           })
+                <script>
+                    async function addToCartUsingFetch(productId, index) {
+                        console.log(index, 'index');
+                        const productStockStr = document.getElementById('stock_' + index).innerHTML
+                        const productStock = Number(productStockStr)
+                        if (!productStock <= 0) {
+                            console.log(productStock, 'productstock is showing');
+                            await fetch(`/add-to-cart/?productId=${productId}&stock=${productStock}`, {
+                                method: 'GET',
+                                headers: {
+                                    'Content-Type': 'applicaton/json'
+                                }
+                            }).then((response) => {
+                                if (response.redirected) {
+                                    Swal.fire({
+                                        title: "Invalid Entry",
+                                        text: "Please sign in to continue.",
+                                        icon: "warning",
+                                        showCancelButton: true,
+                                        confirmButtonText: "Sign In",
+                                        cancelButtonText: "Cancel"
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = '/signin'
+                                        }
+                                    })
+                                } else if (!response.ok) {
+                                    throw new Error('A network error occurred while fetching data.')
+                                }
+                                return response.json()
+                            })
 
-                .then(data => {
-                    console.log(data.result)
-                    data.result === 'within limit' ?
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: "Successfully product added to cart",
-                            showConfirmButton: false,
-                            timer: 1500
-                        }) : Swal.fire({
-                            position: "center",
-                            icon: "error",
-                            title: "Maximum product limit is exceeded",
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                }).catch(err => {
-                    console.log(err, 'Some error occured in fetch method in shop page');
-                })
-        }
-    </script>
+                                .then(data => {
+                                    console.log(data.result)
+                                    data.result === 'within limit' ?
+                                        Swal.fire({
+                                            position: "center",
+                                            icon: "success",
+                                            title: "Successfully product added to cart",
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        }) : Swal.fire({
+                                            position: "center",
+                                            icon: "error",
+                                            title: "Maximum product limit is exceeded",
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        })
+                                }).catch(err => {
+                                    console.log(err, 'Some error occured in fetch method in shop page');
+                                })
+                        } else {
+                            Swal.fire({
+                                icon: 'warning',
+                                showConfirmButton: false,
+                                title: 'Out of stock',
+                                timer: 2500
+                            })
+                        }
+
+                    }
+                </script>
     </body>
 
 </html>
