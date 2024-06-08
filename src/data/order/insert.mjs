@@ -1,3 +1,4 @@
+import { v4 as uuid } from "uuid";
 import { cartCollection } from "../../model/cart.mjs";
 import { orderCollection } from "../../model/order.mjs";
 import { otpGenForForgotPassword } from "../../utils/otp-generator.mjs";
@@ -12,7 +13,7 @@ export async function insertOrder(userId, userAddressId, paymentMethod, paymentI
     const address = await findUserAddressUsingId(userAddressId);
     console.log(address, 'address is showing ');
     const cart = await findCartDataUsingUserId(userId);
-    const orderId = await otpGenForForgotPassword();
+    const orderId = uuid()  //generating unique id for order id 
     const cartItems = cart.items.filter(item => item.productId.stock.toString() <= item.quantity.toString())
     const couponCode = cart.couponCode
 
