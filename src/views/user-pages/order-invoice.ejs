@@ -147,8 +147,7 @@
                         <th>Item</th>
                         <th>Price</th>
                         <th>Quantity</th>
-                        <th>Total</th>
-                        <th>Status</th>
+                        <th colspan="20">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -160,13 +159,12 @@
                             <td>
                                 <%= product.name %>
                             </td>
-                            <td>$<%= product.price %>
+                            <td>₹ <%= product.originalProductPrice %>
                             </td>
                             <td>
                                 <%= product.quantity %>
                             </td>
-                            <td>$<%= product.price * product.quantity %>
-                            </td>
+    
                             <td>
                                 <%= product.status %>
                             </td>
@@ -174,7 +172,7 @@
                         <% }) %>
                             <tr>
                                 <td colspan="5" class="text-right">Original Amount</td>
-                                <td>$<%= orderData.originalPrice %>
+                                <td>₹ <%= orderData.originalPrice %>
                                 </td>
                             </tr>
                             <tr>
@@ -185,7 +183,7 @@
                             </tr>
                                 <tr>
                                     <td colspan="5" class="text-right">Sub Total</td>
-                                    <td>$<%= orderData.totalPrice %>
+                                    <td> ₹ <%= orderData.totalPrice %>
                                     </td>
                                 </tr>
                             <!-- <tr>
