@@ -38,7 +38,7 @@ export async function insertOrder(userId, userAddressId, paymentMethod, paymentI
             productId: item.productId._id,
             name: item.productId.name,
             quantity: item.quantity,
-            orginalProductPrice:item.productId.discount_price,
+            originalProductPrice:item.productId.discount_price,
             price: item.productId.discount_price = item.productId.discount_price - (item.productId.discount_price * couponDiscount/100),
           })),
           totalPrice: cart.totalPrice,

@@ -188,7 +188,7 @@
                     <% order[0].products.forEach(item => { %>
                     <tr class="order-item">
                         <td class="product-name"><%= item.name %></td>
-                        <td class="product-price">Rs <%= item.price %></td>
+                        <td class="product-price">Rs <%= item.originalProductPrice %></td>
                         <td class="product-quantity"><%= item.quantity %></td>
                     </tr>
                     <% }) %>

@@ -48,7 +48,7 @@ const orderSchema = mongoose.Schema({
         type: Number,
         required: true,
       },
-      orginalProductPrice:{
+      originalProductPrice:{
         type:Number,
 
       },
