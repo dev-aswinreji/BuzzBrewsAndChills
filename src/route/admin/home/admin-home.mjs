@@ -13,7 +13,7 @@ import {admin_manageCategory} from "../../../controller/admin/home/manage-catego
 import {admin_authentication} from "../../../middleware/admin-auth.mjs";
 import { admin_orderDetailsGet, admin_orderDetailsPost } from "../../../controller/admin/home/order-details.mjs";
 import { admin_couponGet, admin_couponPost } from "../../../controller/admin/home/coupon.mjs";
-import { admin_editCouponGet } from "../../../controller/admin/home/edit-coupon.mjs";
+import { admin_editCouponGet, admin_editCouponPost, admin_updateCouponStatusPut } from "../../../controller/admin/home/edit-coupon.mjs";
 import { admin_salesReportDownloadGet, admin_salesReportGet } from "../../../controller/admin/home/sales-report.mjs";
 import { admin_pdfFormat } from "../../../controller/admin/home/pdf-format.mjs";
 
@@ -51,6 +51,8 @@ adminHomeRoute.get('/coupon',admin_couponGet)
 adminHomeRoute.post('/coupon',admin_couponPost)
 
 adminHomeRoute.get('/edit-coupon',admin_editCouponGet)
+adminHomeRoute.post('/edit-coupon',admin_editCouponPost)
+adminHomeRoute.put('/update-coupon',admin_updateCouponStatusPut)
 
 adminHomeRoute.get('/sales-report',admin_salesReportGet)
 adminHomeRoute.get('/report/download/:period',admin_salesReportDownloadGet)

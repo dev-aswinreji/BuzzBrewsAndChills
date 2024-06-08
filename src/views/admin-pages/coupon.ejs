@@ -28,7 +28,7 @@
                             <span class="text">Products</span>
                         </a>
                     </div>
-                    <div class="menu-item active">
+                    <div class="menu-item ">
                         <a class="menu-link" href="/admin/category">
                             <i class="icon material-icons md-shopping_bag"></i>
                             <span class="text">Categories</span>
@@ -64,7 +64,7 @@
                             <span class="text">User Login</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item active">
                         <a class="menu-link" href="/admin/coupon">
                             <i class="icon material-icons md-comment"></i>
                             <span class="text">Coupon</span>
@@ -165,10 +165,11 @@
                                             <thead>
                                                 <tr>
                                                     <th>No.</th>
-                                                    <th>Categories</th>
+                                                    <th>Coupons</th>
                                                     <th>Minimum Cart Price</th>
                                                     <th>Description</th>
                                                     <th>Status</th>
+                                                    <th>Date</th>
                                                     <th>Discount</th>
                                                     <th class="text-end">Action</th>
                                                 </tr>
@@ -190,26 +191,29 @@
                                                                 <%= coupon[i].description %>
                                                             </td>
                                                             <td>
-                                                                <% if (coupon[i].availability==='ACTIVE' ) { %>
+                                                                <% if (coupon[i].couponStatus==='ACTIVE' ) { %>
                                                                     <span class="badge rounded-pill alert-success">
-                                                                        <%= coupon[i].availability %>
+                                                                        <%= coupon[i].couponStatus %>
                                                                     </span>
                                                                     <% } else { %>
                                                                         <span class="badge rounded-pill alert-danger">
-                                                                            <%= coupon[i].availability %>
+                                                                            <%= coupon[i].couponStatus %>
                                                                         </span>
                                                                         <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <%= new Date(coupon[i].ending_date).toLocaleDateString('en-GB') %> 
                                                             </td>
                                                             <td>
                                                                 <%= coupon[i].discount %> %
                                                             </td>
                                                             <td class="text-end">
                                                                 <a class="btn"
-                                                                    href="/admin/edit-coupon/<%= coupon[i]._id %>">Edit</a>
+                                                                    href="/admin/edit-coupon/?couponId=<%= coupon[i]._id %>">Edit</a>
                                                                 <button
-                                                                    onclick="HideAndUnhide('<%= coupon[i]._id %>', '<%= coupon[i].availability %>')"
+                                                                    onclick="HideAndUnhide('<%= coupon[i]._id %>', '<%= coupon[i].couponStatus %>')"
                                                                     class="" style="width: 6rem;">
-                                                                    <% if (coupon[i].availability==='ACTIVE' ) { %>
+                                                                    <% if (coupon[i].couponStatus==='ACTIVE' ) { %>
                                                                         HIDE
                                                                         <% } else { %>
                                                                             SHOW
@@ -269,18 +273,22 @@
                             $('#inputdate').attr('min', maxDate);
                         });
 
-                        async function HideAndUnhide(id, availability) {
-                            const response = await fetch(`/admin/manage-category/${id}?availability=${availability}`, {
-                                method: 'GET',
+                        async function HideAndUnhide(id, couponStatus) {
+                            const response = await fetch(`/admin/update-coupon`, {
+                                method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json'
-                                }
+                                },
+                                body:JSON.stringify({
+                                    couponId:id,
+                                    couponStatus:couponStatus
+                                })
                             });
                             if (!response.ok) {
-                                console.log('Some network error occurred');
+                                throw new Error('Some network error occurred')
                             } else {
                                 const data = await response.json();
-                                if (data.id) {
+                                if (data.result=='success') {
                                     window.location.reload();
                                 } else {
                                     console.log('Fetched data is unsuccessful');

@@ -26,3 +26,7 @@ export async function findTotalNumberOfCouponCountForAdmin() {
         console.log(error, 'find total number of coupon count for admin func');
     }
 }
+
+export async function findUniqueCouponForAdminToEdit (couponId){
+    return await couponCollection.findById(couponId)
+}

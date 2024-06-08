@@ -27,13 +27,16 @@ const couponSchema = mongoose.Schema({
     type:Number,
     required:true
   },
-  once_per_user:{
-    type:String,
-    enum:['USED','NOT USED'],
-    default:'NOT USED'
+  maximum_cart_redeem:{
+    type:Number,
   },
   description:{
     type:String,
+  },
+  couponStatus:{
+    type:String,
+    enum:['ACTIVE','ARCHIVED'],
+    default:'ACTIVE'
   }
 });
 
