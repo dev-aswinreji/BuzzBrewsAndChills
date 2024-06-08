@@ -21,7 +21,7 @@ const categorySchema = new mongoose.Schema({
     },
     availability:{
         type:String,
-        enum:['ACTIVE','ARCHIVE','UNAVAILABLE'],
+        enum:['ACTIVE','ARCHIVED','UNAVAILABLE'],
         default:'ACTIVE',
         required:true
     },

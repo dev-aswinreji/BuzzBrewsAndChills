@@ -8,7 +8,7 @@ export const admin_manageCategory = async(req,res)=>{
     console.log(categoryData);
 
     if(categoryData.availability === 'ACTIVE'){
-        await updateCategory(categoryId,{availability:'UNAVAILABLE'})
+        await updateCategory(categoryId,{availability:'ARCHIVED'})
     }else{
         await updateCategory(categoryId,{availability:'ACTIVE'})
     }

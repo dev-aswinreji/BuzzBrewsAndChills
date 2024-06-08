@@ -24,7 +24,7 @@ export async function findUniqueCategory(categoryName) {
 }
 
 export async function findRelatedProductAccordingToCategory (category){
-    return await productCollection.find({availability:'AVAILABLE',category}).populate('category')
+    return await productCollection.find({availability:'ACTIVE',category}).populate('category')
 }
 
 export async function findAllProducts(skip, limit) {
@@ -42,30 +42,30 @@ export async function findSingleProductWithSameName(productName) {
 }
 
 export async function findAllProductsForUser(name, skip, limit) {
-    return (await productCollection.find({ availability: 'AVAILABLE', name: name }).skip(skip).limit(limit).populate('category')).filter(products => products.category.availability === 'ACTIVE')
+    return (await productCollection.find({ availability: 'ACTIVE', name: name }).skip(skip).limit(limit).populate('category')).filter(products => products.category.availability === 'ACTIVE')
 }
 
 export async function findAllProductsForUserSortingLowToHigh(name, skip, limit) {
-    return (await productCollection.find({ availability: 'AVAILABLE', name: name }).sort({ discount_price: 1 }).skip(skip).limit(limit).populate('category')).filter(products => products.category.availability === 'ACTIVE')
+    return (await productCollection.find({ availability: 'ACTIVE', name: name }).sort({ discount_price: 1 }).skip(skip).limit(limit).populate('category')).filter(products => products.category.availability === 'ACTIVE')
 }
 
 export async function findAllProductsForUserSortingHighToLow(name, skip, limit) {
-    return (await productCollection.find({ availability: 'AVAILABLE', name: name }).sort({ discount_price: -1 }).skip(skip).limit(limit).populate('category')).filter(products => products.category.availability === 'ACTIVE')
+    return (await productCollection.find({ availability: 'ACTIVE', name: name }).sort({ discount_price: -1 }).skip(skip).limit(limit).populate('category')).filter(products => products.category.availability === 'ACTIVE')
 }
 
 export async function findAllProductsForUserSortingAtoZ(name, skip, limit) {
-    return (await productCollection.find({ availability: 'AVAILABLE', name: name }).sort({ name: 1 }).skip(skip).limit(limit).populate('category')).filter(products => products.category.availability === 'ACTIVE')
+    return (await productCollection.find({ availability: 'ACTIVE', name: name }).sort({ name: 1 }).skip(skip).limit(limit).populate('category')).filter(products => products.category.availability === 'ACTIVE')
 }
 
 export async function findAllProductsForUserSortingZtoA(name, skip, limit) {
-    return (await productCollection.find({ availability: 'AVAILABLE', name: name }).sort({ name: -1 }).skip(skip).limit(limit).populate('category')).filter(products => products.category.availability === 'ACTIVE')
+    return (await productCollection.find({ availability: 'ACTIVE', name: name }).sort({ name: -1 }).skip(skip).limit(limit).populate('category')).filter(products => products.category.availability === 'ACTIVE')
 }
 
 export async function findTotalCountOfAllProductsForAdmin() {
     return await productCollection.countDocuments()
 }
 export async function findTotalCountOfAllProducts() {
-    const products = await productCollection.find({ availability: 'AVAILABLE' }).populate('category').exec()
+    const products = await productCollection.find({ availability: 'ACTIVE' }).populate('category').exec()
     const totalCount = products.filter(products => products.category.availability === 'ACTIVE').length
     return totalCount
 }
@@ -90,7 +90,7 @@ export async function findProductCategoryFiltering(categoryName, sort) {
         const products = await productCollection.aggregate([
             {
                 $match: {
-                    availability: 'AVAILABLE'
+                    availability: 'ACTIVE'
                 }
             },
             {

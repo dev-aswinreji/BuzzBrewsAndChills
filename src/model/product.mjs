@@ -32,8 +32,8 @@ const productsSchema = mongoose.Schema({
     },
     availability:{
         type:String,
-        enum:['AVAILABLE','UNAVAILABLE'],
-        default:'AVAILABLE',
+        enum:['ACTIVE','ARCHIVED'],
+        default:'ACTIVE',
         required:true
     },
     stock: {

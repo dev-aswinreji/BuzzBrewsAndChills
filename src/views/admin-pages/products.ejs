@@ -141,15 +141,15 @@
                                                 <th scope="col">
                                                     <input type="checkbox">
                                                 </th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Image</th>
-                                                <th scope="col">Price</th>
-                                                <th scope="col">Stock</th>
-                                                <th scope="col">Category</th>
-                                                <th scope="col">Discount</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Action</th>
+                                                <th scope="col" class="fs-4 fw-bold">Name</th>
+                                                <th scope="col" class="fs-4 fw-bold">Image</th>
+                                                <th scope="col" class="fs-4 fw-bold">Price</th>
+                                                <th scope="col" class="fs-4 fw-bold">Stock</th>
+                                                <th scope="col" class="fs-4 fw-bold">Category</th>
+                                                <th scope="col" class="fs-4 fw-bold">Discount</th>
+                                                <th scope="col" class="fs-4 fw-bold">Status</th>
+                                                <th scope="col" class="fs-4 fw-bold">Date</th>
+                                                <th scope="col" class="fs-4 fw-bold">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -159,13 +159,11 @@
                                                         <input type="checkbox">
                                                     </td>
                                                     <td>
-                                                        <a href="#">
                                                             <div class="info">
-                                                                <h6 class="mb-0">
+                                                                <h6 class="mb-0 fw-bolder">
                                                                     <%= product[i].name %>
                                                                 </h6>
                                                             </div>
-                                                        </a>
                                                     </td>
                                                     <td class="align-middle">
 
@@ -173,42 +171,48 @@
                                                             class="img-sm img-thumbnail" alt="Item">
                                                     </td>
                                                     <td>
-                                                        $<%= product[i].price %>
+                                                        <h6 class="fw-bolder text-dark">₹ <%= product[i].price %></h6>
                                                     </td>
                                                     <td>
-                                                        <h5><% if ( product[i].stock === 0 ) { %>
-                                                            <%= product[i].stock %>
-                                                        <% }else {%>
-                                                            
-                                                            <% } %> 
-                                                        </h5>
+                                                        <h6 class="fw-bolder">
+                                                            <% if ( product[i].stock===0 ) { %>
+                                                                <span class="text-danger">Product is out of stock</span>
+                                                                <% }else {%>
+                                                                    <%= product[i].stock %>
+                                                                        <% } %>
+                                                        </h6>
                                                     </td>
                                                     <td>
-                                                        <h5><%= product[i].category.name %></h5>
-                                                    </td>
-                                                    <td><h5>
-                                                        <% if (product[i].discount) { %>
-                                                            <%= product[i].discount %>%
-                                                        <% }else {%>
-                                                            No discount applied yet
-                                                            <% } %> 
-                                                        </h5> 
+                                                        <h6 class="fw-bolder">
+                                                            <%= product[i].category.name %>
+                                                        </h6>
                                                     </td>
                                                     <td>
-                                                        <% if (product[i].availability==='AVAILABLE' ) { %>
+                                                        <h6>
+                                                            <% if (product[i].discount) { %>
+                                                                <%= product[i].discount %>%
+                                                                    <% }else {%>
+                                                                        No discount applied yet
+                                                                        <% } %>
+                                                        </h6>
+                                                    </td>
+                                                    <td>
+                                                        <% if (product[i].availability==='ACTIVE' ) { %>
 
-                                                            <span class="badge rounded-pill alert-success">
+                                                            <span class="badge rounded-pill alert-success fw-bold fs-6">
                                                                 <%= product[i].availability %>
                                                             </span>
                                                             <% } else {%>
-                                                                <span class="badge rounded-pill alert-danger">
+                                                                <span class="badge rounded-pill alert-danger fw-bold fs-6">
                                                                     <%= product[i].availability %>
                                                                 </span>
                                                                 <% } %>
                                                     </td>
                                                     <td>
-                                                        <span>
-                                                            <%= product[i].createdAt %>
+                                                        <span class="fw-bold fs-6">
+                                                            <%= new
+                                                                Date(product[i].createdAt).toLocaleDateString('en-GB')
+                                                                %>
                                                         </span>
                                                     </td>
                                                     <td>
@@ -223,7 +227,7 @@
                                                             class="btn btn-sm font-sm btn-light rounded"
                                                             id="productButton_<%= product[i]._id %>"
                                                             style="width: 6rem;">
-                                                            <% if(product[i].availability==='AVAILABLE' ) {%>
+                                                            <% if(product[i].availability==='ACTIVE' ) {%>
                                                                 HIDE
                                                                 <% } else { %>
                                                                     SHOW
@@ -250,21 +254,24 @@
 <div class="pagination-area mt-30 mb-50">
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-start">
-            <% if (page > 1) { %>
+            <% if (page> 1) { %>
                 <li class="page-item">
                     <a class="page-link" href="/admin/products/?page=<%= page - 1 %>">Prev</a>
                 </li>
-            <% } %>
-            <% for (let i = 1; i <= totalPages; i++) { %>
-                <li class="page-item <%= page === i ? 'active' : '' %>">
-                    <a class="page-link" href="/admin/products/?page=<%= i %>"><%= i %></a>
-                </li>
-            <% } %>
-            <% if (page < totalPages) { %>
-                <li class="page-item">
-                    <a class="page-link btn btn-primary" href="/admin/products/?page=<%= page + 1 %>">Next</a>
-                </li>
-            <% } %>
+                <% } %>
+                    <% for (let i=1; i <=totalPages; i++) { %>
+                        <li class="page-item <%= page === i ? 'active' : '' %>">
+                            <a class="page-link" href="/admin/products/?page=<%= i %>">
+                                <%= i %>
+                            </a>
+                        </li>
+                        <% } %>
+                            <% if (page < totalPages) { %>
+                                <li class="page-item">
+                                    <a class="page-link btn btn-primary"
+                                        href="/admin/products/?page=<%= page + 1 %>">Next</a>
+                                </li>
+                                <% } %>
         </ul>
     </nav>
 </div><%- include('./partials/footer/footer.ejs') %>

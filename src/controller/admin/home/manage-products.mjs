@@ -12,11 +12,11 @@ export const admin_manageProducts = async (req, res) => {
         console.log(productId, 'productId');
 
 
-        if (productAvailability === "AVAILABLE") {
-            await updateProducts(productId, { availability: 'UNAVAILABLE' })
+        if (productAvailability === "ACTIVE") {
+            await updateProducts(productId, { availability: 'ARCHIVED' })
         }
         else {
-            await updateProducts(productId, { availability: 'AVAILABLE' })
+            await updateProducts(productId, { availability: 'ACTIVE' })
         }
 
         // res.redirect('/admin/products')
