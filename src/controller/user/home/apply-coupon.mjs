@@ -30,7 +30,11 @@ export const user_applyCoupon = async (req, res) => {
 
       res.json({ result: "Invalid Coupon" });
 
-    } else if (10 >= totalCartPrice) {
+    } else if (result.ending_date >= new Date()) {
+      console.log('else if coupon expired');
+      res.json({ result:'Coupon is expired try with another one'})
+
+    } else if (coupon.minimum_cart_price >= totalCartPrice) {
 
       console.log("is it entering in else if case of totalcart price");
 
@@ -38,41 +42,41 @@ export const user_applyCoupon = async (req, res) => {
 
     } else if (result === "EXIST") {
 
-     const discount = coupon.discount
-     const discountPrice = totalCartPrice - (totalCartPrice * (discount/100))
+      const discount = coupon.discount
+      const discountPrice = totalCartPrice - (totalCartPrice * (discount / 100))
 
-     console.log(discountPrice,'discount price is showing');
-     
-     console.log(discount,'discount is showing');
+      console.log(discountPrice, 'discount price is showing');
+
+      console.log(discount, 'discount is showing');
 
       console.log(USER_ID, "user id is showing");
 
       const userData = await findUserUsingId(USER_ID);
-        console.log(userData,'userData is showing');
+      console.log(userData, 'userData is showing');
       console.log(userData.coupon.length, "herhe");
 
       if (userData.coupon.length == 0) {
 
-        const cartUpdated = await updateCartTotalPriceWhileApplyingCoupon(USER_ID,discountPrice,discount,couponCode)
-        console.log(cartUpdated,'cart updated or not');
-        
-        res.json({result:'Coupon Applied',discount:discount})
-        
-    } else if (userData.coupon.length > 0) {
-        console.log(couponCode,'hehe');
-        
-          const exists = userData.coupon.includes(couponCode)
+        const cartUpdated = await updateCartTotalPriceWhileApplyingCoupon(USER_ID, discountPrice, discount, couponCode)
+        console.log(cartUpdated, 'cart updated or not');
 
-          if(exists){
-            res.json({result:'Coupon Already Exist'})
-          }else{
+        res.json({ result: 'Coupon Applied', discount: discount })
 
-            const cartUpdated = await updateCartTotalPriceWhileApplyingCoupon(USER_ID,discountPrice,discount,couponCode)
-            console.log(cartUpdated,'cart updated or not');
-            
-            res.json({result:'Coupon Applied',discount:discount})
-          }
-          
+      } else if (userData.coupon.length > 0) {
+        console.log(couponCode, 'hehe');
+
+        const exists = userData.coupon.includes(couponCode)
+
+        if (exists) {
+          res.json({ result: 'Coupon Already Exist' })
+        } else {
+
+          const cartUpdated = await updateCartTotalPriceWhileApplyingCoupon(USER_ID, discountPrice, discount, couponCode)
+          console.log(cartUpdated, 'cart updated or not');
+
+          res.json({ result: 'Coupon Applied', discount: discount })
+        }
+
       }
     }
   } catch (error) {
