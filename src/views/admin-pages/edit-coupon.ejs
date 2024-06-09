@@ -111,7 +111,7 @@
                                 <div class="col-md-4 mx-auto">
                                     <% if (coupon) { %>
 
-                                        <form action="/admin/edit-coupon/?couponId=<%= coupon._id %>" method="post">
+                                        <form id="editCouponForm" action="/admin/edit-coupon/?couponId=<%= coupon._id %>" method="post">
                                             <div class="mb-4">
                                                 <label class="form-label">coupon</label>
                                                 <input type="text" name="name" placeholder="Type here"
@@ -132,12 +132,12 @@
                                                     value="<%= coupon.minimum_cart_price %>" name="minimum_cart_price"
                                                     class="form-control" id="min-cart-price">
                                             </div>
-                                            <div class="mb-4">
+                                            <!-- <div class="mb-4">
                                                 <label class="form-label">Maximum Redeem Price</label>
                                                 <input placeholder="Type here" type="number" max="2000"
-                                                    value="<%= coupon.maximum_cart_redeem %>" name="max-redeem-price"
+                                                    value="<%#= coupon.maximum_cart_redeem %>" name="max-redeem-price"
                                                     class="form-control" id="max-redeem-price">
-                                            </div>
+                                            </div> -->
                                             <div class="mb-4">
                                                 <label class="form-label">Expiry Date</label>
                                                 <input type="date" name="expiry" class="form-control" id="inputdate"
@@ -170,6 +170,21 @@
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+            
+            <script>
+                const form = document.getElementById('editCouponForm')
+                
+                form.addEventListener('submit',function(event){
+                    event.preventDefault();
+
+
+                    const formData = new formData(form)
+
+                    const response = axios.put(`/edit-coupon/?couponId=${couponId}`)
+                    console.log(response,'response is showing');
+                })
+            </script>
+
             <script>
                 $(function () {
                     var dtToday = new Date();
