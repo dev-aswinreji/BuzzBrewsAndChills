@@ -535,11 +535,18 @@
                                                                 }
 
                                                             } else {
-                                                                Swal.fire('Insufficient fund kindly update amount in wallet')
+                                                                Swal.fire({
+                                                                    icon: 'error',
+                                                                    title: 'Insufficient Funds',
+                                                                    text: 'You have insufficient funds in your wallet. Please update your wallet amount.'
+                                                                });
                                                             }
                                                         } else {
-                                                            Swal.fire('Address not found kindly add to continue')
-
+                                                            Swal.fire({
+                                                                icon: 'warning',
+                                                                title: 'Address Not Found',
+                                                                text: 'To proceed, please add your address.'
+                                                            });
                                                         }
                                                     }
 
@@ -562,9 +569,14 @@
                                                             return response.json()
                                                         }).then(data => {
                                                             if (data.result === 'success') {
-                                                                Swal.fire('coupon removed successfully').then(() => {
-                                                                    location.reload()
-                                                                })
+                                                                Swal.fire({
+                                                                    icon: 'success',
+                                                                    title: 'Coupon Removed Successfully',
+                                                                    text: 'Your coupon has been successfully removed.'
+                                                                }).then(() => {
+                                                                    location.reload();
+                                                                });
+
                                                             } else {
                                                                 Swal.fire('Some issue encountered')
                                                             }
@@ -597,29 +609,66 @@
                                                                 })
                                                                 .then(data => {
                                                                     if (data.result === 'Invalid Coupon') {
-                                                                        Swal.fire('Invalid Coupon')
-                                                                    }
-                                                                    else if (data.result === 'Cart Limit Is Low') {
-                                                                        Swal.fire('Minimum cart price to apply coupon is 1000')
+                                                                        Swal.fire({
+                                                                            icon: 'error',
+                                                                            title: 'Invalid Coupon',
+                                                                            text: 'The coupon code you entered is invalid. Please double-check and try again.'
+                                                                        });
+                                                                    } else if (data.result === 'Coupon Not Found') {
+                                                                        Swal.fire({
+                                                                            icon: 'error',
+                                                                            title: 'Coupon Not Found',
+                                                                            text: 'The coupon code you entered does not match any available coupons.'
+                                                                        });
+                                                                    } else if (data.result === 'Coupon Expired') {
+                                                                        Swal.fire({
+                                                                            icon: 'error',
+                                                                            title: 'Coupon Expired',
+                                                                            text: 'Sorry, the coupon you are trying to use has expired.'
+                                                                        });
+                                                                    } else if (data.result === 'Cart Limit Is Low') {
+                                                                        Swal.fire({
+                                                                            title: 'Minimum Cart Total Required',
+                                                                            text: `To apply this coupon, the minimum cart total must be ${data.amount}`,
+                                                                            icon: 'info',
+                                                                            confirmButtonText: 'OK'
+                                                                        });
                                                                     } else if (data.result === 'Coupon Applied') {
-                                                                        Swal.fire('Coupon Applied Successfully').then(() => {
-                                                                            location.reload()
-                                                                        })
-                                                                        const discount = Number(data.discount)
-                                                                        console.log(discount, 'discount is showing');
-                                                                        totalCartPriceData.innerHTML = totalCartPrice - (totalCartPrice * (discount / 100))
-
-
+                                                                        Swal.fire({
+                                                                            icon: 'success',
+                                                                            title: 'Coupon Applied Successfully',
+                                                                            text: 'The coupon has been applied successfully!',
+                                                                            showConfirmButton: false,
+                                                                            timer: 1500,
+                                                                        }).then(() => {
+                                                                            location.reload();
+                                                                        });
+                                                                        const discount = Number(data.discount);
+                                                                        console.log(discount, 'discount is applied');
+                                                                        totalCartPriceData.innerHTML = totalCartPrice - (totalCartPrice * (discount / 100));
                                                                     } else if (data.result === 'Coupon Already Exist') {
-                                                                        Swal.fire('Coupon already used please apply another coupon')
-
+                                                                        Swal.fire({
+                                                                            icon: 'warning',
+                                                                            title: 'Coupon Already Used',
+                                                                            text: 'This coupon has already been applied. Please try another coupon.'
+                                                                        });
                                                                     }
+
                                                                 })
                                                         } else if (couponDiscount) {
-                                                            Swal.fire('Coupon is already applied')
+                                                            Swal.fire({
+                                                                icon: 'warning',
+                                                                title: 'Coupon Already Applied',
+                                                                text: 'You have already applied a coupon. Only one coupon can be applied per order.'
+                                                            });
                                                         } else {
-                                                            Swal.fire('Enter a coupon')
+                                                            Swal.fire({
+                                                                icon: 'info',
+                                                                title: 'Enter Coupon Code',
+                                                                text: 'Please enter a valid coupon code to apply.'
+                                                            });
                                                         }
+
 
                                                     }
                                                 </script>
@@ -699,8 +748,11 @@
                                                                 alert('Failed to create order');
                                                             }
                                                         } else {
-                                                            Swal.fire('Address not found kindly add to continue')
-
+                                                            Swal.fire({
+                                                                icon: 'warning',
+                                                                title: 'Address Not Found',
+                                                                text: 'To proceed, please add your address.'
+                                                            })
                                                         }
                                                     });
 
@@ -712,14 +764,22 @@
 
                                                         if (address.length > 0) {
                                                             if (totalPrice <= 1000) {
-
                                                                 orderPlace();
                                                             } else {
-                                                                Swal.fire('Cash on Delivery is avalable only under 1000 Rs')
+                                                                Swal.fire({
+                                                                    icon: 'info',
+                                                                    title: 'Cash on Delivery Limit Exceeded',
+                                                                    text: 'Cash on Delivery is available only for orders under Rs. 1000.'
+                                                                });
                                                             }
                                                         } else {
-                                                            Swal.fire('Address not found kindly add to continue')
+                                                            Swal.fire({
+                                                                icon: 'warning',
+                                                                title: 'Address Not Found',
+                                                                text: 'To proceed, please add your address.'
+                                                            });
                                                         }
+
                                                     }
 
                                                     async function orderPlace() {

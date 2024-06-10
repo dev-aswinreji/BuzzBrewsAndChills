@@ -25,22 +25,27 @@ export const user_applyCoupon = async (req, res) => {
     const result = await checkDataDuplication(coupon);
 
     console.log(result, "result is showing ");
-
+    // console.log(coupon.starting_date,'staring');
+    // const couponStartingDate = new Date(coupon.starting_date)
+    // const today = new Date()
+    // console.log(couponStartingDate.getTime() >= today.getTime(),'kklads;fjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj');
+    // console.log(new Date());
+    // console.log(coupon.starting_date < new Date(),'what is the ouput');
     if (result === "NOT EXIST") {
 
       res.json({ result: "Invalid Coupon" });
 
-    } else if (result.ending_date >= new Date()) {
-      console.log('else if coupon expired');
-      res.json({ result:'Coupon is expired try with another one'})
-
-    } else if (coupon.minimum_cart_price >= totalCartPrice) {
-
-      console.log("is it entering in else if case of totalcart price");
-
-      res.json({ result: "Cart Limit Is Low" });
-
     } else if (result === "EXIST") {
+
+
+
+      const dateChecking1 = new Date(coupon.starting_date).toLocaleDateString('en-GB')
+      const dateChecking2 = new Date(coupon.ending_date).toLocaleDateString('en-GB')
+
+      console.log(dateChecking1, 'date is checking', dateChecking2, 'date checking success or not ');
+
+
+
 
       const discount = coupon.discount
       const discountPrice = totalCartPrice - (totalCartPrice * (discount / 100))
@@ -54,8 +59,20 @@ export const user_applyCoupon = async (req, res) => {
       const userData = await findUserUsingId(USER_ID);
       console.log(userData, 'userData is showing');
       console.log(userData.coupon.length, "herhe");
+      if (coupon.minimum_cart_price >= totalCartPrice) {
 
-      if (userData.coupon.length == 0) {
+        console.log("is it entering in else if case of totalcart price");
+
+        res.json({ result: "Cart Limit Is Low", amount: coupon.minimum_cart_price });
+
+      } else if (coupon.starting_date >= new Date()) {
+        res.json({ result: 'Coupon Not Found' })
+
+      } else if (coupon.ending_date <= new Date()) {
+        console.log('else if coupon expired');
+        res.json({ result: 'Coupon Expired' })
+      }
+      else if (userData.coupon.length == 0) {
 
         const cartUpdated = await updateCartTotalPriceWhileApplyingCoupon(USER_ID, discountPrice, discount, couponCode)
         console.log(cartUpdated, 'cart updated or not');
