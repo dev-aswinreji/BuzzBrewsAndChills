@@ -51,7 +51,7 @@ adminHomeRoute.get('/coupon',admin_couponGet)
 adminHomeRoute.post('/coupon',admin_couponPost)
 
 adminHomeRoute.get('/edit-coupon',admin_editCouponGet)
-adminHomeRoute.put('/edit-coupon',admin_editCouponPost)
+adminHomeRoute.put('/edit-coupon',upload.none(),admin_editCouponPost)
 adminHomeRoute.put('/update-coupon',admin_updateCouponStatusPut)
 
 adminHomeRoute.get('/sales-report',admin_salesReportGet)

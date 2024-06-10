@@ -30,3 +30,8 @@ export async function findTotalNumberOfCouponCountForAdmin() {
 export async function findUniqueCouponForAdminToEdit (couponId){
     return await couponCollection.findById(couponId)
 }
+
+
+export async function findUniqueCouponForAdmin (couponId){
+    return await couponCollection.findById(couponId)
+}

@@ -1,7 +1,6 @@
-import { findUniqueCouponForAdminToEdit, findUniqueCouponForUser } from "../../../data/coupon/find.mjs"
+import { findUniqueCouponForAdmin, findUniqueCouponForAdminToEdit } from "../../../data/coupon/find.mjs"
 import { adminCouponStatusUpdate, adminCouponUpdate } from "../../../data/coupon/update.mjs"
 import { checkDataDuplication } from "../../../validation/checking-duplicateData.mjs"
-
 
 export const admin_editCouponGet = async (req, res) => {
     const { couponId } = req.query
@@ -18,23 +17,31 @@ export const admin_updateCouponStatusPut = async (req, res) => {
 
 
 export const admin_editCouponPost = async (req, res) => {
+
     const { couponId } = req.query
-    const couponData = {
-        name: req.body.name,
-        discount: req.body.discount,
-        description: req.body.description,
-        minimum_cart_price: req.body.minimum_cart_price,
-        ending_date: req.body.expiry,
+
+    const {
+        name, discount, starting_date, expiry, minimum_cart_price, description
+    } = formData
+
+    const updatedCouponData = {
+        name: name,
+        discount: Number(discount),
+        starting_date: starting_date,
+        ending_date: expiry,
+        mininmum_cart_price: Number(minimum_cart_price),
+        description: description,
     }
-    console.log(couponData, 'didihdhd');
-    console.log(couponData.ending_date, 'end date');
-    const coupon = await findUniqueCouponForUser()
+
+    const coupon = await findUniqueCouponForAdmin(couponId)
     const result = await checkDataDuplication(coupon)
-    if (result === 'NOT EXIST') {
-        await adminCouponUpdate(couponId, couponData)
+
+    if (result === 'NOT EXIST' || coupon._id.equals(couponId)) {
+        await adminCouponUpdate(couponId, updatedCouponData)
+        res.json({ result: 'success' })
+    } else {
+        req.session.couponError = 'coupon already exists'
+        res.json({ result: 'already exists' })
     }
-    req.session
-    console.log(result, 'result is showing');
-    res.redirect('/admin/coupon')
 
 }
