@@ -168,9 +168,8 @@
     </style>
 </head>
 
-<%- include('partials/head/head.ejs') %>
-
-    <body>
+<body>
+    <%- include('partials/head/head.ejs') %>
         <%- include('partials/header/header.ejs') %>
             <!-- breadcrumb-section -->
             <div class="breadcrumb-section breadcrumb-bg">
@@ -193,8 +192,7 @@
                         <div class="order">
                             <div class="order-header" onclick="toggleOrderDetails('<%= orderIndex %>')">
                                 <span class="order-number fw-bolder">ORDER ID : <%= data.orderId %></span>
-                                <span
-                                    class="order-status">
+                                <span class="order-status">
                                     <%= data.orderDate %>
                                 </span>
                             </div>
@@ -219,25 +217,30 @@
                                             <h5>Status: <%= item.status %>
                                             </h5>
                                             <% if (data.couponDiscount) { %>
-                                                <h5>Coupon Applied : <span id="couponDiscount"><%= data.couponDiscount %></span>  % </h5> 
-                                             
-                                            <% } %>
+                                                <h5>Coupon Applied: <span id="couponDiscount">
+                                                        <%= data.couponDiscount %>
+                                                    </span> %</h5>
+                                                <% } %>
                                         </div>
                                         <div class="product-actions">
                                             <% if (item.status==='DELIVERED' ) { %>
                                                 <button class="btn btn-return btn-primary"
-                                                    onclick="returnOrder('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>','<%= data.couponDiscount %>')">Return
+                                                    onclick="returnOrder('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>', '<%= data.couponDiscount %>')">Return
                                                     Order</button>
-                                                <% } else if(item.status === 'CANCELLED') { %>
+                                                <% } else if (item.status==='CANCELLED' ) { %>
                                                     <h6 class="text-danger">Product cancelled Successfully</h6>
-                                                    <% } else if (item.status === 'RETURNED') { %>
-                                                        <h6 class="text-danger">Product has been returned Successfully</h6>
-
-                                                    <%} else { %> 
-                                                    <button class="btn btn-cancel btn-danger"
-                                                        onclick="cancelProduct('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>')">Cancel
-                                                        Product</button>
-                                                    <% } %>
+                                                    <% } else if (item.status==='RETURNED' ) { %>
+                                                        <h6 class="text-danger">Product has been returned Successfully
+                                                        </h6>
+                                                        <% } else if (item.status==='PENDING' ) { %>
+                                                            <button class="fw-bold btn btn-danger"
+                                                                onclick="retryPaymentFailed('<%= data.orderId %>','<%= data.totalPrice %>')">Retry
+                                                                Payment</button>
+                                                            <% } else { %>
+                                                                <button class="btn btn-cancel btn-danger"
+                                                                    onclick="cancelProduct('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>')">Cancel
+                                                                    Product</button>
+                                                                <% } %>
                                         </div>
                                     </div>
                                     <% }) %>
@@ -245,7 +248,11 @@
                                         </h5>
                                         <h4>Total Amount: Rs <%= data.totalPrice %>
                                         </h4>
-                                        <button class="btn-history"><a href="/order-invoice?orderId=<%= order[orderIndex].orderId %>">Invoice</a></button>
+                                        <% console.log(data.products[0].status, 'products status is showing' ); %>
+                                            <% if (data.products[0].status !=='PENDING' ) { %>
+                                                <button class="btn-history"><a
+                                                        href="/order-invoice?orderId=<%= order[orderIndex].orderId %>">Invoice</a></button>
+                                                <% } %>
                             </div>
                         </div>
                         <% }) %>
@@ -255,7 +262,8 @@
                                 <% } %>
             </div>
             <%- include('partials/footer/footer.ejs') %>
-            
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
                 <script>
                     function toggleOrderDetails(index) {
                         const details = document.getElementById('order-details-' + index);
@@ -264,7 +272,7 @@
 
                     async function cancelProduct(orderIndex, orderId, productId) {
                         const quantity = document.getElementById('quantity_' + orderIndex + '_0').value;
-                        console.log(quantity,'quantity is showing');
+                        console.log(quantity, 'quantity is showing');
                         await fetch(`/cancel-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}`, {
                             method: 'GET',
                             headers: {
@@ -274,16 +282,14 @@
                             .then(response => response.ok ? response.json() : console.log('Network failure'))
                             .then(data => {
                                 if (data.result === 'success') {
-                                    let status = data.status
-                                    console.log(status,'');
                                     console.log('Product cancelled successfully');
-                                    location.reload()
+                                    location.reload();
                                 }
                             })
                             .catch(err => console.log('Error:', err));
                     }
 
-                    async function returnOrder(orderIndex, orderId, productId,couponDiscount) {
+                    async function returnOrder(orderIndex, orderId, productId, couponDiscount) {
                         const quantity = document.getElementById('quantity_' + orderIndex + '_0').value;
                         await fetch(`/return-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}&couponDiscount=${couponDiscount}`, {
                             method: 'GET',
@@ -294,13 +300,110 @@
                             .then(response => response.ok ? response.json() : console.log('Network failure'))
                             .then(data => {
                                 if (data.result === 'success') {
-                                    location.reload();
                                     console.log('Order returned successfully');
+                                    location.reload();
                                 }
                             })
                             .catch(err => console.log('Error:', err));
                     }
                 </script>
-    </body>
+                <script>
+                    async function retryPaymentFailed(orderId, amount) {
+                        try {
+                            console.log('razorpay is working');
+                            const response = await fetch(`/razorpay-payment`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ amount: amount.trim() })
+                            });
+
+                            if (!response.ok) {
+                                throw new Error('Failed to create order');
+                            }
+                            console.log(response, 'response is showing ===================');
+
+                            const order = await response.json();
+                            console.log(order, 'order is showing');
+                            const options = {
+                                key: 'rzp_test_e55Dk1oHQbvyBo',
+                                amount: order.amount,
+                                currency: order.currency,
+                                order_id: order.id,
+                                name: 'Your Company Name',
+                                description: 'Test Payment',
+                                image: 'https://via.placeholder.com/150',
+                                handler: function (response) {
+                                    console.log(response, 'response is showing');
+                                    Swal.fire({
+                                        title: 'Payment Successful!',
+                                        html: `<p>Payment ID: <strong>${response.razorpay_payment_id}</strong></p>
+                                       <p>Amount: <strong>${order.amount}</strong> ${order.currency}</p>`,
+                                        icon: 'success',
+                                        timer: 3500,
+
+                                    }).then(() => {
+                                        razorpaySuccess(response.razorpay_payment_id);
+                                    });
+                                },
+                                prefill: {
+                                    name: 'John Doe',
+                                    email: 'john.doe@example.com',
+                                    contact: '1234567890'
+                                },
+                                theme: {
+                                    color: '#528FF0'
+                                }
+                            };
+
+                            const razorpayInstance = new Razorpay(options);
+                            razorpayInstance.on('payment.failed', function (response) {
+                                console.log(response.error, 'Payment failed');
+                                fetch('/payment-failed-handler', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        amount: amount.trim(),
+                                        paymentMethod: 'Online Payment',
+                                        address: selectedAddress,
+                                        couponDiscount: couponDiscount,
+                                        couponCode: couponCode
+                                    })
+                                })
+                                    .then(() => {
+                                        window.location.href = '/payment-failed-page';
+                                    })
+                                    .catch(err => {
+                                        console.error('Error handling payment failure:', err);
+                                        window.location.href = '/payment-failed-page';
+                                    });
+                            });
+
+                            razorpayInstance.open();
+
+                            async function razorpaySuccess(paymentId) {
+                                console.log('showing');
+                                const paymentMethod = 'Online Payment';
+                                await fetch(`/order-add-failed-payment/?paymentMethod=${paymentMethod}&orderId=${orderId}`, {
+                                    method: 'GET',
+                                    headers: { 'Content-Type': 'application/json' }
+                                }).then(response => response.ok ? response.json() : console.log('Network error'))
+                                    .then((data) => {
+                                        if (data.result === 'success')
+                                            window.location.href = '/order-placed';
+                                    }).catch(err => {
+                                        console.log('Error:', err);
+                                    });
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                            alert('Failed to create order');
+                        }
+                    }
+                </script>
+</body>
 
 </html>

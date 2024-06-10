@@ -24,12 +24,12 @@ export async function updateProductStockInOrder(order) {
   }
 }
 
-export async function updateCancelProduct(orderId,productId) {
+export async function updateCancelProduct(orderId, productId) {
   try {
     return (await orderCollection.updateOne(
       { orderId: orderId },
       { $set: { "products.$[elem].status": 'CANCELLED' } },
-        { arrayFilters: [{ "elem.productId": productId }]}
+      { arrayFilters: [{ "elem.productId": productId }] }
     ))
       ? "Success"
       : "Fail";
@@ -38,12 +38,12 @@ export async function updateCancelProduct(orderId,productId) {
   }
 }
 
-export async function updateReturnedProduct(orderId,productId) {
+export async function updateReturnedProduct(orderId, productId) {
   try {
     return (await orderCollection.updateOne(
       { orderId: orderId },
       { $set: { "products.$[elem].status": 'RETURNED' } },
-        { arrayFilters: [{ "elem.productId": productId }]}
+      { arrayFilters: [{ "elem.productId": productId }] }
     ))
       ? "Success"
       : "Fail";
@@ -55,20 +55,42 @@ export async function updateReturnedProduct(orderId,productId) {
 export async function updateOrderedProduct(orderId, productId, status) {
   try {
     console.log(status, "status is showing");
-    console.log(productId,'product id is showing');
+    console.log(productId, 'product id is showing');
     const orderData = await orderCollection.findOne({
       orderId: orderId,
     });
     console.log(orderData, "order data is showing");
     const result = await orderCollection.updateOne(
-        { orderId: orderId },
-        { $set: { "products.$[elem].status": status } },
-        { arrayFilters: [{ "elem.productId": productId }]}
-      );
+      { orderId: orderId },
+      { $set: { "products.$[elem].status": status } },
+      { arrayFilters: [{ "elem.productId": productId }] }
+    );
     console.log(result, "update ordered data is success");
-    const afterUpdate = await orderCollection.findOne({orderId:orderId})
-    console.log(afterUpdate,'after update is shwoing');
+    const afterUpdate = await orderCollection.findOne({ orderId: orderId })
+    console.log(afterUpdate, 'after update is shwoing');
   } catch (error) {
     console.log(error, "update ordered product func");
+  }
+}
+
+
+export async function paymentFailedOrderUpdating(userId, orderId) {
+  try {
+    const result = await orderCollection.updateOne(
+      { userId: userId, orderId: orderId },
+      {
+        $set: {
+          "products.$[].status": "ORDER PLACED",
+          paymentStatus: "SUCCESS"
+        }
+      }
+    );
+    console.log(result);
+    const order = await orderCollection.find({ userId: userId, orderId: orderId })
+    console.log(order, 'order is showing');
+    await updateProductStockInOrder(order);
+    return order
+  } catch (error) {
+    console.error('Error updating order:', error);
   }
 }

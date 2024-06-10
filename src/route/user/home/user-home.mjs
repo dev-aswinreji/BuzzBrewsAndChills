@@ -33,6 +33,8 @@ import { user_removeCouponGet } from '../../../controller/user/home/remove-coupo
 import { user_returnOrderGet } from '../../../controller/user/home/return-order.mjs';
 import { user_walletPaymentGet } from '../../../controller/user/home/wallet-payment.mjs';
 import { user_orderInvoiceGet } from '../../../controller/user/home/order-invoice.mjs';
+import { user_paymentFailedHandler, user_paymentFailedPage } from '../../../controller/user/home/razorpay-payment-failed.mjs';
+import { user_orderFailedUpdate } from '../../../controller/user/home/update-failed-order.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)
@@ -78,6 +80,9 @@ routeHome.post('/set-new-password', user_authentication, user_setNewPasswordPost
 
 
 routeHome.post('/razorpay-payment',user_authentication,user_razorpay)
+routeHome.post('/payment-failed-handler',user_paymentFailedHandler)
+routeHome.get('/payment-failed-page',user_paymentFailedPage)
+routeHome.get('/order-add-failed-payment',user_orderFailedUpdate)
 
 routeHome.get('/order-add',user_authentication,user_orderAddGet)
 routeHome.get('/order-placed',user_authentication,user_orderPlacedGet)

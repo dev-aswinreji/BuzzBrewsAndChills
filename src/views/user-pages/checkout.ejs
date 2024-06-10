@@ -686,11 +686,11 @@
                                                             const amount = document.getElementById('totalPrice').innerHTML;
                                                             console.log(amount, 'amount is showing');
                                                             const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked').value;
-                                                            const couponDiscount = document.getElementById('couponDiscount').innerHTML
-                                                            const couponCode = document.getElementById('couponCode').innerHTML
+                                                            const couponDiscount = document.getElementById('couponDiscount').innerHTML;
+                                                            const couponCode = document.getElementById('couponCode').innerHTML;
                                                             console.log(couponCode, 'coupon Code is showing');
                                                             console.log(couponDiscount, 'coupon discount is showing');
-                                                            console.log(selectedAddress, 'selectedAddress is showing')
+                                                            console.log(selectedAddress, 'selectedAddress is showing');
                                                             try {
                                                                 console.log('razorpay is working');
                                                                 const response = await fetch(`/razorpay-payment`, {
@@ -704,7 +704,7 @@
                                                                 if (!response.ok) {
                                                                     throw new Error('Failed to create order');
                                                                 }
-                                                                console.log(response,'response is showing ===================');
+                                                                console.log(response, 'response is showing ===================');
 
                                                                 const order = await response.json();
                                                                 console.log(order, 'order is showing');
@@ -717,13 +717,17 @@
                                                                     description: 'Test Payment',
                                                                     image: 'https://via.placeholder.com/150',
                                                                     handler: function (response) {
-                                                                        console.log(response,'response is showing');
-                                                                        // Swal.fire({
-                                                                        //     text: 'Payment Successful! Payment ID: ' + response.razorpay_payment_id,
-                                                                        //     icon: 'success'
-                                                                        // }).then(() => {
-                                                                        //     razorpaySuccess(response.razorpay_payment_id);
-                                                                        // });
+                                                                        console.log(response, 'response is showing');
+                                                                        Swal.fire({
+                                                                            title: 'Payment Successful!',
+                                                                            html: `<p>Payment ID: <strong>${response.razorpay_payment_id}</strong></p>
+                                                                            <p>Amount: <strong>${order.amount}</strong> ${order.currency}</p>`,
+                                                                            icon: 'success',
+                                                                            timer: 3500,
+
+                                                                        }).then(() => {
+                                                                            razorpaySuccess(response.razorpay_payment_id);
+                                                                        });
                                                                     },
                                                                     prefill: {
                                                                         name: 'John Doe',
@@ -736,6 +740,30 @@
                                                                 };
 
                                                                 const razorpayInstance = new Razorpay(options);
+                                                                razorpayInstance.on('payment.failed', function (response) {
+                                                                    console.log(response.error, 'Payment failed');
+                                                                    fetch('/payment-failed-handler', {
+                                                                        method: 'POST',
+                                                                        headers: {
+                                                                            'Content-Type': 'application/json'
+                                                                        },
+                                                                        body: JSON.stringify({
+                                                                            amount: amount.trim(),
+                                                                            paymentMethod: 'Online Payment',
+                                                                            address: selectedAddress,
+                                                                            couponDiscount: couponDiscount,
+                                                                            couponCode: couponCode
+                                                                        })
+                                                                    })
+                                                                        .then(() => {
+                                                                            window.location.href = '/payment-failed-page';
+                                                                        })
+                                                                        .catch(err => {
+                                                                            console.error('Error handling payment failure:', err);
+                                                                            window.location.href = '/payment-failed-page';
+                                                                        });
+                                                                });
+
                                                                 razorpayInstance.open();
 
                                                                 async function razorpaySuccess(paymentId) {
@@ -760,9 +788,10 @@
                                                                 icon: 'warning',
                                                                 title: 'Address Not Found',
                                                                 text: 'To proceed, please add your address.'
-                                                            })
+                                                            });
                                                         }
                                                     });
+
 
 
                                                     function proceedToPayment() {

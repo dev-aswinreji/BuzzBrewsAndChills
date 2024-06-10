@@ -36,7 +36,7 @@ const orderSchema = mongoose.Schema({
       },
       status: {
         type: String,
-        enum: ["ORDER PLACED", "PROCESSING", "OUT FOR DELIVERY", "DELIVERED", "CANCELLED"],
+        enum: ["ORDER PLACED", "PROCESSING", "OUT FOR DELIVERY", "DELIVERED", "CANCELLED","PENDING"],
         default: "ORDER PLACED",
         required: true,
       },
@@ -78,6 +78,11 @@ const orderSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  paymentStatus:{
+    type:String,
+    enum:['SUCCESS','FAILURE'],
+    default: 'SUCCESS'
+  },
   orderDate: {
     type: Date,
     default: new Date(),
@@ -87,7 +92,7 @@ const orderSchema = mongoose.Schema({
   },
   timeStamp: {
     type: String,
-    default: getFormattedDate,
+    default: getFormattedDate(),
   },
   couponDiscount: {
     type: Number,
