@@ -38,6 +38,25 @@ export async function updateCancelProduct(orderId, productId) {
   }
 }
 
+export async function updateReturnedProductStatus(userId, orderId, returnReason) {
+  try {
+    const result = await orderCollection.updateOne(
+      { userId: userId, orderId: orderId },
+      {
+        $set: {
+          "products.$[].status": "PENDING APPROVAL",
+          returnReason: returnReason
+        }
+      }
+    );
+    console.log(result,'resutl is showing')
+    return result
+
+  } catch (error) {
+    console.log(error, 'update return status and reason product func error');
+  }
+}
+
 export async function updateReturnedProduct(orderId, productId) {
   try {
     return (await orderCollection.updateOne(
@@ -48,7 +67,7 @@ export async function updateReturnedProduct(orderId, productId) {
       ? "Success"
       : "Fail";
   } catch (error) {
-    console.log(error, "update cancel product func error");
+    console.log(error, "update return product func error");
   }
 }
 

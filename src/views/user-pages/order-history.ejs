@@ -236,11 +236,13 @@
                                                             <button class="fw-bold btn btn-danger"
                                                                 onclick="retryPaymentFailed('<%= data.orderId %>','<%= data.totalPrice %>')">Retry
                                                                 Payment</button>
-                                                            <% } else { %>
-                                                                <button class="btn btn-cancel btn-danger"
-                                                                    onclick="cancelProduct('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>')">Cancel
-                                                                    Product</button>
-                                                                <% } %>
+                                                            <% } else if (item.status==='PENDING APPROVAL' ) { %>
+                                                                <h5 class="text-danger">Returned request pending </h5>
+                                                                <% } else { %>
+                                                                    <button class="btn btn-cancel btn-danger"
+                                                                        onclick="cancelProduct('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>')">Cancel
+                                                                        Product</button>
+                                                                    <% } %>
                                         </div>
                                     </div>
                                     <% }) %>
@@ -249,7 +251,7 @@
                                         <h4>Total Amount: Rs <%= data.totalPrice %>
                                         </h4>
                                         <% console.log(data.products[0].status, 'products status is showing' ); %>
-                                            <% if (data.products[0].status !=='PENDING' ) { %>
+                                            <% if (data.products[0].status !== 'PENDING' && data.products[0].status !== 'PENDING APPROVAL' ) { %>
                                                 <button class="btn-history"><a
                                                         href="/order-invoice?orderId=<%= order[orderIndex].orderId %>">Invoice</a></button>
                                                 <% } %>
@@ -291,20 +293,39 @@
 
                     async function returnOrder(orderIndex, orderId, productId, couponDiscount) {
                         const quantity = document.getElementById('quantity_' + orderIndex + '_0').value;
-                        await fetch(`/return-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}&couponDiscount=${couponDiscount}`, {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        })
-                            .then(response => response.ok ? response.json() : console.log('Network failure'))
-                            .then(data => {
-                                if (data.result === 'success') {
-                                    console.log('Order returned successfully');
-                                    location.reload();
+                        Swal.fire({
+                            title: 'Return Order',
+                            input: 'textarea',
+                            inputLabel: 'Return Reason',
+                            inputPlaceholder: 'Type your reason here...',
+                            showCancelButton: true,
+                            confirmButtonText: 'Submit',
+                            preConfirm: (returnReason) => {
+                                if (!returnReason) {
+                                    Swal.showValidationMessage('Return reason is required');
                                 }
-                            })
-                            .catch(err => console.log('Error:', err));
+                                return returnReason;
+                            }
+                        }).then(async (result) => {
+                            if (result.isConfirmed) {
+                                const returnReason = result.value;
+                                await fetch(`/return-order/?orderId=${orderId}&returnReason=${encodeURIComponent(returnReason)}`, {
+                                    method: 'GET',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    }
+                                })
+                                    .then(response => response.ok ? response.json() : console.log('Network failure'))
+                                    .then(data => {
+                                        if (data.result === 'success') {
+                                            Swal.fire('Success', 'Order returned successfully', 'success').then(() => {
+                                                location.reload();
+                                            });
+                                        }
+                                    })
+                                    .catch(err => console.log('Error:', err));
+                            }
+                        });
                     }
                 </script>
                 <script>
