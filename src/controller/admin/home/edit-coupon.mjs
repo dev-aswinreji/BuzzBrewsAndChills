@@ -19,7 +19,7 @@ export const admin_updateCouponStatusPut = async (req, res) => {
 export const admin_editCouponPost = async (req, res) => {
 
     const { couponId } = req.query
-
+    const formData = req.body
     const {
         name, discount, starting_date, expiry, minimum_cart_price, description
     } = formData
@@ -32,8 +32,7 @@ export const admin_editCouponPost = async (req, res) => {
         mininmum_cart_price: Number(minimum_cart_price),
         description: description,
     }
-
-    const coupon = await findUniqueCouponForAdmin(couponId)
+    const coupon = await findUniqueCouponForAdmin(updatedCouponData.name)
     const result = await checkDataDuplication(coupon)
 
     if (result === 'NOT EXIST' || coupon._id.equals(couponId)) {

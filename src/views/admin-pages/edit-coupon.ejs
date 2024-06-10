@@ -186,7 +186,30 @@
                                     'Content-Type': 'multipart/form-data'
                                 }
                             });
+
                             console.log(response.data, 'response is showing');
+                            const data = await response.data
+                            console.log(data, 'data is showing');
+                            if (data.result === 'success') {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: "coupon updated successfully",
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                }).then(()=>{
+                                    location.href = '/admin/coupon'
+                                })
+
+                            }else if(data.result === 'already exists'){
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "warning",
+                                    title: "coupon already exists",
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                })
+                            }
                         } catch (error) {
                             console.error(error, 'error is showing');
                         }

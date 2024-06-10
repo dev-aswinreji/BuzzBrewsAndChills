@@ -32,6 +32,11 @@ export async function findUniqueCouponForAdminToEdit (couponId){
 }
 
 
-export async function findUniqueCouponForAdmin (couponId){
-    return await couponCollection.findById(couponId)
+
+export async function findUniqueCouponForAdmin(couponCode) {
+    try {
+        return await couponCollection.findOne({ name: couponCode })
+    } catch (error) {
+        console.log(error, 'find unique coupon for user func error');
+    }
 }
