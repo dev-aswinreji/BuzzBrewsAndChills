@@ -186,7 +186,17 @@
                                     'Content-Type': 'multipart/form-data'
                                 }
                             });
-
+                            if (response.request.requestURL !== response.request.responseURL) {
+                                Swal.fire({
+                                    title: "Invalid Entry",
+                                    text: "Please sign in to continue.",
+                                    icon: "warning",
+                                    showCancelButton: false,
+                                    timer: 2500
+                                }).then(() => {
+                                    window.location.href = '/admin/signin'
+                                })
+                            }
                             console.log(response.data, 'response is showing');
                             const data = await response.data
                             console.log(data, 'data is showing');
@@ -197,11 +207,11 @@
                                     title: "coupon updated successfully",
                                     showConfirmButton: false,
                                     timer: 2500
-                                }).then(()=>{
+                                }).then(() => {
                                     location.href = '/admin/coupon'
                                 })
 
-                            }else if(data.result === 'already exists'){
+                            } else if (data.result === 'already exists') {
                                 Swal.fire({
                                     position: "center",
                                     icon: "warning",

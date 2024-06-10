@@ -87,16 +87,6 @@
             <%- include('./partials/header/header.ejs') %>
 
                 <section class="content-main">
-                    <!-- <div class="content-header">
-                        <div>
-                            <h2 class="content-title card-title">Coupon</h2>
-                            <p>Add Coupon</p>
-                        </div>
-                        <div>
-                            <input type="text" placeholder="Search Categories" class="form-control bg-white">
-                        </div>
-                    </div> -->
-
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#couponModal">
                         Add Coupon
                     </button>
@@ -110,7 +100,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="/admin/coupon" method="post" id="coupon-form">
+                                    <form id="coupon-form">
                                         <div class="mb-4">
                                             <label class="form-label">Coupon Code</label>
                                             <input type="text" name="name" placeholder="Type here" class="form-control"
@@ -125,18 +115,25 @@
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">Minimum Cart Price</label>
-                                            <input placeholder="Type here" type="number" max="500"
+                                            <input placeholder="Type here" type="number" min="500"
                                                 name="minimum_cart_price" class="form-control" id="min-cart-price">
                                         </div>
-                                        <div class="mb-4">
+                                        <!-- <div class="mb-4">
                                             <label class="form-label">Maximum Redeem Price</label>
                                             <input placeholder="Type here" type="number" max="2000"
-                                                name="max-redeem-price" class="form-control" id="max-redeem-price">
+                                                name="max_redeem_price" class="form-control" id="max-redeem-price">
+                                        </div> -->
+                                        <div class="mb-4">
+                                            <label class="form-label">Starting Date</label>
+                                            <input type="date" name="starting_date" class="form-control"
+                                                id="starting_date" required>
+                                            <div id="starting_date-error" class="error"></div>
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">Expiry Date</label>
-                                            <input type="date" name="expiry" class="form-control" id="inputdate"
+                                            <input type="date" name="expiry" class="form-control" id="expiry_date"
                                                 required>
+                                            <div id="expiry_date-error" class="error"></div>
                                         </div>
                                         <div class="mb-4">
                                             <label class="form-label">Description</label>
@@ -145,7 +142,8 @@
                                         </div>
                                         <div class="d-grid">
                                             <button type="submit" class="btn btn-primary" id="submit-btn"
-                                                disabled>Create coupon</button>
+                                                disabled>Create
+                                                coupon</button>
                                         </div>
                                     </form>
                                 </div>
@@ -155,6 +153,7 @@
                             </div>
                         </div>
                     </div>
+
                     <br><br><br>
                     <div class="card">
                         <div class="card-body">
@@ -202,7 +201,9 @@
                                                                         <% } %>
                                                             </td>
                                                             <td>
-                                                                <%= new Date(coupon[i].ending_date).toLocaleDateString('en-GB') %> 
+                                                                <%= new
+                                                                    Date(coupon[i].ending_date).toLocaleDateString('en-GB')
+                                                                    %>
                                                             </td>
                                                             <td>
                                                                 <%= coupon[i].discount %> %
@@ -259,8 +260,9 @@
                     </div>
                 </section>
                 <%- include('./partials/footer/footer.ejs') %>
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1.1/jquery.min.js"></script>
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
                     <script>
                         $(function () {
                             var dtToday = new Date();
@@ -270,37 +272,31 @@
                             if (month < 10) month = '0' + month.toString();
                             if (day < 10) day = '0' + day.toString();
                             var maxDate = year + '-' + month + '-' + day;
-                            $('#inputdate').attr('min', maxDate);
+                            $('#starting_date').attr('min', maxDate);
+                            $('#expiry_date').attr('min', maxDate);
                         });
 
                         async function HideAndUnhide(id, couponStatus) {
-                            const response = await fetch(`/admin/update-coupon`, {
-                                method: 'PUT',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body:JSON.stringify({
-                                    couponId:id,
-                                    couponStatus:couponStatus
-                                })
+                            const response = await axios.put('/admin/update-coupon', {
+                                couponId: id,
+                                couponStatus: couponStatus
                             });
-                            if (!response.ok) {
-                                throw new Error('Some network error occurred')
+                            if (response.data.result === 'success') {
+                                window.location.reload();
                             } else {
-                                const data = await response.json();
-                                if (data.result=='success') {
-                                    window.location.reload();
-                                } else {
-                                    console.log('Fetched data is unsuccessful');
-                                }
+                                console.error('Failed to update coupon status');
                             }
                         }
 
                         const couponForm = document.getElementById('coupon-form');
                         const couponCodeInput = document.getElementById('coupon-code');
                         const discountInput = document.getElementById('discount');
+                        const startingDateInput = document.getElementById('starting_date');
+                        const expiryDateInput = document.getElementById('expiry_date');
                         const couponError = document.getElementById('coupon-error');
                         const discountError = document.getElementById('discount-error');
+                        const startingDateError = document.getElementById('starting_date-error');
+                        const expiryDateError = document.getElementById('expiry_date-error');
                         const submitBtn = document.getElementById('submit-btn');
 
                         const validateForm = () => {
@@ -308,6 +304,8 @@
 
                             couponError.textContent = '';
                             discountError.textContent = '';
+                            startingDateError.textContent = '';
+                            expiryDateError.textContent = '';
 
                             if (!/^[A-Z0-9]{6}$/.test(couponCodeInput.value)) {
                                 couponError.textContent = 'Coupon code must be exactly 6 capital letters or numbers.';
@@ -320,19 +318,80 @@
                                 valid = false;
                             }
 
+                            const startingDate = new Date(startingDateInput.value);
+                            const expiryDate = new Date(expiryDateInput.value);
+                            if (startingDate >= expiryDate) {
+                                expiryDateError.textContent = 'Expiry date must be after the starting date.';
+                                valid = false;
+                            }
+
                             submitBtn.disabled = !valid;
                         }
 
                         couponCodeInput.addEventListener('input', validateForm);
                         discountInput.addEventListener('input', validateForm);
+                        startingDateInput.addEventListener('input', validateForm);
+                        expiryDateInput.addEventListener('input', validateForm);
+
                         couponForm.addEventListener('submit', function (event) {
+                            event.preventDefault();
                             validateForm();
-                            if (submitBtn.disabled) {
-                                event.preventDefault();
+                            if (!submitBtn.disabled) {
+                                const formData = new FormData(couponForm);
+                                const data = {
+                                    name: formData.get('name'),
+                                    discount: formData.get('discount'),
+                                    minimum_cart_price: formData.get('minimum_cart_price'),
+                                    max_redeem_price: formData.get('max_redeem_price'),
+                                    starting_date: formData.get('starting_date'),
+                                    expiry: formData.get('expiry'),
+                                    description: formData.get('description')
+                                };
+
+                                axios.post('/admin/coupon', data)
+
+                                    .then(response => {
+                                        if (response.request.requestURL !== response.request.responseURL) {
+                                            Swal.fire({
+                                                title: "Invalid Entry",
+                                                text: "Please sign in to continue.",
+                                                icon: "warning",
+                                                showCancelButton: false,
+                                                timer:2500
+                                            }).then(() => {
+                                                    window.location.href = '/admin/signin'
+                                            })
+                                        }
+                                        console.log(response, 'response is showing');
+                                        if (response.data.result === 'success') {
+                                            Swal.fire({
+                                                position: "center",
+                                                icon: "success",
+                                                title: "coupon created successfully",
+                                                showConfirmButton: false,
+                                                timer: 2500
+                                            }).then(() => {
+                                                // window.location.reload();
+                                            })
+                                        } else if (response.data.result === 'already exists') {
+                                            Swal.fire({
+                                                position: "center",
+                                                icon: "warning",
+                                                title: "coupon already exists",
+                                                showConfirmButton: false,
+                                                timer: 2500
+                                            })
+                                        } else {
+                                            console.error('Failed to create coupon');
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('An error occurred:', error);
+                                    });
                             }
                         });
                     </script>
         </main>
     </body>
 
-</html
+</html>

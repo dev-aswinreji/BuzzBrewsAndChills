@@ -47,8 +47,8 @@ adminHomeRoute.post('/order-details',admin_authentication,admin_orderDetailsPost
 adminHomeRoute.get('/products', admin_authentication, admin_productsGet)
 adminHomeRoute.delete('/delete-image',admin_authentication,admin_deleteProductImages)
 
-adminHomeRoute.get('/coupon',admin_couponGet)
-adminHomeRoute.post('/coupon',admin_couponPost)
+adminHomeRoute.get('/coupon',admin_authentication,admin_couponGet)
+adminHomeRoute.post('/coupon',admin_authentication,admin_couponPost)
 
 adminHomeRoute.get('/edit-coupon',admin_editCouponGet)
 adminHomeRoute.put('/edit-coupon',upload.none(),admin_editCouponPost)
