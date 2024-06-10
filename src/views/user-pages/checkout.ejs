@@ -626,6 +626,12 @@
                                                                             title: 'Coupon Expired',
                                                                             text: 'Sorry, the coupon you are trying to use has expired.'
                                                                         });
+                                                                    } else if (data.result === 'Coupon Status Archived') {
+                                                                        Swal.fire({
+                                                                            icon: 'info',
+                                                                            title: 'Coupon Status Changed',
+                                                                            text: 'The coupon you applied is no longer available. Please try another coupon code.'
+                                                                        });
                                                                     } else if (data.result === 'Cart Limit Is Low') {
                                                                         Swal.fire({
                                                                             title: 'Minimum Cart Total Required',
@@ -698,6 +704,7 @@
                                                                 if (!response.ok) {
                                                                     throw new Error('Failed to create order');
                                                                 }
+                                                                console.log(response,'response is showing ===================');
 
                                                                 const order = await response.json();
                                                                 console.log(order, 'order is showing');
@@ -710,12 +717,13 @@
                                                                     description: 'Test Payment',
                                                                     image: 'https://via.placeholder.com/150',
                                                                     handler: function (response) {
-                                                                        Swal.fire({
-                                                                            text: 'Payment Successful! Payment ID: ' + response.razorpay_payment_id,
-                                                                            icon: 'success'
-                                                                        }).then(() => {
-                                                                            razorpaySuccess(response.razorpay_payment_id);
-                                                                        });
+                                                                        console.log(response,'response is showing');
+                                                                        // Swal.fire({
+                                                                        //     text: 'Payment Successful! Payment ID: ' + response.razorpay_payment_id,
+                                                                        //     icon: 'success'
+                                                                        // }).then(() => {
+                                                                        //     razorpaySuccess(response.razorpay_payment_id);
+                                                                        // });
                                                                     },
                                                                     prefill: {
                                                                         name: 'John Doe',

@@ -65,6 +65,8 @@ export const user_applyCoupon = async (req, res) => {
 
         res.json({ result: "Cart Limit Is Low", amount: coupon.minimum_cart_price });
 
+      } else if (coupon.couponStatus === 'ARCHIVED') {
+        res.json({result:'Coupon Status Archived'})
       } else if (coupon.starting_date >= new Date()) {
         res.json({ result: 'Coupon Not Found' })
 
