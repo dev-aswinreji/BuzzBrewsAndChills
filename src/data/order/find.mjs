@@ -13,7 +13,7 @@ export async function findOrderData(userId) {
 export async function findAllOrderDataForAdmin(skip, limit) {
   try {
     return await orderCollection
-      .find()
+      .find({ "products.status": { $ne: "PENDING APPROVAL" } })
       .sort({ timeStamp: -1 })
       .skip(skip)
       .limit(limit);
@@ -45,3 +45,20 @@ export async function findAllOrderSuccessFullOrderAmount() {
   return await orderCollection.find({ "products.status": "DELIVERED" });
 }
 
+export async function findAllReturnedOrders(skip,limit) {
+  return await orderCollection.find({
+    $or: [
+      { products: { $elemMatch: { status: "PENDING APPROVAL" } } },
+      { products: { $elemMatch: { status: "REQUEST APPROVED" } } }
+    ]
+  }).skip(skip).limit(limit)
+}
+
+export async function findAllReturnedOrdersCount() {
+  return await orderCollection.countDocuments({
+    $or: [
+      { products: { $elemMatch: { status: "PENDING APPROVAL" } } },
+      { products: { $elemMatch: { status: "REQUEST APPROVED" } } }
+    ]
+  })
+}
