@@ -222,10 +222,10 @@
                                                             <td>
                                                                 <% if (item.status==='PENDING APPROVAL' ) { %>
                                                                     <button class="btn btn-success"
-                                                                        onclick="handleReturn('APPROVE', '<%= item.productId %>')">Approve
+                                                                        onclick="handleReturnOrder('APPROVE', '<%= item.productId %>')">Approve
                                                                         Return</button>
                                                                     <button class="btn btn-danger "
-                                                                        onclick="handleReturn('REJECT', '<%= item.productId %>')">Reject
+                                                                        onclick="handleReturnOrder('REJECT', '<%= item.productId %>')">Reject
                                                                         Return</button>
                                                                     <% } %>
 
@@ -252,19 +252,23 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
-            async function handleReturn(action, productId) {
-                const orderId = '<%= orderDetails.orderId %>';
+            console.log('what is happening');
+            const orderData = '<%- JSON.stringify(orderDetails) %>';
+            console.log(orderData,'order is showing');
+            async function handleReturnOrder(action, productId) {
                 try {
+                    const order = JSON.parse(orderData)
+                    console.log(order,'order is showing');
                     const response = await fetch(`/admin/return-order-confirmation`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            orderId: orderId,
+                            orderId: order.orderId,
                             productId: productId,
-                            userId:orderId.userId,
-                            totalPrice:orderId.totalPrice,
+                            userId:order.userId,
+                            totalPrice:order.totalPrice,
                             action: action 
                         })
                     });

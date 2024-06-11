@@ -73,5 +73,5 @@ export async function findUniqueOrderToChangeReturnOrderStatus(orderId){
 }
 
 export async function returnOrderStatusUpdate(orderId,update,options){
-  await orderCollection.findOneAndUpdate({ orderId: orderId }, update, options);
+  return await orderCollection.findOneAndUpdate({ orderId: orderId }, update, options);
 }

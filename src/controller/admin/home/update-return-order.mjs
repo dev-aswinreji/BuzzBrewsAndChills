@@ -1,4 +1,6 @@
-import { findUniqueOrderToChangeReturnOrderStatus } from "../../../data/order/find.mjs";
+import { findUniqueOrderToChangeReturnOrderStatus, returnOrderStatusUpdate } from "../../../data/order/find.mjs";
+import { findSingleProduct } from "../../../data/products/find.mjs";
+import { updateProducts } from "../../../data/products/update.mjs";
 import { updateUserWallet } from "../../../data/wallet/update.mjs";
 
 
@@ -18,16 +20,19 @@ export const admin_orderReturnUpdatingGet = async (req, res) => {
 export const admin_orderReturnConfirmationPut = async (req, res) => {
     try {
         const { orderId, productId, userId, action, totalPrice } = req.body
-        if (action === 'APPROVED') {
+        console.log(req.body);
+        console.log(action,'action');
+        const product = await findSingleProduct(productId);
+        if (action === 'APPROVE') {
             const update = {
-                $set: { "products.$[elem].status": 'APPROVED' }
+                $set: { "products.$[elem].status": 'APPROVE' }
             };
             const options = {
                 arrayFilters: [{ "elem.productId": productId }],
                 new: true
             };
             const result = await returnOrderStatusUpdate(orderId, update, options)
-            console.log(result, 'result is showing');
+            console.log(result, 'result is showing approveddddd');
             const walletTransactions = {
                 date: new Date(),
                 type: 'CREDIT',
@@ -40,16 +45,18 @@ export const admin_orderReturnConfirmationPut = async (req, res) => {
             let updateProductStock = Number(product.stock) + Number(quantity);
 
             await updateProducts(productId, { stock: updateProductStock })
-            res.json({ result: 'APPROVED' })
-        } else if (action === 'REJECTED') {
+
+            res.json({ result: 'APPROVE' })
+        } else if (action === 'REJECT') {
             const update = {
-                $set: { "products.$[elem].status": 'REJECTED' }
+                $set: { "products.$[elem].status": 'REJECT' }
             };
             const options = {
                 arrayFilters: [{ "elem.productId": productId }],
                 new: true
             };
             const result = await returnOrderStatusUpdate(orderId, update, options)
+            console.log(result,'result is showing');
             res.json({ result: 'REJECTED' })
         }
 
