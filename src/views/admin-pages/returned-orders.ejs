@@ -154,7 +154,7 @@
                                                         <%= orders[i].orderDate %>
                                                     </td>
                                                     <td class="text-end">
-                                                        <a href="/admin/order-details?orderId=<%= orders[i]._id %>" class="btn btn-md rounded font-sm">Detail</a>
+                                                        <a href="/admin/return-order-details?orderId=<%= orders[i]._id %>" class="btn btn-md rounded font-sm">Detail</a>
                                                          <!-- dropdown //end -->
                                                     </td>
                                                 </tr>
@@ -172,17 +172,17 @@
                             <ul class="pagination justify-content-start">
                                 <% if (page > 1) { %>
                                     <li class="page-item">
-                                        <a class="page-link" href="/admin/orders/?page=<%= page - 1 %>">Prev</a>
+                                        <a class="page-link" href="/admin/return-order-details/?page=<%= page - 1 %>">Prev</a>
                                     </li>
                                 <% } %>
                                 <% for (let i = 1; i <= totalPages; i++) { %>
                                     <li class="page-item <%= page === i ? 'active' : '' %>">
-                                        <a class="page-link" href="/admin/orders/?page=<%= i %>"><%= i %></a>
+                                        <a class="page-link" href="/admin/return-order-details/?page=<%= i %>"><%= i %></a>
                                     </li>
                                 <% } %>
                                 <% if (page < totalPages) { %>
                                     <li class="page-item">
-                                        <a class="page-link btn btn-primary" href="/admin/orders/?page=<%= page + 1 %>">Next</a>
+                                        <a class="page-link btn btn-primary" href="/admin/return-order-details/?page=<%= page + 1 %>">Next</a>
                                     </li>
                                 <% } %>
                             </ul>

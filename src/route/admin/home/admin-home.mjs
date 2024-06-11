@@ -17,6 +17,7 @@ import { admin_editCouponGet, admin_editCouponPost, admin_updateCouponStatusPut 
 import { admin_salesReportDownloadGet, admin_salesReportGet } from "../../../controller/admin/home/sales-report.mjs";
 import { admin_pdfFormat } from "../../../controller/admin/home/pdf-format.mjs";
 import { admin_returnedOrdersGet } from "../../../controller/admin/home/returned-orders.mjs";
+import { admin_orderReturnConfirmationPut, admin_orderReturnUpdatingGet } from "../../../controller/admin/home/update-return-order.mjs";
 
 const adminHomeRoute = express.Router()
 
@@ -45,6 +46,8 @@ adminHomeRoute.get('/orders', admin_authentication, admin_ordersGet)
 adminHomeRoute.get('/order-details',admin_authentication,admin_orderDetailsGet)
 adminHomeRoute.post('/order-details',admin_authentication,admin_orderDetailsPost)
 adminHomeRoute.get('/returned-orders',admin_returnedOrdersGet)
+adminHomeRoute.get('/return-order-details',admin_orderReturnUpdatingGet)
+adminHomeRoute.put('/return-order-confirmation',admin_orderReturnConfirmationPut)
 
 adminHomeRoute.get('/products', admin_authentication, admin_productsGet)
 adminHomeRoute.delete('/delete-image',admin_authentication,admin_deleteProductImages)

@@ -62,3 +62,16 @@ export async function findAllReturnedOrdersCount() {
     ]
   })
 }
+
+
+export async function findUniqueOrderToChangeReturnOrderStatus(orderId){
+  try {
+    return await orderCollection.findById(orderId)
+  } catch (error) {
+    console.log(error,'find unique order to change return status func error');
+  }
+}
+
+export async function returnOrderStatusUpdate(orderId,update,options){
+  await orderCollection.findOneAndUpdate({ orderId: orderId }, update, options);
+}
