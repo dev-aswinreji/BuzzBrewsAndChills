@@ -25,17 +25,17 @@ adminHomeRoute.get('/users-list', admin_authentication, admin_userListGet)
 adminHomeRoute.get('/user-manage/:id', admin_authentication, admin_userListManage)
 
 adminHomeRoute.get('/add-new-products',admin_authentication, admin_addNewProductsGet)
-adminHomeRoute.post('/add-new-products', upload.array("imageUrl", 5), admin_addNewProductsPost)
+adminHomeRoute.post('/add-new-products',admin_authentication, upload.array("imageUrl", 5), admin_addNewProductsPost)
 
 adminHomeRoute.get('/category', admin_authentication, admin_categoriesGet)
-adminHomeRoute.post('/category', admin_categoriesPost)
+adminHomeRoute.post('/category',admin_authentication, admin_categoriesPost)
 
 adminHomeRoute.get('/edit-category/:id', admin_authentication, admin_editCategoryGet)
-adminHomeRoute.post('/edit-category/:id', admin_editCategoryPost)
+adminHomeRoute.post('/edit-category/:id',admin_authentication, admin_editCategoryPost)
 
 adminHomeRoute.get('/manage-category/:id', admin_authentication, admin_manageCategory)
 
-adminHomeRoute.get('/dashboard', admin_dashboardGet)
+adminHomeRoute.get('/dashboard',admin_authentication, admin_dashboardGet)
 
 adminHomeRoute.get('/edit-products/:id', admin_authentication, admin_editProductsGet)
 adminHomeRoute.post('/edit-products', upload.array("imageUrl", 5), admin_editProductsPost)
@@ -45,9 +45,9 @@ adminHomeRoute.get('/manage-products/:id', admin_authentication, admin_managePro
 adminHomeRoute.get('/orders', admin_authentication, admin_ordersGet)
 adminHomeRoute.get('/order-details',admin_authentication,admin_orderDetailsGet)
 adminHomeRoute.post('/order-details',admin_authentication,admin_orderDetailsPost)
-adminHomeRoute.get('/returned-orders',admin_returnedOrdersGet)
-adminHomeRoute.get('/return-order-details',admin_orderReturnUpdatingGet)
-adminHomeRoute.put('/return-order-confirmation',admin_orderReturnConfirmationPut)
+adminHomeRoute.get('/returned-orders',admin_authentication,admin_returnedOrdersGet)
+adminHomeRoute.get('/return-order-details',admin_authentication,admin_orderReturnUpdatingGet)
+adminHomeRoute.put('/return-order-confirmation',admin_authentication,admin_orderReturnConfirmationPut)
 
 adminHomeRoute.get('/products', admin_authentication, admin_productsGet)
 adminHomeRoute.delete('/delete-image',admin_authentication,admin_deleteProductImages)
@@ -55,12 +55,12 @@ adminHomeRoute.delete('/delete-image',admin_authentication,admin_deleteProductIm
 adminHomeRoute.get('/coupon',admin_authentication,admin_couponGet)
 adminHomeRoute.post('/coupon',admin_authentication,admin_couponPost)
 
-adminHomeRoute.get('/edit-coupon',admin_editCouponGet)
-adminHomeRoute.put('/edit-coupon',upload.none(),admin_editCouponPost)
-adminHomeRoute.put('/update-coupon',admin_updateCouponStatusPut)
+adminHomeRoute.get('/edit-coupon',admin_authentication,admin_editCouponGet)
+adminHomeRoute.put('/edit-coupon',admin_authentication,upload.none(),admin_editCouponPost)
+adminHomeRoute.put('/update-coupon',admin_authentication,admin_updateCouponStatusPut)
 
-adminHomeRoute.get('/sales-report',admin_salesReportGet)
-adminHomeRoute.get('/report/download/:period',admin_salesReportDownloadGet)
-adminHomeRoute.get('/download-report',admin_pdfFormat)
+adminHomeRoute.get('/sales-report',admin_authentication,admin_salesReportGet)
+adminHomeRoute.get('/report/download/:period',admin_authentication,admin_salesReportDownloadGet)
+adminHomeRoute.get('/download-report',admin_authentication,admin_pdfFormat)
 
 export default adminHomeRoute

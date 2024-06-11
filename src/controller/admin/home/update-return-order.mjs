@@ -19,7 +19,7 @@ export const admin_orderReturnUpdatingGet = async (req, res) => {
 
 export const admin_orderReturnConfirmationPut = async (req, res) => {
     try {
-        const { orderId, productId, userId, action, totalPrice } = req.body
+        const { orderId, productId, userId, action, totalPrice , quantity} = req.body
         console.log(req.body);
         console.log(action,'action');
         const product = await findSingleProduct(productId);
@@ -57,7 +57,7 @@ export const admin_orderReturnConfirmationPut = async (req, res) => {
             };
             const result = await returnOrderStatusUpdate(orderId, update, options)
             console.log(result,'result is showing');
-            res.json({ result: 'REJECTED' })
+            res.json({ result: 'REJECT' })
         }
 
     } catch (error) {

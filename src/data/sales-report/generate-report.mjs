@@ -4,9 +4,8 @@ import { orderCollection } from "../../model/order.mjs";
 export async function generateReport(period, customStartDate, customEndDate) {
 
     const data = await orderCollection.find({"products.status":'DELIVERED'})
-    console.log(data,'data is showing=======================================[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]=====================================');
-    console.log(data[0].products,'hhhhhhhhhhhhhhhhhhheeeeeeeeeeeeeeeeeeeehhhhhhhhhhhhhhhhhhhhhhhhheeeeeeeeeeeeeeeeeeeeeeeeee');
-    let matchStage = { "products.status": "DELIVERED" };
+    console.log(data,'data is showing');
+    let matchStage = { "products.status": "DELIVERED"};
 
     switch (period) {
         case 'daily':

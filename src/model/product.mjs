@@ -48,6 +48,9 @@ const productsSchema = mongoose.Schema({
     createdAt:{
         type:Date,
         default:Date.now,
+    },updatedAt:{   //pending
+        type:Date,
+
     },
     discount:{
         type:Number,

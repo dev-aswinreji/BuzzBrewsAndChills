@@ -193,12 +193,13 @@
                                                     <tr>
                                                         <th width="40%">Product</th>
                                                         <th width="20%">Unit Price</th>
+                                                        <th width="20%">Reason</th>
                                                         <th width="20%">Quantity</th>
                                                         <th width="20%">Total Amount</th>
                                                         <th width="20%" class="text-end">Order Status</th>
                                                     </tr>
                                                 </thead>
-                                                <% orderDetails.products.forEach(item=> { %>
+                                                <% orderDetails.products.forEach((item,index)=> { %>
                                                     <tbody>
                                                         <tr>
                                                             <td>
@@ -215,19 +216,25 @@
                                                             <td>Rs <%= item.price %>
                                                             </td>
                                                             <td>
-                                                                <%= item.quantity %>
+                                                                <%= orderDetails.returnReason %> 
+                                                            </td>
+                                                            <td>
+                                                                <span id="quantity_<%= index %>">
+                                                                    <%= item.quantity %>
+                                                                </span>
                                                             </td>
                                                             <td>Rs <%= item.price * item.quantity %>
                                                             </td>
                                                             <td>
                                                                 <% if (item.status==='PENDING APPROVAL' ) { %>
                                                                     <button class="btn btn-success"
-                                                                        onclick="handleReturnOrder('APPROVE', '<%= item.productId %>')">Approve
+                                                                        onclick="handleReturnOrder('APPROVE', '<%= item.productId %>','<%= item.quantity %>')">Approve
                                                                         Return</button>
                                                                     <button class="btn btn-danger "
-                                                                        onclick="handleReturnOrder('REJECT', '<%= item.productId %>')">Reject
+                                                                        onclick="handleReturnOrder('REJECT', '<%= item.productId %>','<%= item.quantity %>')">Reject
                                                                         Return</button>
                                                                     <% } %>
+
 
                                                             </td>
                                                         </tr>
@@ -254,11 +261,11 @@
         <script>
             console.log('what is happening');
             const orderData = '<%- JSON.stringify(orderDetails) %>';
-            console.log(orderData,'order is showing');
-            async function handleReturnOrder(action, productId) {
+            console.log(orderData, 'order is showing');
+            async function handleReturnOrder(action, productId, quantity) {
                 try {
                     const order = JSON.parse(orderData)
-                    console.log(order,'order is showing');
+                    console.log(order, 'order is showing');
                     const response = await fetch(`/admin/return-order-confirmation`, {
                         method: 'PUT',
                         headers: {
@@ -267,14 +274,15 @@
                         body: JSON.stringify({
                             orderId: order.orderId,
                             productId: productId,
-                            userId:order.userId,
-                            totalPrice:order.totalPrice,
-                            action: action 
+                            userId: order.userId,
+                            totalPrice: order.totalPrice,
+                            action: action,
+                            quantity: quantity
                         })
                     });
                     if (response.ok) {
                         const data = await response.json();
-                        if (data.result=== 'success') {
+                        if (data.result === 'APPROVE') {
                             Swal.fire({
                                 position: "center",
                                 icon: "success",
@@ -282,7 +290,15 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             }).then(() => location.reload());
-                        } else {
+                        } else if (data.result === 'REJECT') {
+                            Swal.fire({
+                                position: "center",
+                                icon: "warning",
+                                title: `Return request ${action.toLowerCase()}ed successfully`,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => location.reload());
+
                             console.log('Return action unsuccessful');
                         }
                     } else {
