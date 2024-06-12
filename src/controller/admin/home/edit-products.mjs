@@ -1,5 +1,7 @@
 import { imageDirectory } from "../../../app.mjs";
 import { deleteProductImageUsingFetch } from "../../../data/products/delete.mjs";
+import fs from 'fs'
+
 import {
   findCategory,
   findSingleProduct,
@@ -108,5 +110,11 @@ export const admin_deleteProductImages = async (req, res) => {
   const imageUrl = req.query.filename;
   console.log(productId, imageUrl);
   await deleteProductImageUsingFetch(productId, imageUrl);
+  fs.unlinkSync(imageDirectory+'/'+imageUrl,(err=>{
+    if(err)console.log('some error occured in admin delete product images ',err);
+    else{
+      console.log(imageDirectory+'/'+imageUrl);
+    }
+  }))
   res.json({ response: "success" });
 };
