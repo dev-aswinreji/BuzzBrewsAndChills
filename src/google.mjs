@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import passport from 'passport'
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth'
 import { insertGoogle } from './data/users/insert.mjs'
-import { findSigninWithGoogleUser } from './data/users/find.mjs'
+import { findUser } from './data/users/find.mjs'
 
 
 passport.serializeUser((user, cb) => {
@@ -33,7 +33,7 @@ export const googleSignIn = passport.use(new GoogleStrategy({
 
         console.log('inside try block');
 
-        const user = await findSigninWithGoogleUser(googleData.id)
+        const user = await findUser(googleData.id)
         console.log(user, 'USER CREATED');
 
         if (user) {
@@ -42,7 +42,6 @@ export const googleSignIn = passport.use(new GoogleStrategy({
         } else {
             console.log('inside else');
             const userData = {
-                googleId: googleData.id,
 
                 fullName: googleData.displayName,
 
@@ -51,6 +50,7 @@ export const googleSignIn = passport.use(new GoogleStrategy({
             console.log(userData);
 
             const newUser = await insertGoogle(userData)
+            console.log(newUser,'new user is showing');
 
             done(null, newUser)
         }

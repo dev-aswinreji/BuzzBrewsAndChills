@@ -24,12 +24,11 @@ const userSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
     },
     role: {
         type: String,
         enum: ['USER', 'ADMIN'],
-        default: 'ADMIN',
+        default: 'USER',
         required: true
     },
     accountStatus:{

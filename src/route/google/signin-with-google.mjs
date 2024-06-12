@@ -13,6 +13,9 @@ googleRoute.get('/auth/google', googleSignIn.authenticate('google', { scope: ['e
 googleRoute.get('/auth/google/callback', googleSignIn.authenticate('google', { failureRedirect: '/error' }), async (req, res) => {
     // console.log(req.user);
     console.log('anything');
+    console.log(req.user,'user is shwoin google is working');
+    req.session.USER_ID = req.user[0]._id
+    console.log(req.session.USER_ID,'userid is showing  whattttttttttttttttttt')
     // console.log(req.user,'req.user is working or not');
     req.session.isUserAuth = true
     res.redirect('/success')
@@ -21,8 +24,7 @@ googleRoute.get('/auth/google/callback', googleSignIn.authenticate('google', { f
 
 
 googleRoute.get('/success', async (req, res) => {
-    console.log('working or not signin with google')
-    req.session.isUserAuth = true
+
     res.redirect('/home')
 })
 

@@ -13,5 +13,5 @@ export async function insertUserAddress(data) {
 
 
 export async function insertGoogle(data){
-    return await googleCollection.create([data])
+    return await userCollection.create([data])
 }
