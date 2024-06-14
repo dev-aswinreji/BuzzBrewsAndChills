@@ -20,6 +20,7 @@ dotenv.config()
 const GOOGLE_CLIENT_ID = process.env.CLIENT_ID
 const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SECRET
 console.log('google signin page working ')
+console.log(GOOGLE_CLIENT_ID,'google client id is showing' )
 export const googleSignIn = passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
