@@ -14,7 +14,7 @@ googleRoute.get('/auth/google/callback', googleSignIn.authenticate('google', { f
     // console.log(req.user);
     console.log('anything');
     console.log(req.user,'user is shwoin google is working');
-    req.session.USER_ID = req.user[0]._id
+    req.session.USER_ID = req.user._id
     console.log(req.session.USER_ID,'userid is showing  whattttttttttttttttttt')
     // console.log(req.user,'req.user is working or not');
     req.session.isUserAuth = true

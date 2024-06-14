@@ -4,7 +4,7 @@ import { googleCollection } from "../../model/signin-with-google.mjs"
 
 
 export async function insertUser(data) {
-    return await userCollection.create([data])
+    return await userCollection.create(data)
 }
 
 export async function insertUserAddress(data) {
