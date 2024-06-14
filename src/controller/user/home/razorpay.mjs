@@ -2,7 +2,7 @@ import { razorpayInstance } from "../../../utils/razorpay.mjs";
 
 export const user_razorpay = async (req, res) => {
   try {
-    const amount = req.body.amount * 100
+    const amount = Number(req.body.amount) * 100
 
     console.log(amount,'wht is happening');
     const currency = "INR";
