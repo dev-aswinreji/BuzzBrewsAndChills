@@ -7,15 +7,15 @@ import { admin_orderDetailsGet, admin_orderDetailsPost } from "../../../controll
 import { admin_returnedOrdersGet } from "../../../controller/admin/order/returned-orders.mjs";
 import { admin_orderReturnConfirmationPut, admin_orderReturnUpdatingGet } from "../../../controller/admin/order/update-return-order.mjs";
 
-const orderRoute = express.Router()
+const orderAdminRoute = express.Router()
 
-orderRoute.get('/orders', admin_authentication, admin_ordersGet)
-orderRoute.get('/order-details', admin_authentication, admin_orderDetailsGet)
-orderRoute.post('/order-details', admin_authentication, admin_orderDetailsPost)
-orderRoute.get('/returned-orders', admin_authentication, admin_returnedOrdersGet)
-orderRoute.get('/return-order-details', admin_authentication, admin_orderReturnUpdatingGet)
-orderRoute.put('/return-order-confirmation', admin_authentication, admin_orderReturnConfirmationPut)
+orderAdminRoute.get('/orders', admin_authentication, admin_ordersGet)
+orderAdminRoute.get('/order-details', admin_authentication, admin_orderDetailsGet)
+orderAdminRoute.post('/order-details', admin_authentication, admin_orderDetailsPost)
+orderAdminRoute.get('/returned-orders', admin_authentication, admin_returnedOrdersGet)
+orderAdminRoute.get('/return-order-details', admin_authentication, admin_orderReturnUpdatingGet)
+orderAdminRoute.put('/return-order-confirmation', admin_authentication, admin_orderReturnConfirmationPut)
 
 
-export default orderRoute
+export default orderAdminRoute
 

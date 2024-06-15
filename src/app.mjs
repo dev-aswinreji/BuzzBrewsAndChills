@@ -19,7 +19,7 @@ import redis from 'redis'
 import categoryRoute from './route/admin/category/category.mjs'
 import couponRoute from './route/admin/coupon/coupon.mjs'
 import dashboardRoute from './route/admin/dashboard/dashboard.mjs'
-import orderRoute from './route/admin/order/order.mjs'
+import orderAdminRoute from './route/admin/order/order.mjs'
 import productsRoute from './route/admin/products/products.mjs'
 import salesReportRoute from './route/admin/sales-report/sales-report.mjs'
 import signinAdminRoute from './route/admin/signin/admin.mjs'
@@ -36,6 +36,7 @@ import contactRoute from './route/user/contact/contact.mjs'
 import couponUserRoute from './route/user/coupon/coupon.mjs'
 import emailVerifyRoute from './route/user/email-verification/email-verification.mjs'
 import forgotPassRoute from './route/user/forgot-password/forgot-password.mjs'
+import orderRoute from './route/user/order/order.mjs'
 import otpVerifyRoute from './route/user/otp/otp.mjs'
 import razorpayRoute from './route/user/razorpay/razorpay.mjs'
 import shopRoute from './route/user/shop/shop.mjs'
@@ -112,8 +113,8 @@ app.use(function (req, res, next) {
     res.locals.session = req.session;
     next()
 })
-app.use('/', [aboutRoute, cartRoute, checkoutRoute, contactRoute, couponUserRoute, emailVerifyRoute, forgotPassRoute, otpVerifyRoute, razorpayRoute, shopRoute, signinRoute, signupRoute, userProfileRoute, walletRoute, wishlistRoute])
-app.use('/admin', [categoryRoute, couponRoute, dashboardRoute, orderRoute, productsRoute, salesReportRoute, signinAdminRoute, usersListRoute])
+app.use('/', [aboutRoute, cartRoute, checkoutRoute, contactRoute, couponUserRoute, emailVerifyRoute, forgotPassRoute,orderRoute, otpVerifyRoute, razorpayRoute, shopRoute, signinRoute, signupRoute, userProfileRoute, walletRoute, wishlistRoute])
+app.use('/admin', [categoryRoute, couponRoute, dashboardRoute, orderAdminRoute, productsRoute, salesReportRoute, signinAdminRoute, usersListRoute])
 app.use('/', googleRoute)
 
 
