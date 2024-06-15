@@ -4,13 +4,13 @@ import { user_homeGet } from '../../../controller/user/shop/home.mjs';
 import { user_shopGet } from '../../../controller/user/shop/shop.mjs';
 import { user_productView } from '../../../controller/user/shop/product-view.mjs';
 
-const routeHome = express.Router()
+const shopRoute = express.Router()
 
-routeHome.get('/', user_homeGet)
-routeHome.get('/home', user_homeGet)
+shopRoute.get('/', user_homeGet)
+shopRoute.get('/home', user_homeGet)
 
-routeHome.get('/shop', user_shopGet)
-routeHome.get('/product-view/:id', user_productView)
+shopRoute.get('/shop', user_shopGet)
+shopRoute.get('/product-view/:id', user_productView)
 
-export default routeHome
+export default shopRoute
 

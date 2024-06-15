@@ -1,18 +1,15 @@
 import exprees from "express";
+
 import { admin_signinGet, admin_signinPost } from "../../../controller/admin/signin/signin.mjs";
 import { admin_signoutGet } from "../../../controller/admin/signin/signout.mjs";
 
+const signinRoute = exprees.Router()
 
-const authRoute = exprees.Router()
+signinRoute.get('/',admin_signinGet)
+signinRoute.get('/signin',admin_signinGet)
+signinRoute.post('/signin',admin_signinPost)
 
+signinRoute.get('/signout',admin_signoutGet)
 
-authRoute.get('/',admin_signinGet)
-authRoute.get('/signin',admin_signinGet)
-authRoute.post('/signin',admin_signinPost)
-
-authRoute.get('/signout',admin_signoutGet)
-
-
-
-export default authRoute
+export default signinRoute
 

@@ -1,8 +1,10 @@
 import express from 'express'
+
 import { user_aboutGet } from '../../../controller/user/about/about.mjs';
 
-const routeHome = express.Router()
-routeHome.get('/about', user_aboutGet)
+const aboutRoute = express.Router()
 
-export default routeHome
+aboutRoute.get('/about', user_aboutGet)
+
+export default aboutRoute
 

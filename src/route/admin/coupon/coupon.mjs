@@ -1,19 +1,21 @@
 import express from "express";
-import {admin_authentication} from "../../../middleware/admin-auth.mjs";
 
-import {upload} from "../../../middleware/multer.mjs";
+import { admin_authentication } from "../../../middleware/admin-auth.mjs";
+
+import { upload } from "../../../middleware/multer.mjs";
+
 import { admin_couponGet, admin_couponPost } from "../../../controller/admin/coupon/coupon.mjs";
-
 import { admin_editCouponGet, admin_editCouponPost, admin_updateCouponStatusPut } from "../../../controller/admin/coupon/edit-coupon.mjs";
 
+const couponRoute = express.Router()
 
-const adminHomeRoute = express.Router()
-adminHomeRoute.get('/coupon',admin_authentication,admin_couponGet)
-adminHomeRoute.post('/coupon',admin_authentication,admin_couponPost)
+couponRoute.get('/coupon', admin_authentication, admin_couponGet)
+couponRoute.post('/coupon', admin_authentication, admin_couponPost)
 
-adminHomeRoute.get('/edit-coupon',admin_authentication,admin_editCouponGet)
-adminHomeRoute.put('/edit-coupon',admin_authentication,upload.none(),admin_editCouponPost)
-adminHomeRoute.put('/update-coupon',admin_authentication,admin_updateCouponStatusPut)
+couponRoute.get('/edit-coupon', admin_authentication, admin_editCouponGet)
+couponRoute.put('/edit-coupon', admin_authentication, upload.none(), admin_editCouponPost)
 
-export default adminHomeRoute
+couponRoute.put('/update-coupon', admin_authentication, admin_updateCouponStatusPut)
+
+export default couponRoute
 

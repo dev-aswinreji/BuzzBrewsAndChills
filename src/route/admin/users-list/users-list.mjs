@@ -3,9 +3,10 @@ import {admin_authentication} from "../../../middleware/admin-auth.mjs";
 
 import {admin_userListGet, admin_userListManage} from "../../../controller/admin/users-list/users-list.mjs";
 
-const adminHomeRoute = express.Router()
+const usersListRoute = express.Router()
 
+usersListRoute.get('/users-list', admin_authentication, admin_userListGet)
+usersListRoute.get('/user-manage/:id', admin_authentication, admin_userListManage)
 
-adminHomeRoute.get('/users-list', admin_authentication, admin_userListGet)
-adminHomeRoute.get('/user-manage/:id', admin_authentication, admin_userListManage)
+export default usersListRoute
 

@@ -1,13 +1,13 @@
 import express from 'express'
 
 import {user_authentication} from '../../../middleware/user-auth.mjs';
+
 import { user_applyCoupon } from '../../../controller/user/coupon/apply-coupon.mjs';
 import { user_removeCouponGet } from '../../../controller/user/coupon/remove-coupon.mjs';
 
-const routeHome = express.Router()
+const couponUserRoute = express.Router()
 
+couponUserRoute.get('/apply-coupon',user_authentication,user_applyCoupon)
+couponUserRoute.delete('/remove-coupon',user_authentication,user_removeCouponGet)
 
-
-routeHome.get('/apply-coupon',user_applyCoupon)
-routeHome.delete('/remove-coupon',user_removeCouponGet)
-export default routeHome
+export default couponUserRoute
