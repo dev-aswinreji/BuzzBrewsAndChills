@@ -210,6 +210,7 @@
             const doc = new jsPDF();
             const order = `<%- JSON.stringify(orderData) %>`;
             const orderData = JSON.parse(order);
+            console.log(orderData,'order data is success');
             const rupeeSymbol = 'INR'
 
             // Company Details
@@ -288,7 +289,7 @@
             return invoiceName;
         }
     </script>
-    <%- include(.'partials/footer/footer.ejs') %>
+    <%- include('../partials/footer/footer.ejs') %>
 
 </body>
 

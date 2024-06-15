@@ -78,7 +78,7 @@ export async function updateOrderedProduct(orderId, productId, status) {
     const orderData = await orderCollection.findOne({
       orderId: orderId,
     });
-    console.log(orderData, "order data is showing");
+    console.log(orderData, "order data is showing in  update order product func");
     const result = await orderCollection.updateOne(
       { orderId: orderId },
       { $set: { "products.$[elem].status": status } },
