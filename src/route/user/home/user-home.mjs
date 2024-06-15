@@ -4,7 +4,7 @@ const routeHome = express.Router()
 
 import {user_checkoutGet} from '../../../controller/user/checkout/checkout.mjs';
 import {user_shopGet} from '../../../controller/user/shop/shop.mjs';
-import {user_contactGet} from '../../../controller/user/contact/contact.mjs';
+import {user_contactGet, user_contactPost} from '../../../controller/user/contact/contact.mjs';
 import {user_productView} from '../../../controller/user/shop/product-view.mjs';
 import {user_profileGet} from '../../../controller/user/user-profile/user-profile.mjs';
 import {user_authentication} from '../../../middleware/user-auth.mjs';
@@ -46,6 +46,7 @@ routeHome.get('/contact', user_contactGet)
 routeHome.get('/shop', user_shopGet)
 
 routeHome.get('/contact', user_contactGet)
+routeHome.post('/contact-queries',user_contactPost)
 
 routeHome.get('/product-view/:id', user_productView)
 
