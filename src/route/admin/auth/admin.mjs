@@ -1,6 +1,6 @@
 import exprees from "express";
-import { admin_signinGet, admin_signinPost } from "../../../controller/admin/auth/signin.mjs";
-import { admin_signoutGet } from "../../../controller/admin/auth/signout.mjs";
+import { admin_signinGet, admin_signinPost } from "../../../controller/admin/signin/signin.mjs";
+import { admin_signoutGet } from "../../../controller/admin/signin/signout.mjs";
 
 
 const authRoute = exprees.Router()

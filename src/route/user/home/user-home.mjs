@@ -2,39 +2,39 @@ import express from 'express'
 
 const routeHome = express.Router()
 
-import {user_homeGet} from "../../../controller/user/home/home.mjs";
-import {user_checkoutGet} from '../../../controller/user/home/checkout.mjs';
-import {user_aboutGet} from '../../../controller/user/home/about.mjs';
-import {user_shopGet} from '../../../controller/user/home/shop.mjs';
-import {user_contactGet} from '../../../controller/user/home/contact.mjs';
-import {user_productView} from '../../../controller/user/home/product-view.mjs';
-import {user_profileGet} from '../../../controller/user/home/user-profile.mjs';
+import {user_checkoutGet} from '../../../controller/user/checkout/checkout.mjs';
+import {user_shopGet} from '../../../controller/user/shop/shop.mjs';
+import {user_contactGet} from '../../../controller/user/contact/contact.mjs';
+import {user_productView} from '../../../controller/user/shop/product-view.mjs';
+import {user_profileGet} from '../../../controller/user/user-profile/user-profile.mjs';
 import {user_authentication} from '../../../middleware/user-auth.mjs';
-import {user_setNewPasswordGet, user_setNewPasswordPost} from '../../../controller/user/home/set-new-password.mjs';
-import {user_editAddressGet, user_editAddressPost} from '../../../controller/user/home/edit-address.mjs';
-import {user_updateProfileGet, user_updateProfilePost} from '../../../controller/user/home/update-profile.mjs';
-import {user_cartGet} from '../../../controller/user/home/cart.mjs';
-import {user_addToCartGet} from '../../../controller/user/home/add-to-cart.mjs';
-import {user_addToCartManageGet} from '../../../controller/user/home/add-to-cart-manage.mjs';
-import {user_addressGet} from '../../../controller/user/home/address.mjs';
-import {user_addAddressGet, user_addAddressPost} from '../../../controller/user/home/add-address.mjs';
-import {user_addressDeleteDelete} from '../../../controller/user/home/delete-address.mjs';
-import { user_orderListGet } from '../../../controller/user/home/order-history.mjs';
-import { user_updateDefaultAddressGet } from '../../../controller/user/home/update-default-address.mjs';
-import { user_cancelOrderGet } from '../../../controller/user/home/cancel-order.mjs';
-import { user_deleteCartProductDelete } from '../../../controller/user/home/delete-cart.mjs';
-import { user_razorpay } from '../../../controller/user/home/razorpay.mjs';
-import { user_orderPlacedGet } from '../../../controller/user/home/order-placed.mjs';
-import { user_applyCoupon } from '../../../controller/user/home/apply-coupon.mjs';
-import { user_walletGet } from '../../../controller/user/home/wallet.mjs';
-import { user_addToWishlistGet, user_deleteProductFromWishlist, user_wishlistGet } from '../../../controller/user/home/wishlist.mjs';
-import { user_orderAddGet } from '../../../controller/user/home/add-order.mjs';
-import { user_removeCouponGet } from '../../../controller/user/home/remove-coupon.mjs';
-import { user_returnOrderGet } from '../../../controller/user/home/return-order.mjs';
-import { user_walletPaymentGet } from '../../../controller/user/home/wallet-payment.mjs';
-import { user_orderInvoiceGet } from '../../../controller/user/home/order-invoice.mjs';
-import { user_paymentFailedHandler, user_paymentFailedPage } from '../../../controller/user/home/razorpay-payment-failed.mjs';
-import { user_orderFailedUpdate } from '../../../controller/user/home/update-failed-order.mjs';
+import {user_setNewPasswordGet, user_setNewPasswordPost} from '../../../controller/user/user-profile/set-new-password.mjs';
+import {user_editAddressGet, user_editAddressPost} from '../../../controller/user/user-profile/edit-address.mjs';
+import {user_updateProfileGet, user_updateProfilePost} from '../../../controller/user/user-profile/update-profile.mjs';
+import {user_cartGet} from '../../../controller/user/cart/cart.mjs';
+import {user_addToCartGet} from '../../../controller/user/cart/add-to-cart.mjs';
+import {user_addToCartManageGet} from '../../../controller/user/cart/add-to-cart-manage.mjs';
+import {user_addressGet} from '../../../controller/user/user-profile/address.mjs';
+import {user_addAddressGet, user_addAddressPost} from '../../../controller/user/user-profile/add-address.mjs';
+import {user_addressDeleteDelete} from '../../../controller/user/user-profile/delete-address.mjs';
+import { user_orderListGet } from '../../../controller/user/order/order-history.mjs';
+import { user_updateDefaultAddressGet } from '../../../controller/user/user-profile/update-default-address.mjs';
+import { user_cancelOrderGet } from '../../../controller/user/order/cancel-order.mjs';
+import { user_deleteCartProductDelete } from '../../../controller/user/cart/delete-cart.mjs';
+import { user_razorpay } from '../../../controller/user/razorpay/razorpay.mjs';
+import { user_orderPlacedGet } from '../../../controller/user/order/order-placed.mjs';
+import { user_applyCoupon } from '../../../controller/user/coupon/apply-coupon.mjs';
+import { user_walletGet } from '../../../controller/user/wallet/wallet.mjs';
+import { user_addToWishlistGet, user_deleteProductFromWishlist, user_wishlistGet } from '../../../controller/user/wishlist/wishlist.mjs';
+import { user_orderAddGet } from '../../../controller/user/order/add-order.mjs';
+import { user_removeCouponGet } from '../../../controller/user/coupon/remove-coupon.mjs';
+import { user_returnOrderGet } from '../../../controller/user/order/return-order.mjs';
+import { user_walletPaymentGet } from '../../../controller/user/wallet/wallet-payment.mjs';
+import { user_orderInvoiceGet } from '../../../controller/user/order/order-invoice.mjs';
+import { user_paymentFailedHandler, user_paymentFailedPage } from '../../../controller/user/razorpay/razorpay-payment-failed.mjs';
+import { user_orderFailedUpdate } from '../../../controller/user/order/update-failed-order.mjs';
+import { user_homeGet } from '../../../controller/user/shop/home.mjs';
+import { user_aboutGet } from '../../../controller/user/about/about.mjs';
 
 routeHome.get('/', user_homeGet)
 routeHome.get('/home', user_homeGet)

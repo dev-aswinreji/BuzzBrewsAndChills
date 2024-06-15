@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .breadcrumb-section {
+            background-color: #333;
+            padding: 50px 0;
+            color: white;
+        }
+
+        .breadcrumb-text p {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .breadcrumb-text h1 {
+            margin: 10px 0 0;
+            font-size: 2.5em;
+        }
+
+        .product-section {
+            padding: 50px 0;
+        }
+
+        .product-filters ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 30px;
+        }
+
+        .product-filters ul li {
+            margin: 0 10px;
+        }
+
+        .product-filters ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1.2em;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .product-filters ul li a:hover,
+        .product-filters ul li a.active {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .sort-options-wrapper,
+        .search-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .sort-options-wrapper ul {
+            display: flex;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sort-options-wrapper ul li {
+            margin: 0 10px;
+        }
+
+        .sort-options-wrapper ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1.2em;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sort-options-wrapper ul li a:hover,
+        .sort-options-wrapper ul li a.active {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .search-input {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .search-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .search-btn:hover {
+            background-color: #218838;
+        }
+
+        .product-lists {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .single-product-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #fff;
+            transition: box-shadow 0.3s;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .single-product-item:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .product-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .product-price del {
+            color: #999;
+            margin-right: 5px;
+        }
+
+        .cart-btn {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cart-btn:hover {
+            background-color: #218838;
+        }
+
+        .cart-btn[disabled] {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pagination-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style-type: none;
+            padding: 0;
+            margin-top: 30px;
+        }
+
+        .pagination-wrap ul {
+            display: inline-flex;
+            gap: 5px;
+        }
+
+        .pagination-wrap ul li a {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .pagination-wrap ul li a:hover,
+        .pagination-wrap ul li a.active {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        /* Style for the select element */
+        .box {
+            appearance: none;
+            /* Remove default arrow */
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        /* Style for the options */
+        .box option {
+            background-color: #fff;
+            color: #333;
+        }
+
+        /* Style for the selected option */
+        .box option:checked {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+    <%- include('../partials/head/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../partials/header/header.ejs') %>
+
+        <!-- breadcrumb-section -->
+        <div class="breadcrumb-section breadcrumb-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 text-center">
+                        <div class="breadcrumb-text">
+                            <p>Fresh and Organic</p>
+                            <h1>Shop</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end breadcrumb section -->
+
+        <!-- products -->
+        <div class="product-section mt-150 mb-150">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="product-filters">
+                            <ul>
+                                <li class="active" data-filter="*"><a href="/shop">All</a></li>
+                                <% category.forEach(category=> { %>
+                                    <li data-filter=".energy"><a href="/shop/?categoryName=<%= category.name %>">
+                                            <%= category.name %>
+                                        </a></li>
+                                    <% }) %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-wrapper">
+                    <div class="p-5">
+                        <form action="/shop" method="GET">
+                            <input type="hidden" name="sortOption" value="<%= sortOption %>">
+                            <input type="text" name="search" class="search-input" placeholder="Search for products..."
+                                value="<%= search %>">
+                            <button type="submit" class="search-btn">Search</button>
+                        </form>
+                    </div>
+                    <h4>
+                        Filter By :
+
+                        <select name="sortOption" id="sort" class="box">
+
+                            <option value="priceLowHigh" <%=sortOption==='priceLowHigh' ? 'selected' : '' %>>Low To High
+                            </option>
+                            <option value="priceHighLow" <%=sortOption==='priceHighLow' ? 'selected' : '' %>>High To Low
+                            </option>
+                            <option value="A-Z" <%=sortOption==='A-Z' ? 'selected' : '' %>>Aa - Zz
+                            </option>
+                            <option value="Z-A" <%=sortOption==='Z-A' ? 'selected' : '' %>>Zz - Aa
+                            </option>
+                            <option value="default" <%=sortOption==='default' ? 'selected' : '' %>> Default
+                            </option>
+                        </select>
+                    </h4>
+                </div>
+
+                <% if (products.length> 0) { %>
+                    <div class="row product-lists" id="product-lists">
+                        <% products.forEach((product, index)=> { %>
+                            <div class="col-lg-4 col-md-6 text-center berry">
+                                <div class="single-product-item">
+                                    <a href="/product-view/<%= product._id %>">
+                                        <div class="product-image">
+                                            <img src="/product-images/<%= product.imageUrl[0] %>"
+                                                alt="<%= product.name %>">
+                                        </div>
+                                    </a>
+                                    <h3>
+                                        <%= product.name %>
+                                    </h3>
+                                    <% if (product.stock < 40) { %>
+                                        <% if (product.stock===0) { %>
+                                            <br>
+                                            <p style="font-weight: bold; font-size: large;" class="text-danger md-2">
+                                                Product is <br>currently out <br>of stock!!!
+                                            </p>
+                                            <br>
+                                            <% } else { %>
+                                                    <p class="product-stock">
+                                                        <span class="text-danger"
+                                                            style="font-weight: bolder; font-size: medium;">Hot
+                                                            Deal!</span><br>
+                                                        <span class="text-success"
+                                                            style="font-size: medium; font-weight: bold;">In
+                                                            Stock</span>
+                                                        <span id="stock_<%= index %>">
+                                                            <%= product.stock %>
+                                                        </span>
+                                                    </p>
+                                                    <p class="product-price">
+                                                        <span>Per Kg</span>Rs
+                                                        <% if (product.price===product.discount_price) { %>
+                                                            
+                                                            <%= product.discount_price %>
+
+                                                            <% }else {%>
+                                                                <del>
+                                                                    <%= product.price %>
+                                                                </del>
+                                                                <%= product.discount_price %>
+                                                                <% } %> 
+                                                    </p>
+                                                    <% } %>
+                                                        <% } else { %>
+                                                                <p class="product-stock">
+                                                                    <span class="text-success"
+                                                                        style="font-size: medium; font-weight: bold;">In
+                                                                        Stock</span>
+                                                                    <span id="stock_<%= index %>">
+                                                                        <%= product.stock %>
+                                                                    </span>
+                                                                </p>
+                                                                <p class="product-price">
+                                                                    <span>Per Kg</span>Rs <del>
+                                                                        <%= product.price %>
+                                                                    </del>
+                                                                    <%= product.discount_price %>
+                                                                </p>
+                                                                <% } %>
+                                                                    <a
+                                                                        onclick="addToWishlist('<%= index %>', '<%= product._id %>')">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="24" height="24" fill="currentColor"
+                                                                            class="bi bi-heart" viewBox="0 0 16 16"
+                                                                            style="margin-right: 3rem;">
+                                                                            <path
+                                                                                d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                                                                        </svg>
+                                                                    </a>
+                                                                    <% if (product.stock> 0) { %>
+                                                                        <button
+                                                                            onclick="addToCartUsingFetch('<%= index %>', '<%= product._id %>')"
+                                                                            class="cart-btn">
+                                                                            <i class="fas fa-shopping-cart"></i> Add to
+                                                                            Cart
+                                                                        </button>
+                                                                        <% } else { %>
+                                                                            <button class="cart-btn" disabled>
+                                                                                <i class="fas fa-shopping-cart"></i> Add
+                                                                                to Cart
+                                                                            </button>
+                                                                            <% } %>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+                    <% } else { %>
+                        <h3 class="text-center">Product Unavailable</h3>
+                        <% } %>
+
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    <div class="pagination-wrap">
+                                        <ul class="pagination float-right">
+                                            <% if (page> 1) { %>
+                                                <li class="page-item">
+                                                    <a class="page-link"
+                                                        href="/shop/?page=<%= page - 1 %>&sortOption=<%= sortOption %>&search=<%= search %>">Prev</a>
+                                                </li>
+                                                <% } %>
+                                                    <% for (let i=1; i <=totalPages; i++) { %>
+                                                        <li class="page-item <%= page === i ? 'active' : '' %>">
+                                                            <a class="page-link"
+                                                                href="/shop/?page=<%= i %>&sortOption=<%= sortOption %>&search=<%= search %>">
+                                                                <%= i %>
+                                                            </a>
+                                                        </li>
+                                                        <% } %>
+                                                            <% if (page < totalPages) { %>
+                                                                <li class="page-item">
+                                                                    <a class="page-link"
+                                                                        href="/shop/?page=<%= page + 1 %>&sortOption=<%= sortOption %>&search=<%= search %>">Next</a>
+                                                                </li>
+                                                                <% } %>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+            </div>
+        </div>
+        <!-- end products -->
+
+        <%- include('../partials/footer/footer.ejs') %>
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const sortSelect = document.getElementById('sort');
+
+                    sortSelect.addEventListener('change', function () {
+                        const selectedSortOption = this.value;
+                        const urlParams = new URLSearchParams(window.location.search);
+
+                        // Set or update the sortOption query parameter
+                        urlParams.set('sortOption', selectedSortOption);
+
+                        // Redirect to the updated URL
+                        window.location.search = urlParams.toString();
+                    });
+                });
+            </script>
+
+            <script>
+                async function addToWishlist(index, productId) {
+                    await fetch(`/add-to-wishlist?productId=${productId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((response) => {
+                        if (response.redirected) {
+                            Swal.fire({
+                                title: "Invalid Entry",
+                                text: "Please sign in to continue.",
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonText: "Sign In",
+                                cancelButtonText: "Cancel"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = '/signin'
+                                }
+                            })
+                        } else if (!response.ok) {
+                            throw new Error('A network error occurred while fetching data.')
+                        }
+                        return response.json()
+                    })
+                        .then(data => {
+                            if (data.result === 'success') {
+                                Swal.fire('Product added to wishlist successfully')
+                            } else if (data.result === 'product already exist') {
+                                Swal.fire('Product already exists in wishlist')
+                            }
+                        }).catch(err => {
+                            console.error(err, 'Some error occurred while adding to wishlist');
+                        });
+                }
+
+                async function addToCartUsingFetch(index, productId) {
+                    const productStock = document.getElementById('stock_' + index).innerText;
+                    await fetch(`/add-to-cart/?productId=${productId}&stock=${productStock}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((response) => {
+                        if (response.redirected) {
+                            Swal.fire({
+                                title: "Invalid Entry",
+                                text: "Please sign in to continue.",
+                                icon: "warning",
+                                showCancelButton: true,
+                                confirmButtonText: "Sign In",
+                                cancelButtonText: "Cancel"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = '/signin'
+                                }
+                            })
+                        } else if (!response.ok) {
+                            throw new Error('A network error occurred while fetching data.')
+                        }
+                        return response.json()
+                    })
+                        .then(data => {
+                            if (data.result === 'within limit') {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: "Product added to cart successfully",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            } else {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "error",
+                                    title: "Maximum product limit exceeded",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                        }).catch(err => {
+                            console.error(err, 'Some error occurred while adding to cart');
+                        });
+                }
+            </script>
+</body>
+
+</html>

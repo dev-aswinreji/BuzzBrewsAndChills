@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .dropdown-and-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        td[colspan="5"] {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40%;
+            /* Ensure the cell takes up full height */
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../partials/head/head.ejs') %>
+        <div class="screen-overlay"></div>
+        <aside class="navbar-aside" id="offcanvas_aside">
+            <div class="aside-top">
+                <a href="index.html" class="brand-wrap">
+                    <img src="assets/imgs/theme/logo.svg" class="logo" alt="BuzzBrews & Chills">
+                </a>
+                <div>
+                    <button class="btn btn-icon btn-aside-minimize">
+                        <i class="text-muted material-icons md-menu_open"></i>
+                    </button>
+                </div>
+            </div>
+            <nav>
+                <div class="menu-aside">
+                    <a class="menu-link" href="/admin/dashboard">
+                        <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/products">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">Products</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/category">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">Categories</span>
+                        </a>
+                    </div>
+                    <div class="menu-item active">
+                        <a class="menu-link" href="/admin/orders">
+                            <i class="icon material-icons md-shopping_cart"></i>
+                            <span class="text">Orders</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/users-list">
+                            <i class="icon material-icons md-person"></i>
+                            <span class="text">Users</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/add-new-products">
+                            <i class="icon material-icons md-add_box"></i>
+                            <span class="text">Add Product</span>
+                        </a>
+                    </div>
+                    <li class="menu-item">
+                        <a class="menu-link" href="/admin/transaction">
+                            <i class="icon material-icons md-monetization_on"></i>
+                            <span class="text">Transactions</span>
+                        </a>
+                    </li>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/">
+                            <i class="icon material-icons md-person"></i>
+                            <span class="text">User Login</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/coupon">
+                            <i class="icon material-icons md-comment"></i>
+                            <span class="text">Coupon</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/brands">
+                            <i class="icon material-icons md-stars"></i>
+                            <span class="text">Brands</span>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+            </nav>
+        </aside>
+
+        <main class="main-wrap">
+            <%- include('../partials/header/header.ejs') %>
+                <section class="content-main">
+                    <% if (orderDetails) { %>
+                        <div class="content-header">
+                            <div>
+                                <h2 class="content-title card-title">Order Detail</h2>
+                                <p>Details for Order ID: <%= orderDetails.orderId %>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <header class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
+                                        <span>
+                                            <i class="material-icons md-calendar_today"></i> <b>
+                                                <%= orderDetails.orderDate %>
+                                            </b>
+                                        </span>
+                                        <br>
+                                        <small class="text-muted">Order ID: <%= orderDetails.orderId %></small>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 ms-auto text-md-end">
+                                        <a class="btn btn-secondary print ms-2" href="#">
+                                            <i class="icon material-icons md-print"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </header>
+                            <div class="card-body">
+                                <div class="row mb-50 mt-20 order-info-wrap">
+                                    <div class="col-md-4">
+                                        <article class="icontext align-items-start">
+                                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                                <i class="text-primary material-icons md-person"></i>
+                                            </span>
+                                            <div class="text">
+                                                <h6 class="mb-1">Customer</h6>
+                                                <p class="mb-1">
+                                                    <%= orderDetails.username %><br>
+                                                        <%= orderDetails.email %><br>
+                                                            <%= orderDetails.phoneNumber %>
+                                                </p>
+                                                <a href="#">View profile</a>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <article class="icontext align-items-start">
+                                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                                <i class="text-primary material-icons md-local_shipping"></i>
+                                            </span>
+                                            <div class="text">
+                                                <h6 class="mb-1">Order Info</h6>
+                                                <p class="mb-1">
+                                                    Shipping: Fargo express<br>
+                                                    Pay method: <%= orderDetails.paymentMethod %><br>
+                                                        Status: new
+                                                </p>
+                                                <a href="#">Download info</a>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <article class="icontext align-items-start">
+                                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                                <i class="text-primary material-icons md-place"></i>
+                                            </span>
+                                            <div class="text">
+                                                <h6 class="mb-1">Deliver to</h6>
+                                                <p class="mb-1">
+                                                    City: <%= orderDetails.address %><br>
+                                                        Block A, House 123, Floor 2<br>
+                                                        Po Box 10000
+                                                </p>
+                                                <a href="#">View profile</a>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="40%">Product</th>
+                                                        <th width="20%">Unit Price</th>
+                                                        <th width="20%">Reason</th>
+                                                        <th width="20%">Quantity</th>
+                                                        <th width="20%">Total Amount</th>
+                                                        <th width="20%" class="text-end">Order Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <% orderDetails.products.forEach((item,index)=> { %>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <a class="itemside" href="#">
+                                                                    <div class="left">
+                                                                        <img src="assets/imgs/items/1.jpg" width="40"
+                                                                            height="40" class="img-xs" alt="Item">
+                                                                    </div>
+                                                                    <div class="info">
+                                                                        <%= item.name %>
+                                                                    </div>
+                                                                </a>
+                                                            </td>
+                                                            <td>Rs <%= item.price %>
+                                                            </td>
+                                                            <td>
+                                                                <%= orderDetails.returnReason %> 
+                                                            </td>
+                                                            <td>
+                                                                <span id="quantity_<%= index %>">
+                                                                    <%= item.quantity %>
+                                                                </span>
+                                                            </td>
+                                                            <td>Rs <%= item.price * item.quantity %>
+                                                            </td>
+                                                            <td>
+                                                                <% if (item.status==='PENDING APPROVAL' ) { %>
+                                                                    <button class="btn btn-success"
+                                                                        onclick="handleReturnOrder('APPROVE', '<%= item.productId %>','<%= item.quantity %>')">Approve
+                                                                        Return</button>
+                                                                    <button class="btn btn-danger "
+                                                                        onclick="handleReturnOrder('REJECT', '<%= item.productId %>','<%= item.quantity %>')">Reject
+                                                                        Return</button>
+                                                                    <% } %>
+
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <% }) %>
+                                            </table>
+                                            <div class="text-end mt-4">
+                                                <h4>Grand Total: Rs <%= orderDetails.products.reduce((total, item)=>
+                                                        total + (item.price * item.quantity), 0) %></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } else { %>
+                            <div class="no-data">No data found. Some error occurred, kindly check the order.</div>
+                            <% } %>
+                </section>
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            console.log('what is happening');
+            const orderData = '<%- JSON.stringify(orderDetails) %>';
+            console.log(orderData, 'order is showing');
+            async function handleReturnOrder(action, productId, quantity) {
+                try {
+                    const order = JSON.parse(orderData)
+                    console.log(order, 'order is showing');
+                    const response = await fetch(`/admin/return-order-confirmation`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            orderId: order.orderId,
+                            productId: productId,
+                            userId: order.userId,
+                            totalPrice: order.totalPrice,
+                            action: action,
+                            quantity: quantity
+                        })
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.result === 'APPROVE') {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: `Return request ${action.toLowerCase()}ed successfully`,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => location.reload());
+                        } else if (data.result === 'REJECT') {
+                            Swal.fire({
+                                position: "center",
+                                icon: "warning",
+                                title: `Return request ${action.toLowerCase()}ed successfully`,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => location.reload());
+
+                            console.log('Return action unsuccessful');
+                        }
+                    } else {
+                        console.log('Network failure occurred while processing return');
+                    }
+                } catch (error) {
+                    console.log(error, 'Error occurred while processing return action');
+                }
+            }
+
+        </script>
+        <%- include('../partials/footer/footer.ejs') %>
+</body>
+
+</html>

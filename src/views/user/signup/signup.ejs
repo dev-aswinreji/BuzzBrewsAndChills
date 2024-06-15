@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <%- include('../auth-partials/head.ejs') %>
+  <link href="cssUser/main.css" rel="stylesheet" type="text/css" />
+
+  <body>
+    <div
+      class="wrapper"
+      style="background-image: url('assets/images/redbullPurpleEdition.png')"
+    >
+      <div class="inner">
+        <form action="/signup" method="post" onsubmit="return validateForm()">
+          <h3>SIGN UP</h3>
+          <div class="form-group">
+            <div class="form-wrapper">
+              <label for="fullname">First Name</label>
+              <input
+                type="text"
+                id="fullname"
+                name="fullName"
+                class="form-control"
+                required
+                oninput="validate_input('fullname')"
+              />
+              <span id="fullname_alert"></span>
+            </div>
+            <div class="form-wrapper">
+              <label for="lastname">Last Name</label>
+              <input
+                type="text"
+                id="lastname"
+                name="lastName"
+                class="form-control"
+                required
+                oninput="validate_input('lastname')"
+              />
+              <span id="lastname_alert"></span>
+            </div>
+          </div>
+          <div class="form-wrapper">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              class="form-control"
+              required
+              oninput="validate_input('email')"
+            />
+            <span id="error" class="text-danger fw-bold fs-5"> <%= errors %></span>
+          </div>
+          <div class="form-wrapper">
+            <label for="pass">Password</label>
+            <input
+              type="password"
+              id="pass"
+              name="password"
+              class="form-control"
+              required
+              oninput="validate_password()"
+            />
+          </div>
+          <div class="form-wrapper">
+            <label for="confirm_pass">Confirm Password</label>
+            <input
+              class="form-control"
+              id="confirm_pass"
+              type="password"
+              name="confirm_pass"
+              placeholder="Confirm Password"
+              required
+              oninput="validate_password()"
+            />
+          </div>
+          <span id="wrong_pass_alert"></span>
+          <div class="buttons">
+            <button id="create" class="submit_btn w-100">Submit</button>
+          </div>
+          <br />
+          <h5>Already have an account?<a href="/signin">SIGN IN</a></h5>
+          <br />
+          <br />
+        </form>
+      </div>
+    </div>
+
+
+  </body>
+  <%- include('../auth-partials/footer.ejs') %> 
+</html>

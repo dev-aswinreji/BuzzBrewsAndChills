@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<%- include('../auth-partials/head.ejs') %>
+<link href="/cssUser/main.css" rel="stylesheet" type="text/css" />
+
+
+	<body>
+
+		<div class="wrapper" style="background-image: url('assets/images/redbullPurpleEdition-1.png');">
+			<div class="inner">
+				<form action="/email-verification" method="post">
+					<h3>ENTER YOUR EMAIL ID</h3>
+					<div class="form-wrapper">
+						<label for="">Email</label>
+						<input type="email" name="email" class="form-control">
+					</div>
+					<button type="submit" class=" w-100">REQUEST OTP</button>
+					<br>
+					<h5>Back to<a class="p-2" href="/signin">SIGN IN</a></h5>
+				</form>
+				
+			</div>
+		</div>
+
+	</body>
+
+</html>

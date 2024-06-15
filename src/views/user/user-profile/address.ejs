@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Existing Addresses</title>
+    <style>
+        /* body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        } */
+
+        .container-address {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .address-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .address-item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .address-item h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .address-item p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .address-item .btn {
+            padding: 5px 10px;
+            background-color: #54585c;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .address-item .btn:hover {
+            background-color: #2d5521;
+        }
+
+        /* Add this CSS code to your existing styles */
+        .add-address-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .add-address-btn {
+            padding: 8px 16px;
+            background-color: #54585c;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-address-btn a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .add-address-btn:hover {
+            background-color: #2d5521;
+        }
+
+        /* Other existing styles */
+        /* Add this CSS code to your existing styles */
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #54585c;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+            /* Add margin between buttons */
+        }
+
+        .btn:hover {
+            background-color: #2d5521;
+        }
+    </style>
+
+    <%- include ('../partials/head/head.ejs' ) %>
+
+<body>
+    <%- include('../partials/header/header.ejs') %>
+        <!-- breadcrumb-section -->
+        <div class="breadcrumb-section breadcrumb-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 text-center">
+                        <div class="breadcrumb-text">
+                            <p>Fresh and Organic</p>
+                            <h1>User Address</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end breadcrumb section -->
+        </head>
+        <div class="container-address">
+            <div class="add-address-container">
+                <h1> Addresses</h1>
+                <button class="add-address-btn"><a href="/add-address">Add New Address</a></button>
+            </div>
+            <% userAddresses.addresses.forEach((address,index)=> { %>
+
+                <ul class="address-list">
+                    <!-- Sample address item -->
+                    <input type="text" name="" value="<%= address._id %>" id="address_<%= index %>" hidden>
+                    <li class="address-item">
+                        <h2>
+                            Name :<%= address.name %>
+                        </h2>
+                        <p>Home: <%= address.homeAddress %>
+                        </p>
+                        <p>Number: <%= address.phoneNumber %>
+                        </p>
+                        <p>City: <%= address.city %>
+                        </p>
+                        <p>State: <%= address.state %>
+                        </p>
+                        <p>Country: <%= address.country %>
+                        </p>
+
+                        <% console.log(address._id); %>
+                            <a href="/edit-address/?id=<%= address._id %>" class="btn">Edit</a>
+
+                            <% if (address.isDefault==='YES' ) { %>
+                                <span style="font-weight: bold;font-size:large;color: #2d5521;">Default
+                                    Address</span>
+                                <% }else{ %>
+                                    <button class="btn" onclick="deleteButton(`<%= index %>`)">Delete</button>
+                                    <button class="btn" onclick="makeDefault(`<%= index %>`)">Make Default</button>
+                                    <% } %>
+                    </li>
+                </ul>
+                <% }) %>
+        </div>
+
+        <%- include('./../partials/footer/footer.ejs') %>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    async function deleteButton(index) {
+
+        const addressId = document.getElementById('address_' + index).value
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                checkingSwal(addressId)
+            }
+        });
+    }
+    async function checkingSwal(addressId) {
+
+        await fetch(`/delete-address/?id=${addressId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.ok ? response.json() :
+            console.log('Oops some network error happened while deleting the user'))
+            .then(data => data.result === 'success' ?
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Address has been deleted successfully.",
+                    icon: "success"
+                }) : 'some error occured').then(() => {
+                    location.reload()
+                })
+            .catch(err => console.log(err, 'some error occured in fetch method addresss page'))
+    }
+</script>
+<script>
+    async function makeDefault(index) {
+        try {
+
+        } catch (error) {
+
+        }
+        const addressId = document.getElementById('address_' + index).value
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Change it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                checkingSwalInUpdateDefaultAddress(addressId)
+            }
+        });
+
+        async function checkingSwalInUpdateDefaultAddress(addressId) {
+            await fetch(`/update-default-address/?addressId=${addressId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.ok ? response.json() :
+                console.log('Oops some network error happened while deleting the user'))
+                .then(data => data.result === 'success' ?
+                    Swal.fire({
+                        title: "Changed!",
+                        text: "Default address has been changed successfully.",
+                        icon: "success"
+                    }) : 'some error occured').then(() => {
+                        location.reload()
+                    })
+                .catch(err => console.log(err, 'some error occured in fetch method update default addrses page'))
+        }
+
+    }
+</script>
+
+</html>

@@ -33,10 +33,37 @@ app.use(nocache())
 
 app.use(express.static('public'))
 app.set('views', [
-    path.join(__dirname, 'views/admin-pages'),
-    path.join(__dirname, 'views/admin-auth'),
-    path.join(__dirname, 'views/user-auth'),
-    path.join(__dirname, 'views/user-pages')
+    path.join(__dirname, 'views/admin/category'),
+    path.join(__dirname, 'views/admin/coupon'),
+    path.join(__dirname, 'views/admin/dashboard'),
+    path.join(__dirname, 'views/admin/logo'),
+    path.join(__dirname, 'views/admin/order'),
+    path.join(__dirname, 'views/admin/products'),
+    path.join(__dirname, 'views/admin/review'),
+    path.join(__dirname, 'views/admin/sales-report'),
+    path.join(__dirname, 'views/admin/signin'),
+    path.join(__dirname, 'views/admin/transaction'),
+    path.join(__dirname, 'views/admin/users-list'),
+    path.join(__dirname, 'views/admin/error-page'),
+
+    path.join(__dirname, 'views/user/about'),
+    path.join(__dirname, 'views/user/cart'),
+    path.join(__dirname, 'views/user/checkout'),
+    path.join(__dirname, 'views/user/contact'),
+    path.join(__dirname, 'views/user/email-verification'),
+    path.join(__dirname, 'views/user/forgot-password'),
+    path.join(__dirname, 'views/user/order'),
+    path.join(__dirname, 'views/user/otp-verfication'),
+    path.join(__dirname, 'views/user/razorpay'),
+    path.join(__dirname, 'views/user/shop'),
+    path.join(__dirname, 'views/user/signin'),
+    path.join(__dirname, 'views/user/signup'),
+    path.join(__dirname, 'views/user/user-profile'),
+    path.join(__dirname, 'views/user/wallet'),
+    path.join(__dirname, 'views/user/wishlist'),
+    path.join(__dirname, 'views/user/error-page'),
+
+
 ])
 
 app.set('view engine', 'ejs')

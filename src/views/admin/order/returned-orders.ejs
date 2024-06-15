@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<%- include('../partials/head/head.ejs') %>
+
+    <body>
+
+        <div class="screen-overlay"></div>
+        <aside class="navbar-aside" id="offcanvas_aside">
+            <div class="aside-top">
+                <a href="index.html" class="brand-wrap">
+                    <img src="assets/imgs/theme/logo.svg" class="logo" alt="BuzzBrews & Chills">
+                </a>
+                <div>
+                    <button class="btn btn-icon btn-aside-minimize"> <i
+                            class="text-muted material-icons md-menu_open"></i>
+                    </button>
+                </div>
+            </div>
+            <nav>
+                <div class="menu-aside">
+
+                    <a class="menu-link" href="/admin/dashboard"> <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/products"> <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">Products</span>
+                        </a>
+                    </div>
+                    <div class="menu-item ">
+                        <a class="menu-link" href="/admin/category"> <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">categories</span>
+                        </a>
+                    </div>
+                    <div class="menu-item active">
+                        <a class="menu-link" href="/admin/orders"> <i class="icon material-icons md-shopping_cart"></i>
+                            <span class="text">Orders</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/users-list"> <i class="icon material-icons md-person"></i>
+                            <span class="text">Users</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/add-new-products"> <i
+                                class="icon material-icons md-add_box"></i>
+                            <span class="text">Add product</span>
+                        </a>
+                    </div>
+                    <li class="menu-item">
+                        <a class="menu-link" href="/admin/transaction"> <i
+                                class="icon material-icons md-monetization_on"></i>
+                            <span class="text">Transactions</span>
+                        </a>
+                    </li>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/"> <i class="icon material-icons md-person"></i>
+                            <span class="text">User Login</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/coupon"> <i class="icon material-icons md-comment"></i>
+                            <span class="text">Coupon</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/brands"> <i class="icon material-icons md-stars"></i>
+                            <span class="text">Brands</span> </a>
+                    </div>
+                </div>
+                <hr>
+                <br>
+                <br>
+            </nav>
+        </aside>
+
+
+
+
+        <main class="main-wrap">
+
+            <%- include('../partials/header/header.ejs') %>
+
+                <section class="content-main">
+                    <div class="content-header">
+                        <div>
+                            <h2 class="content-title card-title">Order List </h2>
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                        <div>
+                            <input type="text" placeholder="Search order ID" class="form-control bg-white">
+                        </div>
+                        <div>
+                            <button class="btn btn-success"><a style="text-decoration: none;color: white;" href="/admin/returned-orders">Returned Orders</a></button>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <header class="card-header">
+                            <div class="row gx-3">
+                                <div class="col-lg-4 col-md-6 me-auto">
+                                    <input type="text" placeholder="Search..." class="form-control">
+                                </div>
+                                
+                                <div class="col-lg-2 col-6 col-md-3">
+                                    <select class="form-select">
+                                        <option>Status</option>
+                                        <option>Active</option>
+                                        <option>Disabled</option>
+                                        <option>Show all</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 col-6 col-md-3">
+                                    <select class="form-select">
+                                        <option>Show 20</option>
+                                        <option>Show 30</option>
+                                        <option>Show 40</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </header> <!-- card-header end// -->
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#ID</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Total</th>
+                                            <th scope="col">Method Of Payment</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col" class="text-end"> Action </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (orders.length>0) { %>
+
+                                            <% for( let i=0; i < orders.length; i++ ) { %>
+
+
+                                                <tr>
+                                                    <td><%= orders[i].orderId %> </td>
+                                                    <td><b>
+                                                            <%= orders[i].username %>
+                                                        </b></td>
+                                            
+                                                    <td>Rs <%= orders[i].totalPrice %>
+                                                    </td>
+                                                    <td>
+                                                        <%= orders[i].paymentMethod %>
+                                                    </td>
+                                                    <td>
+                                                        <%= orders[i].orderDate %>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <a href="/admin/return-order-details?orderId=<%= orders[i]._id %>" class="btn btn-md rounded font-sm">Detail</a>
+                                                         <!-- dropdown //end -->
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                                    <%} else{ %>
+                                                        <h4>No returned order placed yet</h4>
+                                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div> <!-- table-responsive //end -->
+                        </div> <!-- card-body end// -->
+                    </div> <!-- card end// -->
+                    <div class="pagination-area mt-15 mb-50">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-start">
+                                <% if (page > 1) { %>
+                                    <li class="page-item">
+                                        <a class="page-link" href="/admin/return-order-details/?page=<%= page - 1 %>">Prev</a>
+                                    </li>
+                                <% } %>
+                                <% for (let i = 1; i <= totalPages; i++) { %>
+                                    <li class="page-item <%= page === i ? 'active' : '' %>">
+                                        <a class="page-link" href="/admin/return-order-details/?page=<%= i %>"><%= i %></a>
+                                    </li>
+                                <% } %>
+                                <% if (page < totalPages) { %>
+                                    <li class="page-item">
+                                        <a class="page-link btn btn-primary" href="/admin/return-order-details/?page=<%= page + 1 %>">Next</a>
+                                    </li>
+                                <% } %>
+                            </ul>
+                        </nav>
+                    </div>
+                </section> <!-- content-main end// -->
+                <%- include('../partials/footer/footer.ejs') %>
+
+    </body>
+
+
+</html>
