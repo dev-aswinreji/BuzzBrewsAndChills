@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import path from 'path'
 import dotenv from 'dotenv'
-import routeHome from './route/user/home/user-home.mjs'
 import route from './route/user/auth/user-auth.mjs'
 import authRoute from './route/admin/auth/admin.mjs'
 import adminHomeRoute from './route/admin/home/admin-home.mjs'
@@ -16,6 +15,9 @@ import Jwt from 'jsonwebtoken' //no need in this week
 import axios from 'axios'
 import redis from 'redis'
 import googleRoute from './route/google/signin-with-google.mjs'
+import routeHome from './route/user/shop/shop.mjs'
+import routeHome from './route/user/razorpay/razorpay.mjs'
+
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
