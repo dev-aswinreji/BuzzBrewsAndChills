@@ -6,6 +6,7 @@ import { findCartDataUsingUserId } from "../cart/find.mjs";
 import { findUserAddressUsingId } from "../users/find.mjs";
 import { updateCouponInUserData } from "../users/update.mjs";
 import { updateProductStockInOrder } from "./update.mjs";
+import { orderIdGenerator } from "../../utils/orderId-generator.mjs";
 
 export async function insertOrder(userId, userAddressId, paymentMethod, paymentId, couponDiscount) {
   try {
@@ -13,7 +14,7 @@ export async function insertOrder(userId, userAddressId, paymentMethod, paymentI
     const address = await findUserAddressUsingId(userAddressId);
     console.log(address, 'address is showing ');
     const cart = await findCartDataUsingUserId(userId);
-    const orderId = uuid()  //generating unique id for order id 
+    const orderId = await orderIdGenerator()  //generating unique id for order id 
     const cartItems = cart.items.filter(item => item.productId.stock.toString() <= item.quantity.toString())
     const couponCode = cart.couponCode
 
@@ -34,7 +35,7 @@ export async function insertOrder(userId, userAddressId, paymentMethod, paymentI
       const order = await orderCollection.create([
         {
           userId: userId,
-          orderId: orderId,
+          orderId: "#"+orderId,
           products: cart.items.map((item) => ({
             productId: item.productId._id,
             name: item.productId.name,

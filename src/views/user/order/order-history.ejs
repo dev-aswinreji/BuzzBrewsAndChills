@@ -193,12 +193,13 @@
                             <div class="order-header" onclick="toggleOrderDetails('<%= orderIndex %>')">
                                 <span class="order-number fw-bolder">ORDER ID : <%= data.orderId %></span>
                                 <span class="order-status">
-                                    <%= data.orderDate %>
+                                    <h5 class="order-date">Date: <%= new
+                                            Date(data.orderDate).toLocaleDateString('en-GB',{ weekday: 'long' ,
+                                            day: 'numeric' , month: 'long' , year: 'numeric' }) %>
+                                    </h5>
                                 </span>
                             </div>
                             <div class="order-details" id="order-details-<%= orderIndex %>">
-                                <h5 class="order-date">Date: <%= new Date(data.orderDate).toLocaleDateString() %>
-                                </h5>
                                 <% data.products.forEach((item, index)=> { %>
                                     <input type="hidden" value="<%= item.productId %>"
                                         id="productId_<%= orderIndex %>_<%= index %>">
@@ -239,14 +240,16 @@
                                                             <% } else if (item.status==='PENDING APPROVAL' ) { %>
                                                                 <h5 class="text-danger">Returned request pending </h5>
                                                                 <% } else if (item.status==='APPROVE' ) { %>
-                                                                    <h5 class="text-success"> Product return approved</h5>
+                                                                    <h5 class="text-success"> Product return approved
+                                                                    </h5>
                                                                     <% } else if (item.status==='REJECT' ) { %>
-                                                                        <h5 class="text-danger">Product return rejected</h5>
-                                                                <% } else { %>
-                                                                    <button class="btn btn-cancel btn-danger"
-                                                                        onclick="cancelProduct('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>')">Cancel
-                                                                        Product</button>
-                                                                    <% } %>
+                                                                        <h5 class="text-danger">Product return rejected
+                                                                        </h5>
+                                                                        <% } else { %>
+                                                                            <button class="btn btn-cancel btn-danger"
+                                                                                onclick="cancelProduct('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>')">Cancel
+                                                                                Product</button>
+                                                                            <% } %>
                                         </div>
                                     </div>
                                     <% }) %>
@@ -255,7 +258,8 @@
                                         <h4>Total Amount: Rs <%= data.totalPrice %>
                                         </h4>
                                         <% console.log(data.products[0].status, 'products status is showing' ); %>
-                                            <% if (data.products[0].status !== 'PENDING' && data.products[0].status !== 'PENDING APPROVAL' && data.products[0].status !== 'APPROVE' ) { %>
+                                            <% if (data.products[0].status !=='PENDING' && data.products[0].status
+                                                !=='PENDING APPROVAL' && data.products[0].status !=='APPROVE' ) { %>
                                                 <button class="btn-history"><a
                                                         href="/order-invoice?orderId=<%= order[orderIndex].orderId %>">Invoice</a></button>
                                                 <% } %>

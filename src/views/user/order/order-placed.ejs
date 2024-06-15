@@ -175,7 +175,7 @@
         <% if (order) { %>
         <div class="order-details">
             <h4>Order ID: <%= order[0].orderId %></h4>
-            <h4>Date: <%= order[0].orderDate %></h4>
+            <h4>Date: <%= new Date(order[0].orderDate).toLocaleDateString('en-GB') %></h4>
             <table>
                 <thead>
                     <tr>
