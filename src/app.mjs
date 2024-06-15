@@ -15,16 +15,21 @@ import redis from 'redis'
 
 //router start 
 
-import aboutRoute from './route/user/about/about.mjs'
+//admin routes
 import categoryRoute from './route/admin/category/category.mjs'
 import couponRoute from './route/admin/coupon/coupon.mjs'
 import dashboardRoute from './route/admin/dashboard/dashboard.mjs'
 import orderRoute from './route/admin/order/order.mjs'
 import productsRoute from './route/admin/products/products.mjs'
 import salesReportRoute from './route/admin/sales-report/sales-report.mjs'
-import signinRoute from './route/admin/signin/admin.mjs'
+import signinAdminRoute from './route/admin/signin/admin.mjs'
 import usersListRoute from './route/admin/users-list/users-list.mjs'
+
+//signin with google route
 import googleRoute from './route/google/signin-with-google.mjs'
+
+//user routes
+import aboutRoute from './route/user/about/about.mjs'
 import cartRoute from './route/user/cart/cart.mjs'
 import checkoutRoute from './route/user/checkout/checkout.mjs'
 import contactRoute from './route/user/contact/contact.mjs'
@@ -34,6 +39,7 @@ import forgotPassRoute from './route/user/forgot-password/forgot-password.mjs'
 import otpVerifyRoute from './route/user/otp/otp.mjs'
 import razorpayRoute from './route/user/razorpay/razorpay.mjs'
 import shopRoute from './route/user/shop/shop.mjs'
+import signinRoute from './route/user/signin/signin.mjs'
 import signupRoute from './route/user/signup/signup.mjs'
 import userProfileRoute from './route/user/user-profile/user-profile.mjs'
 import walletRoute from './route/user/wallet/wallet.mjs'
@@ -107,7 +113,7 @@ app.use(function (req, res, next) {
     next()
 })
 app.use('/', [aboutRoute, cartRoute, checkoutRoute, contactRoute, couponUserRoute, emailVerifyRoute, forgotPassRoute, otpVerifyRoute, razorpayRoute, shopRoute, signinRoute, signupRoute, userProfileRoute, walletRoute, wishlistRoute])
-app.use('/admin', [categoryRoute, couponRoute, dashboardRoute, orderRoute, productsRoute, salesReportRoute, signinRoute, usersListRoute])
+app.use('/admin', [categoryRoute, couponRoute, dashboardRoute, orderRoute, productsRoute, salesReportRoute, signinAdminRoute, usersListRoute])
 app.use('/', googleRoute)
 
 
