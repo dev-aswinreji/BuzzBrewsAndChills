@@ -42,9 +42,9 @@ export const user_signinPost = async (req, res) => {
         if (data.email === userAuth.email && pass === true && userAuth.accountStatus === 'ACTIVE') {
             req.session.USER_ID = userAuth._id
             req.session.isUserAuth = true
-            const token = jwt.sign({ userId: userAuth._id }, process.env.JWT_SECRET_KEY, {
-                expiresIn: '1h',
-            })
+            // const token = jwt.sign({ userId: userAuth._id }, process.env.JWT_SECRET_KEY, {
+            //     expiresIn: '1h',
+            // })
             res.status(200)
             res.redirect('/home')
         } else {
