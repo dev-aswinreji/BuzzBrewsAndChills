@@ -29,6 +29,7 @@ export const user_addToCartManageGet = async (req,res) => {
 
     const totalPrice = await aggregationForTotalPrice(userId);
     console.log(totalPrice, "aggregation is working ====================");
+    req.session.totalPrice = totalPrice[0].totalPrice || 0
     if (totalPrice.length > 0) {
       await cartCollection.updateOne(
         {

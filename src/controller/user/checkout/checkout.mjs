@@ -10,13 +10,14 @@ export const user_checkoutGet = async (req, res) => {
         const userId = req.session.USER_ID
         let cartDatas = await findAllCartDatas(userId)
         const wallet = await findWalletAmount(userId)
-
+        console.log(cartDatas.totalPrice , 'cart data total Price is showing ===========');
         // console.log(cartDatas.couponDiscount, 'coupon discount is showing');
         // console.log(cartDatas, 'cart data is showing');
-        let totalPrice = Number(req.query.totalPrice)
+        let totalPrice = Number(req.session.totalPrice)
 
         console.log(totalPrice,'total price is showing');
         let updatedTotalPrice = totalPrice - (totalPrice * cartDatas.couponDiscount / 100)
+        console.log(updatedTotalPrice,'updated total Price is showing');
         const userDatas = await findAllUserAddresses(userId)
 
         // console.log(userDatas.addresses,'addreses is showing')

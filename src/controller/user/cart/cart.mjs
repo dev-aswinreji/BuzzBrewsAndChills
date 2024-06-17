@@ -8,6 +8,9 @@ export const user_cartGet = async (req, res) => {
   console.log(req.session.applyCoupon, 'what is this');
   const totalPrice = await aggregationForTotalPrice(userId);
   console.log(totalPrice, "aggregation is working ====================");
+  req.session.totalPrice = totalPrice[0].totalPrice || 0
+
+
   if (totalPrice.length > 0) {
     await cartCollection.updateOne(
       {
