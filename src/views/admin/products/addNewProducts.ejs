@@ -137,6 +137,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <% if (error) { %>
+                             <h4 id="error" class="text-danger"><%= error %> </h4>
+                            <% } %>
                             <div class="col-lg-6">
                                 <div class="card mb-4">
                                     <div class="card-header">
@@ -249,11 +252,122 @@
                     </div>
 
         </main>
+<!-- Add a container for the cropped image preview -->
+<div id="cropped-image-preview" style="display:none;"></div>
+
+<!-- Existing HTML content remains unchanged until the closing body tag -->
+
+<!-- Include Bootstrap JS and Cropper.js scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+<script src="your-script.js"></script> <!-- Ensure this script tag links to your external JavaScript file -->
 
         <!-- Include Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Include Cropper.js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+const errMsg = document.getElementById('error')
+reload()
+function reload(){
+    setTimeout(()=>{
+        errMsg.innerHTML = ''
+    },4000)
+}
+</script>
+
+
+        <script>
+            document.getElementById('uploadForm').addEventListener('submit', function (event) {
+                validateImages();
+                event.preventDefault(); // Prevent default form submission
+            });
+
+            function validateImages() {
+                const fileInput = document.getElementById('imageInput');
+                const files = fileInput.files;
+                let isValid = true;
+
+                for (let i = 0; i < files.length; i++) {
+                    if (!files[i].type.match('image/jpeg|image/png')) {
+                        isValid = false;
+                        break;
+                    }
+                }
+
+                if (!isValid) {
+                    alert('Please select valid JPEG or PNG image files.');
+                } else {
+                    displayImagePreviews(files);
+                }
+            }
+
+            function displayImagePreviews(files) {
+                const imagePreview = document.getElementById('image-preview');
+                imagePreview.innerHTML = ''; // Clear previous previews
+
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        const imageContainer = document.createElement('div');
+                        imageContainer.className = 'preview-container';
+                        const image = document.createElement('img');
+                        image.src = e.target.result;
+                        image.className = 'img-preview';
+                        image.onclick = function () { showCropper(this); }; // Attach click handler to open cropper
+                        imageContainer.appendChild(image);
+                        imagePreview.appendChild(imageContainer);
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            function showCropper(imgElement) {
+                const imageSrc = imgElement.src;
+                document.getElementById('cropImageContainer').innerHTML = '<img id="imageToCrop" src="' + imageSrc + '" class="img-fluid">';
+                const imageToCrop = document.getElementById('imageToCrop');
+
+                // Destroy any existing croppers
+                croppers.forEach(cropper => cropper.destroy());
+
+                // Initialize a new cropper instance
+                const cropper = new Cropper(imageToCrop, {
+                    aspectRatio: 1,
+                    viewMode: 1,
+                    autoCropArea: 1,
+                    responsive: true,
+                    background: false,
+                    guides: false,
+                    highlight: false,
+                    cropBoxResizable: false,
+                    cropBoxMovable: false,
+                    minCropBoxWidth: 150,
+                    minCropBoxHeight: 150,
+                    ready: function () {
+                        cropModal.show();
+                    }
+                });
+
+                croppers.push(cropper);
+
+                // Display the cropped image preview
+                cropper.getCroppedCanvas().toBlob(function (blob) {
+                    var url = URL.createObjectURL(blob);
+                    document.getElementById('cropped-image-preview').src = url;
+                    document.getElementById('cropped-image-preview').style.display = 'block';
+                }, 'image/jpeg');
+            }
+
+            // Existing JavaScript code for handling the crop button click remains unchanged
+
+        </script>
         <script>
             document.getElementById('uploadForm').addEventListener('submit', function (event) {
                 const fileInput = document.getElementById('imageInput');

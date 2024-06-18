@@ -1,5 +1,7 @@
 import { findCategory, findUniqueCategory } from "../../../data/products/find.mjs"
 import { insertNewProducts } from "../../../data/products/insert.mjs"
+import sharp from 'sharp'
+
 
 
 export const admin_addNewProductsGet = async (req, res) => {
@@ -8,8 +10,9 @@ export const admin_addNewProductsGet = async (req, res) => {
 
         if (req.session.isAdminAuthenticated) {
             const category = await findCategory()
-            res.render('addNewProducts', { category })
-
+            const error = req.session.productError
+            res.render('addNewProducts', { category ,error })
+            req.session.productError = ''
         } else {
             res.redirect('/admin')
         }
@@ -31,9 +34,17 @@ export const admin_addNewProductsPost = async (req, res) => {
         const category = await findUniqueCategory(categoryName)
         let imageUrl = []
         let count = 0
+        let imageValidating ;
         for(const file of req.files){
-            imageUrl[count] = file.filename
-              count++
+            imageValidating = await validateImage(file.path)
+            console.log(imageValidating);
+            if(imageValidating){
+                imageUrl[count] = file.filename
+                  count++
+            }else{
+                req.session.productError = 'Image validate error'
+                return res.redirect('/admin/add-new-products')
+            }
         }
         const categoryDiscount = category.discount
         console.log(categoryDiscount,'category discount is showing ');
@@ -68,5 +79,23 @@ export const admin_addNewProductsPost = async (req, res) => {
 
     } catch (error) {
         console.log(error,'ADMIN ADD NEW PRODUCTS POST');
+    }
+}
+
+
+async function validateImage(filename) {
+    try {
+        // Read the image file and get its metadata
+        const metadata = await sharp(filename).metadata();
+        
+        // Validate based on metadata, you can add more checks if needed
+        if (metadata.format && metadata.width && metadata.height) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error('Error validating image:', error);
+        return false;
     }
 }
