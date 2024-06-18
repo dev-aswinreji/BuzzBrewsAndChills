@@ -1,4 +1,4 @@
-import { findUniqueOrderToChangeReturnOrderStatus, returnOrderStatusUpdate } from "../../../data/order/find.mjs";
+import { findSingleOrder, findUniqueOrderToChangeReturnOrderStatus, returnOrderStatusUpdate } from "../../../data/order/find.mjs";
 import { findSingleProduct } from "../../../data/products/find.mjs";
 import { updateProducts } from "../../../data/products/update.mjs";
 import { updateUserWallet } from "../../../data/wallet/update.mjs";
@@ -19,9 +19,10 @@ export const admin_orderReturnUpdatingGet = async (req, res) => {
 
 export const admin_orderReturnConfirmationPut = async (req, res) => {
     try {
-        const { orderId, productId, userId, action, totalPrice , quantity} = req.body
+        const { orderId, productId, userId, action, quantity } = req.body
         console.log(req.body);
-        console.log(action,'action');
+        console.log(action, 'action');
+        const orderDetails = await findSingleOrder(orderId)
         const product = await findSingleProduct(productId);
         if (action === 'APPROVE') {
             const update = {
@@ -29,16 +30,25 @@ export const admin_orderReturnConfirmationPut = async (req, res) => {
             };
             const options = {
                 arrayFilters: [{ "elem.productId": productId }],
-                new: true
-            };
+            }
             const result = await returnOrderStatusUpdate(orderId, update, options)
             console.log(result, 'result is showing approveddddd');
+
+
+
+            let productPrice
+            for (const product of orderDetails.products) {
+                 productPrice = product.productId === productId ? product.price : 0
+            }
+            console.log(productPrice,'product price is showing');
+
+
             const walletTransactions = {
                 date: new Date(),
                 type: 'CREDIT',
-                amount: totalPrice.toFixed(2),
+                amount: productPrice.toFixed(2),
             }
-            const updateWallet = await updateUserWallet(userId, totalPrice, walletTransactions)
+            const updateWallet = await updateUserWallet(userId, productPrice, walletTransactions)
             console.log(updateWallet, 'wallet update or not ');
 
 
@@ -53,10 +63,9 @@ export const admin_orderReturnConfirmationPut = async (req, res) => {
             };
             const options = {
                 arrayFilters: [{ "elem.productId": productId }],
-                new: true
             };
             const result = await returnOrderStatusUpdate(orderId, update, options)
-            console.log(result,'result is showing');
+            console.log(result, 'result is showing');
             res.json({ result: 'REJECT' })
         }
 

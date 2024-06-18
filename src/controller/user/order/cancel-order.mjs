@@ -25,7 +25,7 @@ export const user_cancelOrderGet = async (req, res) => {
     const paymentMethod = orderDetail.paymentMethod
     console.log(paymentMethod);
     console.log(userId, '');
-    if (paymentMethod === 'Online Payment' || 'Wallet' || 'cash on delivery' && returnedProduct.status === 'DELIVERED')  {
+    if (paymentMethod === 'Online Payment' || paymentMethod === 'Wallet' || paymentMethod === 'cash on delivery' && returnedProduct.status === 'DELIVERED')  {
       const walletTransactions = {
         date: new Date(),
         type: 'CREDIT',

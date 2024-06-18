@@ -13,11 +13,11 @@ export const user_returnOrderGet = async (req,res)=>{
     try {
         console.log(req.query,'query is showing');
         const userId = req.session.USER_ID
-        const orderId = req.query.orderId;
-        const returnReason = req.query.returnReason
+    
+        const {orderId,productId,returnReason} = req.query
         console.log(returnReason,'return reason is showing===========================');
         
-        const result = await updateReturnedProductStatus(userId,orderId,returnReason);
+        const result = await updateReturnedProductStatus(userId,orderId,productId,returnReason);
         console.log(result,'result');
         res.json({result:'success'})
         

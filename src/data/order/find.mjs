@@ -4,7 +4,7 @@ export async function findOrderData(userId) {
   try {
     return await orderCollection
       .find({ userId: userId })
-      .sort({ timeStamp: -1 });
+      .sort({ _id: -1 });
   } catch (error) {
     console.log(error, "error occured in find order data func");
   }

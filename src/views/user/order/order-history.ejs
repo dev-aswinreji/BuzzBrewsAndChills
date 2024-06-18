@@ -317,7 +317,7 @@
                         }).then(async (result) => {
                             if (result.isConfirmed) {
                                 const returnReason = result.value;
-                                await fetch(`/return-order/?orderId=${orderId}&returnReason=${encodeURIComponent(returnReason)}`, {
+                                await fetch(`/return-order/?orderId=${orderId}&productId=${productId}&returnReason=${encodeURIComponent(returnReason)}`, {
                                     method: 'GET',
                                     headers: {
                                         'Content-Type': 'application/json'

@@ -38,18 +38,15 @@ export async function updateCancelProduct(orderId, productId) {
   }
 }
 
-export async function updateReturnedProductStatus(userId, orderId, returnReason) {
+export async function updateReturnedProductStatus(userId, orderId, productId, returnReason) {
   try {
     const result = await orderCollection.updateOne(
       { userId: userId, orderId: orderId },
       {
-        $set: {
-          "products.$[].status": "PENDING APPROVAL",
-          returnReason: returnReason
-        }
-      }
+        $set: { "products.$[elem].status": "PENDING APPROVAL", returnReason: returnReason }
+      }, { arrayFilters: [{ "elem.productId": productId }] }
     );
-    console.log(result,'resutl is showing')
+    console.log(result, 'resutl is showing')
     return result
 
   } catch (error) {
