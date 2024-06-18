@@ -38,7 +38,9 @@ export const admin_orderReturnConfirmationPut = async (req, res) => {
 
             let productPrice
             for (const product of orderDetails.products) {
-                 productPrice = product.productId === productId ? product.price : 0
+                if( product.productId === productId){
+                    productPrice = product.price * product.quantity 
+                }
             }
             console.log(productPrice,'product price is showing');
 

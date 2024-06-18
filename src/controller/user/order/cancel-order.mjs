@@ -18,7 +18,7 @@ export const user_cancelOrderGet = async (req, res) => {
     // const returnedProductPrice = orderDetail.products.filter(product => product.productId.equals(product._id) ? product.price : 0)
     const returnedProduct = orderDetail.products.filter(product =>product.productId === productId)
     console.log(returnedProduct,'returned product is showing =========                                ============================ kkkkkkkkkkkkkkkkkkkkkkkkk=====================');
-    const returnedProductPrice = returnedProduct[0].price || 0
+    const returnedProductPrice = returnedProduct[0].price * returnedProduct[0].quantity
     console.log(returnedProductPrice,'returned product is showing ============================4444444444444450000000000000');
     const couponCode = orderDetail.couponCode
     console.log(couponCode, 'coupon code is showing');
