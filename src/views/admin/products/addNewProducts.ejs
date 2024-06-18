@@ -201,9 +201,9 @@
                                                                     <label class="form-label">Promotional Price</label>
                                                                     <input placeholder="$" type="text"
                                                                         class="form-control" id="promotional_price">
-                                                                    <div id="promoPriceError" class="error-message">
+                                                                    <!-- <div id="promoPriceError" class="error-message">
                                                                         Please enter a promotional
-                                                                        price.</div>
+                                                                        price.</div> -->
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4">
@@ -283,13 +283,13 @@
                 }
 
                 // Validate Promotional Price
-                const promoPrice = document.getElementById('promotional_price').value.trim();
-                if (promoPrice === "" || isNaN(promoPrice)) {
-                    document.getElementById('promoPriceError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('promoPriceError').style.display = 'none';
-                }
+                // const promoPrice = document.getElementById('promotional_price').value.trim();
+                // if (promoPrice === "" || isNaN(promoPrice)) {
+                //     document.getElementById('promoPriceError').style.display = 'block';
+                //     isValid = false;
+                // } else {
+                //     document.getElementById('promoPriceError').style.display = 'none';
+                // }
 
                 // Validate Images
                 const imageInput = document.getElementById('imageInput');
