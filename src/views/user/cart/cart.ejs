@@ -1,135 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-d5i7LaZXa5O4fjB5WddjWJ7+/QhQYXxMntXGyN24ez5b/ct60Bsqx/xOtq2osUqHe9QthddvD6YUi3KnLR9D8g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+	integrity="sha512-d5i7LaZXa5O4fjB5WddjWJ7+/QhQYXxMntXGyN24ez5b/ct60Bsqx/xOtq2osUqHe9QthddvD6YUi3KnLR9D8g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
-	 body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-        }
+	body {
+		font-family: 'Roboto', sans-serif;
+		background-color: #f8f9fa;
+		margin: 0;
+		padding: 0;
+	}
 
-        .container {
-            max-width: 1400px; /* Increased max-width */
-            margin: 0 auto;
-            padding: 20px;
-        }
+	.container {
+		max-width: 1400px;
+		/* Increased max-width */
+		margin: 0 auto;
+		padding: 20px;
+	}
 
-        .cart-section {
-            padding: 50px 0;
-        }
+	.cart-section {
+		padding: 50px 0;
+	}
 
-        .cart-table-wrap {
-            overflow-x: auto;
-        }
+	.cart-table-wrap {
+		overflow-x: auto;
+	}
 
-        .cart-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            font-size: 1.1em; /* Increased font size */
-        }
+	.cart-table {
+		width: 100%;
+		border-collapse: collapse;
+		margin-bottom: 20px;
+		font-size: 1.1em;
+		/* Increased font size */
+	}
 
-        .cart-table th,
-        .cart-table td {
-            padding: 20px; /* Increased padding */
-            text-align: center;
-        }
+	.cart-table th,
+	.cart-table td {
+		padding: 20px;
+		/* Increased padding */
+		text-align: center;
+	}
 
-        .cart-table th {
-            background-color: #007bff;
-            color: white;
-            text-transform: uppercase;
-        }
+	.cart-table th {
+		background-color: #007bff;
+		color: white;
+		text-transform: uppercase;
+	}
 
-        .cart-table td {
-            background-color: #fff;
-            border-bottom: 1px solid #dee2e6;
-        }
+	.cart-table td {
+		background-color: #fff;
+		border-bottom: 1px solid #dee2e6;
+	}
 
-        .cart-table .product-remove button {
-            background: none;
-            border: none;
-            color: #dc3545;
-            cursor: pointer;
-            font-size: 20px;
-        }
+	.cart-table .product-remove button {
+		background: none;
+		border: none;
+		color: #dc3545;
+		cursor: pointer;
+		font-size: 20px;
+	}
 
-        .cart-table .product-image img {
-            width: 120px; /* Increased image size */
-            height: auto;
-            border-radius: 5px;
-        }
+	.cart-table .product-image img {
+		width: 120px;
+		/* Increased image size */
+		height: auto;
+		border-radius: 5px;
+	}
 
-        .cart-table .product-quantity input {
-            width: 80px; /* Increased input width */
-            padding: 5px;
-            text-align: center;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-        }
+	.quantity-control {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-        .total-section {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+	.quantity-control button {
+		background: none;
+		border: 1px solid #ced4da;
+		padding: 5px 10px;
+		cursor: pointer;
+		font-size: 16px;
+	}
 
-        .total-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            font-size: 1.1em; /* Increased font size */
-        }
+	.quantity-control span {
+		padding: 0 10px;
+		font-size: 16px;
+	}
 
-        .total-table th,
-        .total-table td {
-            padding: 15px; /* Increased padding */
-            text-align: left;
-        }
+	.total-section {
+		background-color: #fff;
+		padding: 20px;
+		border-radius: 5px;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	}
 
-        .total-table th {
-            background-color: #007bff;
-            color: white;
-            text-transform: uppercase;
-        }
+	.total-table {
+		width: 100%;
+		border-collapse: collapse;
+		margin-bottom: 20px;
+		font-size: 1.1em;
+		/* Increased font size */
+	}
 
-        .total-table .total-data strong {
-            font-weight: 700;
-        }
+	.total-table th,
+	.total-table td {
+		padding: 15px;
+		/* Increased padding */
+		text-align: left;
+	}
 
-        .cart-buttons {
-            text-align: center;
-        }
+	.total-table th {
+		background-color: #007bff;
+		color: white;
+		text-transform: uppercase;
+	}
 
-        .cart-buttons .boxed-btn {
-            background-color: #007bff;
-            color: white;
-            padding: 15px 30px; /* Increased padding */
-            border: none;
-            border-radius: 5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
+	.total-table .total-data strong {
+		font-weight: 700;
+	}
 
-        .cart-buttons .boxed-btn.black {
-            background-color: #343a40;
-        }
+	.cart-buttons {
+		text-align: center;
+	}
 
-        .cart-buttons .boxed-btn:hover {
-            background-color: #0056b3;
-        }
+	.cart-buttons .boxed-btn {
+		background-color: #007bff;
+		color: white;
+		padding: 15px 30px;
+		/* Increased padding */
+		border: none;
+		border-radius: 5px;
+		text-transform: uppercase;
+		cursor: pointer;
+		text-decoration: none;
+		transition: background-color 0.3s;
+	}
 
-        .cart-buttons .boxed-btn.black:hover {
-            background-color: #23272b;
-        }
+	.cart-buttons .boxed-btn.black {
+		background-color: #343a40;
+	}
+
+	.cart-buttons .boxed-btn:hover {
+		background-color: #0056b3;
+	}
+
+	.cart-buttons .boxed-btn.black:hover {
+		background-color: #23272b;
+	}
+
+	.empty-cart {
+		margin-top: 50px;
+		text-align: center;
+	}
+
+	.empty-cart h2 {
+		color: #333;
+	}
+
+	.empty-cart a {
+		color: #007bff;
+		text-decoration: none;
+	}
+
+	.empty-cart a:hover {
+		text-decoration: underline;
+	}
 </style>
-
 <%- include ('../partials/head/head.ejs' ) %>
 
 	<body>
@@ -171,25 +207,44 @@
 											</tr>
 										</thead>
 										<tbody>
-											<% for(let i = 0; i < cart.items.length; i++) { %>
-											<input type="text" value="<%= cart.items[i].productId.stock %>" hidden id="stock_<%= i %>">
-											<tr class="table-body-row">
-												<td class="product-remove">
-													<button onclick="deleteCartProduct('<%= cart.items[i].productId._id %>')">
-														<i class="far fa-window-close"></i>
-													</button>
-												</td>
-												<td class="product-image">
-													<img src="/product-images/<%= cart.items[i].productId.imageUrl[0] %>" alt="">
-												</td>
-												<td class="product-name"><%= cart.items[i].productId.name %></td>
-												<td class="product-price" id="price_<%= i %>">Rs <%= cart.items[i].productId.discount_price %></td>
-												<td class="product-quantity">
-													<input type="number" min="1" id="quantity_<%= i %>" value="<%= cart.items[i].quantity %>" placeholder="1" oninput="validity.valid||(value='');addtoCartUsingFetch('<%= i %>','<%= cart.items[i].productId._id %>')">
-												</td>
-												<td class="product-total" id="productTotal_<%= i %>"><%= cart.items[i].quantity * cart.items[i].productId.discount_price %></td>
-											</tr>
-											<% } %>
+											<% for(let i=0; i < cart.items.length; i++) { %>
+												<input type="text" value="<%= cart.items[i].productId.stock %>" hidden
+													id="stock_<%= i %>">
+												<tr class="table-body-row">
+													<td class="product-remove">
+														<button
+															onclick="deleteCartProduct('<%= cart.items[i].productId._id %>')">
+															<i class="far fa-window-close"></i>
+														</button>
+													</td>
+													<td class="product-image">
+														<img src="/product-images/<%= cart.items[i].productId.imageUrl[0] %>"
+															alt="">
+													</td>
+													<td class="product-name">
+														<%= cart.items[i].productId.name %>
+													</td>
+													<td class="product-price" id="price_<%= i %>">Rs <%=
+															cart.items[i].productId.discount_price %>
+													</td>
+													<td>
+
+														<div class="quantity-control">
+															<button type="button"
+																onclick="updateQuantity('<%= i %>', '<%= cart.items[i].productId._id %>', -1)">-</button>
+															<span id="quantity_<%= i %>">
+																<%= cart.items[i].quantity %>
+															</span>
+															<button type="button"
+																onclick="updateQuantity('<%= i %>', '<%= cart.items[i].productId._id %>', 1)">+</button>
+														</div>
+													</td>
+													<td class="product-total" id="productTotal_<%= i %>">
+														<%= cart.items[i].quantity *
+															cart.items[i].productId.discount_price %>
+													</td>
+												</tr>
+												<% } %>
 										</tbody>
 									</table>
 								</div>
@@ -206,7 +261,9 @@
 										<tbody>
 											<tr class="total-data">
 												<td><strong>Subtotal: </strong></td>
-												<td id="totalPrice"><%= cart.totalPrice %></td>
+												<td id="totalPrice">
+													<%= cart.totalPrice %>
+												</td>
 											</tr>
 											<tr class="total-data">
 												<td><strong>Shipping: </strong></td>
@@ -226,7 +283,7 @@
 						</div>
 					</div>
 				</div>
-			
+
 				<!-- end cart -->
 				<% }else{ %>
 
@@ -268,91 +325,51 @@
 
 
 	<script>
-		
-		async function addtoCartUsingFetch(index, productId) {
 
-			console.log(index, 'index is not changing');
-			const quantityTypeString = document.getElementById('quantity_' + index)
-			const quantityValue = quantityTypeString.value
-			const quantity = Number(quantityValue)
-			console.log(quantity, 'quantity of each product is getting');
-			const priceText = document.getElementById('price_' + index).innerHTML
-			const price = priceText.replace(/Rs/gi, '')
-			console.log(price, 'price of each product is showing');
+		async function updateQuantity(index, productId, change) {
+			const quantityElement = document.getElementById('quantity_' + index);
+			let quantity = parseInt(quantityElement.textContent);
+			const stock = parseInt(document.getElementById('stock_' + index).value);
+			const price = parseFloat(document.getElementById('price_' + index).textContent.replace('Rs', '').trim());
 
-			const stockTypeString = document.getElementById('stock_' + index).value
-			const stock = Number(stockTypeString)
-			console.log(stock, 'stock is showing', quantity, 'quanitity is showing');
-			console.log(typeof quantity, 'what is heppeing');
-			console.log(typeof stock, 'what the h');
-			console.log(quantity <= stock, 'what is happening');
-			console.log(2 <= 12, 'what is the issue');
-			if (quantity <= stock) {
+			quantity += change;
 
-
-				quantity <= 10 ? await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
-					method: 'GET',
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				}).then(response => response.ok ? response.json() : console.log('Some network error occured while fetching'))
-					.then(
-						data => {
-							console.log(data)
-							console.log(data.totalPrice[0].totalPrice, 'total price is showing ');
-							console.log(data.quantityFromUpdatedData[0].quantity, 'quantity of product is showing ');
-
-							if (data.result === 'within limit') {
-
-								document.getElementById('totalPrice').innerHTML = data.totalPrice[0].totalPrice
-								document.getElementById('productTotal_' + index).innerHTML = data.quantityFromUpdatedData[0].quantity * price
-								// Show success message
-								// Swal.fire({
-								// 	position: "center",
-								// 	icon: "success",
-								// 	title: "Successfully product added to cart",
-								// 	showConfirmButton: false,
-								// 	timer: 1500
-								// });
-							} else {
-								// Show error message
-								Swal.fire({
-									position: "center",
-									icon: "error",
-									title: "Maximum product limit is exceeded",
-									showConfirmButton: false,
-									timer: 1500
-								});
-							}
-						})
-					.catch(err => {
-						console.log(err, 'Some error occured while fetching in cart page');
-					}) : Swal.fire({
-						position: "center",
-						icon: "error",
-						title: "Maximum product limit is exceeded",
-						showConfirmButton: false,
-						timer: 1500
-					}).then(() => {
-						if (stock <= 10) {
-							quantityTypeString.value = stock
-						} else {
-							quantityTypeString.value = 10
-						}
-					})
-
-			} else {
+			if (quantity <= 0 || quantity > stock || quantity > 10) {
 				Swal.fire({
 					position: "center",
 					icon: "error",
-					title: "Maximum stock limit of product exceeded",
+					title: quantity <= 0 ? "Quantity must be at least 1" : "Maximum product limit is exceeded",
 					showConfirmButton: false,
 					timer: 1500
-				}).then(() => {
-					quantityTypeString.value = stock
-				})
+				});
+				return
 			}
+			await fetch(`/add-to-cart-manage/?productId=${productId}&quantity=${quantity}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(response => response.ok ? response.json() : console.log('Some network error occurred while fetching'))
+				.then(data => {
+					if (data.result === 'within limit') {
+						document.getElementById('totalPrice').textContent = data.totalPrice[0].totalPrice;
+						document.getElementById('productTotal_' + index).textContent = (quantity * price).toFixed(2);
+						quantityElement.textContent = quantity;
+					} else {
+						Swal.fire({
+							position: "center",
+							icon: "error",
+							title: "Maximum product limit is exceeded",
+							showConfirmButton: false,
+							timer: 1500
+						});
+					}
+				})
+				.catch(err => {
+					console.log(err, 'Some error occurred while fetching in cart page');
+				});
 		}
+
 
 
 
