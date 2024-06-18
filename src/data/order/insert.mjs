@@ -39,6 +39,8 @@ export async function insertOrder(userId, userAddressId, paymentMethod, paymentI
           products: cart.items.map((item) => ({
             productId: item.productId._id,
             name: item.productId.name,
+            imageUrl:item.productId.imageUrl[0],
+            category:item.productId.category.name,
             quantity: item.quantity,
             originalProductPrice:item.productId.discount_price,
             price: item.productId.discount_price = item.productId.discount_price - (item.productId.discount_price * couponDiscount/100),
@@ -74,13 +76,14 @@ export async function paymentFailedCreateOrder(userId, userAddressId, paymentMet
   const address = await findUserAddressUsingId(userAddressId);
     console.log(address, 'address is showing ');
     const cart = await findCartDataUsingUserId(userId);
+    console.log(cart, "cart data is ------------------------------------------------888888888888888888888888888888888888900000000000000000 ");
+    console.log(cart.items[0].productId,'hehehehhehehhe');
     const orderId = await orderIdGenerator()  //generating unique id for order id 
     const cartItems = cart.items.filter(item => item.productId.stock.toString() <= item.quantity.toString())
     const couponCode = cart.couponCode
 
     console.log(couponCode, 'coupon code is showing rn');
     console.log(cartItems, 'cartItems is working');
-    console.log(cart, "cart data is ");
     console.log(orderId, "order id is working");
     const originalPrice = cart.items.reduce((total, item) => {
       return total + (item.productId.discount_price * item.quantity);
@@ -100,6 +103,8 @@ export async function paymentFailedCreateOrder(userId, userAddressId, paymentMet
             productId: item.productId._id,
             name: item.productId.name,
             quantity: item.quantity,
+            imageUrl:item.productId.imageUrl[0],
+            category:item.productId.category.name,
             status:"PENDING",
             originalProductPrice:item.productId.discount_price,
             price: item.productId.discount_price = item.productId.discount_price - (item.productId.discount_price * couponDiscount/100),

@@ -48,6 +48,14 @@ const orderSchema = mongoose.Schema({
         type: String,
         required: true,
       },
+      category: {
+        type:String,
+        required:true
+      },
+      imageUrl:{
+        type:String,
+        required:true
+      },
       quantity: {
         type: Number,
         required: true,

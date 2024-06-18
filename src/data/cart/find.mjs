@@ -1,3 +1,4 @@
+import { populate } from "dotenv";
 import { cartCollection } from "../../model/cart.mjs";
 
 export async function findAllCartDatas (userId){
@@ -10,5 +11,5 @@ export async function findDuplicateCartProducts(userId,product){
 
 
 export async function findCartDataUsingUserId(userId){
-    return await cartCollection.findOne({userId:userId}).populate('items.productId')
+    return await cartCollection.findOne({userId:userId}).populate({path:'items.productId',populate:{path:'category',model:"categories"}})
 }
