@@ -138,316 +138,206 @@
                                 </div>
                             </div>
                             <% if (error) { %>
-                             <h4 id="error" class="text-danger"><%= error %> </h4>
-                            <% } %>
-                            <div class="col-lg-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <h4>Basic</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="mb-4">
-                                            <label for="product_name" class="form-label">Product Name</label>
-                                            <input type="text" placeholder="Type here" name="name" class="form-control"
-                                                id="product_name">
-                                        </div>
-                                        <% if (category) { %>
-                                            <div class="mb-4">
-                                                <label for="product_category" class="form-label">Category</label>
-                                                <select name="category" id="product_category" required>
-                                                    <% for (cate of category) { %>
-                                                        <option value="" selected disabled></option>
-                                                        <option value="<%= cate.name %>">
-                                                            <%= cate.name %>
-                                                        </option>
-                                                        <% } %>
-                                                </select>
+                                <h4 id="error" class="text-danger">
+                                    <%= error %>
+                                </h4>
+                                <% } %>
+                                    <div class="col-lg-6">
+                                        <div class="card mb-4">
+                                            <div class="card-header">
+                                                <h4>Basic</h4>
                                             </div>
-                                            <% } %>
+                                            <div class="card-body">
                                                 <div class="mb-4">
-                                                    <label for="product_stock" class="form-label">Product Stock</label>
-                                                    <input type="text" placeholder="Type here" name="stock"
-                                                        class="form-control" id="product_stock">
+                                                    <label for="product_name" class="form-label">Product Name</label>
+                                                    <input type="text" placeholder="Type here" name="name"
+                                                        class="form-control" id="product_name">
+                                                    <div id="nameError" class="error-message">Please enter a product
+                                                        name.</div>
                                                 </div>
-                                                <div class="mb-4">
-                                                    <label class="form-label">Full Description</label>
-                                                    <textarea placeholder="Type here" class="form-control"
-                                                        name="description" id="product_description" rows="4"></textarea>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-4">
-                                                        <div class="mb-4">
-                                                            <label class="form-label">Regular Price</label>
-                                                            <div class="row gx-2">
-                                                                <input placeholder="$" type="text" name="price"
-                                                                    id="product_price" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="mb-4">
-                                                            <label class="form-label">Promotional Price</label>
-                                                            <input placeholder="$" type="text" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <label class="form-label">Currency</label>
-                                                        <select class="form-select">
-                                                            <option>USD</option>
-                                                            <option>EUR</option>
-                                                            <option>RUBL</option>
+                                                <% if (category) { %>
+                                                    <div class="mb-4">
+                                                        <label for="product_category"
+                                                            class="form-label">Category</label>
+                                                        <select name="category" id="product_category" required>
+                                                            <% for (cate of category) { %>
+                                                                <option value="" selected disabled></option>
+                                                                <option value="<%= cate.name %>">
+                                                                    <%= cate.name %>
+                                                                </option>
+                                                                <% } %>
                                                         </select>
                                                     </div>
-                                                </div>
-                                                <div class="mb-4">
-                                                    <label for="product_discount" class="form-label">Offer</label>
-                                                    <input type="number" placeholder="Type here" name="discount"
-                                                        inputmode="tel" class="form-control" id="product_discount">
-                                                </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <h4>Product Image</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="input-upload">
-                                            <input type="file" name="imageUrl" class="form-control" id="imageInput"
-                                                accept="image/jpeg, image/jpg, image/png" multiple>
-                                            <div id="image-preview" class="mt-3"></div>
+                                                    <% } %>
+                                                        <div class="mb-4">
+                                                            <label for="product_stock" class="form-label">Product
+                                                                Stock</label>
+                                                            <input type="text" placeholder="Type here" name="stock"
+                                                                class="form-control" id="product_stock">
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <label class="form-label">Full Description</label>
+                                                            <textarea placeholder="Type here" class="form-control"
+                                                                name="description" id="product_description"
+                                                                rows="4"></textarea>
+                                                            <div id="descError" class="error-message">Please describe
+                                                                the product.</div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-4">
+                                                                <div class="mb-4">
+                                                                    <label class="form-label">Regular Price</label>
+                                                                    <div class="row gx-2">
+                                                                        <input placeholder="$" type="text" name="price"
+                                                                            id="product_price" class="form-control">
+                                                                        <div id="priceError" class="error-message">
+                                                                            Please enter a product
+                                                                            price.</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <div class="mb-4">
+                                                                    <label class="form-label">Promotional Price</label>
+                                                                    <input placeholder="$" type="text"
+                                                                        class="form-control" id="promotional_price">
+                                                                    <div id="promoPriceError" class="error-message">
+                                                                        Please enter a promotional
+                                                                        price.</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <label class="form-label">Currency</label>
+                                                                <select class="form-select">
+                                                                    <option>USD</option>
+                                                                    <option>EUR</option>
+                                                                    <option>RUBL</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <label for="product_discount"
+                                                                class="form-label">Offer</label>
+                                                            <input type="number" placeholder="Type here" name="discount"
+                                                                inputmode="tel" class="form-control"
+                                                                id="product_discount">
+                                                        </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                                    <div class="col-lg-3">
+                                        <div class="card mb-4">
+                                            <div class="card-header">
+                                                <h4>Product Image</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="input-upload">
+                                                    <input type="file" name="imageUrl" class="form-control"
+                                                        id="imageInput" accept="image/jpeg, image/jpg, image/png"
+                                                        multiple>
+                                                    <div id="image-preview"></div>
+                                                    <div id="imageError" class="error-message">Please upload at least
+                                                        valid
+                                                        image.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                     </form>
+                    </div>
                 </section>
                 <%- include('../partials/footer/footer.ejs') %>
 
-                    <!-- Modal for image cropping -->
-                    <div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="cropModalLabel">Crop Image</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div id="cropImageContainer">
-                                        <img id="imageTo
-                            Crop" class="img-fluid">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" id="cropButton">Crop</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
         </main>
-<!-- Add a container for the cropped image preview -->
-<div id="cropped-image-preview" style="display:none;"></div>
-
-<!-- Existing HTML content remains unchanged until the closing body tag -->
-
-<!-- Include Bootstrap JS and Cropper.js scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-<script src="your-script.js"></script> <!-- Ensure this script tag links to your external JavaScript file -->
-
-        <!-- Include Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Include Cropper.js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-
-
-
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-const errMsg = document.getElementById('error')
-reload()
-function reload(){
-    setTimeout(()=>{
-        errMsg.innerHTML = ''
-    },4000)
-}
-</script>
-
-
         <script>
-            document.getElementById('uploadForm').addEventListener('submit', function (event) {
-                validateImages();
-                event.preventDefault(); // Prevent default form submission
-            });
-
-            function validateImages() {
-                const fileInput = document.getElementById('imageInput');
-                const files = fileInput.files;
+            document.getElementById('uploadForm').addEventListener('submit', function (e) {
                 let isValid = true;
 
-                for (let i = 0; i < files.length; i++) {
-                    if (!files[i].type.match('image/jpeg|image/png')) {
-                        isValid = false;
-                        break;
-                    }
-                }
-
-                if (!isValid) {
-                    alert('Please select valid JPEG or PNG image files.');
+                // Validate Product Name
+                const productName = document.getElementById('product_name').value.trim();
+                if (productName === "") {
+                    document.getElementById('nameError').style.display = 'block';
+                    isValid = false;
                 } else {
-                    displayImagePreviews(files);
+                    document.getElementById('nameError').style.display = 'none';
                 }
-            }
 
-            function displayImagePreviews(files) {
+                // Validate Product Description
+                const productDescription = document.getElementById('product_description').value.trim();
+                if (productDescription === "") {
+                    document.getElementById('descError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('descError').style.display = 'none';
+                }
+
+                // Validate Product Price
+                const productPrice = document.getElementById('product_price').value.trim();
+                if (productPrice === "" || isNaN(productPrice)) {
+                    document.getElementById('priceError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('priceError').style.display = 'none';
+                }
+
+                // Validate Promotional Price
+                const promoPrice = document.getElementById('promotional_price').value.trim();
+                if (promoPrice === "" || isNaN(promoPrice)) {
+                    document.getElementById('promoPriceError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('promoPriceError').style.display = 'none';
+                }
+
+                // Validate Images
+                const imageInput = document.getElementById('imageInput');
                 const imagePreview = document.getElementById('image-preview');
-                imagePreview.innerHTML = ''; // Clear previous previews
-
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    const reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        const imageContainer = document.createElement('div');
-                        imageContainer.className = 'preview-container';
-                        const image = document.createElement('img');
-                        image.src = e.target.result;
-                        image.className = 'img-preview';
-                        image.onclick = function () { showCropper(this); }; // Attach click handler to open cropper
-                        imageContainer.appendChild(image);
-                        imagePreview.appendChild(imageContainer);
-                    };
-
-                    reader.readAsDataURL(file);
+                if (imageInput.files.length === 0) {
+                    document.getElementById('imageError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('imageError').style.display = 'none';
                 }
-            }
 
-            function showCropper(imgElement) {
-                const imageSrc = imgElement.src;
-                document.getElementById('cropImageContainer').innerHTML = '<img id="imageToCrop" src="' + imageSrc + '" class="img-fluid">';
-                const imageToCrop = document.getElementById('imageToCrop');
-
-                // Destroy any existing croppers
-                croppers.forEach(cropper => cropper.destroy());
-
-                // Initialize a new cropper instance
-                const cropper = new Cropper(imageToCrop, {
-                    aspectRatio: 1,
-                    viewMode: 1,
-                    autoCropArea: 1,
-                    responsive: true,
-                    background: false,
-                    guides: false,
-                    highlight: false,
-                    cropBoxResizable: false,
-                    cropBoxMovable: false,
-                    minCropBoxWidth: 150,
-                    minCropBoxHeight: 150,
-                    ready: function () {
-                        cropModal.show();
-                    }
-                });
-
-                croppers.push(cropper);
-
-                // Display the cropped image preview
-                cropper.getCroppedCanvas().toBlob(function (blob) {
-                    var url = URL.createObjectURL(blob);
-                    document.getElementById('cropped-image-preview').src = url;
-                    document.getElementById('cropped-image-preview').style.display = 'block';
-                }, 'image/jpeg');
-            }
-
-            // Existing JavaScript code for handling the crop button click remains unchanged
-
-        </script>
-        <script>
-            document.getElementById('uploadForm').addEventListener('submit', function (event) {
-                const fileInput = document.getElementById('imageInput');
-                const files = fileInput.files;
-                let isValid = true;
-                for (let i = 0; i < files.length; i++) {
-                    if (!files[i].type.match('image/jpeg|image/png')) {
-                        isValid = false;
-                        break;
-                    }
-                }
                 if (!isValid) {
-                    alert('Please select valid JPEG or PNG image files.');
-                    event.preventDefault();
+                    e.preventDefault();
                 }
             });
 
-            document.getElementById('imageInput').addEventListener('change', function (event) {
-                const files = event.target.files;
+            document.getElementById('imageInput').addEventListener('change', function (e) {
+                const files = e.target.files;
                 const imagePreview = document.getElementById('image-preview');
-                imagePreview.innerHTML = ''; // Clear previous previews
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
+                imagePreview.innerHTML = "";
+
+                Array.from(files).forEach(file => {
+                    if (!['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
+                        document.getElementById('imageError').style.display = 'block';
+                        return;
+                    }
+
                     const reader = new FileReader();
                     reader.onload = function (e) {
-                        const imageContainer = document.createElement('div');
-                        imageContainer.className = 'preview-container';
-                        const image = document.createElement('img');
-                        image.src = e.target.result;
-                        image.className = 'img-preview';
-                        imageContainer.appendChild(image);
-                        imagePreview.appendChild(imageContainer);
-                    }
+                        const previewContainer = document.createElement('div');
+                        previewContainer.className = 'preview-container';
+
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+
+                        const removeBtn = document.createElement('button');
+                        removeBtn.className = 'remove-btn';
+                        removeBtn.innerHTML = '&times;';
+                        removeBtn.addEventListener('click', () => {
+                            previewContainer.remove();
+                        });
+
+                        previewContainer.appendChild(img);
+                        previewContainer.appendChild(removeBtn);
+                        imagePreview.appendChild(previewContainer);
+                    };
                     reader.readAsDataURL(file);
-                }
-            });
-
-            let croppers = [];
-            const cropButton = document.getElementById('cropButton');
-            const cropModal = new bootstrap.Modal(document.getElementById('cropModal'));
-
-            document.getElementById('image-preview').addEventListener('click', function (event) {
-                const target = event.target;
-                if (target.classList.contains('img-preview')) {
-                    const imageSrc = target.src;
-                    document.getElementById('cropImageContainer').innerHTML = '<img id="imageToCrop" src="' + imageSrc + '" class="img-fluid">';
-                    croppers.forEach(cropper => cropper.destroy());
-                    const imageToCrop = document.getElementById('imageToCrop');
-                    const cropper = new Cropper(imageToCrop, {
-                        aspectRatio: 1,
-                        viewMode: 1,
-                        autoCropArea: 1,
-                        responsive: true,
-                        background: false,
-                        guides: false,
-                        highlight: false,
-                        cropBoxResizable: false,
-                        cropBoxMovable: false,
-                        minCropBoxWidth: 150,
-                        minCropBoxHeight: 150,
-                        ready: function () {
-                            cropModal.show();
-                        }
-                    });
-                    croppers.push(cropper);
-                }
-            });
-
-            cropButton.addEventListener('click', function () {
-                const croppedImages = [];
-                croppers.forEach(cropper => {
-                    const canvas = cropper.getCroppedCanvas();
-                    if (canvas) {
-                        const croppedImage = canvas.toDataURL('image/jpeg');
-                        croppedImages.push(croppedImage);
-                    }
                 });
-                // Use croppedImages array for further processing or submit to server
-                console.log(croppedImages);
-                cropModal.hide();
             });
         </script>
     </body>
