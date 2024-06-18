@@ -188,11 +188,11 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th width="40%">Product</th>
+                                                <th width="20%">Product</th>
                                                 <th width="20%">Unit Price</th>
                                                 <th width="20%">Quantity</th>
                                                 <th width="20%">Total Amount</th>
-                                                <th width="20%" class="text-end">Order Status</th>
+                                                <th width="40%" class="">Order Status</th>
                                             </tr>
                                         </thead>
                                         <% orderDetails.products.forEach(item => { %>
@@ -216,8 +216,11 @@
                                                             <h6>User Cancelled Order</h6>
                                                         <% }else{ %>
                                                         <div class="dropdown-and-button">
-                                                            
-                                                            <% if (item.status === 'DELIVERED') { %>
+                                                            <% if (item.status === 'RETURNED') { %>
+                                                            <h5>Admin approved product return request</h5>
+                                                            <% } else if (item.status === 'DELIVERED' && item.returnStatus === 'REJECT') { %>
+                                                                <h5>Admin rejected product return request</h5>          
+                                                            <%}else if (item.status === 'DELIVERED') { %>
                                                                 <h6>Product has been successfully delivered</h6>
                                                             <% } else { %>
                                                                 <select id="status-dropdown" data-product-id="<%= item.productId %>">
@@ -261,8 +264,6 @@
                 }
                 if (selectedStatus === 'ORDER PLACED') {
                     options[0].disabled = true; // Disable "Order Placed"
-                    options[2].disabled = true; // Disable "Out for Delivery"
-                    options[3].disabled = true; // Disable "Delivered"
                 } else if (selectedStatus === 'PROCESSING') {
                     options[0].disabled = true; // Disable "Order Placed"
                     options[1].disabled = true; // Disable "Processing"

@@ -224,7 +224,7 @@
                                                 <% } %>
                                         </div>
                                         <div class="product-actions">
-                                            <% if (item.status==='DELIVERED' ) { %>
+                                            <% if (item.status==='DELIVERED' && item.returnStatus !== 'REJECT' ) { %>
                                                 <button class="btn btn-return btn-primary"
                                                     onclick="returnOrder('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>', '<%= data.couponDiscount %>')">Return
                                                     Order</button>

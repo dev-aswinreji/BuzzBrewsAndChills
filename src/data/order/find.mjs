@@ -49,7 +49,6 @@ export async function findAllReturnedOrders(skip,limit) {
   return await orderCollection.find({
     $or: [
       { products: { $elemMatch: { status: "PENDING APPROVAL" } } },
-      { products: { $elemMatch: { status: "REQUEST APPROVED" } } }
     ]
   }).skip(skip).limit(limit)
 }
@@ -58,7 +57,6 @@ export async function findAllReturnedOrdersCount() {
   return await orderCollection.countDocuments({
     $or: [
       { products: { $elemMatch: { status: "PENDING APPROVAL" } } },
-      { products: { $elemMatch: { status: "REQUEST APPROVED" } } }
     ]
   })
 }
