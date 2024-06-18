@@ -1,7 +1,7 @@
+import { findCartDataUsingUserId } from "../../../data/cart/find.mjs";
 import { updateCartTotalPriceWhileApplyingCoupon } from "../../../data/cart/update.mjs";
 import { findUniqueCouponForUser } from "../../../data/coupon/find.mjs";
 import { findUserUsingId } from "../../../data/users/find.mjs";
-import { updateCouponInUserData } from "../../../data/users/update.mjs";
 import { checkDataDuplication } from "../../../validation/checking-duplicateData.mjs";
 
 export const user_applyCoupon = async (req, res) => {
@@ -10,7 +10,8 @@ export const user_applyCoupon = async (req, res) => {
 
     const couponCode = req.query.couponCode.trim();
 
-    const totalCartPrice = Number(req.query.totalCartPrice);
+    const cart =await findCartDataUsingUserId(USER_ID)
+    const totalCartPrice = cart.totalPrice
 
     console.log(typeof totalCartPrice, "total price is shwoing");
 
