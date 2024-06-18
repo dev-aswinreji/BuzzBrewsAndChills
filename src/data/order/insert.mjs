@@ -74,7 +74,7 @@ export async function paymentFailedCreateOrder(userId, userAddressId, paymentMet
   const address = await findUserAddressUsingId(userAddressId);
     console.log(address, 'address is showing ');
     const cart = await findCartDataUsingUserId(userId);
-    const orderId = uuid()  //generating unique id for order id 
+    const orderId = await orderIdGenerator()  //generating unique id for order id 
     const cartItems = cart.items.filter(item => item.productId.stock.toString() <= item.quantity.toString())
     const couponCode = cart.couponCode
 
