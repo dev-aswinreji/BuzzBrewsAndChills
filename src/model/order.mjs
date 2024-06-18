@@ -36,9 +36,13 @@ const orderSchema = mongoose.Schema({
       },
       status: {
         type: String,
-        enum: ["ORDER PLACED", "PROCESSING", "OUT FOR DELIVERY", "DELIVERED", "CANCELLED", "PENDING"],
+        enum: ["ORDER PLACED", "PROCESSING", "OUT FOR DELIVERY", "DELIVERED", "CANCELLED", "PENDING APPROVAL","RETURNED"],
         default: "ORDER PLACED",
         required: true,
+      },
+      returnStatus: {
+        type: String,
+        enum: ['APPROVE', 'REJECT']
       },
       name: {
         type: String,
@@ -99,8 +103,10 @@ const orderSchema = mongoose.Schema({
   },
   couponCode: {
     type: String
-  }, returnReason: {
+  },
+  returnReason: {
     type: String,
+
   }
 });
 

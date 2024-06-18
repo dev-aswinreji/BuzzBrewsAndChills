@@ -26,7 +26,7 @@ export const admin_orderReturnConfirmationPut = async (req, res) => {
         const product = await findSingleProduct(productId);
         if (action === 'APPROVE') {
             const update = {
-                $set: { "products.$[elem].status": 'APPROVE' }
+                $set: { "products.$[elem].returnStatus": 'APPROVE', "products.$[elem].status": "RETURNED" }
             };
             const options = {
                 arrayFilters: [{ "elem.productId": productId }],
@@ -38,11 +38,11 @@ export const admin_orderReturnConfirmationPut = async (req, res) => {
 
             let productPrice
             for (const product of orderDetails.products) {
-                if( product.productId === productId){
-                    productPrice = product.price * product.quantity 
+                if (product.productId === productId) {
+                    productPrice = product.price * product.quantity
                 }
             }
-            console.log(productPrice,'product price is showing');
+            console.log(productPrice, 'product price is showing');
 
 
             const walletTransactions = {
@@ -61,7 +61,7 @@ export const admin_orderReturnConfirmationPut = async (req, res) => {
             res.json({ result: 'APPROVE' })
         } else if (action === 'REJECT') {
             const update = {
-                $set: { "products.$[elem].status": 'REJECT' }
+                $set: { "products.$[elem].status": 'DELIVERED', "products.$[elem].returnStatus": 'REJECT' }
             };
             const options = {
                 arrayFilters: [{ "elem.productId": productId }],

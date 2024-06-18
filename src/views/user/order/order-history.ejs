@@ -239,10 +239,10 @@
                                                                 Payment</button>
                                                             <% } else if (item.status==='PENDING APPROVAL' ) { %>
                                                                 <h5 class="text-danger">Return request pending </h5>
-                                                                <% } else if (item.status==='APPROVE' ) { %>
+                                                                <% } else if (item.returnStatus==='APPROVE' ) { %>
                                                                     <h5 class="text-success"> Product return approved
                                                                     </h5>
-                                                                    <% } else if (item.status==='REJECT' ) { %>
+                                                                    <% } else if (item.returnStatus==='REJECT' ) { %>
                                                                         <h5 class="text-danger">Product return rejected
                                                                         </h5>
                                                                         <% } else { %>
@@ -259,7 +259,7 @@
                                         </h4>
                                         <% console.log(data.products[0].status, 'products status is showing' ); %>
                                             <% if (data.products[0].status !=='PENDING' && data.products[0].status
-                                                !=='PENDING APPROVAL' && data.products[0].status !=='APPROVE' ) { %>
+                                                !=='PENDING APPROVAL' && data.products[0].returnStatus !=='APPROVE' ) { %>
                                                 <button class="btn-history"><a
                                                         href="/order-invoice?orderId=<%= order[orderIndex].orderId %>">Invoice</a></button>
                                                 <% } %>
