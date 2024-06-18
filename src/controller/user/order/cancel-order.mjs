@@ -7,40 +7,42 @@ import { updateUserWallet } from "../../../data/wallet/update.mjs";
 
 export const user_cancelOrderGet = async (req, res) => {
   try {
-    console.log(req.query,'query is showing');
+    console.log(req.query, 'query is showing');
     const productId = req.query.productId;
     const userId = req.session.USER_ID
     const product = await findSingleProduct(productId);
     const quantity = req.query.quantity;
     const orderId = req.query.orderId;
     const orderDetail = await findSingleOrder(orderId)
-    console.log(orderDetail,'order detail is showing===============================================================');
+    console.log(orderDetail, 'order detail is showing===============================================================');
+    // const returnedProductPrice = orderDetail.products.filter(product => product.productId.equals(product._id) ? product.price : 0)
+    const returnedProduct = orderDetail.products.filter(product =>product.productId === productId)
+    console.log(returnedProduct,'returned product is showing =========                                ============================ kkkkkkkkkkkkkkkkkkkkkkkkk=====================');
+    const returnedProductPrice = returnedProduct[0].price || 0
+    console.log(returnedProductPrice,'returned product is showing ============================4444444444444450000000000000');
     const couponCode = orderDetail.couponCode
-    console.log(couponCode,'coupon code is showing');
+    console.log(couponCode, 'coupon code is showing');
     const paymentMethod = orderDetail.paymentMethod
-    const totalPrice = orderDetail.totalPrice
-    console.log(totalPrice,'total price is showing');
     console.log(paymentMethod);
-    console.log(userId,'');
-    if(paymentMethod === 'Online Payment' || 'Wallet'){
+    console.log(userId, '');
+    if (paymentMethod === 'Online Payment' || 'Wallet' || 'cash on delivery' && returnedProduct.status === 'DELIVERED')  {
       const walletTransactions = {
-        date:new Date(),
-        type:'CREDIT',
-        amount:totalPrice.toFixed(2),
+        date: new Date(),
+        type: 'CREDIT',
+        amount: returnedProductPrice.toFixed(2),
       }
-     const updateWallet = await updateUserWallet(userId,totalPrice,walletTransactions)
-     console.log(updateWallet,'wallet updated successfulyyyyyy');
+      const updateWallet = await updateUserWallet(userId, returnedProductPrice, walletTransactions)
+      console.log(updateWallet, 'wallet updated successfulyyyyyy');
     }
     let updateProductStock = Number(product.stock) + Number(quantity);
 
-    const result = await updateCancelProduct(orderId,productId);
-    const userCouponRemove = await updateCouponInUserDataReturnAndCancel(userId,couponCode)
-    console.log(userCouponRemove,'coupon removed from user database');
+    const result = await updateCancelProduct(orderId, productId);
+
     const response =
       result === "Success"
         ? await updateProducts(productId, { stock: updateProductStock }).then(
-            () => ({ result: "success" ,status:'CANCELLED' })
-          )
+          () => ({ result: "success", status: 'CANCELLED' })
+        )
         : { result: "fail" };
 
     res.json(response);
