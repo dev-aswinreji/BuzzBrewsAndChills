@@ -2,6 +2,7 @@
 import { findAllOrderSuccessFullOrderAmount } from "../../../data/order/find.mjs"
 import { findCountOfCategoryForAdmin, findTotalCountOfAllProductsForAdmin } from "../../../data/products/find.mjs";
 import { getMonthlySalesReport, getDeliveredProductStatsUsingAggregation, getYearlySalesReport, getWeeklySalesReport, getDailySalesReport } from "../../../data/sales-report/find.mjs";
+import { getTopSellingCategories, getTopSellingProducts } from "../../../data/top-10/top-10.mjs";
 import { findAllUserListForAdmin } from "../../../data/users/find.mjs";
 
 export const admin_dashboardGet = async (req, res) => {
@@ -27,8 +28,11 @@ export const admin_dashboardGet = async (req, res) => {
         const dailyData = await getDailySalesReport()
         console.log(dailyData, 'dailt report is showing');
 
-
-        res.render('dashboard', { orderCount: totalDeliveredOrders, totalRevenue: totalDeliveredCost, totalUserCount, productCount, categoryCount, yearlyData, monthlyData, weeklyData, dailyData })
+        const topProducts = await getTopSellingProducts()
+        console.log(topProducts, 'top  products ');
+        const topCategories = await getTopSellingCategories()
+        console.log(topCategories, 'top 10 categories is showing');
+        res.render('dashboard', { orderCount: totalDeliveredOrders, totalRevenue: totalDeliveredCost, totalUserCount, productCount, categoryCount, yearlyData, monthlyData, weeklyData, dailyData, topProducts, topCategories })
     } catch (error) {
         console.log(error, 'ADMIN SALES REPORT PAGE GET')
     }
