@@ -42,7 +42,7 @@ export const admin_editProductsPost = async (req, res) => {
     console.log(req.body.imageUrl);
     let count = 0;
     const imageUrlMultiple = [];
-    if(req.files.length > 0){
+    if (req.files.length > 0) {
       for (const file of req.files) {
         imageUrlMultiple[count] = file.filename;
         count++;
@@ -56,26 +56,26 @@ export const admin_editProductsPost = async (req, res) => {
     //   }
     // }
     const imageUrl = productData.imageUrl.push(...imageUrlMultiple)
-    console.log(productData.imageUrl,'updated or not');
-  console.log(imageUrl,'updated image url ');
-    
+    console.log(productData.imageUrl, 'updated or not');
+    console.log(imageUrl, 'updated image url ');
+
 
     const categoryDiscount = category.discount
-    console.log(categoryDiscount,'category discount is showing ');
-    
+    console.log(categoryDiscount, 'category discount is showing ');
+
     const productDiscount = Number(req.body.discount) || 0
 
     const discount = categoryDiscount < productDiscount ? productDiscount : categoryDiscount
-    console.log(discount,'discount is showing');
+    console.log(discount, 'discount is showing');
 
-    const price = Number(req.body.price )
-    console.log(price,'price is showing');
+    const price = Number(req.body.price)
+    console.log(price, 'price is showing');
 
     const discount_price = price - (price * discount / 100)
     console.log(discount_price)
 
 
-    console.log(imageUrlMultiple,'image multiple is showing ');
+    console.log(imageUrlMultiple, 'image multiple is showing ');
     const updatedProductData = {
       name: req.body.name,
       description: req.body.name,
@@ -83,8 +83,8 @@ export const admin_editProductsPost = async (req, res) => {
       category: category,
       stock: req.body.stock,
       imageUrl: productData.imageUrl,
-      discount:productDiscount,
-      discount_price:discount_price,
+      discount: productDiscount,
+      discount_price: discount_price,
 
     };
     console.log(updatedProductData);
@@ -106,15 +106,21 @@ export const admin_editProductsPost = async (req, res) => {
 };
 
 export const admin_deleteProductImages = async (req, res) => {
-  const productId = req.query.productId;
-  const imageUrl = req.query.filename;
-  console.log(productId, imageUrl);
-  await deleteProductImageUsingFetch(productId, imageUrl);
-  fs.unlinkSync(imageDirectory+'/'+imageUrl,(err=>{
-    if(err)console.log('some error occured in admin delete product images ',err);
-    else{
-      console.log(imageDirectory+'/'+imageUrl);
-    }
-  }))
-  res.json({ response: "success" });
+  try {
+
+    const productId = req.query.productId;
+    const imageUrl = req.query.filename;
+    console.log(productId, imageUrl);
+    await deleteProductImageUsingFetch(productId, imageUrl);
+    fs.unlinkSync(imageDirectory + '/' + imageUrl, (err => {
+      if (err) console.log('some error occured in admin delete product images ', err);
+      else {
+        console.log(imageDirectory + '/' + imageUrl);
+      }
+    }))
+    res.json({ response: "success" });
+
+  } catch (error) {
+    console.log(error, 'ADMIN DELETE PRODUCT IMAGES');
+  }
 };
