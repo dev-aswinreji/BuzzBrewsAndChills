@@ -14,16 +14,16 @@ const productsSchema = mongoose.Schema({
     name: {
         type: String,
         trim: true,
-        // required: true,
+        required: true,
     },
     description: {
         type: String,
         trim: true,
-        // required: true
+        required: true
     },
     price: {
         type: Number,
-        // required: true,
+        required: true,
         min: 0,
     },
     category: {
@@ -34,16 +34,16 @@ const productsSchema = mongoose.Schema({
         type:String,
         enum:['ACTIVE','ARCHIVED'],
         default:'ACTIVE',
-        // required:true
+        required:true
     },
     stock: {
         type: Number,
-        // required: true,
+        required: true,
         min: 0
     },
     imageUrl:{
         type:Array,
-        // required:true
+        required:true
     },
     createdAt:{
         type:Date,
