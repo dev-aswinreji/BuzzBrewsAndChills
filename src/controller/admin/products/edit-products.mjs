@@ -10,6 +10,7 @@ import {
 } from "../../../data/products/find.mjs";
 import { updateProducts } from "../../../data/products/update.mjs";
 import { checkDataDuplication } from "../../../validation/checking-duplicateData.mjs";
+import { validateImage } from "../../../utils/validateImage.mjs";
 
 export const admin_editProductsGet = async (req, res) => {
   try {
@@ -40,14 +41,40 @@ export const admin_editProductsPost = async (req, res) => {
     const result = await checkDataDuplication(isDuplicateProduct);
     console.log(req.files, "req.files is showing below");
     console.log(req.body.imageUrl);
-    let count = 0;
-    const imageUrlMultiple = [];
-    if (req.files.length > 0) {
-      for (const file of req.files) {
-        imageUrlMultiple[count] = file.filename;
-        count++;
-      }
-    }
+
+
+    
+    let imageUrlMultiple = []
+        let count = 0
+        let imageValidating;
+        for (const file of req.files) {
+
+            imageValidating = await validateImage(file.path)
+
+        }
+        console.log(imageValidating);
+        if (imageValidating) {
+            for (const file of req.files) {
+
+              imageUrlMultiple[count] = file.filename
+                count++
+
+            }
+        } else {
+            for (const file of req.files) {
+                fs.unlinkSync(imageDirectory + '/' + file.filename, (err => {
+                    if (err) console.log('some error occured in admin delete product images ', err);
+                    else {
+                        console.log(imageDirectory + '/' + file.filename);
+                    }
+                }))
+            }
+            req.session.productError = 'Input file contains unsupported image format'
+            return res.redirect(`/admin/edit-products/${id}`)
+        }
+
+
+
     // else{
     //   for (const imageUrl of req.body.old_imageUrl) {
     //     console.log(imageUrl,'image url ');
