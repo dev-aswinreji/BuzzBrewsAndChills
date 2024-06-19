@@ -325,8 +325,47 @@
 
 
 	<script>
+		async function checkSession() {
+			try {
+				const response = await fetch('/check-session', {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+				console.log(response,'response is showing =====================pppp');
+				if (response.status === 401) {
+					throw new Error('User not authenticated');
+				}
 
+				const data = await response.json();
+				return data.result === 'success';
+			} catch (error) {
+				return false;
+			}
+		}
 		async function updateQuantity(index, productId, change) {
+
+			const isSessionValid = await checkSession();
+			console.log(isSessionValid,'session checking');
+
+			if (!isSessionValid) {
+				Swal.fire({
+					title: "Invalid Entry",
+					text: "Please sign in to continue.",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonText: "Sign In",
+					cancelButtonText: "Cancel"
+				}).then((result) => {
+					if (result.isConfirmed) {
+						window.location.href = '/signin';
+					}
+				});
+				return;
+			}
+
+
 			const quantityElement = document.getElementById('quantity_' + index);
 			let quantity = parseInt(quantityElement.textContent);
 			const stock = parseInt(document.getElementById('stock_' + index).value);

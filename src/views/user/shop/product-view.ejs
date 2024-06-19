@@ -325,39 +325,49 @@
 
                 <script>
 
-                    // async function count(quantity) {
+    async function checkSession() {
+		try {
+				const response = await fetch('/check-session', {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
+				console.log(response,'response is showing =====================pppp');
+				if (response.status === 401) {
+					throw new Error('User not authenticated');
+				}
 
-                    //     const quanInput = document.getElementById('quantity')
-                    //     const quan = quanInput.value
-                    //     const stock = document.getElementById('stock').innerHTML.trim()
-                    //     const LIMIT = 10
-                    //     console.log(stock, 'stock is ');
-                    //     console.log(quantity, 'quantity is showing');
-                    //     console.log(quantity >= stock, 'what');
-
-                    //     if (quantity >= stock) {
-                    //         console.log('added');
-                    //     } else {
-                    //         Swal.fire({
-                    //             position: "center",
-                    //             icon: "error",
-                    //             title: "Stock limit exceeded",
-                    //             showConfirmButton: false,
-                    //             timer: 1500
-                    //         }).then(() => {
-
-                    //             console.log(quantity,'quantity is showing');
-                    //             if(quantity<=LIMIT){
-                    //                 quanInput.value = LIMIT
-                    //             }else{
-                    //                 quanInput.value = stock
-                    //             }
-                    //         })
-                    //     }
-                    // }
+				const data = await response.json();
+				return data.result === 'success';
+		   	} catch (error) {
+		 		return false;
+			}
+		       }
 
                     const limit = 10
-                    function increaseQuantity() {
+                async function increaseQuantity() {
+
+                    const isSessionValid = await checkSession();
+			console.log(isSessionValid,'session checking');
+
+			if (!isSessionValid) {
+				Swal.fire({
+					title: "Invalid Entry",
+					text: "Please sign in to continue.",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonText: "Sign In",
+					cancelButtonText: "Cancel"
+				}).then((result) => {
+					if (result.isConfirmed) {
+						window.location.href = '/signin';
+					}
+				});
+				return;
+			}
+
+                        
         const quantityElement = document.getElementById('quantity');
         let quantity = Number(quantityElement.innerHTML);
         const stock = Number(document.getElementById('stock').innerHTML.trim());
@@ -376,7 +386,28 @@
         }
     }
 
-    function decreaseQuantity() {
+  async function decreaseQuantity() {
+
+
+        const isSessionValid = await checkSession();
+			console.log(isSessionValid,'session checking');
+
+			if (!isSessionValid) {
+				Swal.fire({
+					title: "Invalid Entry",
+					text: "Please sign in to continue.",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonText: "Sign In",
+					cancelButtonText: "Cancel"
+				}).then((result) => {
+					if (result.isConfirmed) {
+						window.location.href = '/signin';
+					}
+				});
+				return;
+			}
+
         const quantityElement = document.getElementById('quantity');
         let quantity = Number(quantityElement.innerHTML);
 
