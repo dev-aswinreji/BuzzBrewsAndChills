@@ -224,6 +224,57 @@
             background-color: #007bff;
             color: #fff;
         }
+
+        /* Style the search container to position elements */
+        .search-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Style the search input */
+        #searchInput {
+            padding-right: 30px;
+            /* Make room for the clear button */
+        }
+
+        /* Style the clear button */
+        .clear-btn {
+            display: inline-block;
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgb(10, 5, 5);
+            font-size: 3rem;
+            font-weight: bold;
+            animation-name: fadeIn;
+            animation-duration: 2s;
+            /* Adjust duration as needed */
+            animation-fill-mode: forwards;
+            /* Keeps the final state of the animation */
+            animation-delay: 1.5s;
+            /* Delay before the animation starts */
+            opacity: 0;
+            /* Start with full transparency */
+        }
+
+        /* Define the keyframes for the fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+
+        /* Show the clear button when input has text */
+        #searchInput:not(:placeholder-shown)+.clear-btn {
+            display: block;
+        }
     </style>
     <%- include('../partials/head/head.ejs') %>
 </head>
@@ -255,7 +306,8 @@
                             <ul>
                                 <li class="active" data-filter="*"><a href="/shop">All</a></li>
                                 <% category.forEach(category=> { %>
-                                    <li data-filter=".energy"><a href="/shop/?categoryName=<%= category.name %>">
+                                    <li data-filter=".energy"><a
+                                            href="/shop/?categoryName=<%= category.name %>&sortOption=<%= sortOption %>">
                                             <%= category.name %>
                                         </a></li>
                                     <% }) %>
@@ -267,13 +319,18 @@
                     <div class="p-5">
                         <form action="/shop" method="GET">
                             <input type="hidden" name="sortOption" value="<%= sortOption %>">
-                            <input type="text" name="search" class="search-input" placeholder="Search for products..."
-                                value="<%= search %>">
+
+                            <div class="search-container">
+                                <input type="text" name="search" class="search-input" id="searchInput"
+                                    placeholder="Search for products..." value="<%= search %>">
+                                <span id="clearBtn" class="clear-btn">&times;</span>
+                            </div>
+
                             <button type="submit" class="search-btn">Search</button>
                         </form>
                     </div>
                     <h4>
-                        Filter By :
+                        Sort By :
 
                         <select name="sortOption" id="sort" class="box">
 
@@ -313,70 +370,69 @@
                                             </p>
                                             <br>
                                             <% } else { %>
-                                                    <p class="product-stock">
-                                                        <span class="text-danger"
-                                                            style="font-weight: bolder; font-size: medium;">Hot
-                                                            Deal!</span><br>
-                                                        <span class="text-success"
-                                                            style="font-size: medium; font-weight: bold;">In
-                                                            Stock</span>
-                                                        <span id="stock_<%= index %>">
-                                                            <%= product.stock %>
-                                                        </span>
-                                                    </p>
-                                                    <p class="product-price">
-                                                        <span>Per Kg</span>Rs
-                                                        <% if (product.price===product.discount_price) { %>
-                                                            
-                                                            <%= product.discount_price %>
+                                                <p class="product-stock">
+                                                    <span class="text-danger"
+                                                        style="font-weight: bolder; font-size: medium;">Hot
+                                                        Deal!</span><br>
+                                                    <span class="text-success"
+                                                        style="font-size: medium; font-weight: bold;">In
+                                                        Stock</span>
+                                                    <span id="stock_<%= index %>">
+                                                        <%= product.stock %>
+                                                    </span>
+                                                </p>
+                                                <p class="product-price">
+                                                    <span>Per Kg</span>Rs
+                                                    <% if (product.price===product.discount_price) { %>
+
+                                                        <%= product.discount_price %>
 
                                                             <% }else {%>
                                                                 <del>
                                                                     <%= product.price %>
                                                                 </del>
                                                                 <%= product.discount_price %>
-                                                                <% } %> 
-                                                    </p>
-                                                    <% } %>
-                                                        <% } else { %>
-                                                                <p class="product-stock">
-                                                                    <span class="text-success"
-                                                                        style="font-size: medium; font-weight: bold;">In
-                                                                        Stock</span>
-                                                                    <span id="stock_<%= index %>">
-                                                                        <%= product.stock %>
-                                                                    </span>
-                                                                </p>
-                                                                <p class="product-price">
-                                                                    <span>Per Kg</span>Rs <del>
-                                                                        <%= product.price %>
-                                                                    </del>
-                                                                    <%= product.discount_price %>
-                                                                </p>
-                                                                <% } %>
-                                                                    <a
-                                                                        onclick="addToWishlist('<%= index %>', '<%= product._id %>')">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="24" height="24" fill="currentColor"
-                                                                            class="bi bi-heart" viewBox="0 0 16 16"
-                                                                            style="margin-right: 3rem;">
-                                                                            <path
-                                                                                d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                                                                        </svg>
-                                                                    </a>
-                                                                    <% if (product.stock> 0) { %>
-                                                                        <button
-                                                                            onclick="addToCartUsingFetch('<%= index %>', '<%= product._id %>')"
-                                                                            class="cart-btn">
-                                                                            <i class="fas fa-shopping-cart"></i> Add to
-                                                                            Cart
-                                                                        </button>
-                                                                        <% } else { %>
-                                                                            <button class="cart-btn" disabled>
-                                                                                <i class="fas fa-shopping-cart"></i> Add
-                                                                                to Cart
-                                                                            </button>
-                                                                            <% } %>
+                                                                    <% } %>
+                                                </p>
+                                                <% } %>
+                                                    <% } else { %>
+                                                        <p class="product-stock">
+                                                            <span class="text-success"
+                                                                style="font-size: medium; font-weight: bold;">In
+                                                                Stock</span>
+                                                            <span id="stock_<%= index %>">
+                                                                <%= product.stock %>
+                                                            </span>
+                                                        </p>
+                                                        <p class="product-price">
+                                                            <span>Per Kg</span>Rs <del>
+                                                                <%= product.price %>
+                                                            </del>
+                                                            <%= product.discount_price %>
+                                                        </p>
+                                                        <% } %>
+                                                            <a
+                                                                onclick="addToWishlist('<%= index %>', '<%= product._id %>')">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" fill="currentColor" class="bi bi-heart"
+                                                                    viewBox="0 0 16 16" style="margin-right: 3rem;">
+                                                                    <path
+                                                                        d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                                                                </svg>
+                                                            </a>
+                                                            <% if (product.stock> 0) { %>
+                                                                <button
+                                                                    onclick="addToCartUsingFetch('<%= index %>', '<%= product._id %>')"
+                                                                    class="cart-btn">
+                                                                    <i class="fas fa-shopping-cart"></i> Add to
+                                                                    Cart
+                                                                </button>
+                                                                <% } else { %>
+                                                                    <button class="cart-btn" disabled>
+                                                                        <i class="fas fa-shopping-cart"></i> Add
+                                                                        to Cart
+                                                                    </button>
+                                                                    <% } %>
                                 </div>
                             </div>
                             <% }) %>
@@ -422,6 +478,26 @@
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
             <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+            <script>
+                document.getElementById('searchInput').addEventListener('input', function () {
+                    var clearBtn = document.getElementById('clearBtn');
+                    if (this.value.length > 0) {
+                        clearBtn.style.display = 'block';
+                    } else {
+                        clearBtn.style.display = 'none';
+                    }
+                });
+
+                document.getElementById('clearBtn').addEventListener('click', function (event) {
+                    event.stopPropagation(); // Prevent form submission
+                    var searchInput = document.getElementById('searchInput');
+                    searchInput.value = '';
+                    searchInput.focus(); // Focus back on the input field
+                    this.style.display = 'none';
+                });
+
+            </script>
 
             <script>
                 document.addEventListener('DOMContentLoaded', function () {

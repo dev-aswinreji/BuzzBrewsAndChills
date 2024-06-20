@@ -176,7 +176,6 @@
                                                                 <strong>Categories:</strong>
                                                                 <%= product.category.name %> , Organic
                                     </div>
-                                    <% if (product.stock < 40) { %>
                                         <% if (product.stock===0) { %>
                                             <p style="font-weight: bold;font-size: medium;" class="text-danger">
                                                 Product is currently out of stock!!!
@@ -193,9 +192,8 @@
                                                     </span> left
                                                 </p>
                                                 <% } %>
-                                                    <% } %>
                                 </div>
-                                <h4>Share:</h4>
+                                <!-- <h4>Share:</h4>
                                 <ul class="product-share">
                                     <li>
                                         <a href="">
@@ -217,7 +215,7 @@
                                             <i class="fab fa-linkedin"></i>
                                         </a>
                                     </li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
                     </div>
@@ -238,6 +236,7 @@
                             </div>
                         </div>
                     </div>
+                    <% if (relatedProduct.length > 1) { %>
                     <div class="row">
                             <% for (let i=0; i < relatedProduct.length; i++) { %>
                                 <% console.log(relatedProduct[i]._id,'realaet',product._id); %> 
@@ -263,6 +262,9 @@
                                 <% } %>
                                 <% } %>
                         </div>
+                        <% }else {%>
+                            <h4 class="text-center text-danger">No related product available right now</h4>
+                            <% } %> 
                 </div>
             </div>
             <!-- end more products -->
@@ -437,6 +439,7 @@
                     'Content-Type': 'application/json'
                 }
             }).then((response) => {
+                console.log(response,'res');
                 if (response.redirected) {
                     Swal.fire({
                         title: "Invalid Entry",

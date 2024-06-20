@@ -267,11 +267,14 @@
 											</tr>
 											<tr class="total-data">
 												<td><strong>Shipping: </strong></td>
-												<td>$45</td>
+												<td>
+													<del>45</del><br>
+													<span class="text-success fw-bold">Free Delivery</span>
+												</td>
 											</tr>
 											<tr class="total-data">
 												<td><strong>Total: </strong></td>
-												<td>$545</td>
+												<td id="overallTotal"><%= cart.totalPrice %> </td>
 											</tr>
 										</tbody>
 									</table>
@@ -392,6 +395,7 @@
 				.then(data => {
 					if (data.result === 'within limit') {
 						document.getElementById('totalPrice').textContent = data.totalPrice[0].totalPrice;
+						document.getElementById('overallTotal').textContent = data.totalPrice[0].totalPrice;
 						document.getElementById('productTotal_' + index).textContent = (quantity * price).toFixed(2);
 						quantityElement.textContent = quantity;
 					} else {

@@ -143,3 +143,9 @@ export async function findProductCategoryFiltering(categoryName, sort) {
 export async function findSearchedProductForUserUsingRegex(name, skip, limit) {
     return await productCollection.find(name).skip(skip).limit(limit)
 }
+
+
+export async function findAllProductsForUserHome(limit){
+    return (await productCollection.find({ availability: 'ACTIVE'}).limit(limit).populate('category')).filter(products => products.category.availability === 'ACTIVE')
+
+}
