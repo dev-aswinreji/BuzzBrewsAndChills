@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -47,7 +48,7 @@
         }
 
         .order-number {
-            font-weight: bolder;
+            font-weight: bold;
             font-size: large;
             color: #333;
         }
@@ -165,12 +166,76 @@
         .breadcrumb-text p {
             margin: 0;
         }
+
+        .total-price {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .order-summary {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            font-size: large;
+            font-weight: bold;
+        }
+
+        .order-summary h4 {
+            margin: 0 0 10px;
+        }
+
+        .order-summary div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .order-summary div:last-child {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .btn-history {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .btn-history:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .product {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .product-actions {
+                width: 100%;
+                align-items: flex-start;
+                margin-top: 10px;
+            }
+        }
     </style>
 </head>
 
 <body>
     <%- include('../partials/head/head.ejs') %>
         <%- include('../partials/header/header.ejs') %>
+
             <!-- breadcrumb-section -->
             <div class="breadcrumb-section breadcrumb-bg">
                 <div class="container">
@@ -185,16 +250,17 @@
                 </div>
             </div>
             <!-- end breadcrumb section -->
+
             <div class="container-order">
                 <h1>Order List</h1>
                 <% if (order.length> 0) { %>
                     <% order.forEach((data, orderIndex)=> { %>
                         <div class="order">
                             <div class="order-header" onclick="toggleOrderDetails('<%= orderIndex %>')">
-                                <span class="order-number fw-bolder">ORDER ID : <%= data.orderId %></span>
+                                <span class="order-number">ORDER ID: <%= data.orderId %></span>
                                 <span class="order-status">
                                     <h5 class="order-date">Date: <%= new
-                                            Date(data.orderDate).toLocaleDateString('en-GB',{ weekday: 'long' ,
+                                            Date(data.orderDate).toLocaleDateString('en-GB', { weekday: 'long' ,
                                             day: 'numeric' , month: 'long' , year: 'numeric' }) %>
                                     </h5>
                                 </span>
@@ -224,8 +290,8 @@
                                                 <% } %>
                                         </div>
                                         <div class="product-actions">
-                                            <% if (item.status==='DELIVERED' && item.returnStatus !== 'REJECT' ) { %>
-                                                <button class="btn btn-return btn-primary"
+                                            <% if (item.status==='DELIVERED' && item.returnStatus !=='REJECT' ) { %>
+                                                <button class="btn btn-primary"
                                                     onclick="returnOrder('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>', '<%= data.couponDiscount %>')">Return
                                                     Order</button>
                                                 <% } else if (item.status==='CANCELLED' ) { %>
@@ -235,7 +301,7 @@
                                                         </h6>
                                                         <% } else if (item.status==='PENDING' ) { %>
                                                             <button class="fw-bold btn btn-danger"
-                                                                onclick="retryPaymentFailed('<%= data.orderId %>','<%= data.totalPrice %>')">Retry
+                                                                onclick="retryPaymentFailed('<%= data.orderId %>', '<%= data.totalPrice %>')">Retry
                                                                 Payment</button>
                                                             <% } else if (item.status==='PENDING APPROVAL' ) { %>
                                                                 <h5 class="text-danger">Return request pending </h5>
@@ -246,23 +312,39 @@
                                                                         <h5 class="text-danger">Product return rejected
                                                                         </h5>
                                                                         <% } else { %>
-                                                                            <button class="btn btn-cancel btn-danger"
+                                                                            <button class="btn btn-danger"
                                                                                 onclick="cancelProduct('<%= orderIndex %>', '<%= data.orderId %>', '<%= item.productId %>')">Cancel
                                                                                 Product</button>
                                                                             <% } %>
                                         </div>
                                     </div>
                                     <% }) %>
-                                        <h5>Payment Method: <%= data.paymentMethod %>
-                                        </h5>
-                                        <h4>Total Amount: Rs <%= data.totalPrice %>
-                                        </h4>
-                                        <% console.log(data.products[0].status, 'products status is showing' ); %>
-                                            <% if (data.products[0].status !=='PENDING' && data.products[0].status
-                                                !=='PENDING APPROVAL' && data.products[0].returnStatus !=='APPROVE' ) { %>
-                                                <button class="btn-history"><a
-                                                        href="/order-invoice?orderId=<%= order[orderIndex].orderId %>">Invoice</a></button>
-                                                <% } %>
+
+                                        <div class="order-summary">
+                                            <h4>Order Summary</h4>
+                                            <div>
+                                                <span>Payment Method:</span>
+                                                <span>
+                                                    <%= data.paymentMethod %>
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span>Delivered Address:</span>
+                                                <span>
+                                                    <%= data.address.homeAddress %> , <%= data.address.city %>
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span>Total Amount:</span>
+                                                <span>Rs <%= data.totalPrice %></span>
+                                            </div>
+                                        </div>
+
+                                        <% if (data.products[0].status !=='PENDING' && data.products[0].status
+                                            !=='PENDING APPROVAL' && data.products[0].returnStatus !=='APPROVE' ) { %>
+                                            <a class="btn-history"
+                                                href="/order-invoice?orderId=<%= order[orderIndex].orderId %>">Invoice</a>
+                                            <% } %>
                             </div>
                         </div>
                         <% }) %>
@@ -272,31 +354,57 @@
                                 <% } %>
             </div>
             <%- include('../partials/footer/footer.ejs') %>
-                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script>
                     function toggleOrderDetails(index) {
                         const details = document.getElementById('order-details-' + index);
                         details.classList.toggle('active');
                     }
-
                     async function cancelProduct(orderIndex, orderId, productId) {
+
                         const quantity = document.getElementById('quantity_' + orderIndex + '_0').value;
                         console.log(quantity, 'quantity is showing');
-                        await fetch(`/cancel-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}`, {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json'
+
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, Cancel it!"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+
+                                fetch(`/cancel-order/?productId=${productId}&quantity=${quantity}&orderId=${orderId}`, {
+                                    method: 'GET',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    }
+                                })
+                                    .then(response => response.ok ? response.json() : console.log('Network failure'))
+                                    .then(data => {
+                                        if (data.result === 'success') {
+                                            console.log('Product cancelled successfully')
+                                            Swal.fire({
+                                                title: "Cancelled!",
+                                                text: "Product has been cancelled successfully.",
+                                                icon: "success",
+                                                timer:2000,
+                                                showConfirmButton:false
+                                            }).then(() => {
+                                                location.reload()
+
+                                            })
+                                        }
+                                    })
+                                    .catch(err => console.log('Error:', err))
+
                             }
-                        })
-                            .then(response => response.ok ? response.json() : console.log('Network failure'))
-                            .then(data => {
-                                if (data.result === 'success') {
-                                    console.log('Product cancelled successfully');
-                                    location.reload();
-                                }
-                            })
-                            .catch(err => console.log('Error:', err));
+                        });
+
                     }
 
                     async function returnOrder(orderIndex, orderId, productId, couponDiscount) {

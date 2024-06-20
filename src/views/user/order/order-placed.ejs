@@ -58,11 +58,11 @@
         }
 
         .product-name {
-            width: 60%;
+            width: 40%;
             font-weight: bold;
         }
 
-        .product-price, .product-quantity {
+        .product-price, .product-quantity, .product-total {
             width: 20%;
             text-align: center;
         }
@@ -149,6 +149,60 @@
         .discount-details h5 {
             margin: 5px 0;
         }
+        .order-summary {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            font-size: large;
+            font-weight: bold;
+        }
+
+        .order-summary h4 {
+            margin: 0 0 10px;
+        }
+
+        .order-summary div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .order-summary div:last-child {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .btn-history {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #141516;
+            color: #fff;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .btn-history:hover {
+            background-color: #0a0a0a;
+        }
+
+        @media (max-width: 768px) {
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .product {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .product-actions {
+                width: 100%;
+                align-items: flex-start;
+                margin-top: 10px;
+            }
+        }
     </style>
 <%- include ('../partials/head/head.ejs' ) %>
 
@@ -179,9 +233,11 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Product Image</th>
                         <th>Product Name</th>
                         <th>Price</th>
                         <th>Quantity</th>
+                        <th colspan="4">Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -191,6 +247,7 @@
                         <td class="product-name"><%= item.name %></td>
                         <td class="product-price">Rs <%= item.originalProductPrice %></td>
                         <td class="product-quantity"><%= item.quantity %></td>
+                        <td class="product-total" colspan="4">Rs <%= item.originalProductPrice * item.quantity %> </td>
                     </tr>
                     <% }) %>
                 </tbody>
@@ -198,10 +255,22 @@
 
             <div id="address-container">
                 <div class="address-title">
-                    <% order.forEach(address => { %>
-                     
-                    
-                    <h4>Delivery Address: <%= order[0].address.homeAddress %></h4>
+                    <h3>Order Summary</h3>
+                    <% order.forEach(data => { %>
+                        <div class="order-summary">
+                        <div>
+                            <span>Payment Method:</span>
+                            <span><%= data.paymentMethod %></span>
+                        </div>
+                        <div>
+                            <span>Delivered Address:</span>
+                            <span><%= data.address.homeAddress %> , <%= data.address.city %> </span>
+                        </div>
+                        <div>
+                            <span>Total Amount:</span>
+                            <span>Rs <%= data.totalPrice %></span>
+                        </div>
+                        </div>
                     <% }) %>
                 </div>
             </div>
@@ -215,13 +284,6 @@
             <h5>Discount Amount: Rs <%= order[0].originalTotal - order[0].totalPrice %></h5>
         </div>
         <% } %>
-        <div class="payment-method">
-            <h5>Payment Method: <%= order[0].paymentMethod %></h5>
-        </div>
-
-        <div class="total">
-            <h4>Total: Rs <%= order[0].totalPrice %></h4>
-        </div>
 
         <div class="btn-container-order">
             <button class="btn-shop"><a href="/shop">Return to Shop</a></button>
