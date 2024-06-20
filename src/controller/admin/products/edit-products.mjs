@@ -43,35 +43,40 @@ export const admin_editProductsPost = async (req, res) => {
     console.log(req.body.imageUrl);
 
 
-    
     let imageUrlMultiple = []
-        let count = 0
-        let imageValidating;
+    let count = 0
+    let imageValidating;
+    if (req.files.length === 0) {
+      imageUrlMultiple = []
+    } else {
+
+      for (const file of req.files) {
+
+        imageValidating = await validateImage(file.path)
+
+      }
+      console.log(imageValidating);
+      if (imageValidating) {
         for (const file of req.files) {
 
-            imageValidating = await validateImage(file.path)
+          imageUrlMultiple[count] = file.filename
+          count++
 
         }
-        console.log(imageValidating);
-        if (imageValidating) {
-            for (const file of req.files) {
-
-              imageUrlMultiple[count] = file.filename
-                count++
-
+      } else {
+        for (const file of req.files) {
+          fs.unlinkSync(imageDirectory + '/' + file.filename, (err => {
+            if (err) console.log('some error occured in admin delete product images ', err);
+            else {
+              console.log(imageDirectory + '/' + file.filename);
             }
-        } else {
-            for (const file of req.files) {
-                fs.unlinkSync(imageDirectory + '/' + file.filename, (err => {
-                    if (err) console.log('some error occured in admin delete product images ', err);
-                    else {
-                        console.log(imageDirectory + '/' + file.filename);
-                    }
-                }))
-            }
-            req.session.productError = 'Input file contains unsupported image format'
-            return res.redirect(`/admin/edit-products/${id}`)
+          }))
         }
+        req.session.productError = 'Input file contains unsupported image format'
+        return res.redirect(`/admin/edit-products/${id}`)
+      }
+
+    }
 
 
 
