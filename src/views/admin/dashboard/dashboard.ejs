@@ -112,12 +112,12 @@
                             <span class="text">Coupon</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <!-- <div class="menu-item">
                         <a class="menu-link" href="/admin/brands">
                             <i class="icon material-icons md-stars"></i>
                             <span class="text">Brands</span>
                         </a>
-                    </div>
+                    </div> -->
                 </div>
                 <hr>
                 <br>
@@ -195,7 +195,7 @@
                                     <span class="icon icon-sm rounded-circle bg-info-light"><i
                                             class="text-info material-icons md-shopping_basket"></i></span>
                                     <div class="text">
-                                        <h6 class="mb-1 card-title">Monthly Earning</h6> <span>$6,982</span>
+                                        <h6 class="mb-1 card-title">Monthly Earning</h6> <span id="monthlyCost"></span>
                                         <span class="text-sm">
                                             Based on your local time.
                                         </span>
@@ -369,6 +369,7 @@
                         const monthlyLabels = monthlyData.map(data => `${data.year}-${data.month}`);
                         const monthlyCosts = monthlyData.map(data => data.totalDeliveredCost);
                         const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+                        document.getElementById('monthlyCost').innerHTML = monthlyCosts
                         renderChart(monthlyCtx, monthlyLabels, monthlyCosts, 'Total Delivered Cost');
 
                         // Yearly chart

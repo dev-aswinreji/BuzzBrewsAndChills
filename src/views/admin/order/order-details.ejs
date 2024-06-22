@@ -118,7 +118,7 @@
                         <div class="row align-items-center">
                             <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
                                 <span>
-                                    <i class="material-icons md-calendar_today"></i> <b><%= orderDetails.orderDate %></b>
+                                    <i class="material-icons md-calendar_today"></i> <b><%= new Date(orderDetails.orderDate).toLocaleString() %></b>
                                 </span>
                                 <br>
                                 <small class="text-muted">Order ID: <%= orderDetails.orderId %></small>
@@ -140,9 +140,9 @@
                                     <div class="text">
                                         <h6 class="mb-1">Customer</h6>
                                         <p class="mb-1">
-                                            <%= orderDetails.username %><br>
-                                            <%= orderDetails.email %><br>
-                                            <%= orderDetails.phoneNumber %>
+                                            <%= orderDetails.address.name %><br>
+                                            <%= orderDetails.address.email %><br>
+                                            <%= orderDetails.address.phoneNumber %>
                                         </p>
                                         <a href="#">View profile</a>
                                     </div>
@@ -158,7 +158,6 @@
                                         <p class="mb-1">
                                             Shipping: Fargo express<br>
                                             Pay method: <%= orderDetails.paymentMethod %><br>
-                                            Status: new
                                         </p>
                                         <a href="#">Download info</a>
                                     </div>
@@ -172,9 +171,9 @@
                                     <div class="text">
                                         <h6 class="mb-1">Deliver to</h6>
                                         <p class="mb-1">
-                                            City: <%= orderDetails.address %><br>
-                                            Block A, House 123, Floor 2<br>
-                                            Po Box 10000
+                                            City: <%= orderDetails.address.city %><br>
+                                            <%= orderDetails.address.homeAddress %> <br>
+                                            Pincode <%= orderDetails.address.pincode %> 
                                         </p>
                                         <a href="#">View profile</a>
                                     </div>
@@ -218,11 +217,13 @@
                                                         <div class="dropdown-and-button">
                                                             <% if (item.status === 'RETURNED') { %>
                                                             <h5>Admin approved product return request</h5>
+                                                            <%}else if (item.status === 'PENDING' && orderDetails.paymentStatus === 'FAILURE') { %>
+                                                                <H4 class="text-danger">User order payment failure issue</H4>
                                                             <% } else if (item.status === 'DELIVERED' && item.returnStatus === 'REJECT') { %>
                                                                 <h5>Admin rejected product return request</h5>          
                                                             <%}else if (item.status === 'DELIVERED') { %>
                                                                 <h6>Product has been successfully delivered</h6>
-                                                            <% } else { %>
+                                                            <% } else if(item.status === 'ORDER PLACED' || item.status === 'PROCESSING' || item.status === 'OUT FOR DELIVERY' || item.status === 'DELIVERED') { %>
                                                                 <select id="status-dropdown" data-product-id="<%= item.productId %>">
                                                                     <option value="ORDER PLACED" <% if (item.status === 'ORDER PLACED') { %> selected <% } %>>Order Placed</option>
                                                                     <option value="PROCESSING" <% if (item.status === 'PROCESSING') { %> selected <% } %>>Processing</option>

@@ -16,7 +16,7 @@ export async function findAllOrderDataForAdmin(skip, limit) {
       .find({ "products.status": { $ne: "PENDING APPROVAL" } })
       .sort({ timeStamp: -1 })
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
   } catch (error) {
     console.log(error, "error occured in find all order data for admin func");
   }
@@ -24,7 +24,7 @@ export async function findAllOrderDataForAdmin(skip, limit) {
 
 export async function findUniqueOrderToChangeOrderStatus(orderId) {
   try {
-    return await orderCollection.findById(orderId);
+    return await orderCollection.findById(orderId).populate('userId')
   } catch (error) {
     console.log(
       error,
