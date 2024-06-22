@@ -5,7 +5,7 @@ export const admin_pdfFormat = async (req, res) => {
     try {
         const { period, customStartDate, customEndDate } = req.query;
         const reportData = await generateReport(period, customStartDate, customEndDate);
-
+        console.log(reportData, 'report data is showing successfully');
         const doc = new PDFDocument();
         res.setHeader('Content-disposition', 'attachment; filename="sales_report.pdf"');
         res.setHeader('Content-type', 'application/pdf');
@@ -13,25 +13,26 @@ export const admin_pdfFormat = async (req, res) => {
 
         // Add title to the document
         doc.font('Helvetica-Bold')
-            .fontSize(14)
+            .fontSize(18)
             .text('Sales Report', { align: 'center', underline: true })
+            .text(`${period}`)
+            .text(`Total Revenue: Rs${reportData[0].totalRevenue.toFixed(2)}`, { align: 'right' })
             .moveDown();
 
-        // Define table headers and rows
+        //'Original Amount' extracter orginal amount name 
         const table = {
             headers: [
                 'Sl No', 'Username', 'Product Name', 'Quantity', 'Price',
-                'Coupon Discount', 'Original Amount', 'Total Revenue'
+                'Coupon Discount(%)', 'Grand Total'
             ],
-            rows: reportData.map((item, index) => [
+            rows: reportData[0].products.map((item, index) => [
                 index + 1,
                 item.username,
                 item.productName,
                 item.quantity,
-                `$${item.price.toFixed(2)}`,
-                `$${item.couponDiscount.toFixed(2)}`,
-                `$${item.originalAmount.toFixed(2)}`,
-                `$${item.totalRevenue.toFixed(2)}`
+                `Rs${item.price.toFixed(2)}`,
+                `${item.couponDiscount.toFixed(2)}`,
+                `Rs${item.totalPrice.toFixed(2)}`
             ])
         };
 
@@ -47,9 +48,11 @@ export const admin_pdfFormat = async (req, res) => {
 // Function to generate table in PDF document
 function generateTable(doc, table) {
     const startX = 50;
-    const startY = 100;
+    const startY = 150;
     const rowHeight = 50;
-    const colWidths = [30, 80, 80, 70, 50, 80, 60, 100];  // Specify column widths
+    const headerHeight = 30;
+
+    const colWidths = [30, 80, 80, 80, 80, 80, 100];  // Specify column widths
     const borderWidth = 1;
 
     // Draw table headers
