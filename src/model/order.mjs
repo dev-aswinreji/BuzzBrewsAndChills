@@ -20,6 +20,7 @@ function getFormattedDate() {
 const orderSchema = mongoose.Schema({
   userId: {
     type: Schema.Types.ObjectId,
+    ref:'userDatas',
     trim: true,
     required: true,
   },

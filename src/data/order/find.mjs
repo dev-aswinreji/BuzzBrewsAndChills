@@ -13,10 +13,10 @@ export async function findOrderData(userId) {
 export async function findAllOrderDataForAdmin(skip, limit) {
   try {
     return await orderCollection
-      .find({ "products.status": { $ne: "PENDING APPROVAL" } })
+      .find()
       .sort({ timeStamp: -1 })
       .skip(skip)
-      .limit(limit)
+      .limit(limit).populate('userId')
   } catch (error) {
     console.log(error, "error occured in find all order data for admin func");
   }
@@ -48,7 +48,8 @@ export async function findAllOrderSuccessFullOrderAmount() {
 export async function findAllReturnedOrders(skip,limit) {
   return await orderCollection.find({
     $or: [
-      { products: { $elemMatch: { status: "PENDING APPROVAL" } } },
+      { products: { $elemMatch: { status: "PENDING APPROVAL"} } },
+      { products: { $elemMatch: { returnStatus: "APPROVE"} } }
     ]
   }).skip(skip).limit(limit)
 }

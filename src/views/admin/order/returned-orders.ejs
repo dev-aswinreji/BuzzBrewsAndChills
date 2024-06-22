@@ -86,15 +86,13 @@
                 <section class="content-main">
                     <div class="content-header">
                         <div>
-                            <h2 class="content-title card-title">Order List </h2>
+                            <h2 class="content-title card-title">Return Order List </h2>
                             <p>Lorem ipsum dolor sit amet.</p>
                         </div>
                         <div>
                             <input type="text" placeholder="Search order ID" class="form-control bg-white">
                         </div>
-                        <div>
-                            <button class="btn btn-success"><a style="text-decoration: none;color: white;" href="/admin/returned-orders">Returned Orders</a></button>
-                        </div>
+                      
                     </div>
                     <div class="card mb-4">
                         <header class="card-header">
@@ -124,7 +122,7 @@
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead>
-                                        <tr>
+                                        <tr class="fw-bold fs-6">
                                             <th>#ID</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Total</th>
@@ -139,10 +137,10 @@
                                             <% for( let i=0; i < orders.length; i++ ) { %>
 
 
-                                                <tr>
+                                                <tr class="fw-bold fs-6">
                                                     <td><%= orders[i].orderId %> </td>
                                                     <td><b>
-                                                            <%= orders[i].username %>
+                                                            <%= orders[i].userId.fullName %>
                                                         </b></td>
                                             
                                                     <td>Rs <%= orders[i].totalPrice %>
@@ -151,7 +149,7 @@
                                                         <%= orders[i].paymentMethod %>
                                                     </td>
                                                     <td>
-                                                        <%= orders[i].orderDate %>
+                                                        <%= new Date(orders[i].orderDate).toLocaleString('en-IN') %>
                                                     </td>
                                                     <td class="text-end">
                                                         <a href="/admin/return-order-details?orderId=<%= orders[i]._id %>" class="btn btn-md rounded font-sm">Detail</a>

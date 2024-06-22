@@ -142,7 +142,7 @@
                                                 <tr>
                                                     <td><%= orders[i].orderId %> </td>
                                                     <td><b>
-                                                            <%= orders[i].username %>
+                                                            <%= orders[i].userId.fullName %>
                                                         </b></td>
                                             
                                                     <td>Rs <%= orders[i].totalPrice %>
@@ -150,8 +150,8 @@
                                                     <td>
                                                         <%= orders[i].paymentMethod %>
                                                     </td>
-                                                    <td>
-                                                        <%= orders[i].orderDate %>
+                                                    <td class="fw-bold fs-6">
+                                                        <%= new Date(orders[i].orderDate).toLocaleString('en-IN') %>
                                                     </td>
                                                     <td class="text-end">
                                                         <a href="/admin/order-details?orderId=<%= orders[i]._id %>" class="btn btn-md rounded font-sm">Detail</a>

@@ -191,12 +191,12 @@
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                        <th width="40%">Product</th>
+                                                        <th width="20%">Product</th>
                                                         <th width="20%">Unit Price</th>
                                                         <th width="20%">Reason</th>
                                                         <th width="20%">Quantity</th>
                                                         <th width="20%">Total Amount</th>
-                                                        <th width="20%" class="text-end">Order Status</th>
+                                                        <th width="20%" class="">Order Status</th>
                                                     </tr>
                                                 </thead>
                                                 <% orderDetails.products.forEach((item,index)=> { %>
@@ -233,7 +233,9 @@
                                                                     <button class="btn btn-danger "
                                                                         onclick="handleReturnOrder('REJECT', '<%= item.productId %>','<%= item.quantity %>')">Reject
                                                                         Return</button>
-                                                                    <% } %>
+                                                                    <% }else if(item.status === 'RETURNED') {%>
+                                                                        <h4 class="text-success">Product returned successfully</h4>
+                                                                        <% } %> 
 
 
                                                             </td>
