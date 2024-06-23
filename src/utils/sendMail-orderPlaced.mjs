@@ -62,7 +62,7 @@ export const sendEmailForOrderPlaced = async (user, order) => {
                 <p><strong>Total Price: $${order[0].totalPrice.toFixed(2)}</strong></p>
                 <p>Payment Method: ${order[0].paymentMethod}</p>
                 <p>Payment Status: ${order[0].paymentStatus}</p>
-                <p>Order Date: ${new Date(order[0].orderDate).toLocaleString()}</p>
+                <p>Order Date: ${new Date().toLocaleString()}</p>
                 <br>
                 <p>If you have any questions about your order, feel free to contact us.</p>
                 <p>Thank you for shopping with us!</p>
