@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container-wishlist {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .wishlist-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .wishlist-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-details {
+            display: flex;
+            align-items: center;
+        }
+
+        .product-details img {
+            width: 100px;
+            height: auto;
+            margin-right: 20px;
+            border-radius: 8px;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-info h4 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .product-info p {
+            margin: 5px 0;
+            color: #777;
+        }
+
+        .wishlist-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-view-details {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-view-details:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-add-to-cart {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .btn-add-to-cart:hover {
+            background-color: #218838;
+        }
+
+        .btn-remove {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .btn-remove:hover {
+            background-color: #c82333;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #777;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .breadcrumb-section {
+            padding: 20px 0;
+            background-color: #f7f7f7;
+            text-align: center;
+        }
+
+        .breadcrumb-text {
+            display: inline-block;
+            text-align: left;
+        }
+
+        .breadcrumb-text p {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<%- include('../partials/head/head.ejs') %>
+
+    <body>
+        <%- include('../partials/header/header.ejs') %>
+            <!-- breadcrumb-section -->
+            <div class="breadcrumb-section breadcrumb-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-2 text-center">
+                            <div class="breadcrumb-text">
+                                <p>Your favorite products</p>
+                                <h1>Wishlist</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end breadcrumb section -->
+            <div class="container-wishlist">
+                <h1>Wishlist</h1>
+                <% if (wishlist) { %>
+                    <% wishlist.products.forEach((item,index)=> { %>
+                        <% console.log(item,'item is showing'); %>
+                            <div class="wishlist-item">
+                                <div class="product-details">
+                                    <img src="/product-images/<%= item.productId.imageUrl[0] %>"
+                                        alt="<%= item.productId.name %>">
+                                    <div class="product-info">
+
+                                        <h4>
+                                            <%= item.productId.name %>
+                                        </h4>
+                                        <p>Price: Rs <%= item.productId.price %>
+                                        </p>
+
+                                    </div>
+
+                                </div>
+                                <h6><span id="stock_<%= index %>">
+                                        <% if (item.productId.stock <=0) { %>
+                                            <h6 class="text-danger">product is out of stock</h6>
+                                            <% }else {%>
+                                                Stock left:
+                                                <%= item.productId.stock %>
+                                                    <% } %>
+                                    </span></h6>
+
+                                <div class="wishlist-actions">
+                                    <button class="btn btn-view-details" href="/product-view"><a
+                                            href="/product-view/<%= item.productId._id %>">View
+                                            Details</a></button>
+                                    <button class="btn btn-add-to-cart" <%=item.productId.stock <=0 ? 'disabled' : '' %>
+                                        onclick="addToCartUsingFetch('<%= item.productId._id %>','<%= index %>')">Add to
+                                                Cart</button>
+                                    <button class="btn btn-remove"
+                                        onclick="confirmRemoving('<%= item.productId._id %>')">Remove</button>
+                                </div>
+                            </div>
+                            <% }) %>
+                                <% } else { %>
+                                    <p class="empty-message">Your wishlist is empty. Start adding your favorite
+                                        products!
+                                    </p>
+                                    <% } %>
+            </div>
+            <%- include('../partials/footer/footer.ejs') %>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+                <script>
+
+
+                    function addToCart(productId) {
+                        // Implement add to cart functionality here
+                        alert('Add to cart functionality not implemented yet for product ID: ' + productId);
+                    }
+                    async function confirmRemoving(productId) {
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, remove it!"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                removeFromWishlist(productId)
+                            }
+                        });
+                    }
+
+
+                    async function removeFromWishlist(productId) {
+                        // Implement remove from wishlist functionality here
+                        await fetch(`/remove-wishlist/?productId=${productId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        }).then(response => {
+                            if (!response.ok) {
+                                throw new Error('Some error occured while fetching')
+                            }
+                            return response.json()
+                        }).then(data => {
+                            if (data.result === 'success') {
+                                Swal.fire({
+                                    title: "Removed!",
+                                    text: "Your product has been removed from wishlist.",
+                                    icon: "success"
+
+                                }).then(() => {
+                                    location.reload()
+                                })
+                            }
+                        })
+                    }
+                </script>
+
+
+                <script>
+                    async function addToCartUsingFetch(productId, index) {
+                        console.log(index, 'index');
+                        const productStockStr = document.getElementById('stock_' + index).innerHTML
+                        const productStock = Number(productStockStr)
+                        if (!productStock <= 0) {
+                            console.log(productStock, 'productstock is showing');
+                            await fetch(`/add-to-cart/?productId=${productId}&stock=${productStock}`, {
+                                method: 'GET',
+                                headers: {
+                                    'Content-Type': 'applicaton/json'
+                                }
+                            }).then((response) => {
+                                if (response.redirected) {
+                                    Swal.fire({
+                                        title: "Invalid Entry",
+                                        text: "Please sign in to continue.",
+                                        icon: "warning",
+                                        showCancelButton: true,
+                                        confirmButtonText: "Sign In",
+                                        cancelButtonText: "Cancel"
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = '/signin'
+                                        }
+                                    })
+                                } else if (!response.ok) {
+                                    throw new Error('A network error occurred while fetching data.')
+                                }
+                                return response.json()
+                            })
+
+                                .then(data => {
+                                    console.log(data.result)
+                                    data.result === 'within limit' ?
+                                        Swal.fire({
+                                            position: "center",
+                                            icon: "success",
+                                            title: "Successfully product added to cart",
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        }) : Swal.fire({
+                                            position: "center",
+                                            icon: "error",
+                                            title: "Maximum product limit is exceeded",
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        })
+                                }).catch(err => {
+                                    console.log(err, 'Some error occured in fetch method in shop page');
+                                })
+                        } else {
+                            Swal.fire({
+                                icon: 'warning',
+                                showConfirmButton: false,
+                                title: 'Out of stock',
+                                timer: 2500
+                            })
+                        }
+
+                    }
+                </script>
+    </body>
+
+</html>

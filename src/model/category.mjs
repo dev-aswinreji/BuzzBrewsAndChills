@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 
 const db = await import ("./database.mjs").then((instance) => instance.default)
 
-function productModel(collectionName, schema) {
+function categoryModel(collectionName, schema) {
     return db.model(collectionName, schema)
 }
 
@@ -21,15 +21,18 @@ const categorySchema = new mongoose.Schema({
     },
     availability:{
         type:String,
-        enum:['ACTIVE','ARCHIVE','UNAVAILABLE'],
+        enum:['ACTIVE','ARCHIVED','UNAVAILABLE'],
         default:'ACTIVE',
         required:true
     },
     createdAt:{
         type:Date,
         default:Date.now,
+    },
+    discount:{
+        type:Number
     }
 
 })
 
-export const categoryCollection = productModel('category', categorySchema)
+export const categoryCollection = categoryModel('categories', categorySchema)

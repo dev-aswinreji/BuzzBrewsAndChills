@@ -30,24 +30,35 @@ const productsSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: categoryCollection,
     },
-    availability:{
-        type:String,
-        enum:['AVAILABLE','UNAVAILABLE'],
-        default:'AVAILABLE',
-        required:true
+    availability: {
+        type: String,
+        enum: ['ACTIVE', 'ARCHIVED'],
+        default: 'ACTIVE',
+        required: true
     },
     stock: {
         type: Number,
         required: true,
         min: 0
     },
-    imageUrl:{
-        type:Array,
-        required:true
+    imageUrl: {
+        type: Array,
+        required: true
     },
-    createdAt:{
-        type:Date,
-        default:Date.now,
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    updatedAt: {   //pending 
+        type: Date,
+
+    },
+    discount: {
+        type: Number,
+    },
+    discount_price: {
+        type: Number,
+
     }
 })
 

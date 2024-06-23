@@ -24,7 +24,6 @@ const userSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
     },
     role: {
         type: String,
@@ -45,11 +44,15 @@ const userSchema = mongoose.Schema({
     accountCreated: {
         type: String,
         default: moment().format('YYYY/MM/DD')
+    },
+    coupon:{
+        type:Array,
+        required:true
     }
 
 })
 
-export const userCollection = userModel('userData', userSchema)
+export const userCollection = userModel('userDatas', userSchema)
 
 
 

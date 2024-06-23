@@ -12,4 +12,4 @@ export async function updateProducts(id, data) {
 
 export async function updateCategory(id,data){
     return await categoryCollection.findByIdAndUpdate(id,data)
-}
+}   

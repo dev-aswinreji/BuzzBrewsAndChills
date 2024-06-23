@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head/head.ejs') %>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f9;
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #fff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }
+
+            h3 {
+                color: #333;
+                margin-bottom: 20px;
+            }
+
+            .total-amount {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .total-amount h1 {
+                margin: 0 0 0 10px;
+                color: #007bff;
+            }
+
+            .btn-container {
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+            }
+
+            .table-container {
+                margin-top: 20px;
+            }
+
+            .table {
+                width: 100%;
+                margin-bottom: 20px;
+                border-collapse: collapse;
+            }
+
+            .table th,
+            .table td {
+                padding: 10px;
+                border: 1px solid #ddd;
+                text-align: left;
+            }
+
+            .table th {
+                background-color: #f4f4f9;
+            }
+
+            .no-data {
+                text-align: center;
+                background-color: rgba(214, 7, 7, 0.418);
+                padding: 20px;
+                border-radius: 8px;
+            }
+
+            .modal .modal-content {
+                padding: 20px;
+            }
+
+            .modal .modal-title {
+                margin-bottom: 20px;
+            }
+
+            .modal .modal-body {
+                padding: 20px 0;
+            }
+
+            .modal .modal-footer {
+                display: flex;
+                justify-content: space-between;
+                gap: 10px;
+            }
+
+            @media (max-width: 768px) {
+                .total-amount {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .total-amount h1 {
+                    margin: 10px 0 0;
+                }
+
+                .btn-container {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+</head>
+
+<body>
+    <div class="screen-overlay"></div>
+
+    <aside class="navbar-aside" id="offcanvas_aside">
+        <div class="aside-top">
+            <a href="index.html" class="brand-wrap">
+                <img src="assets/imgs/theme/logo.svg" class="logo" alt="BuzzBrews & Chills">
+            </a>
+            <div>
+                <button class="btn btn-icon btn-aside-minimize">
+                    <i class="text-muted material-icons md-menu_open"></i>
+                </button>
+            </div>
+        </div>
+        <nav>
+            <div class="menu-aside">
+
+                <a class="menu-link" href="/admin/dashboard">
+                    <i class="icon material-icons md-home"></i>
+                    <span class="text">Dashboard</span>
+                </a>
+                <div class="menu-item active">
+                    <a class="menu-link" href="/admin/products">
+                        <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">Products</span>
+                    </a>
+                </div>
+                <div class="menu-item ">
+                    <a class="menu-link" href="/admin/category">
+                        <i class="icon material-icons md-shopping_bag"></i>
+                        <span class="text">categories</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link" href="/admin/orders">
+                        <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link" href="/admin/users-list">
+                        <i class="icon material-icons md-person"></i>
+                        <span class="text">Users</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link" href="/admin/add-new-products">
+                        <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Add product</span>
+                    </a>
+                </div>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/transaction">
+                        <i class="icon material-icons md-monetization_on"></i>
+                        <span class="text">Transactions</span>
+                    </a>
+                </li>
+                <div class="menu-item">
+                    <a class="menu-link" href="/">
+                        <i class="icon material-icons md-person"></i>
+                        <span class="text">User Login</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link" href="/admin/coupon">
+                        <i class="icon material-icons md-comment"></i>
+                        <span class="text">Coupon</span>
+                    </a>
+                </div>
+                <!-- <div class="menu-item">
+                    <a class="menu-link" href="/admin/brands">
+                        <i class="icon material-icons md-stars"></i>
+                        <span class="text">Brands</span>
+                    </a>
+                </div> -->
+            </div>
+            <hr>
+            <br>
+            <br>
+        </nav>
+    </aside>
+    <main class="main-wrap">
+        <%- include('../partials/header/header.ejs') %>
+            <div class="container">
+                <div class="row mt-3 mb-5">
+                    <h3>Sales Report - <%= period.charAt(0).toUpperCase() + period.slice(1) %>
+                    </h3>
+                    <div class="total-amount">
+                        <strong>Total Revenue:</strong>
+                        <h1>Rs<%= totalRevenue %>
+                        </h1>
+                    </div>
+                    <div class="btn-container">
+                        <button class="btn btn-secondary" onclick="history.back()">Go Back</button>
+                    </div>
+                </div>
+
+                <div class="row mt-3 mb-4">
+                    <form action="/admin/sales-report" method="get">
+                        <div class="mb-3">
+                            <label for="rangeSelect" class="form-label">Select Time Range:</label>
+                            <select class="form-select" id="rangeSelect" name="period">
+                                <option value="daily" <%=period==='daily' ? 'selected' : '' %>>Daily</option>
+                                <option value="weekly" <%=period==='weekly' ? 'selected' : '' %>>Weekly</option>
+                                <option value="monthly" <%=period==='monthly' ? 'selected' : '' %>>Monthly</option>
+                                <option value="yearly" <%=period==='yearly' ? 'selected' : '' %>>Yearly</option>
+                            </select>
+                        </div>
+                        <div class="btn-container">
+                            <button type="submit" class="btn btn-primary">Generate Report</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#customDate">Custom Date</button>
+                        </div>
+                    </form>
+                </div>
+
+                <% if (reportData.length===0) { %>
+                    <div class="row">
+                        <div class="no-data">
+                            <h1>SORRY NO ORDER FOUND. BOOST YOUR SALE</h1>
+                        </div>
+                    </div>
+                    <% } else { %>
+                        <div class="table-container">
+                            <table id="salesReportTable" class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Number</th>
+                                        <th>Username</th>
+                                        <th>Product Name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Coupon Discount %</th>
+                                        <th>Grand Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% reportData[0].products.forEach((item, index)=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= index + 1 %>
+                                            </td>
+                                            <td>
+                                                <%= item.username %>
+                                            </td>
+                                            <td>
+                                                <%= item.productName %>
+                                            </td>
+                                            <td>Rs <%= item.price %>
+                                            </td>
+                                            <td>
+                                                <%= item.quantity %>
+                                            </td>
+                                                <td><%= item.couponDiscount %>
+                                                </td>
+                                            </td>
+                                            <td>
+                                               Rs <%= item.totalPrice %>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <button onclick="downloadReport(document.getElementById('rangeSelect').value)"
+                                        class="btn btn-success">Download Report</button>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+            </div>
+
+            <!-- Modal for custom date range -->
+            <div class="modal fade text-start" id="customDate" tabindex="-1" aria-labelledby="myModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myModalLabel">Custom Date Report</h5>
+                            <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/admin/sales-report" method="get" id="customDateForm">
+                                <input type="hidden" name="period" value="custom">
+                                <div class="mb-3">
+                                    <label class="form-label" for="start-date">Select Start Date</label>
+                                    <input class="form-control" id="start-date" type="date" name="startDate" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="end-date">Select End Date</label>
+                                    <input class="form-control" id="end-date" type="date" name="endDate" required>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary" type="submit">Generate Report</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+            <%- include('../partials/footer/footer.ejs') %>
+
+                <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>-------
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                <!-- Toastr -->
+                <link rel="stylesheet" type="text/css"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+                <script type="text/javascript"
+                    src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+                <script>
+                    function validateDateRange() {
+                        const startDate = document.getElementById('start-date').value;
+                        const endDate = document.getElementById('end-date').value;
+                        if (new Date(startDate) > new Date(endDate)) {
+                            toastr.success('Start date should be less than end date');
+                            return false;
+                        }
+                        return true;
+                    }
+
+                    document.getElementById('customDateForm').addEventListener('submit', function (event) {
+                        if (!validateDateRange()) {
+                            event.preventDefault();
+                        }
+                    });
+
+                    async function downloadReport(period) {
+                        try {
+                            const response = await axios.get(`/admin/download-report?period=${period}`, { responseType: 'blob' });
+
+                            const blob = new Blob([response.data], { type: 'application/pdf' });
+                            const url = window.URL.createObjectURL(blob);
+
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', `sales_report_${period}.pdf`);
+
+                            document.body.appendChild(link);
+                            link.click();
+
+                            document.body.removeChild(link);
+                            window.URL.revokeObjectURL(url);
+                        } catch (error) {
+                            console.log('Error downloading report:', error);
+                        }
+                    }
+
+                    window.addEventListener('DOMContentLoaded', function () {
+                        const today = new Date().toISOString().split('T')[0];
+                        document.getElementById('start-date').max = today;
+                        document.getElementById('end-date').max = today;
+                    });
+                </script>
+    
+</body>
+
+</html>

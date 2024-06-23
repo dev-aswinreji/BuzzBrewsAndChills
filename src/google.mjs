@@ -2,8 +2,8 @@
 import dotenv from 'dotenv'
 import passport from 'passport'
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth'
-import { insertGoogle } from './data/users/insert.mjs'
-import { findSigninWithGoogleUser } from './data/users/find.mjs'
+import { insertGoogle, insertUser } from './data/users/insert.mjs'
+import { findUser } from './data/users/find.mjs'
 
 
 passport.serializeUser((user, cb) => {
@@ -17,12 +17,11 @@ passport.deserializeUser((obj, cb) => {
 /* Google Authentication */
 
 dotenv.config()
-const GOOGLE_CLIENT_ID = process.env.CLIENT_ID
-const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SECRET
+
 console.log('google signin page working ')
 export const googleSignIn = passport.use(new GoogleStrategy({
-    clientID: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
+    clientID:process.env.CLIENT_ID,
+    clientSecret:process.env.CLIENT_SECRET,
     callbackURL: process.env.LOCALHOST_URL
 }, async (accessToken, refreshToken, profile, done) => {
     try {
@@ -33,7 +32,7 @@ export const googleSignIn = passport.use(new GoogleStrategy({
 
         console.log('inside try block');
 
-        const user = await findSigninWithGoogleUser(googleData.id)
+        const user = await findUser(googleData._json.email,)
         console.log(user, 'USER CREATED');
 
         if (user) {
@@ -42,7 +41,6 @@ export const googleSignIn = passport.use(new GoogleStrategy({
         } else {
             console.log('inside else');
             const userData = {
-                googleId: googleData.id,
 
                 fullName: googleData.displayName,
 
@@ -50,7 +48,8 @@ export const googleSignIn = passport.use(new GoogleStrategy({
             }
             console.log(userData);
 
-            const newUser = await insertGoogle(userData)
+            const newUser = await insertUser(userData)
+            console.log(newUser,'new user is showing');
 
             done(null, newUser)
         }

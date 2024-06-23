@@ -1,0 +1,311 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<%- include('../partials/head/head.ejs') %>
+
+    <body>
+
+        <div class="screen-overlay"></div>
+        <aside class="navbar-aside" id="offcanvas_aside">
+            <div class="aside-top">
+                <a href="index.html" class="brand-wrap">
+                    <img src="assets/imgs/theme/logo.svg" class="logo" alt="BuzzBrews & Chills">
+                </a>
+                <div>
+                    <button class="btn btn-icon btn-aside-minimize">
+                        <i class="text-muted material-icons md-menu_open"></i>
+                    </button>
+                </div>
+            </div>
+            <nav>
+                <div class="menu-aside">
+
+                    <a class="menu-link" href="/admin/dashboard">
+                        <i class="icon material-icons md-home"></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/products">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">Products</span>
+                        </a>
+                    </div>
+                    <div class="menu-item ">
+                        <a class="menu-link" href="/admin/category">
+                            <i class="icon material-icons md-shopping_bag"></i>
+                            <span class="text">categories</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/orders">
+                            <i class="icon material-icons md-shopping_cart"></i>
+                            <span class="text">Orders</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/users-list">
+                            <i class="icon material-icons md-person"></i>
+                            <span class="text">Users</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/add-new-products">
+                            <i class="icon material-icons md-add_box"></i>
+                            <span class="text">Add product</span>
+                        </a>
+                    </div>
+                    <li class="menu-item">
+                        <a class="menu-link" href="/admin/transaction">
+                            <i class="icon material-icons md-monetization_on"></i>
+                            <span class="text">Transactions</span>
+                        </a>
+                    </li>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/">
+                            <i class="icon material-icons md-person"></i>
+                            <span class="text">User Login</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/admin/coupon">
+                            <i class="icon material-icons md-comment"></i>
+                            <span class="text">Coupon</span>
+                        </a>
+                    </div>
+                    <!-- <div class="menu-item">
+                        <a class="menu-link" href="/admin/brands">
+                            <i class="icon material-icons md-stars"></i>
+                            <span class="text">Brands</span>
+                        </a>
+                    </div> -->
+                </div>
+                <hr>
+                <br>
+                <br>
+            </nav>
+        </aside>
+
+
+        <main class="main-wrap">
+
+
+            <%- include('../partials/header/header.ejs') %>
+                <section class="content-main">
+                    <% if (product) { %>
+                        <form action="/admin/edit-products" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="content-header">
+                                        <h2 class="content-title">Edit Product</h2>
+                                        <div>
+                                            <button type="submit"
+                                                class="btn btn-md rounded font-sm hover-up">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-6">
+                                    <div class="card mb-4">
+                                        <div class="card-header">
+                                            <h4>Basic</h4>
+                                        </div>
+                                        <span id="error" class="text-danger fw-bold fs-5">
+                                            <%= error %>
+                                        </span>
+                                        <div class="card-body">
+                                            <div class="mb-4">
+                                                <input type="text" name="productId" value="<%= product._id %>" hidden
+                                                    id="productId">
+                                                <label for="product_name" class="form-label">Product Name</label>
+                                                <input type="text" placeholder="Type here" name="name"
+                                                    class="form-control" value="<%= product.name%>" id="product_name">
+                                            </div>
+
+
+                                            <div class="mb-4">
+                                                <label for="product_category" class="form-label">Category
+                                                </label>
+                                                <% if (category) { %>
+
+                                                    <select name="category" id="" required>
+                                                        <option value="<%= product.category.name %>">
+                                                            <%= product.category.name %>
+                                                        </option>
+                                                        <% for( cate of category ) { %>
+                                                            <% if (cate.name !==product.category.name) { %>
+                                                                <option value="<%= cate.name %>">
+                                                                    <%= cate.name %>
+                                                                </option>
+
+                                                                <% } %>
+                                                                    <% } %>
+                                                    </select>
+                                                    <% } %>
+                                            </div>
+
+
+                                            <div class="mb-4">
+                                                <label for="product_stock" class="form-label">Product Stock</label>
+                                                <input type="text" placeholder="Type here" name="stock"
+                                                    class="form-control" value="<%= product.stock %>" id="product_name">
+                                            </div>
+                                            <div class="mb-4">
+                                                <label class="form-label">Full description</label>
+                                                <textarea placeholder="Type here" class="form-control"
+                                                    name="description" rows="4"><%= product.description %>
+                                            </textarea>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="mb-4">
+                                                        <label class="form-label">Regular price</label>
+                                                        <div class="row gx-2">
+                                                            <input placeholder="$" type="text" name="price"
+                                                                value="<%= product.price %>" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-4">
+                                                        <label class="form-label">Promotional price</label>
+                                                        <input placeholder="$" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <label class="form-label">Currency</label>
+                                                    <select class="form-select">
+                                                        <option>
+                                                            USD
+                                                        </option>
+                                                        <option>
+                                                            EUR
+                                                        </option>
+                                                        <option>
+                                                            RUBL
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="product_discount" class="form-label">Offer</label>
+                                                <input type="number" placeholder="Type here" name="discount"
+                                                    inputmode="tel" class="form-control" id="product_discount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="card mb-4">
+                                        <div class="card-header">
+                                            <h4>Product Image</h4>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <% for (let i=0; i < product.imageUrl.length; i++) { %>
+                                                <div class="input-upload">
+                                                    <img src="/product-images/<%= product.imageUrl[i] %>" alt="">
+                                                    <button type="button" class="delete-image-btn"
+                                                        onclick="deleteImage(this)">x</button>
+                                                </div>
+                                                <input type="text" name="old_imageUrl"
+                                                    value="<%= product.imageUrl[i] %>" hidden>
+                                                <% } %>
+                                                    <input type="file" name="imageUrl" class="form-control" id="imageInput"
+                                                        accept="image/jpg, image/jpeg,  image/png" multiple>
+
+                                                        <div id="imagePreview"></div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                        <% }else{ %>
+                            <h1>No Product Available Right Now
+                            </h1>
+                            <% } %>
+                </section>
+                <%- include('../partials/footer/footer.ejs') %>
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </body>
+    <script>
+      script>
+  document.getElementById('imageInput').addEventListener('change', function(event) {
+    const files = event.target.files;
+    const imagePreview = document.getElementById('imagePreview');
+    imagePreview.innerHTML = ''; // Clear previous previews
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.style.width = '200px'; // Adjust the width as needed
+          img.style.marginRight = '10px'; // Add some margin between images
+          imagePreview.appendChild(img);
+        }
+        reader.readAsDataURL(file);
+      }
+    } else {
+      imagePreview.innerHTML = 'No images selected';
+    }
+  });
+    </script>
+    <script>
+        async function deleteImage(button) {
+            const container = button.parentNode;
+            const image = container.querySelector('img');
+            const hiddenInput = container.nextElementSibling;
+            const filename = hiddenInput.value;
+            console.log(image, 'image is showing');
+            console.log(filename, 'filename is showing');
+            // Remove the image container from the DOM
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    container.remove();
+                    confirmationToDeleteImage(filename)
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
+                }
+            });
+
+        }
+        async function confirmationToDeleteImage(filename) {
+
+            const productId = document.getElementById('productId').value
+            console.log(productId, 'product id is showing whiile fetching');
+            await fetch(`/admin/delete-image?productId=${productId}&filename=${filename}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete image');
+                }
+                return response.json();
+            }).then(data => {
+                console.log(data.message);
+            }).catch(error => {
+                console.error(error.message);
+            });
+        }
+    </script>
+    </body>
+
+</html>
