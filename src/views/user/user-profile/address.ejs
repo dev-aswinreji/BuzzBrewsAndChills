@@ -161,13 +161,13 @@
                         <% console.log(address._id); %>
                             <a href="/edit-address/?id=<%= address._id %>" class="btn">Edit</a>
 
-                            <% if (address.isDefault==='YES' ) { %>
-                                <span style="font-weight: bold;font-size:large;color: #2d5521;">Default
-                                    Address</span>
-                                <% }else{ %>
+                            <%# if (address.isDefault==='YES' ) { %>
+                                <!-- <span style="font-weight: bold;font-size:large;color: #2d5521;">Default
+                                    Address</span> -->
+                                <%# }else{ %>
                                     <button class="btn" onclick="deleteButton(`<%= index %>`)">Delete</button>
-                                    <button class="btn" onclick="makeDefault(`<%= index %>`)">Make Default</button>
-                                    <% } %>
+                                    <!-- <button class="btn" onclick="makeDefault(`<%= index %>`)">Make Default</button> -->
+                                    <%# } %>
                     </li>
                 </ul>
                 <% }) %>

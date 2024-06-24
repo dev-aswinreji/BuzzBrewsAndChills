@@ -130,47 +130,55 @@
                     <div class="billing-address-form">
                         <form id="addressForm" action="/edit-address/?id=<%= address._id %>" method="post" novalidate>
                             <div class="form-group">
+                                <label>Name:</label>
                                 <input type="text" name="name" class="form-control" value="<%= address.name %>"
                                     placeholder="Name" required pattern="[A-Za-z\s]+"
                                     title="Name should contain only letters and spaces">
                                 <div class="error-message" id="name-error"></div>
                             </div>
                             <div class="form-group">
+                                <label>Phone Number</label>
                                 <input type="tel" name="phoneNumber" class="form-control"
                                     value="<%= address.phoneNumber %>" placeholder="Phone" required pattern="\d{10}"
                                     title="Phone number should be 10 digits long">
                                 <div class="error-message" id="phone-error"></div>
                             </div>
                             <div class="form-group">
+                                <label>Home address</label>
                                 <input type="text" name="homeAddress" class="form-control"
                                     value="<%= address.homeAddress %>" placeholder="Home Address" required>
                                 <div class="error-message" id="address-error"></div>
                             </div>
                             <div class="form-group">
+                                <label>Country</label>
                                 <input type="text" name="country" class="form-control" value="<%= address.country %>"
                                     placeholder="Country" required>
                                 <div class="error-message" id="country-error"></div>
                             </div>
                             <div class="form-group">
+                                <label>City</label>
                                 <input type="text" name="city" class="form-control" value="<%= address.city %>"
                                     placeholder="City" required>
                                 <div class="error-message" id="city-error"></div>
                             </div>
                             <div class="form-group">
+                                <label>State</label>
                                 <input type="text" name="state" class="form-control" value="<%= address.state %>"
                                     placeholder="State" required pattern="[A-Za-z\s]+"
                                     title="State should contain only letters and spaces">
                                 <div class="error-message" id="state-error"></div>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="pincode" class="form-control" value="<%= address.pincode %>"
+                                <label>Pincode</label>
+                                <input type="tel" name="pincode" class="form-control" value="<%= address.pincode %>"
                                     placeholder="Pincode" required pattern="\d{6}"
                                     title="Pincode should be 6 digits long">
                                 <div class="error-message" id="pincode-error"></div>
                             </div>
                             <div class="form-group">
+                                <label>Say something</label>
                                 <textarea name="bill" id="bill" class="form-control" cols="30" rows="4"
-                                    placeholder="Say Something"><%= address.bill %></textarea>
+                                    placeholder="Say Something"><% %></textarea>
                             </div>
                             <button class="btn btn-dark" type="submit">Submit</button>
                         </form>
