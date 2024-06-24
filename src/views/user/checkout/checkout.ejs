@@ -744,7 +744,7 @@
                                         Swal.fire({
                                             title: 'Payment Successful!',
                                             html: `<p>Payment ID: <strong>${response.razorpay_payment_id}</strong></p>
-                                                                            <p>Amount: <strong>${order.amount}</strong> ${order.currency}</p>`,
+                                                   <p>Amount: <strong>${order.amount / 100}</strong> ${order.currency}</p>`,
                                             icon: 'success',
                                             timer: 3500,
 
