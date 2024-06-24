@@ -48,7 +48,7 @@ export const user_otpVerificationPost = async (req, res) => {
             const userdata = req.session.userTemporaryData
             req.session.userEmailForAddUserAddress = userdata.email
             const userData = await insertUser(userdata)
-            req.session.USER_ID = userData[0]._id
+            req.session.USER_ID = userData._id
             req.session.isUserAuth = true
             console.log('authentication is true');
             return res.redirect('/home')
