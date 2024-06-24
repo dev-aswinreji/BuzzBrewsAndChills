@@ -86,7 +86,7 @@ app.set('views', [
     path.join(__dirname, 'views/user/email-verification'),
     path.join(__dirname, 'views/user/forgot-password'),
     path.join(__dirname, 'views/user/order'),
-    path.join(__dirname, 'views/user/otp-verfication'),
+    path.join(__dirname, 'views/user/otp-verification'),
     path.join(__dirname, 'views/user/razorpay'),
     path.join(__dirname, 'views/user/shop'),
     path.join(__dirname, 'views/user/signin'),
