@@ -6,39 +6,122 @@
         .chart-container {
             width: 100%;
             max-width: 600px;
-            /* Adjust as needed */
             margin: 0 auto;
         }
 
         canvas {
             width: 100% !important;
             height: 300px !important;
-            /* Adjust as needed */
         }
 
         .dashboard {
             padding: 20px;
         }
 
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
         .top-products,
         .top-categories {
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
         }
 
         .product,
         .category {
             border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             margin: 10px;
-            padding: 10px;
-            width: 200px;
+            padding: 20px;
+            width: 220px;
             text-align: center;
+            transition: transform 0.3s ease;
+            background-color: #fff;
+        }
+
+        .product:hover,
+        .category:hover {
+            transform: scale(1.05);
         }
 
         .product img,
         .category img {
             max-width: 100%;
             height: auto;
+            border-radius: 10px;
+        }
+
+        .product h3,
+        .category h3 {
+            font-size: 18px;
+            color: #333;
+            margin: 15px 0;
+        }
+
+        .product p,
+        .category p {
+            font-size: 16px;
+            color: #777;
+        }
+
+        .product {
+            animation: fadeIn 1s forwards;
+            animation-delay: calc(var(--delay) * 1s);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+        }
+
+
+        .category {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .category:hover {
+            transform: translateY(-5px);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .product,
+            .category {
+                flex-basis: 100%;
+                /* Full width on small screens */
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Ensure Chart.js is included -->
@@ -112,12 +195,6 @@
                             <span class="text">Coupon</span>
                         </a>
                     </div>
-                    <!-- <div class="menu-item">
-                        <a class="menu-link" href="/admin/brands">
-                            <i class="icon material-icons md-stars"></i>
-                            <span class="text">Brands</span>
-                        </a>
-                    </div> -->
                 </div>
                 <hr>
                 <br>
@@ -236,98 +313,38 @@
                         <h2>Yearly Report</h2>
                         <canvas id="yearlyChart"></canvas>
                     </div>
-                    <!-- <div class="row">
-                    <div class="col-xl-8 col-lg-12">
-                        <div class="card mb-4">
-                            <article class="card-body">
-                                <h5 class="card-title">Sale statistics</h5>
-                                <canvas id="myChart" height="120"></canvas>
-                            </article>
-                        </div>
+                    <br><br>
+                    <h2 class="section-title">Top Products</h2>
+                    <div class="top-products">
+                        <% topProducts.forEach((product, index)=> { %>
+                            <div class="product" style="--delay: <%= index %>;">
+                                <img src="/product-images/<%= product.imageUrl %>" alt="<%= product.name %>">
+                                <h3 class="fw-bold">
+                                    Product Name
+                                    <%= product.name %>
+                                </h3>
+                                <p>Sold : <%= product.totalSold %>
+                                </p>
+                            </div>
+                            <% }); %>
+
                     </div>
-                    <div class="col-xl-4 col-lg-12">
-                        <div class="card mb-4">
-                            <article class="card-body">
-                                <h5 class="card-title">Revenue Base on Area</h5>
-                                <canvas id="myChart2" height="217"></canvas>
-                            </article>
-                        </div>
-                        <div class="card mb-4">
-                            <article class="card-body">
-                                <h5 class="card-title">Marketing Channel</h5>
-                                <span class="text-muted font-xs" id="dailyChart">Facebook</span>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar" role="progressbar" id="dailyChart" style="width: 15%">15%</div>
-                                </div>
-                                <span class="text-muted font-xs">Instagram</span>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar" role="progressbar" style="width: 65%">65%</div>
-                                </div>
-                                <span class="text-muted font-xs">Google</span>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar" role="progressbar" style="width: 51%">51%</div>
-                                </div>
-                                <span class="text-muted font-xs">Twitter</span>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar" role="progressbar" style="width: 80%">80%</div>
-                                </div>
-                                <span class="text-muted font-xs">Other</span>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar" role="progressbar" style="width: 80%">80%</div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div> -->
-
-
-                    <!-- top 10 products and category -->
-                    <div class="dashboard">
-                        <h2>Top 10 Selling Products</h2>
-                        <div class="top-products">
-                            <% topProducts.forEach(product=> { %>
-                                <div class="product">
-                                    <img src="/product-images/<%= product.imageUrl %>" alt="<%= product.name %>">
-                                    <h3>
-                                        <%= product.name %>
-                                    </h3>
-                                    <p>Sold: <%= product.totalSold %>
-                                    </p>
-                                </div>
-                                <% }) %>
-                        </div>
-
-                        <h2>Top 10 Selling Categories</h2>
-                        <div class="top-categories">
-                            <% topCategories.forEach(category=> { %>
-                                <div class="category">
-                                    <img src="/product-images/<%= category.imageUrl %>" alt="<%= category.name %>">
-                                    <h3>
+                    <br><br>
+                    <h2 class="section-title">Top Categories</h2>
+                    <div class="top-categories">
+                        <% topCategories.forEach(category=> { %>
+                            <div class="category">
+                                <img src="/product-images/<%= category.imageUrl %>" alt="<%= category.name %>">
+                                <h3 class="fw-bold text-dark">
+                                    Category Name
+                                    <span id="text-success">
                                         <%= category.name %>
-                                    </h3>
-                                    <p>Sold: <%= category.totalSold %>
-                                    </p>
-                                </div>
-                                <% }) %>
-                        </div>
-                    </div>
-                    <!-- end of top products and category -->
-
-
-
-
-                    <div class="pagination-area mt-30 mb-50">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-start">
-                                <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03</a></li>
-                                <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                                <li class="page-item"><a class="page-link" href="#">16</a></li>
-                                <li class="page-item"><a class="page-link" href="#"><i
-                                            class="material-icons md-chevron_right"></i></a></li>
-                            </ul>
-                        </nav>
+                                    </span>
+                                </h3>
+                                <p>Sold : <%= category.totalSold %>
+                                </p>
+                            </div>
+                            <% }); %>
                     </div>
                 </section> <!-- content-main end// -->
 
