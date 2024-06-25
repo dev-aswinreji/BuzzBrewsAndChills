@@ -10,7 +10,8 @@ export const user_orderListGet = async (req, res) => {
     console.log(userId, 'userId is showing');
     const skip = (page - 1) * limit;
     const order = await findOrderData(userId,skip,limit);
-    const totalOrders = await findOrderDataCount(userId)
+    const totalOrders = await findOrderDataCount(userId) / limit
+    console.log(totalOrders,'total orders is showing');
     console.log(order, 'order history of specific user');
     res.render("order-history", { order,currentPage:parseInt(page) ,totalOrders});
   } catch (error) {

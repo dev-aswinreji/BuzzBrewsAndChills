@@ -229,6 +229,33 @@
                 margin-top: 10px;
             }
         }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .pagination a {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            color: #212529;
+            padding: 6px 12px;
+            text-decoration: none;
+            transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .pagination a:hover {
+            background-color: #e9ecef;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -352,29 +379,32 @@
                                 <h3 class="text-center">No order yet placed</h3>
                                 <h4 class="text-center">Go to shopping <a href="/shop">shop</a></h4>
                                 <% } %>
-                                <div class="pagination">
-                            <% if (totalOrders > 1) { %>
-                                <a href="/wallet?page=1">First</a>
-                                <% let start, end; %>
-                                <% if (currentPage <= 3) { %>
-                                    <% start = 1 %>
-                                    <% end = Math.min(5, totalOrders) %>
-                                <% } else if (currentPage >= totalOrders - 2) { %>
-                                    <% start = Math.max(totalOrders - 4, 1) %>
-                                    <% end = totalOrders %>
-                                <% } else { %>
-                                    <% start = currentPage - 2 %>
-                                    <% end = currentPage + 2 %>
-                                <% } %>
-                
-                                <% for (let i = start; i <= end; i++) { %>
-                                    <a href="/wallet?page=<%= i %>" class="<%= i === currentPage ? 'active' : '' %>">
-                                        <%= i %>
-                                    </a>
-                                <% } %>
-                                <a href="/wallet?page=<%= totalOrders %>">Last</a>
-                            <% } %>
-                        </div>
+                                    <div class="pagination">
+                                        <% if (totalOrders> 1) { %>
+                                            <a href="/order-history?page=1">First</a>
+                                            <% let start, end; %>
+                                                <% if (currentPage <=3) { %>
+                                                    <% start=1 %>
+                                                        <% end=Math.min(5, totalOrders) %>
+                                                            <% } else if (currentPage>= totalOrders - 2) { %>
+                                                                <% start=Math.max(totalOrders - 4, 1) %>
+                                                                    <% end=totalOrders %>
+                                                                        <% } else { %>
+                                                                            <% start=currentPage - 2 %>
+                                                                                <% end=currentPage + 2 %>
+                                                                                    <% } %>
+
+                                                                                        <% for (let i=start; i <=end;
+                                                                                            i++) { %>
+                                                                                            <a href="/order-history?page=<%= i %>"
+                                                                                                class="<%= i === currentPage ? 'active' : '' %>">
+                                                                                                <%= i %>
+                                                                                            </a>
+                                                                                            <% } %>
+                                                                                                <a
+                                                                                                    href="/order-history?page=<%= totalOrders %>">Last</a>
+                                                                                                <% } %>
+                                    </div>
             </div>
             <%- include('../partials/footer/footer.ejs') %>
 
@@ -415,8 +445,8 @@
                                                 title: "Cancelled!",
                                                 text: "Product has been cancelled successfully.",
                                                 icon: "success",
-                                                timer:2000,
-                                                showConfirmButton:false
+                                                timer: 2000,
+                                                showConfirmButton: false
                                             }).then(() => {
                                                 location.reload()
 
