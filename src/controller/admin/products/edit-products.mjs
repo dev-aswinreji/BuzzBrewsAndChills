@@ -20,7 +20,7 @@ export const admin_editProductsGet = async (req, res) => {
       const product = await findSingleProduct(param);
       const category = await findCategory();
       console.log(product, "single product is logged ");
-      const error = req.session.productError;
+      const error = req.session.productErrorEdit;
       res.render("edit-products", { product, category, error });
     } else {
       res.redirect("/admin/signin");
@@ -72,7 +72,7 @@ export const admin_editProductsPost = async (req, res) => {
             }
           }))
         }
-        req.session.productError = 'Input file contains unsupported image format'
+        req.session.productErrorEdit = 'Input file contains unsupported image format'
         return res.redirect(`/admin/edit-products/${id}`)
       }
 
@@ -128,7 +128,7 @@ export const admin_editProductsPost = async (req, res) => {
         console.log(error, "Update Product Error");
       }
     } else {
-      req.session.productError = "product is already exist";
+      req.session.productErrorEdit = "product is already exist";
       res.redirect(`/admin/edit-products/${id}`);
     }
   } catch (error) {

@@ -101,15 +101,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <span id="error" class="text-danger fw-bold fs-5">
+                                    <%= error %>
+                                </span>
 
                                 <div class="col-lg-6">
                                     <div class="card mb-4">
                                         <div class="card-header">
                                             <h4>Basic</h4>
                                         </div>
-                                        <span id="error" class="text-danger fw-bold fs-5">
-                                            <%= error %>
-                                        </span>
                                         <div class="card-body">
                                             <div class="mb-4">
                                                 <input type="text" name="productId" value="<%= product._id %>" hidden
@@ -346,6 +346,15 @@
                 });
             }
         </script>
+        <script>
+            const errMsg = document.getElementById('error')
+            function reload(){
+              setTimeout(()=>{
+                errMsg.innerText = ''
+                },3000)
+            }
+            reload()
+            </script>
     </body>
 
 </html>
