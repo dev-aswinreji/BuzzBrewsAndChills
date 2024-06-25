@@ -306,8 +306,8 @@
                             <ul>
                                 <li class="active" data-filter="*"><a href="/shop">All</a></li>
                                 <% category.forEach(category=> { %>
-                                    <li data-filter=".energy"><a
-                                            href="/shop/?categoryName=<%= category.name %>&sortOption=<%= sortOption %>">
+                                    <li data-filter=".energy" class="active"><a 
+                                            href="/shop/?categoryName=<%= category.name %>&sortOption=<%= sortOption %>&search=<%= search %>">
                                             <%= category.name %>
                                         </a></li>
                                     <% }) %>
