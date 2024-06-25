@@ -165,9 +165,8 @@
 
     <body>
         <%- include('../partials/header/header.ejs') %>
-            <% if (wallet) { %>
-                <!-- breadcrumb-section -->
-                <div class="breadcrumb-section breadcrumb-bg">
+        <!-- breadcrumb-section -->
+        <div class="breadcrumb-section breadcrumb-bg">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-8 offset-lg-2 text-center">
@@ -180,6 +179,7 @@
                     </div>
                 </div>
                 <!-- end breadcrumb section -->
+                <% if (wallet) { %>
                 <div class="container-wallet">
                     <h1>Wallet</h1>
                     <div class="wallet-summary">
