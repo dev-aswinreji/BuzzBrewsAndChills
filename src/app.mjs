@@ -47,6 +47,7 @@ import walletRoute from './route/user/wallet/wallet.mjs'
 import wishlistRoute from './route/user/wishlist/wishlist.mjs'
 import { isAuthenticated } from './middleware/isAuthenticated.mjs'
 import transactionAdminRoute from './route/admin/transaction/transaction.mjs'
+import blockOrUnblock from './middleware/user-blocked.mjs'
 
 //router end 
 
@@ -115,8 +116,10 @@ app.use(function (req, res, next) {
     res.locals.session = req.session;
     next()
 })
-app.use('/', [aboutRoute, cartRoute, checkoutRoute, contactRoute, couponRoute, emailVerifyRoute, forgotPassRoute,orderRoute, otpVerifyRoute, razorpayRoute, shopRoute, signinRoute, signupRoute, userProfileRoute, walletRoute, wishlistRoute])
+
+
 app.use('/admin', [categoryRoute, couponAdminRoute, dashboardRoute, orderAdminRoute, productsRoute, salesReportRoute, signinAdminRoute, usersListRoute,transactionAdminRoute])
+app.use('/',blockOrUnblock,[aboutRoute, cartRoute, checkoutRoute, contactRoute, couponRoute, emailVerifyRoute, forgotPassRoute,orderRoute, otpVerifyRoute, razorpayRoute, shopRoute, signinRoute, signupRoute, userProfileRoute, walletRoute, wishlistRoute])
 app.use('/', googleRoute)
 
 app.get('/check-session', isAuthenticated, (req, res) => {
