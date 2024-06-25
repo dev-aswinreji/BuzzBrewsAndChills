@@ -47,6 +47,7 @@ export const admin_signinPost = async (req, res) => {
             req.session.isAdminAuthenticated = true
             res.redirect('/admin/dashboard')
         } else {
+            req.session.adminMessage = 'Invalid Entry'
             res.redirect('/admin')
         }
 
