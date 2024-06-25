@@ -1,15 +1,22 @@
 import { orderCollection } from "../../model/order.mjs";
 
-export async function findOrderData(userId) {
+export async function findOrderData(userId,skip,limit) {
   try {
     return await orderCollection
       .find({ userId: userId })
-      .sort({ _id: -1 });
+      .sort({ _id: -1 }).skip(skip).limit(limit)
   } catch (error) {
     console.log(error, "error occured in find order data func");
   }
 }
-
+export async function findOrderDataCount(userId) {
+  try {
+    return await orderCollection.countDocuments({userId:userId})
+      
+  } catch (error) {
+    console.log(error, "error occured in find order data func");
+  }
+}
 export async function findAllOrderDataForAdmin(skip, limit) {
   try {
     return await orderCollection
