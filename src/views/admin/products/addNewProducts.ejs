@@ -40,6 +40,11 @@
                 padding: 5px;
                 cursor: pointer;
             }
+
+            .error-message {
+                color: red;
+                display: none;
+            }
         </style>
     </head>
 
@@ -110,12 +115,6 @@
                             <span class="text">Coupon</span>
                         </a>
                     </div>
-                    <!-- <div class="menu-item">
-                        <a class="menu-link" href="/admin/brands">
-                            <i class="icon material-icons md-stars"></i>
-                            <span class="text">Brands</span>
-                        </a>
-                    </div> -->
                 </div>
                 <hr>
                 <br>
@@ -152,28 +151,33 @@
                                                     <label for="product_name" class="form-label">Product Name</label>
                                                     <input type="text" placeholder="Type here" name="name"
                                                         class="form-control" id="product_name">
-                                                    <div id="nameError" class="error-message">Please enter a product
+                                                    <div id="nameError" class="error-message">Please enter a valid product
                                                         name.</div>
                                                 </div>
                                                 <% if (category) { %>
                                                     <div class="mb-4">
                                                         <label for="product_category"
                                                             class="form-label">Category</label>
-                                                        <select name="category" id="product_category" required>
+                                                        <select name="category" id="product_category"
+                                                            class="form-control" required>
+                                                            <option value="" selected disabled></option>
                                                             <% for (cate of category) { %>
-                                                                <option value="" selected disabled></option>
                                                                 <option value="<%= cate.name %>">
                                                                     <%= cate.name %>
                                                                 </option>
                                                                 <% } %>
                                                         </select>
+                                                        <div id="categoryError" class="error-message">Please select a
+                                                            category.</div>
                                                     </div>
                                                     <% } %>
                                                         <div class="mb-4">
                                                             <label for="product_stock" class="form-label">Product
                                                                 Stock</label>
-                                                            <input type="text" placeholder="Type here" name="stock"
-                                                                class="form-control" id="product_stock">
+                                                            <input type="number" placeholder="Type here" name="stock"
+                                                                class="form-control" id="product_stock" min="0">
+                                                            <div id="stockError" class="error-message">Please enter a
+                                                                valid product stock.</div>
                                                         </div>
                                                         <div class="mb-4">
                                                             <label class="form-label">Full Description</label>
@@ -191,8 +195,7 @@
                                                                         <input placeholder="$" type="text" name="price"
                                                                             id="product_price" class="form-control">
                                                                         <div id="priceError" class="error-message">
-                                                                            Please enter a product
-                                                                            price.</div>
+                                                                            Please enter a valid product price.</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -200,15 +203,15 @@
                                                                 <div class="mb-4">
                                                                     <label class="form-label">Promotional Price</label>
                                                                     <input placeholder="$" type="text"
-                                                                        class="form-control" id="promotional_price">
-                                                                    <!-- <div id="promoPriceError" class="error-message">
-                                                                        Please enter a promotional
-                                                                        price.</div> -->
+                                                                        class="form-control" name="promotional_price"
+                                                                        id="promotional_price">
+                                                                    <div id="promoPriceError" class="error-message">
+                                                                        Please enter a valid promotional price.</div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4">
                                                                 <label class="form-label">Currency</label>
-                                                                <select class="form-select">
+                                                                <select class="form-select" name="currency">
                                                                     <option>USD</option>
                                                                     <option>EUR</option>
                                                                     <option>RUBL</option>
@@ -220,7 +223,9 @@
                                                                 class="form-label">Offer</label>
                                                             <input type="number" placeholder="Type here" name="discount"
                                                                 inputmode="tel" class="form-control"
-                                                                id="product_discount">
+                                                                id="product_discount" min="0">
+                                                            <div id="discountError" class="error-message">Please enter a
+                                                                valid discount.</div>
                                                         </div>
                                             </div>
                                         </div>
@@ -237,17 +242,15 @@
                                                         multiple>
                                                     <div id="image-preview"></div>
                                                     <div id="imageError" class="error-message">Please upload at least
-                                                        valid
-                                                        image.</div>
+                                                        one valid image.</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                        </div>
                     </form>
-                    </div>
                 </section>
                 <%- include('../partials/footer/footer.ejs') %>
-
         </main>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
@@ -257,11 +260,31 @@
 
                 // Validate Product Name
                 const productName = document.getElementById('product_name').value.trim();
-                if (productName === "") {
+                if (productName === "" || /^\d+$/.test(productName)) { // Check if the product name is empty or consists only of digits
+                    console.log('inside product name');
                     document.getElementById('nameError').style.display = 'block';
                     isValid = false;
                 } else {
                     document.getElementById('nameError').style.display = 'none';
+                }
+
+
+                // Validate Product Category
+                const productCategory = document.getElementById('product_category').value;
+                if (!productCategory) {
+                    document.getElementById('categoryError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('categoryError').style.display = 'none';
+                }
+
+                // Validate Product Stock
+                const productStock = document.getElementById('product_stock').value.trim();
+                if (productStock === "" || isNaN(productStock) || Number(productStock) < 0) {
+                    document.getElementById('stockError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('stockError').style.display = 'none';
                 }
 
                 // Validate Product Description
@@ -275,7 +298,7 @@
 
                 // Validate Product Price
                 const productPrice = document.getElementById('product_price').value.trim();
-                if (productPrice === "" || isNaN(productPrice)) {
+                if (productPrice === "" || isNaN(productPrice) || Number(productPrice) < 0) {
                     document.getElementById('priceError').style.display = 'block';
                     isValid = false;
                 } else {
@@ -283,17 +306,25 @@
                 }
 
                 // Validate Promotional Price
-                // const promoPrice = document.getElementById('promotional_price').value.trim();
-                // if (promoPrice === "" || isNaN(promoPrice)) {
-                //     document.getElementById('promoPriceError').style.display = 'block';
-                //     isValid = false;
-                // } else {
-                //     document.getElementById('promoPriceError').style.display = 'none';
-                // }
+                const promoPrice = document.getElementById('promotional_price').value.trim();
+                if (promoPrice !== "" && (isNaN(promoPrice) || Number(promoPrice) < 0)) {
+                    document.getElementById('promoPriceError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('promoPriceError').style.display = 'none';
+                }
+
+                // Validate Discount
+                const productDiscount = document.getElementById('product_discount').value.trim();
+                if (productDiscount !== "" && (isNaN(productDiscount) || Number(productDiscount) < 0)) {
+                    document.getElementById('discountError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('discountError').style.display = 'none';
+                }
 
                 // Validate Images
                 const imageInput = document.getElementById('imageInput');
-                const imagePreview = document.getElementById('image-preview');
                 if (imageInput.files.length === 0) {
                     document.getElementById('imageError').style.display = 'block';
                     isValid = false;
@@ -304,6 +335,24 @@
                 if (!isValid) {
                     e.preventDefault();
                 }
+            });
+
+            const inputFields = [
+                { id: 'product_name', errorId: 'nameError', validate: value => value.trim() !== "" },
+                { id: 'product_category', errorId: 'categoryError', validate: value => value !== "" },
+                { id: 'product_stock', errorId: 'stockError', validate: value => value.trim() !== "" && !isNaN(value) && Number(value) >= 0 },
+                { id: 'product_description', errorId: 'descError', validate: value => value.trim() !== "" },
+                { id: 'product_price', errorId: 'priceError', validate: value => value.trim() !== "" && !isNaN(value) && Number(value) >= 0 },
+                { id: 'promotional_price', errorId: 'promoPriceError', validate: value => value.trim() === "" || (!isNaN(value) && Number(value) >= 0) },
+                { id: 'product_discount', errorId: 'discountError', validate: value => value.trim() === "" || (!isNaN(value) && Number(value) >= 0) }
+            ];
+
+            inputFields.forEach(field => {
+                const input = document.getElementById(field.id);
+                input.addEventListener('input', function () {
+                    const isValid = field.validate(input.value);
+                    document.getElementById(field.errorId).style.display = isValid ? 'none' : 'block';
+                });
             });
 
             document.getElementById('imageInput').addEventListener('change', function (e) {
