@@ -239,6 +239,7 @@
                                         <th>Product Name</th>
                                         <th>Price</th>
                                         <th>Quantity</th>
+                                        <th>Original Amount </th>
                                         <th>Coupon Discount %</th>
                                         <th>Grand Total</th>
                                     </tr>
@@ -259,6 +260,9 @@
                                             </td>
                                             <td>
                                                 <%= item.quantity %>
+                                            </td>
+                                            <td>
+                                                Rs <%= item.originalAmount %>
                                             </td>
                                                 <td><%= item.couponDiscount %>
                                                 </td>

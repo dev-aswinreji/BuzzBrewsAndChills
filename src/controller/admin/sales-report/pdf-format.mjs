@@ -6,6 +6,7 @@ export const admin_pdfFormat = async (req, res) => {
         const { period, customStartDate, customEndDate } = req.query;
         const reportData = await generateReport(period, customStartDate, customEndDate);
         console.log(reportData, 'report data is showing successfully');
+        console.log(reportData[0].products[0]);
         const doc = new PDFDocument();
         res.setHeader('Content-disposition', 'attachment; filename="sales_report.pdf"');
         res.setHeader('Content-type', 'application/pdf');
@@ -22,17 +23,18 @@ export const admin_pdfFormat = async (req, res) => {
         //'Original Amount' extracter orginal amount name 
         const table = {
             headers: [
-                'Sl No', 'Username', 'Product Name', 'Quantity', 'Price',
-                'Coupon Discount(%)', 'Grand Total'
+                'Sl No', 'Username', 'Product Name','Price (Rs)', 'Quantity', 'Orginal Price (Rs)',
+                'Coupon  Discount (%)', 'Grand Total (Rs)'
             ],
             rows: reportData[0].products.map((item, index) => [
                 index + 1,
                 item.username,
                 item.productName,
+                `${item.price.toFixed(2)}`,
                 item.quantity,
-                `Rs${item.price.toFixed(2)}`,
+                `${item.originalAmount.toFixed(2)}`,
                 `${item.couponDiscount.toFixed(2)}`,
-                `Rs${item.totalPrice.toFixed(2)}`
+                `${item.totalPrice.toFixed(2)}`
             ])
         };
 
@@ -52,7 +54,7 @@ function generateTable(doc, table) {
     const rowHeight = 50;
     const headerHeight = 30;
 
-    const colWidths = [30, 80, 80, 80, 80, 80, 100];  // Specify column widths
+    const colWidths = [30, 70, 70, 70, 60, 70,70, 80];  // Specify column widths
     const borderWidth = 1;
 
     // Draw table headers
