@@ -389,6 +389,15 @@
                 });
             });
         </script>
+        <script>
+        const errMsg = document.getElementById('error')
+        function reload(){
+          SetTimeout(()=>{
+            errMsg.innerHTML = ''
+            },3000)
+        }
+        reload()
+        </script>
     </body>
 
     </html>
