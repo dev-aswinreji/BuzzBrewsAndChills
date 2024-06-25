@@ -8,13 +8,17 @@ export const user_walletGet = async (req, res) => {
 
         const userId = req.session.USER_ID
         const wallet = await findWalletAmount(userId)
-       
-        const totalTransactions = wallet.walletTransactions.length;
-        const totalPages = Math.ceil(totalTransactions / limit);
+        let totalPages
+        let transactions
+        if (wallet) {
+            const totalTransactions = wallet.walletTransactions.length;
+            totalPages = Math.ceil(totalTransactions / limit);
 
-        const transactions = wallet.walletTransactions
-            .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort by date descending
-            .slice((page - 1) * limit, page * limit); // Paginate
+            transactions = wallet.walletTransactions
+                .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort by date descending
+                .slice((page - 1) * limit, page * limit); // Paginate
+        }
+
 
         res.render('wallet', {
             wallet,
