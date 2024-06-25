@@ -131,70 +131,127 @@
         .breadcrumb-text p {
             margin: 0;
         }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .pagination a {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            color: #212529;
+            padding: 6px 12px;
+            text-decoration: none;
+            transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .pagination a:hover {
+            background-color: #e9ecef;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
     </style>
 </head>
+<%- include ('../partials/head/head.ejs' ) %>
 
-<%- include('../partials/head/head.ejs') %>
 
-<body>
-    <%- include('../partials/header/header.ejs') %>
-    <% if (wallet) { %>
-     
-    <!-- breadcrumb-section -->
-    <div class="breadcrumb-section breadcrumb-bg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 offset-lg-2 text-center">
-                    <div class="breadcrumb-text">
-                        <p>Manage your funds</p>
-                        <h1>Wallet</h1>
+    <body>
+        <%- include('../partials/header/header.ejs') %>
+            <% if (wallet) { %>
+                <!-- breadcrumb-section -->
+                <div class="breadcrumb-section breadcrumb-bg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 offset-lg-2 text-center">
+                                <div class="breadcrumb-text">
+                                    <p>Manage your funds</p>
+                                    <h1>Wallet</h1>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- end breadcrumb section -->
-    <div class="container-wallet">
-        <h1>Wallet</h1>
-        <div class="wallet-summary">
-            <div class="wallet-balance">Balance: Rs <%= wallet.walletAmount %></div>
-            <div class="wallet-actions">
-                <button class="btn btn-add-funds" onclick="addFunds()">Add Funds</button>
-                <button class="btn btn-withdraw-funds" onclick="withdrawFunds()">Withdraw Funds</button>
-            </div>
-        </div>
-        <div class="transaction-history">
-            <h2>Transaction History</h2>
-            <% if (wallet.walletTransactions.length > 0) { %>
-                <% wallet.walletTransactions.reverse().forEach(transaction => { %>
-                    <div class="transaction">
-                        <div class="transaction-details">
-                            <span class="transaction-type"><%= transaction.type %></span>
-                            <span class="transaction-date"><%= new Date(transaction.date).toLocaleDateString() %></span>
+                <!-- end breadcrumb section -->
+                <div class="container-wallet">
+                    <h1>Wallet</h1>
+                    <div class="wallet-summary">
+                        <div class="wallet-balance">Balance: Rs <%= wallet.walletAmount %>
                         </div>
-                        <div class="transaction-amount">Rs <%= transaction.amount %></div>
+                        <div class="wallet-actions">
+                            <button class="btn btn-add-funds" onclick="addFunds()">Add Funds</button>
+                            <button class="btn btn-withdraw-funds" onclick="withdrawFunds()">Withdraw Funds</button>
+                        </div>
                     </div>
-                <% }) %>
-                <% } %>
+                    <div class="transaction-history">
+                        <h2>Transaction History</h2>
+                        <% if (transactions.length> 0) { %>
+                            <% transactions.forEach(transaction=> { %>
+                                <div class="transaction">
+                                    <div class="transaction-details">
+                                        <span class="transaction-type">
+                                            <%= transaction.type %>
+                                        </span>
+                                        <span class="transaction-date">
+                                            <%= new Date(transaction.date).toLocaleDateString() %>
+                                        </span>
+                                    </div>
+                                    <div class="transaction-amount">Rs <%= transaction.amount %>
+                                    </div>
+                                </div>
+                                <% }) %>
+                                    <% } else { %>
+                                        <p>No transactions found</p>
+                                        <% } %>
+                    </div>
+                    <div class="pagination">
+                        <div class="pagination">
+                            <% if (totalPages > 1) { %>
+                                <a href="/wallet?page=1">First</a>
+                                <% let start, end; %>
+                                <% if (currentPage <= 3) { %>
+                                    <% start = 1 %>
+                                    <% end = Math.min(5, totalPages) %>
+                                <% } else if (currentPage >= totalPages - 2) { %>
+                                    <% start = Math.max(totalPages - 4, 1) %>
+                                    <% end = totalPages %>
+                                <% } else { %>
+                                    <% start = currentPage - 2 %>
+                                    <% end = currentPage + 2 %>
+                                <% } %>
+                
+                                <% for (let i = start; i <= end; i++) { %>
+                                    <a href="/wallet?page=<%= i %>" class="<%= i === currentPage ? 'active' : '' %>">
+                                        <%= i %>
+                                    </a>
+                                <% } %>
+                                <a href="/wallet?page=<%= totalPages %>">Last</a>
+                            <% } %>
+                        </div>
+                
+                </div>
+                <% } else { %>
+                    <p>No wallet found</p>
+                    <% } %>
+                        <%- include('../partials/footer/footer.ejs') %>
+                            <script>
+                                function addFunds() {
+                                    // Implement add funds functionality here
+                                    alert('Add funds functionality not implemented yet');
+                                }
 
-            <% } else { %>
-                <p>No transactions found</p>
-            <% } %>
-        </div>
-        
-    </div>
-    <%- include('../partials/footer/footer.ejs') %>
-    <script>
-        function addFunds() {
-            // Implement add funds functionality here
-            alert('Add funds functionality not implemented yet');
-        }
-
-        function withdrawFunds() {
-            // Implement withdraw funds functionality here
-            alert('Withdraw funds functionality not implemented yet');
-        }
-    </script>
-</body>
+                                function withdrawFunds() {
+                                    // Implement withdraw funds functionality here
+                                    alert('Withdraw funds functionality not implemented yet');
+                                }
+                            </script>
+    </body>
 
 </html>
