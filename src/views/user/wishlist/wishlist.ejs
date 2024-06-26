@@ -171,12 +171,13 @@
                                     </div>
 
                                 </div>
-                                <h6><span id="stock_<%= index %>">
+                                <h6><span id=>
                                         <% if (item.productId.stock <=0) { %>
                                             <h6 class="text-danger">product is out of stock</h6>
                                             <% }else {%>
                                                 Stock left:
-                                                <%= item.productId.stock %>
+                                                <span id="stock_<%= index %>"> <%= item.productId.stock %></span>
+                                               
                                                     <% } %>
                                     </span></h6>
 
@@ -258,6 +259,7 @@
                         console.log(index, 'index');
                         const productStockStr = document.getElementById('stock_' + index).innerHTML
                         const productStock = Number(productStockStr)
+                        console.log(productStock,'stock is showing');
                         if (!productStock <= 0) {
                             console.log(productStock, 'productstock is showing');
                             await fetch(`/add-to-cart/?productId=${productId}&stock=${productStock}`, {
