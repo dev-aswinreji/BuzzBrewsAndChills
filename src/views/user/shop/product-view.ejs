@@ -73,6 +73,13 @@
             text-align: center;
         }
 
+        .zoomContainer {
+    z-index: 9999;
+}
+
+.zoomLens {
+    border: 1px solid #ccc;
+}
 
 </style>
 <%- include('../partials/head/head.ejs') %>
@@ -271,8 +278,29 @@
 
             <%- include('../partials/footer/footer.ejs') %>
                 <script src="/javascripts/zoomslider.mjs"></script>
-
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.js"></script>
+                
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+                <script>
+                    $(document).ready(function() {
+                        $('#mainImage').elevateZoom({
+                            zoomType: "lens",
+                            lensShape: "square",
+                            lensSize: 300
+                        });
+                    });
+                
+                    function changeMainImg(imageUrl) {
+                        $('#mainImage').attr('src', '/product-images/' + imageUrl);
+                        $('#mainImage').data('zoom-image', '/product-images/' + imageUrl).elevateZoom({
+                            zoomType: "lens",
+                            lensShape: "square",
+                            lensSize: 300
+                        });
+                    }
+                </script>
 
                 <script>
                      async function addToCartRelatedProductUsingFetch(index, productId) {
