@@ -117,14 +117,14 @@ app.use(function (req, res, next) {
     next()
 })
 
+app.get('*',(req,res)=>{
+    res.send('404 page not found')
+})
 
 app.use('/admin', [categoryRoute, couponAdminRoute, dashboardRoute, orderAdminRoute, productsRoute, salesReportRoute, signinAdminRoute, usersListRoute,transactionAdminRoute])
 app.use('/',blockOrUnblock,[aboutRoute, cartRoute, checkoutRoute, contactRoute, couponRoute, emailVerifyRoute, forgotPassRoute,orderRoute, otpVerifyRoute, razorpayRoute, shopRoute, signinRoute, signupRoute, userProfileRoute, walletRoute, wishlistRoute])
 app.use('/', googleRoute)
-app.get('*',(req,res)=>{
-    console.log('isnidedfhjasoifioeasfjlasdfj')
-    res.send('404 page not found')
-})
+
 app.get('/check-session', isAuthenticated, (req, res) => {
     res.json({ result: 'success' });
 });
