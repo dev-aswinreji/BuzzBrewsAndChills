@@ -117,9 +117,7 @@ app.use(function (req, res, next) {
     next()
 })
 
-app.get('*',(req,res)=>{
-    res.send('404 page not found')
-})
+
 
 app.use('/admin', [categoryRoute, couponAdminRoute, dashboardRoute, orderAdminRoute, productsRoute, salesReportRoute, signinAdminRoute, usersListRoute,transactionAdminRoute])
 app.use('/',blockOrUnblock,[aboutRoute, cartRoute, checkoutRoute, contactRoute, couponRoute, emailVerifyRoute, forgotPassRoute,orderRoute, otpVerifyRoute, razorpayRoute, shopRoute, signinRoute, signupRoute, userProfileRoute, walletRoute, wishlistRoute])
@@ -129,7 +127,9 @@ app.get('/check-session', isAuthenticated, (req, res) => {
     res.json({ result: 'success' });
 });
 
-
+app.get('*',(req,res)=>{
+    res.send('404 page not found')
+})
 
 
 // app.use((err, req, res, next) => {
