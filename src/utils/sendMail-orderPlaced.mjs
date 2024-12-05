@@ -1,10 +1,9 @@
 
 import nodemailer from 'nodemailer'
-import dotenv from 'dotenv'
-
-dotenv.config()
 
 export const sendEmailForOrderPlaced = async (user, order) => {
+    console.log(process.env.NODEMAILER_EMAIL);
+    
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,

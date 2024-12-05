@@ -15,7 +15,7 @@ export const admin_ordersGet = async (req, res) => {
    
     const orders = await findAllOrderDataForAdmin(skip,limit)
     console.log(orders,'orders is showing');
-    console.log(orders[0].products);
+    console.log(orders[0]?.products);
     res.render("orders",{orders, page,totalPages, count: TOTAL_COUNT_OF_ORDERS});
   } catch (error) {
     console.error(error, " ADMIN ORDERS GET ");
