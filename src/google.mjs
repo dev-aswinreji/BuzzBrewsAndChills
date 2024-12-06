@@ -1,5 +1,4 @@
 
-import dotenv from 'dotenv'
 import passport from 'passport'
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth'
 import { insertGoogle, insertUser } from './data/users/insert.mjs'
@@ -15,8 +14,6 @@ passport.deserializeUser((obj, cb) => {
 })
 
 /* Google Authentication */
-
-dotenv.config()
 
 console.log('google signin page working ')
 export const googleSignIn = passport.use(new GoogleStrategy({

@@ -4,7 +4,6 @@ import nocache from 'nocache'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import path from 'path'
-import dotenv from 'dotenv'
 
 import passport from 'passport'
 import bodyParser from 'body-parser'
@@ -57,7 +56,6 @@ const PORT = process.env.PORT
 
 export const imageDirectory = path.join(__dirname, '../public/product-images')
 
-dotenv.config()
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
