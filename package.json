@@ -4,7 +4,7 @@
   "description": "main e-commerce project",
   "main": "src/app.mjs",
   "scripts": {
-    "test": "nodemon --env-file=.env src/app.mjs",
+    "start": "nodemon --env-file=.env src/app.mjs",
     "release":"standard-version"
   },
   "author": "Aswin Reji",
