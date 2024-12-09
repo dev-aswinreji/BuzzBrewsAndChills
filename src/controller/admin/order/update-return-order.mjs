@@ -7,9 +7,7 @@ import { updateUserWallet } from "../../../data/wallet/update.mjs";
 export const admin_orderReturnUpdatingGet = async (req, res) => {
     try {
         const { orderId } = req.query
-        console.log(orderId, 'order id is showing');
         const orderDetails = await findUniqueOrderToChangeReturnOrderStatus(orderId)
-        console.log(orderDetails, 'order details is showing');
         res.render('return-order-details', { orderDetails })
 
     } catch (error) {
@@ -20,8 +18,6 @@ export const admin_orderReturnUpdatingGet = async (req, res) => {
 export const admin_orderReturnConfirmationPut = async (req, res) => {
     try {
         const { orderId, productId, userId, action, quantity } = req.body
-        console.log(req.body);
-        console.log(action, 'action');
         const orderDetails = await findSingleOrder(orderId)
         const product = await findSingleProduct(productId);
         if (action === 'APPROVE') {
@@ -32,9 +28,6 @@ export const admin_orderReturnConfirmationPut = async (req, res) => {
                 arrayFilters: [{ "elem.productId": productId }],
             }
             const result = await returnOrderStatusUpdate(orderId, update, options)
-            console.log(result, 'result is showing approveddddd');
-
-
 
             let productPrice
             for (const product of orderDetails.products) {
@@ -42,8 +35,6 @@ export const admin_orderReturnConfirmationPut = async (req, res) => {
                     productPrice = product.price * product.quantity
                 }
             }
-            console.log(productPrice, 'product price is showing');
-
 
             const walletTransactions = {
                 date: new Date(),
@@ -51,8 +42,6 @@ export const admin_orderReturnConfirmationPut = async (req, res) => {
                 amount: productPrice.toFixed(2),
             }
             const updateWallet = await updateUserWallet(userId, productPrice, walletTransactions)
-            console.log(updateWallet, 'wallet update or not ');
-
 
             let updateProductStock = Number(product.stock) + Number(quantity);
 
