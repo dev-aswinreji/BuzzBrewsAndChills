@@ -1,4 +1,3 @@
-#!/bin/sh
 if [ ! -d "public/product-images" ]; then
   mkdir -p public/product-images
 fi
