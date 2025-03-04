@@ -1,2 +1,5 @@
 node_modules
 .env
+
+# To omit the overwriting of images in server while we are pushing
+public/product-images
