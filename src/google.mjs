@@ -17,9 +17,9 @@ passport.deserializeUser((obj, cb) => {
 
 console.log('google signin page working ')
 export const googleSignIn = passport.use(new GoogleStrategy({
-    clientID:process.env.CLIENT_ID,
-    clientSecret:process.env.CLIENT_SECRET,
-    callbackURL: process.env.LOCALHOST_URL
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackURL: process.env.CALLBACK_URL
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         await accessToken, refreshToken
@@ -29,7 +29,7 @@ export const googleSignIn = passport.use(new GoogleStrategy({
 
         console.log('inside try block');
 
-        const user = await findUser(googleData._json.email,)
+        const user = await findUser(googleData._json.email)
         console.log(user, 'USER CREATED');
 
         if (user) {
@@ -46,7 +46,7 @@ export const googleSignIn = passport.use(new GoogleStrategy({
             console.log(userData);
 
             const newUser = await insertUser(userData)
-            console.log(newUser,'new user is showing');
+            console.log(newUser, 'new user is showing');
 
             done(null, newUser)
         }
