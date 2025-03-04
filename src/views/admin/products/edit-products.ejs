@@ -191,7 +191,7 @@
                                         <div class="card-body">
                                             <% for (let i=0; i < product.imageUrl.length; i++) { %>
                                                 <div class="input-upload">
-                                                    <img src="/product-images/<%= product.imageUrl[i] %>" alt="">
+                                                    <img src="/<%= product.imageUrl[i] %>" alt="">
                                                     <button type="button" class="delete-image-btn"
                                                         onclick="deleteImage(this)">x</button>
                                                 </div>

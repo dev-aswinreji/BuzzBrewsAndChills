@@ -111,10 +111,10 @@
                             <div class="col-md-6">
                                 <div id="mainImgContainer" class="border rounded-4 mb-3 d-flex justify-content-center">
                                     <a data-fslightbox="mygalley" id="zoomimg"
-                                        style="background-image: url('/product-images/<%= product.imageUrl[0] %>');"
+                                        style="background-image: url('/<%= product.imageUrl[0] %>');"
                                         class="rounded-4 zoom" onmouseover="zoom(event)" data-type="image" href="">
                                         <img id="mainImage" style="max-width: 100%; max-height: 100%; margin: auto;"
-                                            class="rounded-4 fit" src="/product-images/<%= product.imageUrl[0] %>" />
+                                            class="rounded-4 fit" src="/<%= product.imageUrl[0] %>" />
                                     </a>
                                 </div>
                                 <div class="d-flex justify-content-center mb-3">
@@ -123,7 +123,7 @@
                                             data-fslightbox="mygalley" class="border mx-1 rounded-2" data-type="image"
                                             href="" class="item-thumb">
                                             <img class="rounded-2 img-fluid"
-                                                src="/product-images/<%= product.imageUrl[i] %>" />
+                                                src="/<%= product.imageUrl[i] %>" />
                                         </a>
                                         <% } %>
                                 </div>
@@ -254,7 +254,7 @@
                                     <div class="single-product-item">
                                         <div class="product-image">
                                             <a href="/product-view/<%= relatedProduct[i]._id %>">
-                                                <img src="/product-images/<%= relatedProduct[i].imageUrl[0] %>" alt="">
+                                                <img src="/<%= relatedProduct[i].imageUrl[0] %>" alt="">
                                             </a>
                                         </div>
                                         <h3><%= relatedProduct[i].name %> </h3>
@@ -293,8 +293,8 @@
                     });
                 
                     function changeMainImg(imageUrl) {
-                        $('#mainImage').attr('src', '/product-images/' + imageUrl);
-                        $('#mainImage').data('zoom-image', '/product-images/' + imageUrl).elevateZoom({
+                        $('#mainImage').attr('src', '/' + imageUrl);
+                        $('#mainImage').data('zoom-image', '/' + imageUrl).elevateZoom({
                             zoomType: "lens",
                             lensShape: "square",
                             lensSize: 300

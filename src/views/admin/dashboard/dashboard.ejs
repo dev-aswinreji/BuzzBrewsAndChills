@@ -318,7 +318,7 @@
                     <div class="top-products">
                         <% topProducts.forEach((product, index)=> { %>
                             <div class="product" style="--delay: <%= index %>;">
-                                <img src="/product-images/<%= product.imageUrl %>" alt="<%= product.name %>">
+                                <img src="/<%= product.imageUrl %>" alt="<%= product.name %>">
                                 <h3 class="fw-bold">
                                     Product Name
                                     <%= product.name %>
@@ -334,7 +334,7 @@
                     <div class="top-categories">
                         <% topCategories.forEach(category=> { %>
                             <div class="category">
-                                <img src="/product-images/<%= category.imageUrl %>" alt="<%= category.name %>">
+                                <img src="/<%= category.imageUrl %>" alt="<%= category.name %>">
                                 <h3 class="fw-bold text-dark">
                                     Category Name
                                     <span id="text-success">

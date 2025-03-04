@@ -54,7 +54,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const PORT = process.env.PORT
 
-export const imageDirectory = path.join(__dirname, '../public/product-images')
+export const imageDirectory = path.join(__dirname, '../public')
 
 const app = express()
 
