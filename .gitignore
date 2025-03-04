@@ -3,4 +3,3 @@ node_modules
 
 # To omit the overwriting of images in server while we are pushing
 # is it working properly or regenerating the product folder
-public/product-images
