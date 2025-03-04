@@ -1,3 +1,4 @@
+# removed shebang
 if [ ! -d "public/product-images" ]; then
   mkdir -p public/product-images
 fi
