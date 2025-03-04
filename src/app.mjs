@@ -48,8 +48,6 @@ import { isAuthenticated } from './middleware/isAuthenticated.mjs'
 import transactionAdminRoute from './route/admin/transaction/transaction.mjs'
 import blockOrUnblock from './middleware/user-blocked.mjs'
 
-//router end 
-
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const PORT = process.env.PORT
