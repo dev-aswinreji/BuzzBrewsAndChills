@@ -4,8 +4,8 @@
   "description": "main e-commerce project",
   "main": "src/app.mjs",
   "scripts": {
-    "start": "[ -d public-image ] || mkdir -p public/product-images && nodemon --env-file=.env src/app.mjs",
-    "release":"standard-version"
+    "start": "[ -d public/product-image ] || mkdir -p public/product-images && nodemon --env-file=.env src/app.mjs",
+    "release": "standard-version"
   },
   "author": "Aswin Reji",
   "license": "ISC",
