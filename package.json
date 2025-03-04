@@ -4,7 +4,7 @@
   "description": "main e-commerce project",
   "main": "src/app.mjs",
   "scripts": {
-    "start": "[ -d public/product-image ] || mkdir -p public/product-images && nodemon --env-file=.env src/app.mjs",
+    "start": "[ -d public/product-images ] || mkdir -p public/product-images && nodemon --env-file=.env src/app.mjs",
     "release": "standard-version"
   },
   "author": "Aswin Reji",
